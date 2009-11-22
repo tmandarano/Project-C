@@ -17,7 +17,7 @@
     
     <div class="stream">
       <p>See local</p>
-      <div class="tools">emotions and <a href="#">See interesting</a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
+      <div class="tools"><?php echo $this->element('emotion')?> and <a href="#">See interesting</a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
       <div class="">
         bunches of pictures!
       </div>
