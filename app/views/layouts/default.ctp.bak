@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title><?php echo $title_for_layout?> | Project C</title>
+<?php echo $html->css('screen')?>
+</head>
+<body>
+<div id="header">
+<table id="menu_frame">
+  <tr>
+  <td id="menu_frame_left"><?php echo $html->link("Project C", array('controller'=>'home'));?></td>
+  <td>
+  <table id="menu">
+    <tr>
+<?php function active_on_match($self, $a) {
+  if ($a == $self->params['controller']) { return array('class'=>'active'); } else { return array(); }
+}?>
+    <td><?php echo $html->link("Explore", array('controller'=>'explore'), active_on_match($this, 'explore'));?></td>
+    <td><?php echo $html->link("Streams", array('controller'=>'stream', $user['email']), active_on_match($this, 'stream'));?></td>
+    <?php if ($user) { ?>
+    <td><?php echo $html->link($user['name'], array('controller'=>'users', 'action'=>'profile', $user['id']), active_on_match($this, 'profile'));?></td>
+    <td><?php echo $html->link("settings", array('controller'=>'users', 'action'=>'settings'), active_on_match($this, 'user'));?></td>
+    <? } ?>
+    </tr>
+  </table>
+  </td>
+  <td id="menu_frame_right">
+    <?php if ($user) { ?>
+      <?php echo $html->link("signout", array('controller'=>'users', 'action'=>'logout'));?>
+    <?php } else { ?>
+      <?php echo $html->link("signin", array('controller'=>'users', 'action'=>'login'));?>
+    <? } ?>
+  </td>
+  </tr>
+</table>
+</div>
+<div id="content">
+<?php echo $content_for_layout?>
+</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<?php echo $scripts_for_layout?>
+</body>
+</html>

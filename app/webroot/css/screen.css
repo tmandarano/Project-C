@@ -1,0 +1,280 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{font-size:100%;}
+html{font-size:62.5%;}
+body {
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 1.7em;
+  padding-bottom: 1em;
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+}
+
+a {
+  color: #44AAFF;
+  text-decoration: none;
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+img.large {
+  width: 150px;
+  height: 100px;
+}
+
+img.thumb {
+  width: 75px;
+  height: 50px;
+}
+
+h1.title {
+  font-size: 1.7em;
+  color: #44AAFF;
+  text-align: center;
+}
+
+p.title .question {
+  color: black;
+}
+
+p.title.center {
+  text-align: center;
+}
+
+p.wword {
+  line-height: 1.7em;
+  width: 35em;
+}
+
+p.wword strong {
+  font-size: 1.2em;
+}
+
+#header {
+  background: #101010 url('/img/header_gradient.png') repeat-x;
+  height: 2em;
+}
+#header a {
+  font-weight: bold;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+#header a.active, #header a:hover {
+  color: #44AAFF;
+}
+#menu_frame {
+  width: 1024px;
+  text-align: center;
+  margin: auto;
+}
+#menu_frame_left {
+  text-align: left;
+  font-size: x-large;
+}
+#menu_frame_right {
+  text-align: right;
+}
+#header #menu_frame #menu {
+  width: 100%;
+}
+
+
+#picstream {
+  position: absolute;
+  bottom: 0;
+  left: 6em;
+}
+
+#picstream p {
+  text-align: center;
+}
+
+#content {
+  width: 1024px;
+  position: relative;
+  margin: auto;
+  height: 100%;
+  text-align: left;
+}
+
+#signin {
+  position: absolute;
+  right: 0.75em;
+  bottom: 0.75em;
+}
+
+input[type="text"], input[type="password"] {
+  border: 1px solid #cccccc;
+  background-color: #eeeeee;
+  font-size: 1.5em;
+  vertical-align: middle;
+  margin-right: 0.25em;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+  background-color: #dddddd;
+  border: 1px solid #aaaaaa;
+}
+
+#user {
+  width: 6em;
+}
+
+#password {
+  width: 6em;
+}
+
+#logo {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -1.5em;
+}
+
+#logo img {
+  height: 3em;
+  width: 5em;
+}
+
+#content {
+  padding: 0.5em 3em 1em 3em;
+}
+
+#leftcol {
+  float: left;
+  width: 500px;
+}
+
+#rightcol {
+  float: left;
+  margin-left: 10px;
+  width: 510px;
+  padding-top: 0.5em;
+}
+
+#footer {
+  clear: both;
+}
+
+.user {
+  font-weight: bold;
+}
+
+.pop .user_pic {
+  height: 50px;
+  width: 50px;
+  margin-right: 0.5em;
+  vertical-align: top;
+}
+
+.pop .user {
+  text-decoration: none;
+  color: black;
+}
+
+.pop .location {
+  position: relative;
+  font-size: 0.7em;
+}
+
+.pop .time {
+  position: relative;
+  font-size: 0.8em;
+}
+
+#zeitgeist tr {
+  position: relative;
+  height: 150px;
+  display: block;
+}
+
+#zeitgeist .tags {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#zeitgeist .location {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#map {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 3px solid #FFFFFF;
+}
+
+#map_explore {
+  border: none;
+  width: 100%;
+}
+
+.zeitgeist a {
+  font-weight: bold;
+}
+
+.stream {
+  background-color: #444444;
+}
+.stream img {
+  height: 150px;
+  width: 150px;
+}
+
+div.picture {
+  float: left;
+  width: 200px;
+}
+div.picture img {
+  width: 200px;
+}
+
+div.picture p {
+  font-size: small;
+}
+
+/* viewpic */
+#viewpic_dimmer {
+  position: absolute;
+  background: url('/img/shelf_bg.png');
+  z-index: 9000;
+  width: inherit;
+}
+
+#viewpic {
+  position: relative;
+  margin: auto;
+  width: 800px;
+  height: 600px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  z-index: 9100;
+  background-color: #CDECFF;
+  color: #000000;
+  padding: 1.5em;
+}
+
+#viewpic table {
+  width: 100%;
+}
+
+#viewpic .similar img {
+  height: 55px;
+}
+
+#viewpic_close {
+  position: absolute;
+  top: 1.5em;
+  right: 1.5em;
+}
+
+.cake-sql-log {
+  display: none;
+}
