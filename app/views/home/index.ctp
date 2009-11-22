@@ -16,11 +16,18 @@
     </div>
     
     <div class="stream">
-      <p>See local</p>
-      <div class="tools"><?php echo $this->element('emotion')?> and <a href="#">See interesting</a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
-      <div class="">
-        bunches of pictures!
-      </div>
+      <h1>See <strong>local</strong>.</h1>
+      <div class="tools"><?php echo $this->element('emotion')?> <a href="#">See interesting</a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
+      <table class="pictures">
+        <tr>
+          <td>
+          <?php for ($i=0; $i<min(8,count($recentPictures)); $i++) {
+            //echo $this->element('picture', array('picture'=>$recentPictures[$i]));
+            echo "<img src='/img/mini_pic.jpg' />";
+          }?>
+          </td>
+        </tr>
+      </table>
     </div>
     </td>
   </tr>
