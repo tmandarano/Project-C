@@ -2,7 +2,7 @@
 <html> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<?php echo $html->css('stream_style')?>
+<?php echo $html->css('screen')?>
 <title><?php echo $title_for_layout?> | LiveGather</title> 
 </head> 
 <body> 
@@ -41,8 +41,8 @@
     </li>
   </ul> 
 </div> 
+<div id="centering">
 <div id="content">
-<div class="textleft">
   <?php echo $content_for_layout?>
 </div>
 </div>
