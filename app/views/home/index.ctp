@@ -1,8 +1,7 @@
 <div class="home">
-<table style="text-align: left;">
+<table style="width: 100%;">
   <tr>
     <td>
-
     <div id="updating_map" style="border: 1px solid; float: right; margin-left: 1em;">
       <div id="map" style="width: 400px; height: 350px"></div>
       <div id="updating_map_stream" style="height: 50px;background-color: black;"></div>
@@ -10,22 +9,37 @@
 
     <h1 class="title">Show your friends what you are doing, see what they are doing, and discover people with similar interests.</h1>
 
-    <div>
-    <div><img src="/img/bubble_left.png" /><div class="question" style="display: inline; background: url('/img/bubble_center.png');">There's just one question...what do you see?</div></div>
-    Sign up now!
+    <div style="position: relative; height: 56px; vertical-align: center;">
+      <img src="/img/bubble_left.png" style="height: 56px;" />
+      <p class="question"><span style="color: #999;">There's just one question...</span> what do you see?</p>
+    <img src="/img/signup.png" style="position: absolute; top: 0; left: 42ex;"/>
     </div>
     
     <div class="stream">
       <h1>See <strong>local</strong>.</h1>
-      <div class="tools"><?php echo $this->element('emotion')?> <a href="#">See interesting</a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
+      <div class="tools">
+        <?php echo $this->element('emotion')?>
+        <a href="#">See <strong>interesting</strong></a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
       <table class="pictures">
         <tr>
-          <td>
-          <?php for ($i=0; $i<min(8,count($recentPictures)); $i++) {
-            //echo $this->element('picture', array('picture'=>$recentPictures[$i]));
-            echo "<img src='/img/mini_pic.jpg' />";
-          }?>
-          </td>
+          <?php //echo $this->element('picture', array('picture'=>$recentPictures[$i]));?>
+          <?php for ($i=0; $i<8; $i++) {?>
+            <td><img src='/img/mini_pic.jpg' /></td>
+          <?php }?>
+        </tr>
+      </table>
+    </div>
+    <div class="stream">
+      <h1>See <strong>global</strong>.</h1>
+      <div class="tools">
+        <?php echo $this->element('emotion')?>
+        <a href="#">See <strong>interesting</strong></a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
+      <table class="pictures">
+        <tr>
+          <?php //echo $this->element('picture', array('picture'=>$recentPictures[$i]));?>
+          <?php for ($i=0; $i<8; $i++) {?>
+            <td><img src='/img/mini_pic.jpg' /></td>
+          <?php }?>
         </tr>
       </table>
     </div>

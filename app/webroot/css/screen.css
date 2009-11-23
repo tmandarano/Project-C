@@ -1,7 +1,7 @@
 /*Copyright (c) 2009, Yahoo! Inc. All rights reserved. Code licensed under the BSD License: http://developer.yahoo.net/yui/license.txt version: 2.8.0r4*/html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;} /*end copyrighted*/
 body {
   font-family: Helvetica,Arial,sans-serif;
-  font-size:12px;
+  font-size: 15px;
   color:#000;
   background-color:#FFF;
 }
@@ -110,30 +110,60 @@ h1.title {
 }
 
 .home h1 {
-  font-size: large;
+  font-size: larger;
   font-weight: bold;
+  margin-bottom: 0.5em;
 }
 .home h1.title {
+  font-size: larger;
   color: #d05b2d;
 }
 .home .question {
-  font-size: medium;
+  font-size: x-large;
+  position: relative;
+  top: -58px;
+  left: 20px;
+  height: 36px;
+  background-image: url('/img/bubble_center.png');
+  width: 40ex;
+  vertical-align: middle;
+  padding-top: 17px;
 }
-.home table td {
-  vertical-align: top;
-}
-.home table.footer {
+.home .footer {
   text-align: center;
   margin-top: 1em;
   width: 100%;
   border-top: 1px solid #999;
 }
-
-.home div.stream {
+.home .footer td {
+  vertical-align: top;
+  width: 33%;
+}
+.home .footer td h1 {
+  margin: 1em 0 1em 0;
+  font-size: xx-large;
+}
+.home .footer td p {
+  margin: 1em 0 1em 0;
 }
 
+.home .stream {
+}
+.home .stream .tools {
+  margin-top: 0.5em;
+}
+.home .stream .tools a {
+  text-decoration: none;
+  color: #999;
+}
 .home .stream .pictures {
+  margin-top: 0.5em;
+  border-spacing: 4px;
   border-collapse: separate;
+}
+.home .stream .pictures img {
+  width: 50px;
+  height: 50px;
 }
 
 ul.explore_options {
