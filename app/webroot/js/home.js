@@ -16,8 +16,23 @@ PROJC.mapAddPic = function(map, pic) {
   PROJC.pics.push(marker);
 };
 
+
 PROJC.HOME = {};
 PROJC.HOME.map = null;
+var overlay = PROJC.HOME.overlay = function() {
+  this.captionPane = $('<div id="map_caption">MAP PANE</div>');
+};
+overlay.prototype = new google.maps.OverlayView();
+overlay.prototype.onAdd = function() {
+  $(this.getPanes().floatPane).append(this.captionPane);
+};
+overlay.prototype.draw = function() {
+  this.captionPane;
+};
+overlay.prototype.onRemove = function() {
+  //remove obj from dom
+  $(this.getPanes().floatPane).empty();
+};
 PROJC.HOME.switchPic = function(pic) {
   if (PROJC.pics.length > 0) {
     PROJC.pics.pop().map = null;
@@ -48,6 +63,8 @@ PROJC.HOME.init = function() {
   };
   PROJC.HOME.map = new google.maps.Map($("#map")[0], mapOpts);
   cyclesamplepics();
+  var OVERLAY = new PROJC.HOME.overlay();
+  OVERLAY.setMap(PROJC.HOME.map);
 };
 
 $(document).ready(function(){PROJC.HOME.init();});

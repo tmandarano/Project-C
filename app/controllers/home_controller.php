@@ -11,10 +11,10 @@ class HomeController extends AppController {
 
   function index() {
     $recentPictures = $this->Picture->find('all',
-      array('order'=>'Picture.datetime DESC', 'limit'=>20));
+      array('order'=>'Picture.datetime DESC', 'limit'=>16));
     for ($i=0; $i<count($recentPictures); $i++) {
-      $recentPictures[$i]['Picture']['lat'] = 23;
-      $recentPictures[$i]['Picture']['lng'] = -117;
+      $recentPictures[$i]['Picture']['lat'] = 34;
+      $recentPictures[$i]['Picture']['lng'] = -116;
     }
     $this->set(compact('recentPictures'));
   }

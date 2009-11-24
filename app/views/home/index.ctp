@@ -12,7 +12,9 @@
     <div style="position: relative; height: 56px; vertical-align: center;">
       <img src="/img/bubble_left.png" style="height: 56px;" />
       <p class="question"><span style="color: #999;">There's just one question...</span> what do you see?</p>
-    <img src="/img/signup.png" style="position: absolute; top: 0; left: 42ex;"/>
+      <a href="#">
+        <img src="/img/signup.png" style="position: absolute; top: 0; left: 42ex;"/>
+      </a>
     </div>
     
     <div class="stream">
@@ -23,8 +25,11 @@
       <table class="pictures">
         <tr>
           <?php //echo $this->element('picture', array('picture'=>$recentPictures[$i]));?>
-          <?php for ($i=0; $i<8; $i++) {?>
-            <td><img src='/img/mini_pic.jpg' /></td>
+          <?php for ($i=0; $i<min(8,count($recentPictures)); $i++) {?>
+            <?php $picture = $recentPictures[$i];?>
+            <td>
+  <?php echo $html->image('/pictures/'.$picture['Picture']['id'], array('title'=>$picture['Picture']['caption'], 'height'=>'50px', 'width'=>'50px'))?>
+            </td>
           <?php }?>
         </tr>
       </table>
@@ -37,8 +42,11 @@
       <table class="pictures">
         <tr>
           <?php //echo $this->element('picture', array('picture'=>$recentPictures[$i]));?>
-          <?php for ($i=0; $i<8; $i++) {?>
-            <td><img src='/img/mini_pic.jpg' /></td>
+          <?php for ($i=0; $i<min(8, count($recentPictures)); $i++) {?>
+            <?php $picture = $recentPictures[$i];?>
+            <td>
+  <?php echo $html->image('/pictures/'.$picture['Picture']['id'], array('title'=>$picture['Picture']['caption'], 'height'=>'50px', 'width'=>'50px'))?>
+            </td>
           <?php }?>
         </tr>
       </table>
