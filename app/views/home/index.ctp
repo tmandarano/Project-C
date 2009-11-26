@@ -18,12 +18,8 @@
         <a href="#">See <strong>interesting</strong></a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
       <table class="pictures">
         <tr>
-          <?php //echo $this->element('picture', array('picture'=>$recentPictures[$i]));?>
           <?php for ($i=0; $i<min(8,count($recentPictures)); $i++) {?>
-            <?php $picture = $recentPictures[$i];?>
-            <td>
-  <?php echo $html->image('/pictures/'.$picture['Picture']['id'], array('title'=>$picture['Picture']['caption'], 'height'=>'50px', 'width'=>'50px'))?>
-            </td>
+            <td><?php echo $this->element('thumbnail', array('picture'=>$recentPictures[$i]));?></td>
           <?php }?>
         </tr>
       </table>
@@ -35,12 +31,8 @@
         <a href="#">See <strong>interesting</strong></a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
       <table class="pictures">
         <tr>
-          <?php //echo $this->element('picture', array('picture'=>$recentPictures[$i]));?>
-          <?php for ($i=0; $i<min(8, count($recentPictures)); $i++) {?>
-            <?php $picture = $recentPictures[$i];?>
-            <td>
-  <?php echo $html->image('/pictures/'.$picture['Picture']['id'], array('title'=>$picture['Picture']['caption'], 'height'=>'50px', 'width'=>'50px'))?>
-            </td>
+          <?php for ($i=0; $i<min(16,count($recentPictures)); $i++) {?>
+            <td><?php echo $this->element('thumbnail', array('picture'=>$recentPictures[$i]));?></td>
           <?php }?>
         </tr>
       </table>

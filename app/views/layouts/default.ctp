@@ -6,23 +6,13 @@
 <title><?php echo $title_for_layout?> | LiveGather</title> 
 </head> 
 <body> 
-<?php
-  function active_on_match($self, $a) {
-    if ($a == $self->params['controller']) {
-      return array('class'=>'active');
-    } else {
-      return array();
-    }
-  }
-?>
-<div id='header'> 
-  <!-- Note: we might end up with a lot of menu items...which won't fit in 1000px -->
-  <ul class='main_buttons'> 
 <?php function markSelected($name, $env) {
   if ($name == $env) {
     echo ' class="selected"';
   }
 }?>
+<div id='header'> 
+  <ul class='main_buttons'> 
     <li class='logo'><?php echo $html->link('LiveGather', array('controller'=>'home'), array('escape'=>false))?></li> 
     <?php if ($user) { ?>
       <li<?php markSelected('Stream', $title_for_layout)?>><?php echo $html->link($user['name']."'s Stream", array('controller'=>'stream'))?></li> 

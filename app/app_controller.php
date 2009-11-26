@@ -2,7 +2,7 @@
 class AppController extends Controller {
   var $uses = null;
   var $components = array('Auth', 'RequestHandler');
-  var $helpers = array('Javascript', 'Form');
+  var $helpers = array('Javascript', 'Form', 'Time');
 
   function beforeFilter() {
     Security::setHash('md5');

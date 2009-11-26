@@ -1,23 +1,25 @@
+<div class="pictures_view">
 <table>
 <tr>
 <td>
-  <img src="/img/users/bigtiger23" /><a href="#">@bigtiger23</a>
-  <p>crazy wildfires in LA!</p>
+<img src="/img/mini_pic.jpg" /><a href="/users/profile/<?php echo $picture['User']['name']?>">@<?php echo $picture['User']['name'] ?></a>
+  <p><?php echo $picture['Picture']['caption']?></p>
   <p class="location">Los Angeles, CA</p>
   <p class="time">30 minutes ago</p>
-  <img src="/pictures/<?php echo $id; ?>" />
+  <img id="the_image" src="/pictures/<?php echo $id; ?>" />
   <p><a href="#">View comments</a>
 </td>
-<td>
+<td style="padding-left: 1em">
   <p><a href="#">Share to Facebook</a></p>
   <p><a href="#">Share to Twitter</a></p>
   <div class="similar">
     <h1>Similar pictures nearby</h1>
     <?php foreach ($related as $result) {
-      echo "PROJC.html.img.db(3)+PROJC.html.img.db(5)+PROJC.html.img.db('fire_d')+'<br />'+PROJC.html.img.db('fire_e')+PROJC.html.img.db('fire_f')+PROJC.html.img.db('fire_g')";
+      echo $this->element('thumbnail', array('picture'=>$result));
     } ?>
   </div>
   <div id="map_location"></div>
 </td>
 </tr>
 </table>
+</div>

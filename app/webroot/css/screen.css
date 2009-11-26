@@ -4,6 +4,7 @@ body {
   font-size: 15px;
   color:#000;
   background-color:#FFF;
+  padding-bottom: 72px;
 }
 
 #header, #foot_bar {
@@ -23,6 +24,8 @@ body {
 #foot_bar {
   background-color: #111111;
   margin-top: 1em;
+  position: fixed;
+  left: 5%;
   bottom: 0;
   -webkit-border-top-left-radius: 15px;
   -webkit-border-top-right-radius: 15px;
@@ -250,6 +253,11 @@ h1 {
 .home #map_caption a {
   color: #bb2727;
   text-decoration: none;
+}
+
+.pictures_view #the_image {
+  max-height: 300px;
+  max-width: 350px;
 }
 
 ul.explore_options {
@@ -659,6 +667,11 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 .medium.picture .image:hover .hover {
   display: block;
+}
+
+.small.picture img {
+  width: 50px;
+  height: 50px;
 }
 
 .cake-sql-log {display:none;}
