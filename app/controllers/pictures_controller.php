@@ -32,7 +32,7 @@ class PicturesController extends AppController {
               'user_id'=>$userId,
               'file'=>$file['tmp_name'],
               'caption'=>$formdata['caption'],
-              'location'=>'PointFromText("'.$formdata['location'].'")',
+              //'location'=>'PointFromText("'.$formdata['location'].'")',
               'datetime'=>date('Y-m-d H:i:s', time()),
             );
             if ($this->Picture->save($picture_attribs)) {
@@ -68,7 +68,7 @@ class PicturesController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('index');
+    $this->Auth->allow('index', 'view');
   }
 
   function index($id=null) { /* Linked to by pictures/:id */
