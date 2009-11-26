@@ -1,20 +1,14 @@
 <div class="home">
-<table style="width: 100%;">
+<table class="split">
   <tr>
     <td>
-    <div id="updating_map" style="border: 1px solid; float: right; margin-left: 1em;">
-      <div id="map" style="width: 400px; height: 350px"></div>
-      <div id="updating_map_stream" style="height: 50px;background-color: black;"></div>
-    </div>
-
     <h1 class="title">Show your friends what you are doing, see what they are doing, and discover people with similar interests.</h1>
 
-    <div style="position: relative; height: 56px; vertical-align: center; width: 60em;">
-      <img src="/img/bubble_left.png" style="height: 56px;" />
-      <p class="question"><span style="color: #999;">There's just one question...</span> what do you see?</p>
-      <a href="#">
-        <img src="/img/signup.png" style="position: absolute; top: 0; left: 42ex;"/>
-      </a>
+    <div class="question">
+      <img src="/img/bubble_left.png" />
+      <p><span>There's just one question...</span> what do you see?
+      <a href="#"><img src="/img/signup.png"/></a>
+      </p>
     </div>
     
     <div class="stream">
@@ -51,6 +45,12 @@
         </tr>
       </table>
     </div>
+    </td>
+    <td>
+      <div class="updating_map">
+        <div id="map"></div>
+        <div id="updating_map_stream"></div>
+      </div>
     </td>
   </tr>
 </table>

@@ -112,25 +112,45 @@ h1.title {
 .home h1 {
   font-size: larger;
   font-weight: bold;
-  margin-bottom: 0.5em;
 }
 .home h1.title {
-  font-size: larger;
+  margin-bottom: 1em;
+  font-size: large;
   color: #d05b2d;
 }
+.home .split {
+  width: 100%;
+}
+.home .split td {
+  vertical-align: top;
+}
 .home .question {
-  font-size: x-large;
   position: relative;
+  height: 56px;
+  vertical-align: center;
+  margin-bottom: 1em;
+}
+.home .question img {
+  height: 56px;
+}
+.home .question p {
+  position: relative;
+  font-size: x-large;
+  vertical-align: middle;
   top: -58px;
   left: 20px;
-  height: 36px;
   background-image: url('/img/bubble_center.png');
-  width: 40ex;
-  vertical-align: middle;
-  padding-top: 17px;
+  padding-top: 16px;
+  height: 39px;
+  margin-right: 1em;
 }
-.home .question span {
-  font-size: smaller;
+.home .question p a {
+  position: absolute;
+  top: 0;
+}
+.home .question p span {
+  color: #999;
+  font-size: medium;
 }
 .home .footer {
   text-align: center;
@@ -143,13 +163,12 @@ h1.title {
   width: 33%;
 }
 .home .footer td h1 {
-  margin: 1em 0 1em 0;
+  margin: 0.5em 0 0.5em 0;
   font-size: xx-large;
 }
 .home .footer td p {
   margin: 1em 0 1em 0;
 }
-
 .home .stream {
 }
 .home .stream .tools {
@@ -169,12 +188,23 @@ h1.title {
   height: 50px;
 }
 
-.home #updating_map #updating_map_stream img {
+.home .updating_map {
+  border: 1px solid;
+  margin-left: 1em;
+}
+.home .updating_map #map {
+  width: 400px;
+  height: 350px;
+}
+.home .updating_map #updating_map_stream {
+  height: 50px;
+  background-color: black;
+}
+.home .updating_map #updating_map_stream img {
   float: left;
   height: 50px;
   width: 50px;
 }
-
 .home #map_caption {
   background-color: #FFF;
   top: 5px;
@@ -203,7 +233,6 @@ h1.title {
   top: 8px;
   right: 8px;
 }
-
 .home #map_caption a {
   color: #bb2727;
   text-decoration: none;
