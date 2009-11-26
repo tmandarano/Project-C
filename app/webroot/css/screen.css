@@ -147,6 +147,7 @@ h1.title {
 .home .question p a {
   position: absolute;
   top: 0;
+  right: 0;
 }
 .home .question p span {
   color: #999;
@@ -204,6 +205,19 @@ h1.title {
   float: left;
   height: 50px;
   width: 50px;
+}
+.home #map_picture {
+  position: relative;
+  top: 60px;
+  margin: 0 auto;
+  z-index: 1001;
+  width: 180px;
+  height: 180px;
+  border: 1px solid #999;
+}
+.home #map_picture img {
+  width: 180px;
+  height: 180px;
 }
 .home #map_caption {
   background-color: #FFF;
