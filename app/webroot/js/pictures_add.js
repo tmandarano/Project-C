@@ -1,7 +1,7 @@
-var PROJC = PROJC ? PROJC : {};
-PROJC.PICTURES = {};
-PROJC.PICTURES.ADD = {};
-PROJC.PICTURES.ADD.init = function() {
+var LG = LG ? LG : {};
+LG.PICTURES = LG.PICTURES ? LG.PICTURES : {};
+LG.PICTURES.ADD = {};
+LG.PICTURES.ADD.init = function() {
   var mapOpts = {
     zoom: 7,
     center: new google.maps.LatLng(32.77977,-117.137947),
@@ -11,12 +11,22 @@ PROJC.PICTURES.ADD.init = function() {
     navigationControl: true,
     navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}
   };
-  var map = PROJC.PICTURES.ADD.map = new google.maps.Map($("#map")[0], mapOpts);
-  PROJC.PICTURES.ADD.marker = new google.maps.Marker({map: map});
+  var map = LG.PICTURES.ADD.map = new google.maps.Map($("#map")[0], mapOpts);
+  LG.PICTURES.ADD.marker = new google.maps.Marker({
+    position: map.getCenter(),
+    draggable: true,
+    map: map
+  });
+  google.maps.event.addListener(LG.PICTURES.ADD.marker, 'click', function(e) {
+    $('#location').val(LG.PICTURES.ADD.marker.position.toString());
+  });
   google.maps.event.addListener(map, 'click', function(e) {
-    PROJC.PICTURES.ADD.marker.setPosition(e.latLng);
-    $('#location').val(PROJC.PICTURES.ADD.marker.position.toString());
+    LG.PICTURES.ADD.marker.setPosition(e.latLng);
+    $('#location').val(LG.PICTURES.ADD.marker.position.toString());
+  });
+  google.maps.event.addListener(map, 'bounds_changed', function() {
+    LG.PICTURES.ADD.marker.setPosition(this.getCenter());
+    $('#location').val(LG.PICTURES.ADD.marker.position.toString());
   });
 };
-
-$(document).ready(function(){PROJC.PICTURES.ADD.init();});
+$(document).ready(LG.PICTURES.ADD.init);
