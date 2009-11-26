@@ -74,7 +74,7 @@ PROJC.recentPictures = [
 foreach ($recentPictures as &$result) {
   $pic = $result['Picture'];
   $user = $result['User'];
-  echo "{id:'".$pic['id']."',caption:'".$pic['caption']."',lat:'".$pic['lat']."',lng:'".$pic['lng']."',User:{name:'".$user['name']."'}},";
+  echo "{id:'".$pic['id']."',caption:\"".$pic['caption']."\",lat:".$pic['lat'].",lng:".$pic['lng'].",User:{name:'".$user['name']."'}},";
 } ?>
 ];
 </script>
