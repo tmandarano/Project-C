@@ -31,10 +31,11 @@ class PicturesController extends AppController {
             $picture_attribs = array(
               'user_id'=>$userId,
               'file'=>$file['tmp_name'],
+              'caption'=>$formdata['caption'],
+              'location'=>'PointFromText("'.$formdata['location'].'")',
               'datetime'=>date('Y-m-d H:i:s', time()),
             );
             if ($this->Picture->save($picture_attribs)) {
-              $results['errors'][] = 'hello';
               $filename = $this->Picture->id.'.jpg';
               $fileurl = $upload_dir.$filename;
               if (file_exists($fileurl)) {
@@ -47,6 +48,7 @@ class PicturesController extends AppController {
                   $results['ids'][] = $filename;
                 } else {
                   $results['errors'][] = 'Error uploading';
+                  //TODO remove the picture record
                 }
               }
             }
@@ -56,7 +58,7 @@ class PicturesController extends AppController {
           default: $results['errors'][] = 'Big ERROR!'; break;
         }
       } else {
-        $result['errors'][] = 'You may only upload image files.';
+        $results['errors'][] = 'You may only upload image (jpg) files.';
       }
     }
     return $results;
@@ -123,6 +125,8 @@ class PicturesController extends AppController {
       $userId = $this->Auth->user('id');
       $this->ensureUploadDir();
       $results = $this->saveUploadedFilesForUser($userId, $this->data['Picture']);
+
+      // TODO do some checking that this is really a point.
       $this->set(compact('results'));
     }
   }

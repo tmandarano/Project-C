@@ -17,16 +17,19 @@ LG.PICTURES.ADD.init = function() {
     draggable: true,
     map: map
   });
+  function setLocation(latlng) {
+    $('#location').val('POINT('+latlng.lng()+' '+latlng.lat()+')');
+  }
   google.maps.event.addListener(LG.PICTURES.ADD.marker, 'click', function(e) {
-    $('#location').val(LG.PICTURES.ADD.marker.position.toString());
+    setLocation(LG.PICTURES.ADD.marker.position);
   });
   google.maps.event.addListener(map, 'click', function(e) {
     LG.PICTURES.ADD.marker.setPosition(e.latLng);
-    $('#location').val(LG.PICTURES.ADD.marker.position.toString());
+    setLocation(LG.PICTURES.ADD.marker.position);
   });
   google.maps.event.addListener(map, 'bounds_changed', function() {
     LG.PICTURES.ADD.marker.setPosition(this.getCenter());
-    $('#location').val(LG.PICTURES.ADD.marker.position.toString());
+    setLocation(LG.PICTURES.ADD.marker.position);
   });
 };
 $(document).ready(LG.PICTURES.ADD.init);

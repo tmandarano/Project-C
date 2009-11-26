@@ -36,6 +36,6 @@
  * ...and connect the rest of 'Pages' controller's urls.
  */
         Router::connect('/', array('controller'=>'home'));
-        Router::connect('/:controller/:id', array('action'=>'index'), array('id'=>'[0-9]+'));
+        Router::connect('/:controller/:id', array('action'=>'index'), array('id'=>'([0-9]+)|([0-9a-f]{8}-[0-9a-f-]+)'));
 	Router::connect('/pages/*', array('controller'=>'pages', 'action'=>'display'));
 ?>
