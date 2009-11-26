@@ -9,7 +9,7 @@
 
     <h1 class="title">Show your friends what you are doing, see what they are doing, and discover people with similar interests.</h1>
 
-    <div style="position: relative; height: 56px; vertical-align: center;">
+    <div style="position: relative; height: 56px; vertical-align: center; width: 60em;">
       <img src="/img/bubble_left.png" style="height: 56px;" />
       <p class="question"><span style="color: #999;">There's just one question...</span> what do you see?</p>
       <a href="#">

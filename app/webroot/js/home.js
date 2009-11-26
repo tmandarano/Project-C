@@ -16,15 +16,22 @@ PROJC.mapAddPic = function(map, pic) {
   PROJC.pics.push(marker);
 };
 
-
 PROJC.HOME = {};
 PROJC.HOME.map = null;
 var overlay = PROJC.HOME.overlay = function() {
-  this.captionPane = $('<div id="map_caption">MAP PANE</div>');
+  this.captionPane = $('<div id="map_caption"><img src="/img/mini_pic.jpg" /><a href="#">username</a><p>Just saw a wicked accident on the freeway. Hope everyone is okay.</p><div class="location">San Diego, CA</div><div class="time">6 seconds ago</div></div>');
 };
 overlay.prototype = new google.maps.OverlayView();
 overlay.prototype.onAdd = function() {
-  $(this.getPanes().floatPane).append(this.captionPane);
+  $(this.getMap().getDiv()).append(this.captionPane);
+  var up = $('#updating_map_stream');
+  up.append($('<img src="/img/db/8.jpg" />'));
+  up.append($('<img src="/img/db/7.jpg" />'));
+  up.append($('<img src="/img/db/5.jpg" />'));
+  up.append($('<img src="/img/db/5.jpg" />'));
+  up.append($('<img src="/img/db/3.jpg" />'));
+  up.append($('<img src="/img/db/3.jpg" />'));
+  up.append($('<img src="/img/db/2.jpg" />'));
 };
 overlay.prototype.draw = function() {
   this.captionPane;

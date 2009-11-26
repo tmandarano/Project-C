@@ -169,10 +169,44 @@ h1.title {
   height: 50px;
 }
 
+.home #updating_map #updating_map_stream img {
+  float: left;
+  height: 50px;
+  width: 50px;
+}
+
 .home #map_caption {
   background-color: #FFF;
-  height: 10px;
-  width: 95%;
+  top: 5px;
+  width: 370px;
+  margin: 0 auto;
+  z-index: 1001;
+  position: relative;
+  padding: 8px;
+  height: 60px;
+  -moz-border-radius: 8px; 
+  -webkit-border-radius: 8px;  /* Safari/WebKit */
+}
+.home #map_caption img {
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin-right: 8px;
+}
+.home #map_caption .location {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+.home #map_caption .time {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.home #map_caption a {
+  color: #bb2727;
+  text-decoration: none;
 }
 
 ul.explore_options {

@@ -81,8 +81,8 @@ class DATABASE_CONFIG {
 	var $default = array(
 		'driver' => 'mysql',
 		'persistent' => false,
-		//'host' => 'db.livegather.com',
-		'host' => 'localhost',
+		'host' => 'db.livegather.com',
+		//'host' => 'localhost',
 		'login' => 'livegather',
 		'password' => 'liv3g@th3r',
 		'database' => 'livegather',
