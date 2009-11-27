@@ -7,7 +7,7 @@
     <div class="question">
       <img src="/img/bubble_left.png" />
       <p><span>There's just one question...</span> what do you see?
-      <a href="#"><img src="/img/signup.png"/></a>
+      <a href="/users/add"><img src="/img/signup.png"/></a>
       </p>
     </div>
     

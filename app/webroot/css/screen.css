@@ -1,29 +1,36 @@
 /*Copyright (c) 2009, Yahoo! Inc. All rights reserved. Code licensed under the BSD License: http://developer.yahoo.net/yui/license.txt version: 2.8.0r4*/html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var,optgroup{font-style:inherit;font-weight:inherit;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{*font-size:100%;} /*end copyrighted*/
+.clearer {clear:both;}
 body {
   font-family: Helvetica,Arial,sans-serif;
   font-size: 15px;
-  color:#000;
-  background-color:#FFF;
+  color: #000;
+  background-color: #FFF;
   padding-bottom: 72px;
+}
+
+a {
+  text-decoration: none;
 }
 
 #header, #foot_bar {
   width: 90%;
   height: 36px;
-  margin: 0 auto;
+  margin: auto;
 }
 
-#header {
-  background-color: #d05b2d;
+#header, #content {
   -webkit-border-bottom-left-radius: 15px;
   -webkit-border-bottom-right-radius: 15px;
   -moz-border-radius-bottomleft: 15px;
   -moz-border-radius-bottomright: 15px;
 }
 
+#header {
+  background-color: #d05b2d;
+}
+
 #foot_bar {
   background-color: #111111;
-  margin-top: 1em;
   position: fixed;
   left: 5%;
   bottom: 0;
@@ -34,73 +41,35 @@ body {
 }
 
 #centering {
-  position: relative;
+}
+#centering, ul.main_buttons {
+  position:relative;
   margin: auto;
-  max-width: 85%;
   width: 1000px;
+  max-width: 85%;
 }
 
 #content {
   position: relative;
   text-align: left;
   padding: 1em 1em 1.8em 1em;
-  border-width: 0 1px 1px 1px;
-  border-style: solid;
-  border-color: #999;
   background-color: #edf5f7;
-
-  -webkit-border-bottom-left-radius: 15px;
-  -webkit-border-bottom-right-radius: 15px;
-  -moz-border-radius-bottomleft: 15px;
-  -moz-border-radius-bottomright: 15px;
+  border: 1px solid #999;
+  border-top: 0;
 }
 
-ul.main_buttons {
-  margin: 0 auto;
-  display:block;
-  position:relative;
-  padding:0px;
-  width:1000px;
-  min-width:800px;
-  top: 0px;
-}
 ul.main_buttons li {
-  margin:0 1px 0 0px;
-  display:block;
-  float:left;     
-  height:36px;    
+  float: left;     
 }
-
 ul.main_buttons li:hover, ul.main_buttons li.selected {
   background-color: #993c17;
-  height:36px;    
-  cursor:pointer;
-}
-
-ul.main_buttons li.logo , li:hover.logo {
-  position:relative;
-  margin-right:20px;
-}
-ul.main_buttons li.logo a {
-  position: relative;
-  display: block;
-}
-ul.main_buttons li.logo img {
-  position:relative;
-  top: 4px;
 }
 ul.main_buttons li a {
-  position:relative;
-  top: 10px;
-  color:#FFFFFF;
+  display: block;
+  padding: 10px 20px 0 20px;
+  height: 25px;
   font-weight:bold;
-  text-decoration:none;
-  margin-left:20px;
-  margin-right:20px;
-}
-
-.left_col, .right_col {
-  width:50%;
+  color: #FFFFFF;
 }
 
 h1 {
@@ -192,7 +161,6 @@ h1 {
   width: 50px;
   height: 50px;
 }
-
 .home .updating_map {
   border: 1px solid;
   margin-left: 1em;
@@ -232,8 +200,8 @@ h1 {
   position: relative;
   padding: 8px;
   height: 60px;
+  -webkit-border-radius: 8px;
   -moz-border-radius: 8px; 
-  -webkit-border-radius: 8px;  /* Safari/WebKit */
 }
 .home #map_caption img {
   width: 50px;
@@ -256,9 +224,66 @@ h1 {
   text-decoration: none;
 }
 
+.pictures_view table {
+  width: 100%;
+}
 .pictures_view #the_image {
-  max-height: 300px;
-  max-width: 350px;
+  max-height: 450px;
+  max-width: 450px;
+  margin: 1em auto 1em auto;
+  text-align: center;
+  display: block;
+}
+.pictures_view .nav {
+  background-color: #999;
+  width: 100%;
+  -webkit-border-bottom-left-radius: 8px;
+  -webkit-border-bottom-right-radius: 8px;
+  -moz-border-radius-bottomleft: 8px;
+  -moz-border-radius-bottomright: 8px;
+}
+.pictures_view .nav img {
+  width: 50px;
+  height: 50px;
+}
+.pictures_view .nav a {
+  display: block;
+  text-align: center;
+}
+.pictures_view td.pane {
+  vertical-align: top;
+}
+.pictures_view td.left.pane {
+  width: 630px;
+}
+.pictures_view td.right.pane {
+  padding-left: 1em;
+}
+.pictures_view .commentblock {
+  position: relative;
+  background-color: #d4e5ec;
+  border: 1px solid #999;
+  padding: 0.5em;
+  margin-bottom: 2px;
+}
+.pictures_view .commentblock .time {
+  position: absolute;
+  top: 0;
+  right: 0.5em;
+}
+
+.userpic {
+  float: left;
+  width: 50px;
+  height: 50px;
+  margin-right: 0.5em;
+}
+.username {
+  color: #bb2727;
+}
+
+.caption {
+  color: #1584b2;
 }
 
 ul.explore_options {
@@ -384,7 +409,6 @@ table.stream td {
 
 
 .bubble {
-  
   display:block;  
   margin-left:10px;
   margin-top:5px;
@@ -403,15 +427,14 @@ table.stream td {
 }
   
 .bubble_center {
-
   position:relative;
   float:left;
   top:1px;
   margin-left:5px;
   height:18px;
 }
-div.right {
 
+div.right {
   text-align:right;
   float:right;
   top:1px;
@@ -421,13 +444,11 @@ div.right {
 }
 
 img.sm_icon {
-
   float:right;
   top:2px;
   right:20px;
   position:relative;
   display:block;
-
 }
 
 .grey_divide {
