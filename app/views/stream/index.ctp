@@ -1,4 +1,4 @@
-<div class="stream picture">
+<div class="stream photos">
 <table class="split">
   <tr>
     <td class="left pane"> 
