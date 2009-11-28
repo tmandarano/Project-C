@@ -1,16 +1,20 @@
 <div class="pictures_view">
-<table>
+<table class="split">
 <tr>
   <td class="left pane">
     <div>
-    <?php echo $this->element('user', array('user'=>$picture['User']))?> is in <a href="#" class="location">Los Angeles, CA</a> as of <a href="#" class="time"><?php echo $time->timeAgoInWords($picture['Picture']['datetime'], array('end'=>'+1month'))?></a>
-    <p class="caption"><?php echo $picture['Picture']['caption']?></p>
-    <div class="clearer"></div>
+      <?php echo $this->element('user', array('user'=>$picture['User']))?> in <a href="#" class="location">Los Angeles, CA</a> <a href="#" class="time"><?php echo $time->timeAgoInWords($picture['Picture']['datetime'], array('end'=>'+1month'))?></a>
+      <p class="caption"><?php echo $picture['Picture']['caption']?></p>
+      <div class="clearer"></div>
     </div>
-    <img id="the_image" src="/pictures/<?php echo $id; ?>" />
-    <div class="tags"><strong>tags:</strong> <a href="#">driving</a>, <a href="#">road</a>, <a href="#">trip</a>, <a href="#">radar detector</a> <a href="#">+</a></div>
+    <div class="the_image">
+      <div class="left"><a href="#"><p>previous</p><img class="s1" src='/img/mini_pic.jpg' /></a></div>
+      <img id="the_image" class="s3" src="/pictures/<?php echo $id; ?>" />
+      <div class="right"><a href="#"><p>next</p><img class="s1" src='/img/mini_pic.jpg' /></a></div>
+    </div>
     <div class="comments">
       <div class="actionbox">
+        <div class="tags"><strong>tags:</strong> <a href="#">driving</a>, <a href="#">road</a>, <a href="#">trip</a>, <a href="#">radar detector</a> <a href="#">+</a></div>
         <p><a href="#">Share to Facebook</a></p>
         <p><a href="#">Share to Twitter</a></p>
       </div>
@@ -27,19 +31,33 @@
     </div>
   </td>
   <td class="right pane">
-    <div class="nav">
-      <a href="#"><p>previous</p><img src='/img/mini_pic.jpg' /></a>
-      <a href="#"><p>next</p><img src='/img/mini_pic.jpg' /></a>
-    </div>
     <div class="similar">
-      <div class="bubble"><div class="bubble_center">Similar photos nearby</div><div class="right">&nbsp;</div></div>
-      <?php foreach ($related as $result) {
-        echo $this->element('thumbnail', array('picture'=>$result));
-      } ?>
-      <div class="bubble"><div class="bubble_center">Similar photos</div><div class="right">&nbsp;</div></div>
-      <?php foreach ($related as $result) {
-        echo $this->element('thumbnail', array('picture'=>$result));
-      } ?>
+      <div class="bubble">Similar photos nearby</div>
+      <table class="collage">
+        <tr>
+        <?php for ($i=0; $i<min(5, count($related)); $i++) { $result = $related[$i];?>
+          <td><?php echo $this->element('collagepic', array('picture'=>$result))?></td>
+        <?php } ?>
+        </tr>
+        <tr>
+        <?php for ($i=4; $i<min(10, count($related)); $i++) { $result = $related[$i];?>
+          <td><?php echo $this->element('collagepic', array('picture'=>$result))?></td>
+        <?php } ?>
+        </tr>
+      </table>
+      <div class="bubble">Similar photos<div class="right">10</div></div>
+      <table class="collage">
+        <tr>
+        <?php for ($i=0; $i<min(5, count($related)); $i++) { $result = $related[$i];?>
+          <td><?php echo $this->element('collagepic', array('picture'=>$result))?></td>
+        <?php } ?>
+        </tr>
+        <tr>
+        <?php for ($i=4; $i<min(10, count($related)); $i++) { $result = $related[$i];?>
+          <td><?php echo $this->element('collagepic', array('picture'=>$result))?></td>
+        <?php } ?>
+        </tr>
+      </table>
       <div class="bubble"><div class="bubble_center">This photo is...</div><div class="right">&nbsp;</div></div>
       <?php echo $this->element('emotion')?>
       <div class="bubble"><div class="bubble_center">Location</div><div class="right">&nbsp;</div></div>
@@ -50,3 +68,4 @@
 </tr>
 </table>
 </div>
+<?php $javascript->link('pictures_view', false); ?>

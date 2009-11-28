@@ -5,7 +5,7 @@ class StreamController extends AppController {
   var $helpers = array('Form', 'Time');
 
   function beforeFilter() {
-    $this->Auth->allow('index');
+    $this->Auth->allow('index', 'social');
   }
 
   function index() {

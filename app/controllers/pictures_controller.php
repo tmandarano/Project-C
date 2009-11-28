@@ -88,7 +88,7 @@ class PicturesController extends AppController {
       'extension'=>'jpg',
       'path'=>$upload_dir,
       'mimeType'=>'image/jpeg',
-      'cache'=>true
+      'cache'=>60*60*24*7
     );
     $this->set($params);
   }

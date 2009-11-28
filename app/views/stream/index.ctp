@@ -67,18 +67,18 @@
         </div> 
         <table class="collage" cellpadding="0" cellspacing="3"> 
           <tr> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-          </tr>                                            
-          <tr>                                             
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+          </tr>
+          <tr>
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
           </tr> 
         </table> 
         
@@ -88,18 +88,18 @@
         </div> 
         <table class="collage" cellpadding="0" cellspacing="3"> 
           <tr> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-          </tr>                                                 
-          <tr>                                                  
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+          </tr>
+          <tr>
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
           </tr> 
         </table> 
         
@@ -109,18 +109,18 @@
         </div> 
         <table class="collage" cellpadding="0" cellspacing="3"> 
           <tr> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-          </tr> 
-          <tr> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
-            <td><a href=""><img src="img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+          </tr>
+          <tr>
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
+            <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
           </tr> 
         </table> 
     </td> 
