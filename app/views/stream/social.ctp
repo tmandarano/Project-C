@@ -14,7 +14,7 @@
         <li><a href='#'>Family</a></li> 
         <li><a href='#'>Coworkers</a></li> 
       </ul> 
-      <table class="stream" cellpadding="0" cellspacing="10"> 
+      <table class="stream"> 
         <tr valign="top"> 
         <?php for ($i=0; $i<min(4,count($recentPictures)); $i++) {?>
           <td><?php echo $this->element('picture', array('picture'=>$recentPictures[$i]))?></td>
@@ -50,13 +50,10 @@
           <div class="right">0</div> 
         </div> 
         
-        <div class="grey_divide"></div> 
+        <div class="hrule"></div> 
         
-        <div class="bubble"> 
-          <div class="bubble_center">Most Interesting</div> 
-          <div class="right">hr day wk</div> 
-        </div> 
-        <table class="collage" cellpadding="0" cellspacing="3"> 
+        <div class="bubble">Most Interesting<div class="right">hr day wk</div></div> 
+        <table class="collage"> 
           <tr> 
             <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
             <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
@@ -73,11 +70,8 @@
           </tr> 
         </table> 
         
-        <div class="bubble"> 
-          <div class="bubble_center">People</div> 
-          <img class="sm_icon" src="img/sm_icon.png"/> 
-        </div> 
-        <table class="collage" cellpadding="0" cellspacing="3"> 
+        <div class="bubble">People <div class="right"><img class="sm_icon" src="/img/sm_icon.png"/></div></div>
+        <table class="collage"> 
           <tr> 
             <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
             <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
@@ -94,11 +88,8 @@
           </tr> 
         </table> 
         
-        <div class="bubble"> 
-          <div class="bubble_center">Pictures</div> 
-          <img class="sm_icon" src="img/sm_icon.png"/> 
-        </div> 
-        <table class="collage" cellpadding="0" cellspacing="3"> 
+        <div class="bubble">Pictures <div class="right"><img class="sm_icon" src="/img/sm_icon.png"/></div></div>
+        <table class="collage"> 
           <tr> 
             <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 
             <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 

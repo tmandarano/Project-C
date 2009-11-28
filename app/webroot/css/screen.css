@@ -99,7 +99,7 @@ img.s3, .s3 img { max-width: 450px; max-height: 450px; }
 .main_buttons li a {
   display: block;
   padding: 10px 20px 0 20px;
-  height: 25px;
+  height: 26px;
   font-weight: bold;
   color: #FFFFFF;
 }
@@ -428,10 +428,12 @@ table.stream td {
   border-radius: 10px;
   -moz-border-radius: 10px;
 }
+/*
 .bubble:hover {
   background-color: #d4e5ec;
   color: #000;
 }
+*/
 .bubble .right {
   position: absolute;
   right: 7px;
@@ -454,29 +456,10 @@ img.sm_icon {
   display:block;
 }
 
-.grey_divide {
-  display:block;
-  border:0;
-  border-bottom:1px;
-  border-color:#CCC;
-  border-style:solid;
-  margin-top:15px;
-  margin-bottom:15px;
-  margin-left:20px;
-  width:180px;
-}
-
-.grey_divide2 {
-  display:block;
-  border:0;
-  border-bottom:1px;
-  border-color:#CCC;
-  border-style:solid;
-  margin-top:15px;
-  margin-bottom:15px;
-  margin-left:auto;
-  margin-right:auto;
-  width:700px;
+.hrule {
+  width: 80%;
+  border-bottom: 1px solid #999;
+  margin: 1em auto;
 }
 
 .collage {
