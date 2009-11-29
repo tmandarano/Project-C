@@ -422,15 +422,9 @@ table.stream td {
 */
 .bubble .right {
   position: absolute;
+  top: 50%;
+  margin-top: -0.5em;
   right: 7px;
-}
-
-img.sm_icon {
-  float:right;
-  top:2px;
-  right:20px;
-  position:relative;
-  display:block;
 }
 
 .hrule {
