@@ -178,10 +178,10 @@ class PhotosController extends AppController {
             if ($this->Photo->save($photo_attribs)) {
               $filename = $this->Photo->id.'.jpg';
               if ($this->savePhoto($file['tmp_name'], $filename)) {
-                $results['ids'][] = $filename;
+                $results['ids'][] = '<a href="/photos/'.rtrim($filename, '.jpg').'"><img src="/photos/'.rtrim($filename, '.jpg').'" /></a>';
               } else {
                 $this->Photo->delete($this->Photo->id);
-                $results['errors'][] = 'Unable to save photo';
+                $results['errors'][] = 'Unable to save photo. It was probably corrupt.';
               }
             }
             break;
