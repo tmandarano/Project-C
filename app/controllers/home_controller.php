@@ -13,8 +13,13 @@ class HomeController extends AppController {
     $recentPhotos = $this->Photo->find('all',
       array('order'=>'Photo.datetime DESC', 'limit'=>16));
     for ($i=0; $i<count($recentPhotos); $i++) {
-      $recentPhotos[$i]['Photo']['lat'] = 34;
-      $recentPhotos[$i]['Photo']['lng'] = -116;
+      $photo = $recentPhotos[$i]['Photo']['location'];
+      if (empty($photo[0])) {
+        $recentPhotos[$i]['Photo']['location'][0] = '-181';
+      }
+      if (empty($photo[1])) {
+        $recentPhotos[$i]['Photo']['location'][1] = '-91';
+      }
     }
     $this->set(compact('recentPhotos'));
   }

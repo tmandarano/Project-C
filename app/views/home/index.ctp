@@ -74,7 +74,7 @@ LG.recentPhotos = [
 foreach ($recentPhotos as &$result) {
   $pic = $result['Photo'];
   $user = $result['User'];
-  echo "{id:'".$pic['id']."',caption:\"".$pic['caption']."\",lat:".$pic['lat'].",lng:".$pic['lng'].",time:'".$time->timeAgoInWords($pic['datetime'], array('end'=>'+1month'))."',User:{name:'".$user['name']."'}},";
+  echo "{id:'".$pic['id']."',caption:\"".$pic['caption']."\",lat:".$pic['location'][1].",lng:".$pic['location'][0].",time:'".$time->timeAgoInWords($pic['datetime'], array('end'=>'+1month'))."',User:{id:".$user['id'].",name:'".$user['name']."'}},";
 } ?>
 ];
 </script>

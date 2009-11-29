@@ -7,7 +7,7 @@ class UsersController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('login', 'add');
+    $this->Auth->allow('login', 'add', 'photo');
   }
 
   /* Views */
@@ -46,12 +46,17 @@ class UsersController extends AppController {
   }
 
   function photo($id) {
-    if ($id == 0) {
-      // There is no user photo so display the default user photo...
+    $upload_dir = DS.'webroot'.DS.'img'.DS.'db'.DS.'1'.DS;
+    $user = $this->User->find('first', array('conditions'=>array('User.id'=>$id)));
+    $userphoto = $user['User']['photo_id'];
+    if (is_null($userphoto)) {
+      $photo['id'] = 'userunknown';
+      $photo['caption'] = 'no_profile_picture';
+      $upload_dir = DS.'webroot'.DS.'img'.DS;
+    } else {
+      $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$userphoto)));
+      $photo = $photo['Photo'];
     }
-    $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
-    $photo = $photo['Photo'];
-    $upload_dir = DS.'webroot'.DS.'img'.DS.'db'.DS;
 
     /* Send the photo */
     $this->view = 'Media';
