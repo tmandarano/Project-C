@@ -139,7 +139,7 @@ class PhotosController extends AppController {
         S2_DIR => array(150, 150),
         S3_DIR => array(400, 450));
       foreach ($dirs as $dir => $size) {
-        if (!imagejpeg($this->bound(imagecreatefromjpeg(O_DIR.$name), $size[0], $size[1]), $dir.$name)) {
+        if (!imagejpeg($this->bound(imagecreatefromjpeg(O_DIR.$name), $size[0], $size[1]), $dir.$name, 100)) {
           /* if failed, remove all previously saved photos */
           foreach ($dirs as $olddir => $size) {
             if ($olddir != $dir) {

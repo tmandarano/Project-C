@@ -31,7 +31,7 @@
         <a href="#">See <strong>interesting</strong></a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
       <table>
         <tr>
-          <?php for ($i=0; $i<min(16,count($recentPhotos)); $i++) {?>
+          <?php for ($i=8; $i<min(16,count($recentPhotos)); $i++) {?>
             <td><?php echo $this->element('thumbnail', array('photo'=>$recentPhotos[$i]));?></td>
           <?php }?>
         </tr>

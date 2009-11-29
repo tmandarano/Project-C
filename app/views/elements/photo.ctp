@@ -7,7 +7,7 @@
   </div>
   <a href="/photos/view/<?php echo $photo['Photo']['id']?>">
   <div class='image s2'>
-      <?php echo $html->image('/photos/'.$photo['Photo']['id'], array('title'=>$photo['Photo']['caption']))?>
+      <?php echo $html->image('/photos/'.$photo['Photo']['id'].'/2', array('title'=>$photo['Photo']['caption']))?>
     <div class="hover">
       <?php echo $photo['Photo']['caption']?>
     </div>

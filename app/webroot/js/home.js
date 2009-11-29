@@ -32,9 +32,9 @@ LG.HOME.QueueOverlay.prototype.addPic = function(pic) {
       pic.User.name+'</a><p>'+pic.caption+
       '</p><div class="location">San Diego, CA</div><div class="time">'+pic.time+'</div>';
     self.captionPane.hide().html(caption).fadeIn(600);
-    self.photoPane.hide().html('<img src="/photos/'+pic.id+'" />').fadeIn(600);
+    self.photoPane.hide().html('<img src="/photos/'+pic.id+'/1" />').fadeIn(600);
     self.stream.children().fadeTo(600, 0.5);
-    self.stream.append($('<img src="/photos/'+pic.id+'" />').fadeIn(600));
+    self.stream.append($('<img src="/photos/'+pic.id+'/1" />').fadeIn(600));
   }
   if (this.stream.children().length >= LG.HOME.MAX_PICS_IN_STREAM) {
     $(this.stream.children()[0]).hide(300, function() {
