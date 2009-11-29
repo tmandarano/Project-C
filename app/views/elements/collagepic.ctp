@@ -1,5 +1,5 @@
-<div class='s0 picture'>
-  <a href="/pictures/view/<?php echo $picture['Picture']['id']?>">
-    <?php echo $html->image('/pictures/'.$picture['Picture']['id'], array('title'=>$picture['Picture']['caption']))?>
+<div class='s0 photo'>
+  <a href="/photos/view/<?php echo $photo['Photo']['id']?>">
+    <?php echo $html->image('/photos/'.$photo['Photo']['id'], array('title'=>$photo['Photo']['caption']))?>
   </a>
 </div>

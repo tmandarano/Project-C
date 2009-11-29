@@ -47,8 +47,8 @@ LG.HOME.QueueOverlay.prototype.addPic = function(pic) {
 };
 function cycleSamplePics() {
   function swappic() {
-    PROJC.recentPictures.push(PROJC.recentPictures.shift());
-    LG.HOME.queue.addPic(PROJC.recentPictures[0]);
+    LG.recentPhotos.push(LG.recentPhotos.shift());
+    LG.HOME.queue.addPic(LG.recentPhotos[0]);
     setTimeout(swappic, LG.HOME.TIME_BETWEEN);
   }
   swappic();

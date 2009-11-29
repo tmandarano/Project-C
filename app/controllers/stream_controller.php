@@ -1,7 +1,7 @@
 <?php
 class StreamController extends AppController {
   var $name = 'Stream';
-  var $uses = 'Picture';
+  var $uses = 'Photo';
   var $helpers = array('Form', 'Time');
 
   function beforeFilter() {
@@ -9,23 +9,23 @@ class StreamController extends AppController {
   }
 
   function index() {
-    $recentPictures = $this->Picture->find('all',
-      array('order'=>'Picture.datetime DESC', 'limit'=>20));
-    for ($i=0; $i<count($recentPictures); $i++) {
-      $recentPictures[$i]['Picture']['lat'] = 23;
-      $recentPictures[$i]['Picture']['lng'] = -117;
+    $recentPhotos = $this->Photo->find('all',
+      array('order'=>'Photo.datetime DESC', 'limit'=>20));
+    for ($i=0; $i<count($recentPhotos); $i++) {
+      $recentPhotos[$i]['Photo']['lat'] = 23;
+      $recentPhotos[$i]['Photo']['lng'] = -117;
     }
-    $this->set(compact('recentPictures'));
+    $this->set(compact('recentPhotos'));
   }
 
   function social() {
-    $recentPictures = $this->Picture->find('all',
-      array('order'=>'Picture.datetime DESC', 'limit'=>20));
-    for ($i=0; $i<count($recentPictures); $i++) {
-      $recentPictures[$i]['Picture']['lat'] = 23;
-      $recentPictures[$i]['Picture']['lng'] = -117;
+    $recentPhotos = $this->Photo->find('all',
+      array('order'=>'Photo.datetime DESC', 'limit'=>20));
+    for ($i=0; $i<count($recentPhotos); $i++) {
+      $recentPhotos[$i]['Photo']['lat'] = 23;
+      $recentPhotos[$i]['Photo']['lng'] = -117;
     }
-    $this->set(compact('recentPictures'));
+    $this->set(compact('recentPhotos'));
   }
 }
 ?>

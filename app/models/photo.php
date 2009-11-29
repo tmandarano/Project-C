@@ -1,6 +1,6 @@
 <?php
-class Picture extends AppModel {
-  var $name = 'Picture';
+class Photo extends AppModel {
+  var $name = 'Photo';
   var $useTable = 'pictures';
 
   var $belongsTo = 'User';

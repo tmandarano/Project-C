@@ -16,18 +16,18 @@
       </ul> 
       <table class="stream"> 
         <tr valign="top"> 
-        <?php for ($i=0; $i<min(4,count($recentPictures)); $i++) {?>
-          <td><?php echo $this->element('picture', array('picture'=>$recentPictures[$i]))?></td>
+        <?php for ($i=0; $i<min(4,count($recentPhotos)); $i++) {?>
+          <td><?php echo $this->element('photo', array('photo'=>$recentPhotos[$i]))?></td>
         <?php }?>
         </tr> 
         <tr> 
-        <?php for ($i=4; $i<min(8,count($recentPictures)); $i++) {?>
-          <td><?php echo $this->element('picture', array('picture'=>$recentPictures[$i]))?></td>
+        <?php for ($i=4; $i<min(8,count($recentPhotos)); $i++) {?>
+          <td><?php echo $this->element('photo', array('photo'=>$recentPhotos[$i]))?></td>
         <?php }?>
         </tr> 
         <tr> 
-        <?php for ($i=8; $i<min(12,count($recentPictures)); $i++) {?>
-          <td><?php echo $this->element('picture', array('picture'=>$recentPictures[$i]))?></td>
+        <?php for ($i=8; $i<min(12,count($recentPhotos)); $i++) {?>
+          <td><?php echo $this->element('photo', array('photo'=>$recentPhotos[$i]))?></td>
         <?php }?>
         </tr> 
       </table> 
@@ -88,7 +88,7 @@
           </tr> 
         </table> 
         
-        <div class="bubble">Pictures <div class="right"><img class="sm_icon" src="/img/sm_icon.png"/></div></div> 
+        <div class="bubble">Photos <div class="right"><img class="sm_icon" src="/img/sm_icon.png"/></div></div> 
         <table class="collage" cellpadding="0" cellspacing="3"> 
           <tr> 
             <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 

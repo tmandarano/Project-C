@@ -1,7 +1,7 @@
 <?php
-class PicturesController extends AppController {
-  var $name = 'Pictures';
-  var $uses = 'Picture';
+class PhotosController extends AppController {
+  var $name = 'Photos';
+  var $uses = 'Photo';
 
   function ensureUploadDir() {
     $upload_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'db'.DS;
@@ -28,15 +28,15 @@ class PicturesController extends AppController {
         $upload_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'db'.DS;
         switch ($file['error']) {
           case 0:
-            $picture_attribs = array(
+            $photo_attribs = array(
               'user_id'=>$userId,
               'file'=>$file['tmp_name'],
               'caption'=>$formdata['caption'],
               //'location'=>'PointFromText("'.$formdata['location'].'")',
               'datetime'=>date('Y-m-d H:i:s', time()),
             );
-            if ($this->Picture->save($picture_attribs)) {
-              $filename = $this->Picture->id.'.jpg';
+            if ($this->Photo->save($photo_attribs)) {
+              $filename = $this->Photo->id.'.jpg';
               $fileurl = $upload_dir.$filename;
               if (file_exists($fileurl)) {
                 log('Error: file exists that should not: '.$filename);
@@ -48,7 +48,7 @@ class PicturesController extends AppController {
                   $results['ids'][] = $filename;
                 } else {
                   $results['errors'][] = 'Error uploading';
-                  //TODO remove the picture record
+                  //TODO remove the photo record
                 }
               }
             }
@@ -71,19 +71,19 @@ class PicturesController extends AppController {
     $this->Auth->allow('index', 'view');
   }
 
-  function index($id=null) { /* Linked to by pictures/:id */
+  function index($id=null) { /* Linked to by photos/:id */
     if (!$id) {
       $id = $this->params['id'];
     }
-    $picture = $this->Picture->find('first', array('conditions'=>array('Picture.id'=>$id)));
-    $picture = $picture['Picture'];
+    $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
+    $photo = $photo['Photo'];
     $upload_dir = DS.'webroot'.DS.'img'.DS.'db'.DS;
 
-    /* Send the picture */
+    /* Send the photo */
     $this->view = 'Media';
     $params = array(
-      'id'=>$picture['id'].'.jpg',
-      'name'=>$picture['caption'],
+      'id'=>$photo['id'].'.jpg',
+      'name'=>$photo['caption'],
       'download'=>false,
       'extension'=>'jpg',
       'path'=>$upload_dir,
@@ -99,32 +99,32 @@ class PicturesController extends AppController {
         $id = $this->params['id'];
       }
     }
-    $picture = $this->Picture->find('first', array('conditions'=>array('Picture.id'=>$id)));
+    $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
     /* TODO find related pics */
-    $related = $this->Picture->find('all', array('limit'=>6));
-    $this->set(compact('id', 'picture', 'related'));
+    $related = $this->Photo->find('all', array('limit'=>6));
+    $this->set(compact('id', 'photo', 'related'));
   }
 
   function json($id=null) {
     if (!$id) {
       $id = $this->params['id'];
     }
-    $picture = $this->Picture->find('first', array('conditions'=>array('Picture.id'=>$id)));
-    unset($picture['User']['id']);
-    unset($picture['User']['password']);
-    $this->set(compact('picture'));
+    $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
+    unset($photo['User']['id']);
+    unset($photo['User']['password']);
+    $this->set(compact('photo'));
     $this->layout = false;
     $this->render('/elements/json');
   }
 
   function add() {
-    $this->pageTitle = 'Picture upload';
+    $this->pageTitle = 'Photo upload';
     $file = $this->data;
-    $picture = $this->data['Picture']['picture'];
-    if ($picture) {
+    $photo = $this->data['Photo']['photo'];
+    if ($photo) {
       $userId = $this->Auth->user('id');
       $this->ensureUploadDir();
-      $results = $this->saveUploadedFilesForUser($userId, $this->data['Picture']);
+      $results = $this->saveUploadedFilesForUser($userId, $this->data['Photo']);
 
       // TODO do some checking that this is really a point.
       $this->set(compact('results'));

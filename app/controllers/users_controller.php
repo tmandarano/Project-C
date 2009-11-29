@@ -1,7 +1,7 @@
 <?php
 class UsersController extends AppController {
   var $name = 'Users';
-  var $uses = array('User', 'Picture');
+  var $uses = array('User', 'Photo');
   var $components = array('RequestHandler');
   var $helpers = array('Form', 'Time');
 
@@ -18,9 +18,9 @@ class UsersController extends AppController {
     $this->pageTitle = $this->Auth->user('name')."'s Profile";
     $this->User->id = $this->Auth->user('id');
     $user = $this->User->find();
-    $recentPictures = $this->Picture->find('all', array('order'=>'DateTime DESC', 'limit'=>20));
+    $recentPhotos = $this->Photo->find('all', array('order'=>'DateTime DESC', 'limit'=>20));
     $interests = explode(';', $user['User']['interests']);
-    $this->set(compact('recentPictures', 'interests'));
+    $this->set(compact('recentPhotos', 'interests'));
   }
 
   function add() {

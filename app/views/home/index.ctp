@@ -16,10 +16,10 @@
       <div class="tools">
         <?php echo $this->element('emotion')?>
         <a href="#">See <strong>interesting</strong></a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
-      <table class="pictures">
+      <table>
         <tr>
-          <?php for ($i=0; $i<min(8,count($recentPictures)); $i++) {?>
-            <td><?php echo $this->element('thumbnail', array('picture'=>$recentPictures[$i]));?></td>
+          <?php for ($i=0; $i<min(8,count($recentPhotos)); $i++) {?>
+            <td><?php echo $this->element('thumbnail', array('photo'=>$recentPhotos[$i]));?></td>
           <?php }?>
         </tr>
       </table>
@@ -29,10 +29,10 @@
       <div class="tools">
         <?php echo $this->element('emotion')?>
         <a href="#">See <strong>interesting</strong></a> last <a href="#">hour</a>, <a href="#">day</a>, <a href="#">month</a></div>
-      <table class="pictures">
+      <table>
         <tr>
-          <?php for ($i=0; $i<min(16,count($recentPictures)); $i++) {?>
-            <td><?php echo $this->element('thumbnail', array('picture'=>$recentPictures[$i]));?></td>
+          <?php for ($i=0; $i<min(16,count($recentPhotos)); $i++) {?>
+            <td><?php echo $this->element('thumbnail', array('photo'=>$recentPhotos[$i]));?></td>
           <?php }?>
         </tr>
       </table>
@@ -68,11 +68,11 @@
 </div>
 <?php $javascript->link('home', false); ?>
 <script type="text/javascript">
-var PROJC = PROJC ? PROJC : {};
-PROJC.recentPictures = [
+var LG = LG ? LG : {};
+LG.recentPhotos = [
 <?php
-foreach ($recentPictures as &$result) {
-  $pic = $result['Picture'];
+foreach ($recentPhotos as &$result) {
+  $pic = $result['Photo'];
   $user = $result['User'];
   echo "{id:'".$pic['id']."',caption:\"".$pic['caption']."\",lat:".$pic['lat'].",lng:".$pic['lng'].",User:{name:'".$user['name']."'}},";
 } ?>

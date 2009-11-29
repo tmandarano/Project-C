@@ -1,7 +1,7 @@
 <?php
 class HomeController extends AppController {
   var $name = 'Home';
-  var $uses = 'Picture';
+  var $uses = 'Photo';
   var $helpers = array('Html', 'Time');
 
   function beforeFilter() {
@@ -10,13 +10,13 @@ class HomeController extends AppController {
   }
 
   function index() {
-    $recentPictures = $this->Picture->find('all',
-      array('order'=>'Picture.datetime DESC', 'limit'=>16));
-    for ($i=0; $i<count($recentPictures); $i++) {
-      $recentPictures[$i]['Picture']['lat'] = 34;
-      $recentPictures[$i]['Picture']['lng'] = -116;
+    $recentPhotos = $this->Photo->find('all',
+      array('order'=>'Photo.datetime DESC', 'limit'=>16));
+    for ($i=0; $i<count($recentPhotos); $i++) {
+      $recentPhotos[$i]['Photo']['lat'] = 34;
+      $recentPhotos[$i]['Photo']['lng'] = -116;
     }
-    $this->set(compact('recentPictures'));
+    $this->set(compact('recentPhotos'));
   }
 }
 ?>
