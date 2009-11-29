@@ -29,7 +29,7 @@ form td {
 img.s0, .s0 img { width:  30px; height: 30px; }
 img.s1, .s1 img { width:  50px; height: 50px; }
 img.s2, .s2 img { width: 165px; height: 150px; }
-img.s3, .s3 img { min-height: 50px; max-width: 450px; max-height: 450px; }
+img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 
 /* Setup table for split content */
 .split {
