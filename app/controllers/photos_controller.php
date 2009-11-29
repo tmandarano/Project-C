@@ -126,7 +126,7 @@ class PhotosController extends AppController {
   }
 
   private function resize($img, $width, $height) {
-    $newimg = imagecreateruecolor($width, $height);
+    $newimg = imagecreatetruecolor($width, $height);
     imagecopyresampled($newimg, $img, 0, 0, 0, 0, $width, $height, imagesx($img), imagesy($img));
     return $newimg;
   }
@@ -161,6 +161,7 @@ class PhotosController extends AppController {
       'ids'=>array(),
       'errors'=>array()
     );
+    $this->log($this->Photo->schema());
     $permittedMIMEs = array('image/jpeg');
     foreach ($formdata as $key=>&$file) {
       if (strcmp($key, 'photo') != 0) {continue;}

@@ -84,15 +84,11 @@ class DboMysqlBase extends DboSource {
 		'date' => array('name' => 'date', 'format' => 'Y-m-d', 'formatter' => 'date'),
 		'binary' => array('name' => 'blob'),
 		'boolean' => array('name' => 'tinyint', 'limit' => '1'),
-                /*SPATIAL*/
-                'point' => array('name' => 'point')
 	);
         /*SPATIAL*/
         function introspectType($value) {
           if (is_array($value)) {
-            if (isset($value['lat'])) {
-              return 'point';
-            }
+            return 'point';
           }
           return parent::introspectType($value);
         }
@@ -503,7 +499,13 @@ class DboMysql extends DboMysqlBase {
 		$parent = parent::value($data, $column, $safe);
 
 		if ($parent != null) {
-			return $parent;
+                  /*SPATIAL*/
+                  if (is_array($parent)) {
+                    if (count($data) == 2) {
+                      return 'PointFromText("POINT('.implode(' ', $data).')")';
+                    }
+                  }
+		  return $parent;
 		}
 		if ($data === null || (is_array($data) && empty($data))) {
 			return 'NULL';
@@ -518,7 +520,6 @@ class DboMysql extends DboMysqlBase {
 		switch ($column) {
 			case 'boolean':
 				return $this->boolean((bool)$data);
-			break;
 			case 'integer':
 			case 'float':
 				if ($data === '') {
@@ -529,9 +530,10 @@ class DboMysql extends DboMysqlBase {
 					$data[0] != '0' && strpos($data, 'e') === false)) {
 						return $data;
 					}
-                        case 'point': /*SPATIAL*/
-                          return 'PointFromText("POINT('.implode(' ', $data).')")';
 			default:
+                                if (is_array($data)) {
+                                  $data = implode(',', $data);
+                                }
 				$data = "'" . mysql_real_escape_string($data, $this->connection) . "'";
 			break;
 		}
