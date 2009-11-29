@@ -17,7 +17,7 @@
     <?php if ($user) { ?>
       <li<?php markSelected('Stream', $title_for_layout)?>><?php echo $html->link($user['name']."'s Stream", array('controller'=>'stream'))?></li> 
       <li<?php markSelected('Profile', $title_for_layout)?>><?php echo $html->link($user['name'], array('controller'=>'users', 'action'=>'profile', $user['id']))?></li> 
-      <li<?php markSelected('Add', $title_for_layout)?>><?php echo $html->link("Upload", array('controller'=>'photos', 'action'=>'add'))?></li>
+      <li<?php markSelected('Upload', $title_for_layout)?>><?php echo $html->link("Upload", array('controller'=>'photos', 'action'=>'add'))?></li>
     <? } ?>
     <li<?php markSelected('Explore', $title_for_layout)?>><?php echo $html->link("Explore", array('controller'=>'explore'))?></li> 
     <li>

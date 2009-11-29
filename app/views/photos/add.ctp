@@ -11,23 +11,26 @@
 <?php } ?>
 
 <?php echo $form->create('Photo', array('type'=>'file'))?>
-<table class="split">
-<tr>
-<td class="left pane">
-<?php echo $form->file('Photo.photo')?>
-
-<br />
-<br />
-<label for="PhotoCaption">Caption</label><?php echo $form->text('Photo.caption')?>
-</td>
-<td class="right pane">
-<p>Please click on the map where the photo was taken</p>
-<input type="hidden" name="data[Photo][location]" id="location" />
-<div id="map" style="height: 400px; width: 400px;"></div>
-</td>
-</tr>
+<table>
+  <tr>
+    <th>Photo</th>
+    <td><?php echo $form->file('Photo.photo')?></td>
+  </tr>
+  <tr>
+    <th><label for="PhotoCaption">Caption</label></th>
+    <td><?php echo $form->text('Photo.caption')?></td>
+  </tr>
+  <tr>
+    <th>Location</th>
+    <td>
+      <input type="hidden" name="data[Photo][location]" id="location" />
+      <div id="map" style="height: 400px; width: 400px;"></div>
+    </td>
+    <td>Please click on the map where the photo was taken</td>
+  </tr>
+  <tr>
+    <th></th>
+    <td><span style="font-size: x-large;"><?php echo $form->end('Share') ?></span></td>
+  </tr>
 </table>
-<div style="text-align: center; font-size: xx-large;">
-<?php echo $form->end('Share') ?>
-</div>
 <?php $javascript->link('photos_add', false); ?>

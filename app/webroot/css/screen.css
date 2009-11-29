@@ -19,6 +19,13 @@ h1 {
   color: #d05b2d;
 }
 
+form th {
+  text-align: right;
+}
+form td {
+  padding: 1em 0 1em 1em;
+}
+
 img.s0, .s0 img { width:  30px; height: 30px; }
 img.s1, .s1 img { width:  50px; height: 50px; }
 img.s2, .s2 img { width: 165px; height: 150px; }
@@ -272,13 +279,12 @@ img.s3, .s3 img { min-height: 50px; max-width: 450px; max-height: 450px; }
 .photos.view .commentblock {
   position: relative;
   background-color: #d4e5ec;
-  border: 1px solid #999;
+  border-top: 1px solid #999;
   padding: 0.5em;
-  margin-bottom: 2px;
 }
 .photos.view .commentblock .time {
   position: absolute;
-  top: 0;
+  top: 0.5em;
   right: 0.5em;
 }
 
