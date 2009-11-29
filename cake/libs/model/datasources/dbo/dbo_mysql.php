@@ -83,8 +83,31 @@ class DboMysqlBase extends DboSource {
 		'time' => array('name' => 'time', 'format' => 'H:i:s', 'formatter' => 'date'),
 		'date' => array('name' => 'date', 'format' => 'Y-m-d', 'formatter' => 'date'),
 		'binary' => array('name' => 'blob'),
-		'boolean' => array('name' => 'tinyint', 'limit' => '1')
+		'boolean' => array('name' => 'tinyint', 'limit' => '1'),
+                /*SPATIAL*/
+                'point' => array('name' => 'point')
 	);
+        /*SPATIAL*/
+        function introspectType($value) {
+          if (is_array($value)) {
+            if (isset($value['lat'])) {
+              return 'point';
+            }
+          }
+          return parent::introspectType($value);
+        }
+        function fields(&$model, $alias = null, $fields = array(), $quote = true) {
+          if (empty($fields)) {
+            foreach ($model->schema() as $key => $val) {
+              if ($val['type'] == 'integer' && strpos($key, 'location') !== false) {
+                $fields[] = "ASTEXT(`{$model->alias}`.`{$key}`) AS '`{$model->alias}`.`{$key}`'";
+              } else {
+                $fields[] = $key;
+              }
+            }
+          }
+          return parent::fields($model, $alias, $fields, $quote);
+        }
 /**
  * Generates and executes an SQL UPDATE statement for given model, fields, and values.
  *
@@ -506,6 +529,8 @@ class DboMysql extends DboMysqlBase {
 					$data[0] != '0' && strpos($data, 'e') === false)) {
 						return $data;
 					}
+                        case 'point': /*SPATIAL*/
+                          return 'PointFromText("POINT('.implode(' ', $data).')")';
 			default:
 				$data = "'" . mysql_real_escape_string($data, $this->connection) . "'";
 			break;
@@ -606,6 +631,10 @@ class DboMysql extends DboMysqlBase {
 		if (strpos($col, 'enum') !== false) {
 			return "enum($vals)";
 		}
+    /*SPATIAL*/
+		if (strpos($col, 'point') !== false) {
+      return 'array';
+    }
 		return 'text';
 	}
 /**
@@ -629,7 +658,15 @@ class DboMysql extends DboMysqlBase {
 			if (!empty($column->table)) {
 				$this->map[$index++] = array($column->table, $column->name);
 			} else {
-				$this->map[$index++] = array(0, $column->name);
+                          /*SPATIAL*/
+                                if (strpos($column->name, 'location') !== false) {
+                                  list($col, $name) = explode('`.`', $column->name);
+                                  $col = ltrim($col, '`');
+                                  $name = rtrim($name, '`');
+                                  $this->map[$index++] = array($col, $name);
+                                } else {
+				  $this->map[$index++] = array(0, $column->name);
+                                }
 			}
 			$j++;
 		}
@@ -645,7 +682,17 @@ class DboMysql extends DboMysqlBase {
 			$i = 0;
 			foreach ($row as $index => $field) {
 				list($table, $column) = $this->map[$index];
-				$resultRow[$table][$column] = $row[$index];
+                                /*SPATIAL*/
+                                if (strpos($column, 'location') !== false) {
+                                  $dat = $row[$index];
+                                  $coord = explode(' ', rtrim(ltrim($dat, 'POINT('), ')'));
+                                  while (count($coord) < 2) {
+                                    $coord[] = null;
+                                  }
+				  $resultRow[$table][$column] = $coord;
+                                } else {
+				  $resultRow[$table][$column] = $row[$index];
+                                }
 				$i++;
 			}
 			return $resultRow;

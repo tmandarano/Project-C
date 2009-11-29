@@ -18,7 +18,8 @@ LG.PICTURES.ADD.init = function() {
     map: map
   });
   function setLocation(latlng) {
-    $('#location').val('POINT('+latlng.lng()+' '+latlng.lat()+')');
+    $('#lng').val(latlng.lng());
+    $('#lat').val(latlng.lat());
   }
   google.maps.event.addListener(LG.PICTURES.ADD.marker, 'click', function(e) {
     setLocation(LG.PICTURES.ADD.marker.position);

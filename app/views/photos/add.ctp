@@ -23,7 +23,8 @@
   <tr>
     <th>Location</th>
     <td>
-      <input type="hidden" name="data[Photo][location]" id="location" />
+      <input type="hidden" name="data[Photo][lng]" id="lng" />
+      <input type="hidden" name="data[Photo][lat]" id="lat" />
       <div id="map" style="height: 400px; width: 400px;"></div>
     </td>
     <td>Please click on the map where the photo was taken</td>

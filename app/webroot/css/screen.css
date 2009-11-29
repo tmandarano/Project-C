@@ -621,4 +621,5 @@ input[type="text"]:focus, input[type="password"]:focus {
   display: block;
 }
 
-.cake-sql-log {display:none;}
+.cake-sql-log {
+}

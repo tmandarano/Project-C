@@ -1,22 +1,23 @@
 <?php
+define('UPLOAD_DIR', ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'db'.DS);
+
 class PhotosController extends AppController {
   var $name = 'Photos';
   var $uses = 'Photo';
-
-  /* View */
 
   function beforeFilter() {
     parent::beforeFilter();
     $this->Auth->allow('index', 'view');
   }
 
-  function index($id=null) { /* Linked to by photos/:id */
+  /* Linked to by photos/:id */
+  function index($id=null) {
     if (!$id) {
       $id = $this->params['id'];
     }
     $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
+    $this->log($photo);
     $photo = $photo['Photo'];
-    $upload_dir = DS.'webroot'.DS.'img'.DS.'db'.DS;
 
     /* Send the photo */
     $this->view = 'Media';
@@ -25,7 +26,7 @@ class PhotosController extends AppController {
       'name'=>$photo['caption'],
       'download'=>false,
       'extension'=>'jpg',
-      'path'=>$upload_dir,
+      'path'=>UPLOAD_DIR,
       'mimeType'=>'image/jpeg',
       'cache'=>60*60*24*7
     );
@@ -39,7 +40,7 @@ class PhotosController extends AppController {
       }
     }
     $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
-    /* TODO find related pics */
+    $this->log($photo);
     $related = $this->Photo->find('all', array('limit'=>10));
     $this->set(compact('id', 'photo', 'related'));
   }
@@ -70,59 +71,60 @@ class PhotosController extends AppController {
     }
   }
 
+  private function mime_ok($permitted, $type) {
+    foreach ($permitted as $mime) {
+      if ($mime == $type) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private function ensureUploadDir() {
-    $upload_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'db'.DS;
-    if (!is_dir($upload_dir)) {
-      log('Recreating missing upload directory: '.$upload_dir);
-      mkdir($upload_dir);
+    if (!is_dir(UPLOAD_DIR)) {
+      $this->log('Recreating missing upload directory: '.UPLOAD_DIR);
+      mkdir(UPLOAD_DIR);
     }
   }
 
   private function saveUploadedFilesForUser($userId, $formdata) {
+    $results = array(
+      'ids'=>array(),
+      'errors'=>array()
+    );
     $permittedMIMEs = array('image/jpeg');
-    $results = array();
-    $results['ids'] = array();
-    $results['errors'] = array();
-    foreach ($formdata as &$file) {
-      $mimeOK = false;
-      foreach ($permittedMIMEs as $mime) {
-        if ($mime == $file['type']) {
-          $mimeOK = true;
-          break;
-        }
-      }
-      if ($mimeOK) {
-        $upload_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'db'.DS;
+    foreach ($formdata as $key=>&$file) {
+      if (strcmp($key, 'photo') != 0) {continue;}
+      if ($this->mime_ok($permittedMIMEs, $file['type'])) {
         switch ($file['error']) {
           case 0:
             $photo_attribs = array(
               'user_id'=>$userId,
               'file'=>$file['tmp_name'],
               'caption'=>$formdata['caption'],
-              //'location'=>'PointFromText("'.$formdata['location'].'")',
+              'location'=>array($formdata['lng'], $formdata['lat']),
               'datetime'=>date('Y-m-d H:i:s', time()),
             );
             if ($this->Photo->save($photo_attribs)) {
               $filename = $this->Photo->id.'.jpg';
-              $fileurl = $upload_dir.$filename;
+              $fileurl = UPLOAD_DIR.$filename;
               if (file_exists($fileurl)) {
-                log('Error: file exists that should not: '.$filename);
-                $results['errors'][] = 'Error! File collision';
-                break;
+                $this->log('File exists that should not: '.$filename);
+                $results['errors'][] = 'File collision';
               } else {
                 /* Try to save the file permanently */
                 if (move_uploaded_file($file['tmp_name'], $fileurl)) {
                   $results['ids'][] = $filename;
                 } else {
-                  $results['errors'][] = 'Error uploading';
+                  $results['errors'][] = 'Unable to write file';
                   //TODO remove the photo record
                 }
               }
             }
             break;
-          case 3: $results['errors'][] = 'Error uploading'; break;
-          case 4: $results['errors'][] = 'No file selected'; break;
-          default: $results['errors'][] = 'Big ERROR!'; break;
+          case 3: $results['errors'][] = 'There was an error uploading the file.'; break;
+          case 4: $results['errors'][] = 'There was no file selected.'; break;
+          default: $results['errors'][] = 'Unknown case on upload.'; break;
         }
       } else {
         $results['errors'][] = 'You may only upload image (jpg) files.';
@@ -130,6 +132,5 @@ class PhotosController extends AppController {
     }
     return $results;
   }
-
 }
 ?>
