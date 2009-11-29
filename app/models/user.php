@@ -4,8 +4,8 @@ class User extends AppModel {
   var $useTable = 'users';
 
   var $hasMany = array(
-    'Picture' => array(
-      'className'  => 'Picture'
+    'Photo' => array(
+      'className'  => 'Photo'
     ),
     'Comment' => array(
       'className' => 'Comment'
