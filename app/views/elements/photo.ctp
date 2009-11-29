@@ -1,4 +1,4 @@
-<div class="photo infoed">
+<div class="infoed photo">
   <div class='info'>
     <div class='numcomments'>
       <a href="#">0 <?php echo $html->image('comments.png')?></a>

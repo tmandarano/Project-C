@@ -19,10 +19,10 @@ h1 {
   color: #d05b2d;
 }
 
-img.s0, .s0 img { width: 30px; height: 30px; }
-img.s1, .s1 img { width: 50px; height: 50px; }
+img.s0, .s0 img { width:  30px; height: 30px; }
+img.s1, .s1 img { width:  50px; height: 50px; }
 img.s2, .s2 img { width: 165px; height: 150px; }
-img.s3, .s3 img { max-width: 450px; max-height: 450px; }
+img.s3, .s3 img { min-height: 50px; max-width: 450px; max-height: 450px; }
 
 /* Setup table for split content */
 .split {
@@ -238,15 +238,16 @@ img.s3, .s3 img { max-width: 450px; max-height: 450px; }
 .the_image {
   position: relative;
 }
-.the_image .left {
+.the_image .left, .the_image .right {
   position: absolute;
-  left: 0;
   top: 50%;
+  margin-top: -30px;
+}
+.the_image .left {
+  left: 0;
 }
 .the_image .right {
-  position: absolute;
   right: 0;
-  top: 50%;
 }
 .photos.view .nav {
   background-color: #999;
@@ -603,6 +604,7 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 .infoed.photo .image {
   position: relative;
+  height: 150px;
 }
 .infoed.photo .image .hover {
   position: absolute;

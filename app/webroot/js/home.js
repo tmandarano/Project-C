@@ -4,20 +4,20 @@ LG.HOME.TIME_BETWEEN = 5000;
 LG.HOME.MAX_PICS_IN_STREAM = 8;
 LG.HOME.map = null;
 /* Overlay displays a caption bubble over the map with the user, caption,
- * location, and time. Picture is displayed over the center of the map which
- * centers on the location. Picture is also faded into the right-most empty
- * spot of the stream. If there's too many, bump out the left-most picture.
+ * location, and time. Photo is displayed over the center of the map which
+ * centers on the location. Photo is also faded into the right-most empty
+ * spot of the stream. If there's too many, bump out the left-most photo.
  */
 LG.HOME.QueueOverlay = function() {
   this.captionPane = $('<div id="map_caption"></div>');
-  this.picturePane = $('<div id="map_picture"></div>');
+  this.photoPane = $('<div id="map_photo"></div>');
   this.stream = $('#updating_map_stream');
-  this.picturePane.children('img').css({'width': '50px', 'height': '50px'});
+  this.photoPane.children('img').css({'width': '50px', 'height': '50px'});
 };
 LG.HOME.QueueOverlay.prototype = new google.maps.OverlayView();
 LG.HOME.QueueOverlay.prototype.onAdd = function() {
   $(this.getMap().getDiv()).append(this.captionPane);
-  $(this.getMap().getDiv()).append(this.picturePane);
+  $(this.getMap().getDiv()).append(this.photoPane);
 };
 LG.HOME.QueueOverlay.prototype.draw = function() {
 };
@@ -30,11 +30,11 @@ LG.HOME.QueueOverlay.prototype.addPic = function(pic) {
     self.getMap().panTo(new google.maps.LatLng(pic.lat, pic.lng));
     var caption = '<img src="/img/mini_pic.jpg" /><a href="#">'+
       pic.User.name+'</a><p>'+pic.caption+
-      '</p><div class="location">San Diego, CA</div><div class="time">6 seconds ago</div>';
+      '</p><div class="location">San Diego, CA</div><div class="time">'+pic.time+'</div>';
     self.captionPane.hide().html(caption).fadeIn(600);
-    self.picturePane.hide().html('<img src="/img/db/'+pic.id+'.jpg" />').fadeIn(600);
+    self.photoPane.hide().html('<img src="/photos/'+pic.id+'" />').fadeIn(600);
     self.stream.children().fadeTo(600, 0.5);
-    self.stream.append($('<img src="/img/db/'+pic.id+'.jpg" />').fadeIn(600));
+    self.stream.append($('<img src="/photos/'+pic.id+'" />').fadeIn(600));
   }
   if (this.stream.children().length >= LG.HOME.MAX_PICS_IN_STREAM) {
     $(this.stream.children()[0]).hide(300, function() {

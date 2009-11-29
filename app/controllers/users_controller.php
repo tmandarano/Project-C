@@ -24,6 +24,7 @@ class UsersController extends AppController {
   }
 
   function add() {
+    $this->pageTitle = "Upload";
     if (!empty($this->data)) {
       $this->User->create();
       $this->User->set($this->data);
