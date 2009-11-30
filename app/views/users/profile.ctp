@@ -21,7 +21,7 @@
       </table> 
     </td>
     <td class='right pane'>
-      <?php echo $this->element('user', array('user'=>$user))?>
+      <?php echo $this->element('user', array('user'=>$userobj))?>
       <p>is interested in</p>
       <ul>
       <?php foreach ($interests as $interest) {

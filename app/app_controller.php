@@ -28,8 +28,6 @@ class AppController extends Controller {
     $this->Auth->logoutRedirect = array(
       'controller'=>'home'
     );
-
-    $this->RequestHandler->setContent('json', 'application/json');
   }
 
   function beforeRender() {

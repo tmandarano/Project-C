@@ -5,6 +5,7 @@ class StreamController extends AppController {
   var $helpers = array('Form', 'Time');
 
   function beforeFilter() {
+    parent::beforeFilter();
     $this->Auth->allow('index', 'social');
   }
 

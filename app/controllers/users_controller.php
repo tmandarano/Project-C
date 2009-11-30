@@ -7,20 +7,28 @@ class UsersController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('login', 'add', 'photo');
+    $this->Auth->allow('login', 'add', 'photo', 'profile');
   }
 
   /* Views */
   function index() {
   }
 
-  function profile() {
-    $this->pageTitle = $this->Auth->user('name')."'s Profile";
-    $this->User->id = $this->Auth->user('id');
-    $user = $this->User->find();
-    $recentPhotos = $this->Photo->find('all', array('order'=>'DateTime DESC', 'limit'=>20));
-    $interests = explode(';', $user['User']['interests']);
-    $this->set(compact('recentPhotos', 'interests'));
+  function profile($id=null) {
+    if (is_null($id)) {
+      $id = $this->Auth->user('id');
+    }
+    if (is_null($id)) {
+      $this->redirect('/');
+    } else {
+      $userobj = $this->User->find('first', array('conditions'=>array('User.id'=>$id)));
+      $userobj = $userobj['User'];
+      $this->pageTitle = $userobj['name']."'s Profile";
+      $recentPhotos = $this->Photo->find('all', array('order'=>'DateTime DESC',
+        'conditions'=>array('User.id'=>$userobj['id']), 'limit'=>20));
+      $interests = explode(';', $userobj['interests']);
+      $this->set(compact('userobj', 'recentPhotos', 'interests'));
+    }
   }
 
   function add() {
