@@ -12,7 +12,7 @@ class PhotosController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('index', 'view');
+    $this->Auth->allow('index', 'view', 'json');
   }
 
   /* Linked to by photos/:id */
@@ -63,11 +63,11 @@ class PhotosController extends AppController {
   }
 
   function json($id=null) {
-    if (!$id) {
-      $id = $this->params['id'];
-    }
-    $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
-    unset($photo['User']['id']);
+    if (!$id) { $id = $this->params['id']; }
+    $photo = $this->Photo->find('first',
+                                array('conditions'=>array('Photo.id'=>$id)));
+    unset($photo['Photo']['id']);
+    unset($photo['Photo']['user_id']);
     unset($photo['User']['password']);
     $this->set(compact('photo'));
     $this->layout = false;

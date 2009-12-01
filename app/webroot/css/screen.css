@@ -4,10 +4,11 @@ body {
   font-family: Helvetica,Arial,sans-serif;
   font-size: 15px;
   color: #000;
-  background-color: #FFF;
   /*
+  background-color: #FFF;
   padding-bottom: 72px;
   */
+  background: url('/img/bg.png') no-repeat fixed center center;
 }
 
 a {
