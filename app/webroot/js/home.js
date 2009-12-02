@@ -24,12 +24,14 @@ LG.HOME.QueueOverlay.prototype.draw = function() {
 LG.HOME.QueueOverlay.prototype.onRemove = function() {
   $(this.getMap().getDiv()).empty();
 };
-LG.HOME.QueueOverlay.prototype.addPic = function(pic) {
+LG.HOME.QueueOverlay.prototype.addPic = function(photo) {
   var self = this;
   function appendStream() {
+    var pic = photo.Photo;
+    var usr = photo.User;
     self.getMap().panTo(new google.maps.LatLng(pic.lat, pic.lng));
-    var caption = '<img src="/users/photo/'+pic.User.id+'" /><a href="#">'+
-      pic.User.name+'</a><p>'+pic.caption+
+    var caption = '<img src="/users/photo/'+usr.id+'" /><a href="#">'+
+      usr.name+'</a><p>'+pic.caption+
       '</p><div class="location">San Diego, CA</div><div class="time">'+pic.time+'</div>';
     self.captionPane.hide().html(caption).fadeIn(600);
     self.photoPane.hide().html('<img src="/photos/'+pic.id+'/1" />').fadeIn(600);

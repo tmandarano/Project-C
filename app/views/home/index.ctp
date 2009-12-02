@@ -68,13 +68,8 @@
 </div>
 <?php $javascript->link('home', false); ?>
 <script type="text/javascript">
-var LG = LG ? LG : {};
-LG.recentPhotos = [
-<?php
-foreach ($recentPhotos as &$result) {
-  $pic = $result['Photo'];
-  $user = $result['User'];
-  echo "{id:'".$pic['id']."',caption:\"".$pic['caption']."\",lat:".$pic['location'][1].",lng:".$pic['location'][0].",time:'".$time->timeAgoInWords($pic['datetime'], array('end'=>'+1month'))."',User:{id:".$user['id'].",name:'".$user['name']."'}},";
-} ?>
-];
+var LG=LG?LG:{};
+LG.recentPhotos=[<?php foreach ($recentPhotos as &$photo) {
+  echo $this->element('json', array('photo' => $photo)).',';
+} ?>];
 </script>

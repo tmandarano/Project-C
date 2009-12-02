@@ -32,8 +32,9 @@ class PhotosController extends AppController {
       }
     }
 
-    $photo = $this->Photo->find('first', array('fields'=>array('Photo.id', 'Photo.caption'),
-                                               'conditions'=>array('Photo.id'=>$id)));
+    $photo = $this->Photo->find('first',
+      array('fields'=>array('Photo.id', 'Photo.caption'),
+            'conditions'=>array('Photo.id'=>$id)));
     $photo = $photo['Photo'];
 
     /* Send the photo */
@@ -57,7 +58,7 @@ class PhotosController extends AppController {
       }
     }
     $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
-    //TODO
+    //TODO find real related
     $related = $this->Photo->find('all', array('limit'=>10));
     $this->set(compact('id', 'photo', 'related'));
   }
@@ -84,6 +85,10 @@ class PhotosController extends AppController {
       $results = $this->saveUploadedFilesForUser($userId, $this->data['Photo']);
       $this->set(compact('results'));
     }
+  }
+
+  function edit($id) {
+
   }
 
   private function mime_ok($permitted, $type) {
