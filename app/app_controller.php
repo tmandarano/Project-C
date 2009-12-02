@@ -1,8 +1,7 @@
 <?php
 class AppController extends Controller {
-  var $uses = null;
-  var $components = array('Auth', 'RequestHandler');
-  var $helpers = array('Javascript', 'Form', 'Time');
+  var $components = array('Auth');
+  var $helpers = array('Javascript', 'Html', 'Form', 'Time');
 
   function beforeFilter() {
     Security::setHash('md5');

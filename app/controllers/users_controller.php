@@ -1,7 +1,6 @@
 <?php
 class UsersController extends AppController {
   var $name = 'Users';
-  var $uses = array('User', 'Photo');
   var $components = array('RequestHandler');
   var $helpers = array('Form', 'Time');
 
@@ -24,7 +23,7 @@ class UsersController extends AppController {
       $userobj = $this->User->find('first', array('conditions'=>array('User.id'=>$id)));
       $userobj = $userobj['User'];
       $this->pageTitle = $userobj['name']."'s Profile";
-      $recentPhotos = $this->Photo->find('all', array('order'=>'DateTime DESC',
+      $recentPhotos = $this->User->Photo->find('all', array('order'=>'DateTime DESC',
         'conditions'=>array('User.id'=>$userobj['id']), 'limit'=>20));
       $interests = explode(';', $userobj['interests']);
       $this->set(compact('userobj', 'recentPhotos', 'interests'));
@@ -62,7 +61,7 @@ class UsersController extends AppController {
       $photo['caption'] = 'no_profile_picture';
       $upload_dir = DS.'webroot'.DS.'img'.DS;
     } else {
-      $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$userphoto)));
+      $photo = $this->User->Photo->find('first', array('conditions'=>array('Photo.id'=>$userphoto)));
       $photo = $photo['Photo'];
     }
 

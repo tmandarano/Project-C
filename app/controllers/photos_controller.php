@@ -8,7 +8,6 @@ define('S3_DIR', UPLOAD_DIR.'3'.DS);
 
 class PhotosController extends AppController {
   var $name = 'Photos';
-  var $uses = 'Photo';
 
   function beforeFilter() {
     parent::beforeFilter();

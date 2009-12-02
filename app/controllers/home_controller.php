@@ -2,7 +2,6 @@
 class HomeController extends AppController {
   var $name = 'Home';
   var $uses = 'Photo';
-  var $helpers = array('Html', 'Time');
 
   function beforeFilter() {
     parent::beforeFilter();

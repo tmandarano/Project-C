@@ -1,10 +1,9 @@
 <?php
 class ExploreController extends AppController {
   var $name = 'Explore';
-  var $uses = null;
-  var $helpers = array('Form');
 
   function beforeFilter() {
+    parent::beforeFilter();
     $this->Auth->allow('index');
   }
 
