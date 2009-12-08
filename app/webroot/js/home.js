@@ -30,7 +30,7 @@ LG.HOME.QueueOverlay.prototype.addPic = function(photo) {
     var pic = photo.Photo;
     var usr = photo.User;
     self.getMap().panTo(new google.maps.LatLng(pic.lat, pic.lng));
-    var caption = '<img src="/users/photo/'+usr.id+'" /><a href="#">'+
+    var caption = '<img src="/users/photo/'+usr.id+'" /><a href="/users/profile/'+usr.id+'">'+
       usr.name+'</a><p>'+pic.caption+
       '</p><div class="location">San Diego, CA</div><div class="time">'+pic.time+'</div>';
     self.captionPane.hide().html(caption).fadeIn(600);

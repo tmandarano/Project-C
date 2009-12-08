@@ -35,7 +35,32 @@
   <?php echo $content_for_layout?>
 </div>
 </div>
-<div id="foot_bar"></div>
+<div id="foot_bar">
+<table><tr>
+<td>
+  <h1><a href="#">Upload</a></h1>
+  <ul>
+  <li><a href="#">Mobile</a></li>
+  <li><a href="#">Webcam</a></li>
+  </ul>
+</td>
+<td>
+  <h1><a href="#">Explore</a></h1>
+  <ul>
+  <li><a href="#">Map</a></li>
+  <li><a href="#">People</a></li>
+  <li><a href="#">Photos</a></li>
+  </ul>
+</td>
+<td>
+  <h1><a href="#">About</a></h1>
+  <ul>
+  <li><a href="#">Contact</a></li>
+  <li><a href="#">FAQ</a></li>
+  </ul>
+</td>
+</tr></table>
+</div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 <?php echo $scripts_for_layout; ?>

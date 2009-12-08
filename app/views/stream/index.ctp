@@ -4,12 +4,10 @@
     <td class="left pane"> 
       <ul class='explore_options'> 
         <li>stream:</li> 
-        <li class="selected">
-          <img src="img/option_button_left.png"><div>Photo</div><img src="img/option_button_right.png"></li>
+        <li class="selected">Photo</li>
         <li><a href='/stream/social'>Social</a></li> 
         <li class="second">display:</li> 
-        <li class="selected">
-          <img src="img/option_button_left.png"><div>All</div><img src="img/option_button_right.png"></li> 
+        <li class="selected">All</li> 
         <li><a href='#'>Friends</a></li> 
         <li><a href='#'>Family</a></li> 
         <li><a href='#'>Coworkers</a></li> 

@@ -5,7 +5,6 @@
     <h1 class="title">Show your friends what you are doing, see what they are doing, and discover people with similar interests.</h1>
 
     <div class="question">
-      <img src="/img/bubble_left.png" />
       <p><span>There's just one question...</span> what do you see?
       <a href="/users/add"><img src="/img/signup.png"/></a>
       </p>

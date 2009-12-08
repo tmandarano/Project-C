@@ -40,7 +40,7 @@
         <?php } ?>
         </tr>
         <tr>
-        <?php for ($i=4; $i<min(10, count($related)); $i++) { $result = $related[$i];?>
+        <?php for ($i=4; $i<min(9, count($related)); $i++) { $result = $related[$i];?>
           <td><?php echo $this->element('collagepic', array('photo'=>$result))?></td>
         <?php } ?>
         </tr>
@@ -53,7 +53,7 @@
         <?php } ?>
         </tr>
         <tr>
-        <?php for ($i=4; $i<min(10, count($related)); $i++) { $result = $related[$i];?>
+        <?php for ($i=4; $i<min(9, count($related)); $i++) { $result = $related[$i];?>
           <td><?php echo $this->element('collagepic', array('photo'=>$result))?></td>
         <?php } ?>
         </tr>
