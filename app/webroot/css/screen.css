@@ -346,75 +346,42 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   color: #1584b2;
 }
 
-ul.explore_options {
-  /*left:200px; /*manual offset*/
-  list-style-type:none;
-  display:block;
-  height:20px;
-  position:relative;
-  padding:0px 20px 15px 40px;
-  padding-left:20px;
-  padding-right:40px;
-  vertical-align:top;
-  margin:0;
+.explore_options {
+  display: block;
+  position: relative;
+  vertical-align: top;
+  height: 1.5em;
+  margin-bottom: 15px;
 }
-ul.explore_options li {
-  margin:4px 6px 4px 6px;
-  display:block;
-  height:16px;
-  float:left;
-  color:#666;
-  text-decoration:none;
-  font-weight:bold;
-  font-size:11px; 
-}
-ul.explore_options li.second {
-  margin-left:100px;
-}
-
-ul.explore_options li img {
-  margin:0px;
-  padding:0px;
-  position:relative;
-  float:left;
-  top:0px;
-  display:inline;
-}
-ul.explore_options li.selected {
-  padding: 2px 8px 0 8px;
+.explore_options li {
+  float: left;
+  display: block;
+  font-size: small; 
+  color: #666;
   margin-top: 2px;
-  color: #fff;
-  background-color: #aaa;
+  padding: 2px 8px;
   border-radius: 8px;
   -moz-border-radius: 8px;
 }
-ul.explore_options li a {
-  color:#000000;
-  text-decoration:none;
-  display:block;
-  float:left;
-  font-size:12px;
-  height:16px;
+.explore_options li.selected {
+  background-color: #aaa;
+  color: #fff;
 }
-ul.explore_options .selected:hover {
-  color:#000;
-  text-decoration:none;
-  font-size:12px;
+.explore_options li a {
+  display: block;
+  color: #000;
 }
-ul.explore_options li a:hover {
-  color:#53abbb;
-  text-decoration:none;
-  font-size:12px;
+.explore_options li a:hover {
+  color: #53abbb;
+}
+.explore_options .second {
+  margin-left: 100px;
 }
 
 table.stream {
-  margin:0px;
   width:100%;
   text-align:center;
   vertical-align:top;
-}
-
-table.stream td {
 }
 
 .usrname {
@@ -443,12 +410,6 @@ table.stream td {
   border-radius: 10px;
   -moz-border-radius: 10px;
 }
-/*
-.bubble:hover {
-  background-color: #d4e5ec;
-  color: #000;
-}
-*/
 .bubble .right {
   position: absolute;
   top: 50%;
@@ -458,7 +419,7 @@ table.stream td {
 .bubble a {
   position: relative;
   top: -0.1em;
-  color: #477fbc;
+  color: #53abbb;
 }
 
 .hrule {
