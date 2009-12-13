@@ -22,7 +22,7 @@
     </table>
     
     <div class="stream">
-      <h1>Popular<div class="tools"><?php echo $this->element('emotion')?></div></h1>
+      <h1>Popular <div class="tools"><?php echo $this->element('timelocup')?><?php echo $this->element('emotion')?></div></h1>
       <table class="photos">
         <tr>
           <?php for ($i=0; $i<min(8,count($recentPhotos)); $i++) {?>
@@ -32,7 +32,7 @@
       </table>
     </div>
     <div class="stream">
-      <h1>People<div class="tools"><?php echo $this->element('emotion')?></div></h1>
+      <h1>People <div class="tools"><?php echo $this->element('timelocup')?></div></h1>
       <table class="photos">
         <tr>
           <?php for ($i=8; $i<min(16,count($recentPhotos)); $i++) {?>
