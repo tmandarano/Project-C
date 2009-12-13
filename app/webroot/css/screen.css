@@ -315,6 +315,23 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   right:0;
 }
 
+.users.profile .mostrecent {
+  border-spacing: 1em;
+}
+.users.profile .mostrecent .left.pane, .users.profile .mostrecent .left.pane img {
+  width: 215px;
+}
+.users.profile .mostrecent .left.pane {
+  height: 215px;
+}
+.users.profile .right.pane .caption {
+  color: #5a1;
+  font-size: x-large;
+}
+.users.profile .userinfo {
+  margin-bottom: 0.5em;
+}
+
 .userpic {
   float: left;
   width: 50px;
@@ -414,17 +431,14 @@ table.stream td {
 }
 .time {
   color: #555;
-  font-weight: bold;
   font-size: small;
 }
 
 .bubble {
   position: relative;
-  background-color: #999;
+  background-color: #d7d7d7;
   width: 100%;
-  font-weight: bold;
-  color: #eee;
-  margin: 0 -7px 4px -7px;
+  margin: 4px -7px 4px -7px;
   padding: 2px 7px;
   border-radius: 10px;
   -moz-border-radius: 10px;
@@ -440,6 +454,11 @@ table.stream td {
   top: 50%;
   margin-top: -0.5em;
   right: 7px;
+}
+.bubble a {
+  position: relative;
+  top: -0.1em;
+  color: #477fbc;
 }
 
 .hrule {

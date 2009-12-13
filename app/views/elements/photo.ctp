@@ -9,9 +9,9 @@
   <div class='image s2'>
       <?php echo $html->image('/photos/'.$photo['Photo']['id'].'/2', array('title'=>$photo['Photo']['caption']))?>
     <div class="hover">
+      <div class="name"><?php echo $photo['User']['name']?></div>
       <?php echo $photo['Photo']['caption']?>
     </div>
   </div>
   </a>
-  <div class="name"><?php echo $photo['User']['name']?></div>
 </div>

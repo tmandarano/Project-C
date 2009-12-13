@@ -2,12 +2,24 @@
 <table class="split">
   <tr>
     <td class="left pane">
-      <table>
+      <?php $bigPhoto = $recentPhotos[0]['Photo'];?>
+      <table class="mostrecent split">
         <tr>
-        <?php $bigPhoto = $recentPhotos[0]['Photo'];?>
-        <td><img src="/photos/<?php echo $bigPhoto['id']?>" style="width: 216px;" /></td>
-          <td>
-          <p style="color: #55aa11; font-size: large"><?php echo $bigPhoto['caption'] ?></p><?php echo $time->timeAgoInWords($bigPhoto['datetime'], array('end'=>'+1month'))?>
+          <td class="left pane"><img src="/photos/<?php echo $bigPhoto['id']?>" /></td>
+          <td class="right pane">
+            <p><span class="caption"><?php echo $bigPhoto['caption'] ?></span> <span class="time"><?php echo $time->timeAgoInWords($bigPhoto['datetime'], array('end'=>'+1month'))?></span></p>
+            <div class="comments">
+              <div class="commentblock">
+                <?php echo $this->element('user', array('user'=>$userobj))?> <div class="time">35 seconds ago</div>
+                <div class="comment">Give me a call when you get to school ok? Have fun on the drive down and be safe!</div>
+                <div class="clearer"></div>
+              </div>
+              <div class="commentblock">
+                <?php echo $this->element('user', array('user'=>$userobj))?> <div class="time">2 minutes ago</div>
+                <div class="comment">have fun! good luck at school</div>
+                <div class="clearer"></div>
+              </div>
+            </div>
           </td>
         </tr>
       </table>
@@ -25,18 +37,20 @@
       </table> 
     </td>
     <td class='right pane'>
+      <div class="userinfo">
       <?php echo $this->element('user', array('user'=>$userobj))?>
-      <p>Name <?php echo $userobj['name']?></p>
-      <p>Location <?php echo $userobj['location']?></p>
+      <p><?php echo $userobj['name']?></p>
+      <p><?php echo $userobj['location']?></p>
+      </div>
       <div class="bubble">Watchers<div class="right"><a href="#">0</a></div></div> 
       <div class="bubble">Watching<div class="right"><a href="#">0</a></div></div> 
       <div class="bubble">Friends<div class="right"><a href="#">0</a></div></div> 
-      <div class="bubble">About <?php echo $userobj['name']?> <div class="right"><a href="#">Edit</a></div></div> 
+      <div class="bubble">About <?php echo $userobj['name']?> <div class="right"><a href="#">edit</a></div></div> 
       <ul>
       <li><strong>bio:</strong> go chargers!</li>
       <li><strong>occupation:</strong> student</li>
       </ul>
-      <div class="bubble">Interests <div class="right"><a href="#">Edit</a></div></div> 
+      <div class="bubble">Interests <div class="right"><a href="#">edit</a></div></div> 
       <ul>
       <?php foreach ($interests as $interest) {
         echo '<a href="#">'.$interest.'</a>, ';
