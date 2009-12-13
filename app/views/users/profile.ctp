@@ -28,6 +28,9 @@
       <?php echo $this->element('user', array('user'=>$userobj))?>
       <p>Name <?php echo $userobj['name']?></p>
       <p>Location <?php echo $userobj['location']?></p>
+      <div class="bubble">Watchers<div class="right"><a href="#">0</a></div></div> 
+      <div class="bubble">Watching<div class="right"><a href="#">0</a></div></div> 
+      <div class="bubble">Friends<div class="right"><a href="#">0</a></div></div> 
       <div class="bubble">About <?php echo $userobj['name']?> <div class="right"><a href="#">Edit</a></div></div> 
       <ul>
       <li><strong>bio:</strong> go chargers!</li>
