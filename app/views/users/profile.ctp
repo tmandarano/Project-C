@@ -52,9 +52,7 @@
       </ul>
       <div class="bubble">Interests <div class="right"><a href="#">edit</a></div></div> 
       <ul>
-      <?php foreach ($interests as $interest) {
-        echo '<a href="#">'.$interest.'</a>, ';
-      }?>
+        <?php $interests = array(); foreach ($interests as $interest) { $interests[] = '<a href="#">'.$interest.'</a>'; } echo join(', ', $interests); ?>
       </ul>
       <div class="bubble">Similar people <div class="right"><img class="sm_icon" src="/img/sm_icon.png"/></div></div> 
         <table class="collage" cellpadding="0" cellspacing="3"> 

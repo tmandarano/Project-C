@@ -4,7 +4,7 @@
     <td class="left pane">
     <p class="title"><strong>Show</strong> your friends what you are doing,
                      <strong>see</strong> what they are doing, and
-                     <strong>discover</strong> liked-minded people
+                     <strong>discover</strong> like-minded people
                      all in <strong>real-time</strong>.
     </p>
 
