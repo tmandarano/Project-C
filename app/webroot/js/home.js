@@ -56,6 +56,8 @@ function cycleSamplePics() {
   swappic();
 }
 LG.HOME.init = function() {
+  $('body').css('background', "url('/img/bg.png') no-repeat fixed top center");
+
   var mapOpts = {
     zoom: 7,
     center: new google.maps.LatLng(32.77977,-117.137947),
