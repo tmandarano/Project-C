@@ -36,18 +36,19 @@ class PhotosController extends AppController {
             'conditions'=>array('Photo.id'=>$id)));
     $photo = $photo['Photo'];
 
-    /* Send the photo */
-    $this->view = 'Media';
-    $params = array(
-      'id'=>$photo['id'].'.jpg',
-      'name'=>$photo['caption'],
-      'download'=>false,
-      'extension'=>'jpg',
-      'path'=>$dir,
-      'mimeType'=>'image/jpeg',
-      'cache'=>60*60*24*7
-    );
-    $this->set($params);
+    ///* Send the photo */
+    //$this->view = 'Media';
+    //$params = array(
+    //  'id'=>$photo['id'].'.jpg',
+    //  'name'=>$photo['caption'],
+    //  'download'=>false,
+    //  'extension'=>'jpg',
+    //  'path'=>$dir,
+    //  'mimeType'=>'image/jpeg',
+    //  'cache'=>60*60*24*7
+    //);
+    //$this->set($params);
+    $this->redirect(substr($dir, strlen(ROOT.DS.APP_DIR.DS.WEBROOT_DIR)).DS.$photo['id'].'.jpg', 303);
   }
 
   function view($id=null) {
