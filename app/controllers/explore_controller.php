@@ -9,6 +9,13 @@ class ExploreController extends AppController {
   }
 
   function index() {
+    $this->pageTitle='Explore';
+  }
+  function photos() {
+    $this->pageTitle='Photos | Explore ';
+  }
+  function people() {
+    $this->pageTitle='People | Explore ';
   }
 }
 ?>

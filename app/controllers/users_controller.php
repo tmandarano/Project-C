@@ -13,25 +13,8 @@ class UsersController extends AppController {
   function index() {
   }
 
-  function profile($id=null) {
-    if (is_null($id)) {
-      $id = $this->Auth->user('id');
-    }
-    if (is_null($id)) {
-      $this->redirect('/');
-    } else {
-      $userobj = $this->User->find('first', array('conditions'=>array('User.id'=>$id)));
-      $userobj = $userobj['User'];
-      $this->pageTitle = $userobj['name']."'s Profile";
-      $recentPhotos = $this->User->Photo->find('all', array('order'=>'DateTime DESC',
-        'conditions'=>array('User.id'=>$userobj['id']), 'limit'=>20));
-      $interests = explode(';', $userobj['interests']);
-      $this->set(compact('userobj', 'recentPhotos', 'interests'));
-    }
-  }
-
   function add() {
-    $this->pageTitle = "Upload";
+    $this->pageTitle = "Sign up";
     if (!empty($this->data)) {
       $this->User->create();
       $this->User->set($this->data);
@@ -46,10 +29,6 @@ class UsersController extends AppController {
         $this->set('status', 'invalid');
       }
     }
-  }
-
-  function settings() {
-    
   }
 
   function photo($id) {
@@ -77,6 +56,27 @@ class UsersController extends AppController {
       'cache'=>60*60*24*7
     );
     $this->set($params);
+  }
+
+  function profile($id=null) {
+    if (is_null($id)) {
+      $id = $this->Auth->user('id');
+    }
+    if (is_null($id)) {
+      $this->redirect('/');
+    } else {
+      $userobj = $this->User->find('first', array('conditions'=>array('User.id'=>$id)));
+      $userobj = $userobj['User'];
+      $this->pageTitle = $userobj['name']."'s Profile";
+      $recentPhotos = $this->User->Photo->find('all', array('order'=>'DateTime DESC',
+        'conditions'=>array('User.id'=>$userobj['id']), 'limit'=>20));
+      $interests = explode(';', $userobj['interests']);
+      $this->set(compact('userobj', 'recentPhotos', 'interests'));
+    }
+  }
+
+  function settings() {
+    $this->pageTitle='Settings';
   }
 
   /* Authentication */

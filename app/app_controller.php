@@ -10,23 +10,10 @@ class AppController extends Controller {
       'username' => 'email',
       'password' => 'password'
     );
-    $this->Auth->loginAction = array(
-      'controller'=>'users',
-      'action'=>'login'
-    );
-    /* Redirect users signing in from home page to their stream */
-    if ($this->Session->read('Auth.redirect') == '/') {
-      $this->Session->write('Auth.redirect', '/users/profile');
-    }
-    /* Redirects users coming from external links to a default
-     * logged in page (the profile page) */
-    $this->Auth->loginRedirect = array(
-      'controller'=>'users',
-      'action'=>'profile'
-    );
-    $this->Auth->logoutRedirect = array(
-      'controller'=>'home'
-    );
+    $this->Auth->loginAction = array('controller'=>'users', 'action'=>'login');
+    /* Redirects users from external links to default logged in page (home page) */
+    $this->Auth->loginRedirect = array('controller'=>'home');
+    $this->Auth->logoutRedirect = array('controller'=>'home');
   }
 
   function beforeRender() {

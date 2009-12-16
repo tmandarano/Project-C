@@ -12,24 +12,47 @@
   }
 }?>
 <div id='header'> 
-  <ul class='main_buttons'> 
-    <li class='logo'><?php echo $html->link('LiveGather', array('controller'=>'home'), array('escape'=>false))?></li> 
+  <ul class='nav'> 
+    <li class='logo'><a href="/">LiveGather</a></li> 
     <?php if ($user) { ?>
-      <li<?php markSelected('Stream', $title_for_layout)?>><?php echo $html->link($user['name']."'s Stream", array('controller'=>'stream'))?></li> 
       <li<?php markSelected('Profile', $title_for_layout)?>><?php echo $html->link($user['name'], array('controller'=>'users', 'action'=>'profile', $user['id']))?></li> 
-      <li<?php markSelected('Upload', $title_for_layout)?>><?php echo $html->link("Upload", array('controller'=>'photos', 'action'=>'add'))?></li>
     <? } ?>
-    <li<?php markSelected('Photos', $title_for_layout)?>><?php echo $html->link("Photos", array('controller'=>'explore'))?></li> 
-    <li<?php markSelected('People', $title_for_layout)?>><?php echo $html->link("People", array('controller'=>'explore'))?></li> 
-    <li>
-      <?php /*Sign in/out*/
-      if ($user) {
-        echo $html->link("Sign out", array('controller'=>'users', 'action'=>'logout'));
-      } else {
-        echo $html->link("Sign in", array('controller'=>'users', 'action'=>'login'));
-      } ?>
-    </li>
+    <li<?php markSelected('Photos', $title_for_layout)?>><a href="/explore/photos">Photos</a></li> 
+    <li<?php markSelected('People', $title_for_layout)?>><a href="/explore/people">People</a></li> 
+    <?php if ($user) { ?>
+    <li<?php markSelected('Share', $title_for_layout)?>><a href="/share/upload">Share</a></li>
+    <li<?php markSelected('Settings', $title_for_layout)?>><a href="/users/settings">Settings</a></li>
+    <?php } ?>
+    <li><a href="/users/log<?php if ($user) {?>out<?php }else{?>in<?php }?>">Sign <?php if ($user) {?>out<?php }else{?>in<?php }?></a></li>
   </ul> 
+  <ol class="stream">
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+  </ol>
 </div> 
 <div id="centering">
 <div id="content">
@@ -41,6 +64,7 @@
 <td>
   <h1><a href="/share">Share</a></h1>
   <ul>
+  <li><a href="/share/upload">Upload</a></li>
   <li><a href="/share/mobile">Mobile</a></li>
   <li><a href="/share/webcam">Webcam</a></li>
   </ul>

@@ -9,6 +9,7 @@ class HomeController extends AppController {
   }
 
   function index() {
+    $this->pageTitle='Home';
     $recentPhotos = $this->Photo->find('all',
       array('order'=>'Photo.datetime DESC', 'limit'=>16));
     for ($i=0; $i<count($recentPhotos); $i++) {
@@ -21,6 +22,13 @@ class HomeController extends AppController {
       }
     }
     $this->set(compact('recentPhotos'));
+
+    /* Show streams if user is signed in */
+    if ($this->Auth->user()) {
+      $this->render('/home/signedin');
+    } else {
+      $this->render('/home/signedout');
+    }
   }
 }
 ?>

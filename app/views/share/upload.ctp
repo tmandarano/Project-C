@@ -1,4 +1,4 @@
-<h1>Photo upload</h1>
+<h1>Upload</h1>
 <?php if (isset($results)) { ?>
 <h2>Uploaded photos:</h2>
 <ul>
@@ -34,4 +34,4 @@
     <td><span style="font-size: x-large;"><?php echo $form->end('Share') ?></span></td>
   </tr>
 </table>
-<?php $javascript->link('photos_add', false); ?>
+<?php $javascript->link('share_upload', false); ?>
