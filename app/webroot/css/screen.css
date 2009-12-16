@@ -40,25 +40,16 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 
 /* Setup large page elements (header, footer, content) */
 #header, #foot_bar {
-  width: 90%;
+  width: 100%;
   margin: auto;
 }
-#header, #content {
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  -moz-border-radius-bottomleft: 15px;
-  -moz-border-radius-bottomright: 15px;
-}
 #header {
-  background: url('/img/header.png') repeat-x;
-  background-color: #d05b2d;
-  height: 36px;
+  background-color: #9cda60;
+  height: 2.5em;
 }
 #foot_bar {
   position: relative;
-  background-color: #111111;
-  border-radius: 15px;
-  -moz-border-radius: 15px;
+  background-color: #444;
   margin-top: 1em;
 }
 #foot_bar table {
@@ -87,17 +78,17 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   position: relative;
   text-align: left;
   padding: 1em;
-  background: #edf5f7 url('/img/home_footer_grad.png') repeat-x bottom center;
-  border: 1px solid #999;
-  border-top: 0;
 }
 
 /* Header menu */
+.logo {
+  text-shadow: #555 0 0 5px;
+}
 .main_buttons li {
   float: left;     
 }
-.main_buttons li:hover, .main_buttons li.selected {
-  background-color: #c04b1d;
+.main_buttons li:hover a, .main_buttons li.selected {
+  text-shadow: #555 0 0 5px;
 }
 .main_buttons li a {
   display: block;

@@ -19,7 +19,8 @@
       <li<?php markSelected('Profile', $title_for_layout)?>><?php echo $html->link($user['name'], array('controller'=>'users', 'action'=>'profile', $user['id']))?></li> 
       <li<?php markSelected('Upload', $title_for_layout)?>><?php echo $html->link("Upload", array('controller'=>'photos', 'action'=>'add'))?></li>
     <? } ?>
-    <li<?php markSelected('Explore', $title_for_layout)?>><?php echo $html->link("Explore", array('controller'=>'explore'))?></li> 
+    <li<?php markSelected('Photos', $title_for_layout)?>><?php echo $html->link("Photos", array('controller'=>'explore'))?></li> 
+    <li<?php markSelected('People', $title_for_layout)?>><?php echo $html->link("People", array('controller'=>'explore'))?></li> 
     <li>
       <?php /*Sign in/out*/
       if ($user) {
@@ -38,25 +39,25 @@
 <div id="foot_bar">
 <table><tr>
 <td>
-  <h1><a href="#">Upload</a></h1>
+  <h1><a href="/share">Share</a></h1>
   <ul>
-  <li><a href="#">Mobile</a></li>
-  <li><a href="#">Webcam</a></li>
+  <li><a href="/share/mobile">Mobile</a></li>
+  <li><a href="/share/webcam">Webcam</a></li>
   </ul>
 </td>
 <td>
-  <h1><a href="#">Explore</a></h1>
+  <h1><a href="/explore">Explore</a></h1>
   <ul>
-  <li><a href="#">Map</a></li>
-  <li><a href="#">People</a></li>
-  <li><a href="#">Photos</a></li>
+  <li><a href="/explore/photos">Map</a></li>
+  <li><a href="/explore/people">People</a></li>
+  <li><a href="/explore/photos">Photos</a></li>
   </ul>
 </td>
 <td>
-  <h1><a href="#">About</a></h1>
+  <h1><a href="/about">About</a></h1>
   <ul>
-  <li><a href="#">Contact</a></li>
-  <li><a href="#">FAQ</a></li>
+  <li><a href="/about/contact">Contact</a></li>
+  <li><a href="/about/faq">FAQ</a></li>
   </ul>
 </td>
 </tr></table>
