@@ -253,33 +253,98 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 
 .stream.home .stream li {
   height: 215px;
+  padding: 5px 0;
   position: relative;
 }
 .stream.home .stream li .state {
-  width: 42px; /* 14*3 */
+  width: 15px; /* 14*3 */
   height: inherit;
-  background-color: #eee;
   position: absolute;
-  
+  display: table-cell;
+  vertical-align: middle;
+}
+.stream.home .stream li .state div {
+  height: 32px;
+  width: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #aaa;
+  margin: 5px 0;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+.stream.home .stream li.comments .state .comments,
+.stream.home .stream li.map .state .map,
+.stream.home .stream li.meta .state .meta {
+  background-color: #a3c483;
 }
 .stream.home .stream li .photo {
-  left: 42px;
+  left: 20px;
   position: absolute;
   height: inherit;
   width: 215px;
   background-color: #aaa;
 }
+.stream.home .stream li .photo a {
+  display: block;
+  width: 215px;
+  height: 215px;
+}
 .stream.home .stream li .photo img {
   width: 215px;
-  max-height: 215px;
-  position: relative;
 }
-.stream.home .stream li .details {
-  left: 257px;
+.stream.home .stream li .detail {
+  left: 245px;
   position: absolute;
   height: inherit;
   width: 500px;
-  background-color: #eee;
+  display: none;
+}
+.stream.home .stream li.comments .detail.comments .comments {
+  padding-left: 10px;
+}
+.stream.home .stream li.comments .detail.comments .comments li {
+  display: block;
+}
+.stream.home .stream .map .detail.map .map {
+  position: absolute;
+  width: 215px;
+  height: 215px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+.stream.home .stream .map .detail.map h1,
+.stream.home .stream .map .detail.map ul {
+  padding-left: 225px;
+}
+.stream.home .stream li.comments .detail.comments,
+.stream.home .stream li.map .detail.map,
+.stream.home .stream li.meta .detail.meta {
+  display: block;
+}
+
+div.caption,
+.comment {
+  position: relative;
+  height: 50px !important;
+  overflow: hidden;
+  padding-left: 55px !important;
+  margin-bottom: 5px;
+}
+div.caption img,
+.comment img {
+  position: absolute;
+  top: 0; left: 0;
+}
+div.caption p,
+.comment p {
+  font-size: normal;
+  color: #000;
+}
+
+.location {
+  font-size: smaller;
+  color: #a3c483;
 }
 
 .photos.view #the_image {

@@ -60,9 +60,11 @@
 </td>
 </tr></table>
 </div>
+<div id="scripts">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript" src="/js/global.js"></script>
 <?php echo $scripts_for_layout; ?>
+</div>
 </body> 
 </html> 
