@@ -25,33 +25,7 @@
     <?php } ?>
     <li><a href="/users/log<?php if ($user) {?>out<?php }else{?>in<?php }?>">Sign <?php if ($user) {?>out<?php }else{?>in<?php }?></a></li>
   </ul> 
-  <ol class="stream">
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
-    <li><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/1" /></li>
+  <ol id="headerstream" class="stream">
   </ol>
 </div> 
 <div id="centering">
@@ -88,6 +62,7 @@
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="js/global.js"></script>
 <?php echo $scripts_for_layout; ?>
 </body> 
 </html> 

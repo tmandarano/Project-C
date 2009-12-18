@@ -39,7 +39,7 @@ LG.HOME.QueueOverlay.prototype.addPic = function(photo) {
     self.stream.append($('<img src="/photos/'+pic.id+'/1" />').fadeIn(600));
   }
   if (this.stream.children().length >= LG.HOME.MAX_PICS_IN_STREAM) {
-    $(this.stream.children()[0]).hide(300, function() {
+    this.stream.children(':first').hide(300, function() {
       $(this).remove();
       appendStream();
     });
