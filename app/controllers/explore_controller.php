@@ -5,7 +5,7 @@ class ExploreController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('index');
+    $this->Auth->allow('index', 'photos', 'people');
   }
 
   function index() {

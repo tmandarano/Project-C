@@ -1,4 +1,4 @@
-<?php echo $session->flash('auth')?>
+<h1>You need to sign in before continuing.</h1>
 <?php echo $form->create('User', array('action'=>'login'))?>
 <table>
 <tr><th>Email</th><td><input type="text" name="data[User][email]" id="UserEmail" /></td></tr>
