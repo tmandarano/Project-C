@@ -90,6 +90,9 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   color: #eee;
   text-shadow: #555 0 0 5px;
 }
+.logo {
+  margin-left: -20px;
+}
 .nav li a { /* block links provide big clickable area */
   display: block;
   padding: 0.75em 20px 0 20px;
