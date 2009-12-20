@@ -25,12 +25,11 @@
   </ul> 
   <ol id="headerstream" class="stream"></ol>
 </div> 
-<div id="centering">
 <div id="content">
   <?php echo $content_for_layout?>
 </div>
-</div>
-<div id="foot_bar">
+<div id="footer">
+<div>
 <table><tr>
 <td>
   <h1><a href="/share">Share</a></h1>
@@ -56,6 +55,7 @@
   </ul>
 </td>
 </tr></table>
+</div>
 </div>
 <div id="scripts">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>

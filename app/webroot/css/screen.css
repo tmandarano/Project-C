@@ -39,10 +39,9 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 }
 
 /* Setup large page elements (header, footer, content) */
-#header, #foot_bar {
+#header, #footer {
   position: relative;
   width: 100%;
-  margin: auto;
 }
 #header {
   background-color: #9cda60;
@@ -58,41 +57,28 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   width: 50px;
   float: left;
 }
-#foot_bar {
+#footer {
   background-color: #444;
-  margin-top: 1em;
 }
-#foot_bar table {
-  position: relative;
-  right: 0;
-}
-#foot_bar a {
+#footer a {
   color: #fff;
   font-size: small;
 }
-#foot_bar h1 a {
+#footer h1 a {
   font-size: large;
   font-weight: bold;
 }
-#foot_bar td {
-  padding: 1em;
+#footer td {
+  padding: 0 2em 0.5em 0;
   vertical-align: top;
 }
-#centering, .nav {
-  position:relative;
+#content, .nav, #footer div {
+  position: relative;
   margin: auto;
   width: 960px;
-  max-width: 85%;
 }
 #content {
-  position: relative;
-  text-align: left;
   padding: 1em;
-}
-
-/* Header menu */
-.logo, .logo:hover {
-  text-shadow: #555 0 0 5px;
 }
 .nav {
   height: 2.5em;
@@ -100,11 +86,11 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .nav li {
   float: left;     
 }
-.nav li:hover a, .nav li.selected {
+.logo, .nav li:hover a, .nav li.selected {
   color: #eee;
   text-shadow: #555 0 0 5px;
 }
-.nav li a { /* use block links to provide big clickable area */
+.nav li a { /* block links provide big clickable area */
   display: block;
   padding: 0.75em 20px 0 20px;
   height: 1.75em;
@@ -113,7 +99,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 }
 
 .home.out strong {
-  color: #d05b2d;
+  color: #3b0;
 }
 .home.out .title {
   font-size: larger;
@@ -137,7 +123,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 }
 .home.out .stream h1 {
   font-size: large;
-  color: #d05b2d;
+  color: #3b0;
   margin: 0.5em 0;
 }
 .home.out .stream .tools {
@@ -224,7 +210,6 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   text-align: center;
   margin-top: 1em;
   width: 100%;
-  border-top: 1px solid #999;
 }
 .home.out .footer td {
   position: relative;
@@ -246,7 +231,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 }
 .home.out .footer .links a { 
   font-size: smaller;
-  color: #d05b2d;
+  color: #3b0;
 }
 .home.out .footer .links .left { text-align: left; left: 0; }
 .home.out .footer .links .right { text-align: right; right: 0; }
@@ -400,11 +385,8 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   vertical-align: middle;
 }
 
-.explore.photos #centering {
-  width: 100%;
-  max-width: none;
-}
 .explore.photos #content {
+  width: 100%;
   padding: 0;
 }
 
