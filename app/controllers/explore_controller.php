@@ -9,7 +9,7 @@ class ExploreController extends AppController {
   }
 
   function index() {
-    $this->pageTitle='Explore';
+    $this->pageTitle='Explore ';
   }
   function photos() {
     $this->pageTitle='Photos | Explore ';

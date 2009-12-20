@@ -14,19 +14,16 @@
 <div id='header'> 
   <ul class='nav'> 
     <li class='logo'><a href="/">LiveGather</a></li> 
-    <?php if ($user) { ?>
-      <li<?php markSelected('Profile', $title_for_layout)?>><?php echo $html->link($user['name'], array('controller'=>'users', 'action'=>'profile', $user['id']))?></li> 
-    <? } ?>
     <li<?php markSelected('Photos', $title_for_layout)?>><a href="/explore/photos">Photos</a></li> 
     <li<?php markSelected('People', $title_for_layout)?>><a href="/explore/people">People</a></li> 
     <?php if ($user) { ?>
-    <li<?php markSelected('Share', $title_for_layout)?>><a href="/share/upload">Share</a></li>
-    <li<?php markSelected('Settings', $title_for_layout)?>><a href="/users/settings">Settings</a></li>
-    <?php } ?>
+      <li<?php markSelected('Profile', $title_for_layout)?>><a href="/users/profile/<?php echo $user['id']?>"><?php echo $user['name']?></a></li> 
+      <li<?php markSelected('Share', $title_for_layout)?>><a href="/share/upload">Share</a></li>
+      <li<?php markSelected('Settings', $title_for_layout)?>><a href="/users/settings">Settings</a></li>
+    <? } ?>
     <li><a href="/users/log<?php if ($user) {?>out<?php }else{?>in<?php }?>">Sign <?php if ($user) {?>out<?php }else{?>in<?php }?></a></li>
   </ul> 
-  <ol id="headerstream" class="stream">
-  </ol>
+  <ol id="headerstream" class="stream"></ol>
 </div> 
 <div id="centering">
 <div id="content">

@@ -1,16 +1,10 @@
 <?php
 class UsersController extends AppController {
   var $name = 'Users';
-  var $components = array('RequestHandler');
-  var $helpers = array('Form', 'Time');
 
   function beforeFilter() {
     parent::beforeFilter();
     $this->Auth->allow('login', 'add', 'photo', 'profile');
-  }
-
-  /* Views */
-  function index() {
   }
 
   function add() {

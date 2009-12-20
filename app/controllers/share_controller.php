@@ -5,10 +5,11 @@ class ShareController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('index', 'mobile', 'webcam');
   }
 
-  function index() {}
+  function index() {
+    $this->pageTitle = 'Share ';
+  }
 
   function upload() {
     $this->pageTitle = 'Upload | Share ';

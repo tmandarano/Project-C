@@ -6,10 +6,7 @@ class AppController extends Controller {
   function beforeFilter() {
     Security::setHash('md5');
 
-    $this->Auth->fields = array(
-      'username' => 'email',
-      'password' => 'password'
-    );
+    $this->Auth->fields = array('username' => 'email', 'password' => 'password');
     $this->Auth->loginAction = array('controller'=>'users', 'action'=>'login');
     /* Redirects users from external links to default logged in page (home page) */
     $this->Auth->loginRedirect = array('controller'=>'home');
