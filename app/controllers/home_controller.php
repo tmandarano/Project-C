@@ -25,8 +25,10 @@ class HomeController extends AppController {
 
     /* Show streams if user is signed in */
     if ($this->Auth->user()) {
+      $this->set('pageClass', 'home stream');
       $this->render('/home/signedin');
     } else {
+      $this->set('pageClass', 'home out');
       $this->render('/home/signedout');
     }
   }

@@ -1,4 +1,3 @@
-<div class="home out">
 <table class="split">
   <tr>
     <td class="left pane">
@@ -83,7 +82,6 @@
     </td>
   </tr>
 </table>
-</div>
 <?php $javascript->link('home', false); ?>
 <script type="text/javascript">
 var LG=LG?LG:{};

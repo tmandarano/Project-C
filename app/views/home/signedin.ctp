@@ -1,4 +1,3 @@
-<div class="stream home">
 <table class="split"><tr>
 <td class="left pane">
   <ol class="stream">
@@ -98,5 +97,4 @@
 </ul>
 </td>
 </tr></table>
-</div>
 <?php $javascript->link('home_signedin', false); ?>

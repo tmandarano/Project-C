@@ -10,12 +10,15 @@ class ExploreController extends AppController {
 
   function index() {
     $this->pageTitle='Explore ';
+    $this->set('pageClass', 'explore index');
   }
   function photos() {
     $this->pageTitle='Photos | Explore ';
+    $this->set('pageClass', 'explore photos');
   }
   function people() {
     $this->pageTitle='People | Explore ';
+    $this->set('pageClass', 'explore people');
   }
 }
 ?>

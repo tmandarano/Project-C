@@ -9,6 +9,7 @@ class ShareController extends AppController {
 
   function index() {
     $this->pageTitle = 'Share ';
+    $this->set('pageClass', 'share index');
   }
 
   function upload() {
@@ -21,14 +22,17 @@ class ShareController extends AppController {
       $results = $this->saveUploadedFilesForUser($userId, $this->data['Photo']);
       $this->set(compact('results'));
     }
+    $this->set('pageClass', 'share upload');
   }
 
   function mobile() {
     $this->pageTitle = 'Mobile | Share ';
+    $this->set('pageClass', 'share mobile');
   }
 
   function webcam() {
     $this->pageTitle = 'Webcam | Share ';
+    $this->set('pageClass', 'share webcam');
   }
 
   /* Private */

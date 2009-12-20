@@ -5,7 +5,7 @@
 <?php echo $html->css('screen')?>
 <title><?php echo $title_for_layout?> | LiveGather</title> 
 </head> 
-<body> 
+<body class="<?php echo $pageClass?>"> 
 <?php function markSelected($name, $env) {
   if (strpos($env, $name) !== false) {
     echo ' class="selected"';

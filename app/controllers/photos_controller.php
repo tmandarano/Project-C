@@ -61,6 +61,7 @@ class PhotosController extends AppController {
     //TODO find real related
     $related = $this->Photo->find('all', array('limit'=>10));
     $this->set(compact('id', 'photo', 'related'));
+    $this->set('pageClass', 'photos view');
   }
 
   function json($id=null) {
@@ -85,10 +86,12 @@ class PhotosController extends AppController {
       $results = $this->saveUploadedFilesForUser($userId, $this->data['Photo']);
       $this->set(compact('results'));
     }
+    $this->set('pageClass', 'photos add');
   }
 
   function edit($id) {
 
+    $this->set('pageClass', 'photos edit');
   }
 
   private function mime_ok($permitted, $type) {

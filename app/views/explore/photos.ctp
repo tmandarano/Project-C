@@ -1,4 +1,3 @@
-<div class="explore photos">
 <div id="shelf">
 <table>
 <tr>
@@ -24,6 +23,5 @@
 </table>
 </div>
 <div id="map_explore" style="height: 700px;"></div>
-</div>
 <?php $javascript->link('explore', false); ?>
 <?php $javascript->link('viewpic', false); ?>

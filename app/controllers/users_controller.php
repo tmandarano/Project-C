@@ -23,6 +23,7 @@ class UsersController extends AppController {
         $this->set('status', 'invalid');
       }
     }
+    $this->set('pageClass', 'users add');
   }
 
   function photo($id) {
@@ -67,14 +68,18 @@ class UsersController extends AppController {
       $interests = explode(';', $userobj['interests']);
       $this->set(compact('userobj', 'recentPhotos', 'interests'));
     }
+    $this->set('pageClass', 'users profile');
   }
 
   function settings() {
     $this->pageTitle='Settings';
+    $this->set('pageClass', 'users settings');
   }
 
   /* Authentication */
-  function login() {}
+  function login() {
+    $this->set('pageClass', 'users login');
+  }
   function logout() {
     $this->Session->setFlash('Signed out');
     $this->redirect($this->Auth->logout());

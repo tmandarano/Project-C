@@ -251,12 +251,12 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .home.out .footer .links .left { text-align: left; left: 0; }
 .home.out .footer .links .right { text-align: right; right: 0; }
 
-.stream.home .stream > li {
+.home.stream .stream > li {
   height: 215px;
   padding: 5px 0;
   position: relative;
 }
-.stream.home .stream li .state {
+.home.stream .stream li .state {
   width: 15px;
   height: inherit;
   position: absolute;
@@ -264,7 +264,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   vertical-align: middle;
   padding-top: 50px;
 }
-.stream.home .stream li .state div {
+.home.stream .stream li .state div {
   height: 32px;
   width: 10px;
   background-color: #f9f9f9;
@@ -273,40 +273,40 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   border-radius: 2px;
   -moz-border-radius: 2px;
 }
-.stream.home .stream li.comments .state .comments,
-.stream.home .stream li.map .state .map,
-.stream.home .stream li.meta .state .meta {
+.home.stream .stream li.comments .state .comments,
+.home.stream .stream li.map .state .map,
+.home.stream .stream li.meta .state .meta {
   background-color: #a3c483;
 }
-.stream.home .stream li .photo {
+.home.stream .stream li .photo {
   left: 20px;
   position: absolute;
   height: inherit;
   width: 215px;
   background-color: #aaa;
 }
-.stream.home .stream li .photo a {
+.home.stream .stream li .photo a {
   display: block;
   width: 215px;
   height: 215px;
 }
-.stream.home .stream li .photo img {
+.home.stream .stream li .photo img {
   width: 215px;
 }
-.stream.home .stream li .detail {
+.home.stream .stream li .detail {
   left: 245px;
   position: absolute;
   height: inherit;
   width: 500px;
   display: none;
 }
-.stream.home .stream li.comments .detail.comments .comments {
+.home.stream .stream li.comments .detail.comments .comments {
   padding-left: 10px;
 }
-.stream.home .stream li.comments .detail.comments .comments li {
+.home.stream .stream li.comments .detail.comments .comments li {
   display: block;
 }
-.stream.home .stream .map .detail.map .map {
+.home.stream .stream .map .detail.map .map {
   position: absolute;
   width: 215px;
   height: 215px;
@@ -314,72 +314,72 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   border-radius: 2px;
   -moz-border-radius: 2px;
 }
-.stream.home .stream .map .detail.map h1,
-.stream.home .stream .map .detail.map ul {
+.home.stream .stream .map .detail.map h1,
+.home.stream .stream .map .detail.map ul {
   padding-left: 225px;
 }
-.stream.home .stream .map .detail.map h1 {
+.home.stream .stream .map .detail.map h1 {
   color: #000;
   margin: 0;
   font-weight: bold;
   font-size: smaller;
 }
-.stream.home .stream .map .detail.map li {
+.home.stream .stream .map .detail.map li {
   height: 50px;
   padding-left: 55px;
   position: relative;
 }
-.stream.home .stream .map .detail.map li .time {
+.home.stream .stream .map .detail.map li .time {
   position: relative;
   top: 20%;
 }
-.stream.home .stream .map .detail.map li img {
+.home.stream .stream .map .detail.map li img {
   position: absolute;
   left: 0;
   top: 0;
 }
-.stream.home .stream .detail.meta .summary {
+.home.stream .stream .detail.meta .summary {
   position: absolute;
   width: 200px;
   height: inherit;
   border: 1px solid #eee;
   text-align: center;
 }
-.stream.home .stream .detail.meta .summary h1 {
+.home.stream .stream .detail.meta .summary h1 {
   font-size: medium;
   font-weight: bold;
 }
-.stream.home .stream .detail.meta .summary img.emotion {
+.home.stream .stream .detail.meta .summary img.emotion {
   width: 150px;
   height: 100px;
 }
-.stream.home .stream .detail.meta .summary .emotions ul {
+.home.stream .stream .detail.meta .summary .emotions ul {
   margin: auto;
 }
-.stream.home .stream .detail.meta .summary .emotions li {
+.home.stream .stream .detail.meta .summary .emotions li {
   display: table-cell;
 }
-.stream.home .stream .detail.meta > ul {
+.home.stream .stream .detail.meta > ul {
   padding-left: 210px;
 }
-.stream.home .stream .detail.meta > ul li {
+.home.stream .stream .detail.meta > ul li {
   height: auto;
   display: block;
   position: relative;
   padding-left: 55px;
   margin: 5px 0;
 }
-.stream.home .stream .detail.meta > ul li > img {
+.home.stream .stream .detail.meta > ul li > img {
   position: absolute;
   left: 0;
   top: 0;
 }
-.stream.home .stream li.comments .detail.comments,
-.stream.home .stream li.map .detail.map,
-.stream.home .stream li.meta .detail.meta {
+.home.stream .stream li.comments .detail.comments,
+.home.stream .stream li.map .detail.map,
+.home.stream .stream li.meta .detail.meta {
   display: block;
 }
-.stream.home .right.pane h1 {
+.home.stream .right.pane h1 {
   background-color: #9cda60;
   border-radius: 2px;
   -moz-border-radius: 2px;
@@ -388,16 +388,24 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   padding-left: 1em;
   margin-top: 0.5em;
 }
-.stream.home .social.stream > li {
+.home.stream .social.stream > li {
   height: auto;
   text-align: center;
 }
-.stream.home .social.stream > li p {
+.home.stream .social.stream > li p {
   text-align: left;
   font-size: smaller;
 }
-.stream.home .social.stream > li p img {
+.home.stream .social.stream > li p img {
   vertical-align: middle;
+}
+
+.explore.photos #centering {
+  width: 100%;
+  max-width: none;
+}
+.explore.photos #content {
+  padding: 0;
 }
 
 div.caption,
