@@ -21,26 +21,26 @@
         </li>
       </div>
       <div class="detail map">
-        <div class="map">Here be a map.</div>
-        <h1 class="location">Mercer Island, WA</h1>
+        <div class="map"></div>
+        <h1>Near <span class="location">Mercer Island, WA</span></h1>
         <h1 class="time">December 17, 2009 1:04pm</h1>
         <ul>
-          <li><img src="/users/photo/11" /> 20 seconds ago</li>
-          <li><img src="/users/photo/11" /> 42 seconds ago</li>
-          <li><img src="/users/photo/11" /> 3 minutes ago</li>
+          <li><a href="/users/profile/11"><img src="/users/photo/11" /> <span class="time">20 seconds ago</span></a></li>
+          <li><a href="/users/profile/11"><img src="/users/photo/11" /> <span class="time">42 seconds ago</span></a></li>
+          <li><a href="/users/profile/11"><img src="/users/photo/11" /> <span class="time">3 minutes ago</span></a></li>
         </ul>
       </div>
       <div class="detail meta">
-        <div class="">
-          <h1>This photo is</h1>
-          <h2>Newsworthy</h2>
-          <img src="/img/emotions/l/newsworthy.png" />
+        <div class="summary">
+          <h1>Newsworthy</h1>
+          <img class="emotion" src="/img/emotions/l/newsworthy.png" />
           <ul class="emotions">
             <li><img src="/img/emotions/newsworthy.png" /></li>
             <li><img src="/img/emotions/cute_l.png" /></li>
             <li><img src="/img/emotions/happy_l.png" /></li>
             <li><img src="/img/emotions/interesting_l.png" /></li>
           </ul>
+          <div class="stars three"></div>
         </div>
         <ul>
           <li>
@@ -87,6 +87,14 @@
 <li>2 new comments</li>
 <li>2 requests</li>
 <li>1 message</li>
+</ul>
+<h1>Social Stream <select><option>Friends</option><option>Family</option></select></h1>
+<ul class="social stream">
+  <li><p><a class="username" href="/users/profile/11">Tony Mandarano</a> commented on <a class="username" href="/users/profile/12">John Last</a>'s <a href="/photos/view/1">photo</a></p><img src="/photos/4b12d1dd-e77c-4da9-b794-7c2f2641192c/1" /></li>
+  <li><p><a class="username" href="/users/profile/11">Will Noble</a> likes <a class="username" href="/users/profile/12">Jeff Other</a>'s <a href="/photos/view/1">photo</a></p><img src="/photos/4b12d1dd-e77c-4da9-b794-7c2f2641192c/1" /></li>
+  <li><p><a class="username" href="/users/profile/11">Elliot Otherbody</a> thinks <a class="username" href="/users/profile/12">Nolan Somebody</a>'s <a href="/photos/view/1">photo</a> is <img src="/img/emotions/happy_l.png" /></p><img src="/photos/4b12d1dd-e77c-4da9-b794-7c2f2641192c/1" /></li>
+  <li><p><a class="username" href="/users/profile/11">John Yayay</a> commented on <a class="username" href="/users/profile/12">Amir Boobooboo</a>'s <a href="/photos/view/1">photo</a></p><img src="/photos/4b12d1dd-e77c-4da9-b794-7c2f2641192c/1" /></li>
+  <li><p><a class="username" href="/users/profile/11">Jessica Parker</a> thinks <a class="username" href="/users/profile/12">Sarah Lie</a>'s <a href="/photos/view/1">photo</a> is <img src="/img/emotions/cute_l.png" /></p><img src="/photos/4b12d1dd-e77c-4da9-b794-7c2f2641192c/1" /></li>
 </ul>
 </td>
 </tr></table>

@@ -1,4 +1,4 @@
-<div class="home">
+<div class="home out">
 <table class="split">
   <tr>
     <td class="left pane">
