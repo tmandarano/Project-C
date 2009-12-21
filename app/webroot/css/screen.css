@@ -9,9 +9,6 @@ body {
 a {
   text-decoration: none;
 }
-h1 {
-  font-size: 1.7em;
-}
 form th {
   text-align: right;
 }
@@ -46,13 +43,13 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 #header {
   background-color: #9cda60;
 }
-#header .stream {
+#headerstream {
   position: relative;
   height: 50px;
   background-color: #000;
   margin: auto;
 }
-#header .stream li {
+#headerstream li {
   height: inherit;
   width: 50px;
   float: left;
@@ -69,7 +66,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   font-weight: bold;
 }
 #footer td {
-  padding: 0 2em 0.5em 0;
+  padding: 0.5em 2em 0.5em 0;
   vertical-align: top;
 }
 #content, .nav, #footer div {
@@ -218,6 +215,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   position: relative;
   vertical-align: top;
   width: 33%;
+  padding: 0 0.5em 0 0.5em;
 }
 .home.out .footer td h1 {
   margin: 0.5em 0;
@@ -440,23 +438,6 @@ div.caption p,
 .the_image .right {
   right: 0;
 }
-.photos.view .nav {
-  background-color: #999;
-  width: 50%;
-  margin: auto;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  -moz-border-radius-bottomleft: 8px;
-  -moz-border-radius-bottomright: 8px;
-}
-.photos.view .nav img {
-  width: 50px;
-  height: 50px;
-}
-.photos.view .nav a {
-  display: block;
-  text-align: center;
-}
 .photos.view td.pane {
   vertical-align: top;
 }
@@ -497,12 +478,17 @@ div.caption p,
 .users.profile .mostrecent .left.pane {
   height: 215px;
 }
-.users.profile .right.pane .caption {
-  color: #5a1;
+.users.profile .mostrecent .right.pane .caption {
   font-size: x-large;
+  color: #3b0;
 }
 .users.profile .userinfo {
   margin-bottom: 0.5em;
+}
+
+.share.upload h1 {
+  font-size: x-large;
+  color: #3b0;
 }
 
 .userpic {

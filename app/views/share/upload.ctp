@@ -1,4 +1,4 @@
-<h1>Upload</h1>
+<h1>Share by Uploading</h1>
 <?php if (isset($results)) { ?>
 <h2>Uploaded photos:</h2>
 <ul>

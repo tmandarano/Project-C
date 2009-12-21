@@ -23,7 +23,7 @@
     <? } ?>
     <li><a href="/users/log<?php if ($user) {?>out<?php }else{?>in<?php }?>">Sign <?php if ($user) {?>out<?php }else{?>in<?php }?></a></li>
   </ul> 
-  <ol id="headerstream" class="stream"></ol>
+  <ol id="headerstream"></ol>
 </div> 
 <div id="content">
   <?php echo $content_for_layout?>
