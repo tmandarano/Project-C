@@ -139,7 +139,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   border-collapse: separate;
 }
 .home.out .updating_map {
-  border: 1px solid;
+  border: 1px solid #999;
 }
 .home.out .updating_map #map {
   width: 400px;
@@ -391,6 +391,97 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   padding: 0;
 }
 
+.explore.people #content > h1 {
+  color: #3b0;
+  font-size: x-large;
+}
+.explore.people .location.selector {
+  position: absolute;
+  top: 1em;
+  right: 0;
+  font-size: large !important;
+  color: #fff !important;
+  background-color: #9cda60;
+  padding: 2px 4px;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+.explore.people .recent {
+  width: 100%;
+  margin-top: 1em;
+}
+.explore.people .recent h1 {
+  color: #3b0;
+  font-size: large;
+  margin-bottom: 0.5em;
+}
+.explore.people .recent #recently_near_people_map {
+  width: 300px; height: 300px;
+  border: 1px solid #555;
+}
+.explore.people div.search {
+  margin-top: 1em;
+}
+.explore.people .search h1 {
+  color: #3b0;
+  font-size: large;
+}
+.explore.people .search .searchbox {
+  width: 80%;
+  text-align: center;
+  margin: 0.5em auto;
+}
+.explore.people .search label {
+  color: #3b0;
+}
+.explore.people .search .label {
+  color: #555;
+  font-size: small;
+}
+.explore.people .search .match {
+  color: #3b0;
+}
+.explore.people .search .users > li {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 215px;
+}
+.explore.people .search .users > li .photo {
+  position: absolute;
+  top: 0; right: 0;
+  width: 215px;
+}
+.explore.people .search .users > li .photo img {
+  width: 215px;
+  max-height: 215px;
+}
+
+ul.users > li {
+  position: relative;
+  padding-left: 55px;
+  min-height: 50px;
+  margin-bottom: 0.5em;
+  vertical-align: middle;
+}
+ul.users.centered > li {
+  line-height: 50px;
+}
+ul.users > li img {
+  position: absolute;
+  top:0; left:0; 
+}
+
+form.search input[type="text"] {
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  padding: 0 20px 0 4px;
+}
+form.search input[type="image"] {
+  margin-left: -20px;
+  vertical-align: middle;
+}
+
 div.caption,
 .comment {
   position: relative;
@@ -597,13 +688,10 @@ h2 {
 }
 
 input.comment {
-  border-style:solid;
-  border-color:#CCC;
+  border: 2px solid #ccc;
   margin-top:6px;
-  padding-left:5px;
-  padding-right:5px;
+  padding: 0 5px;
   width:450px;
-  border-width:2px;
   background-color:#f7f7f7;
   font-size:16px;
   color:#999;
@@ -661,7 +749,7 @@ input[type="text"]:focus, input[type="password"]:focus {
   -moz-border-radius: 10px;
   z-index: 9100;
   background-color: #CDECFF;
-  color: #000000;
+  color: #000;
   padding: 1.5em;
 }
 #viewpic table {
@@ -674,11 +762,6 @@ input[type="text"]:focus, input[type="password"]:focus {
   position: absolute;
   top: 1.5em;
   right: 1.5em;
-}
-
-/*maps*/
-#map {
-  border: 1px solid #999;
 }
 
 .actionbox {
@@ -730,10 +813,6 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 .infoed.photo .image:hover .hover {
   display: block;
-}
-
-.explore.photos {
-  width: 100%;
 }
 
 .cake-sql-log {
