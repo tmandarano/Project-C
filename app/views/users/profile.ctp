@@ -1,4 +1,3 @@
-<div class="users profile">
 <table class="split">
   <tr>
     <td class="left pane">
@@ -8,18 +7,19 @@
           <td class="left pane"><img src="/photos/<?php echo $bigPhoto['id']?>" /></td>
           <td class="right pane">
             <p><span class="caption"><?php echo $bigPhoto['caption'] ?></span> <span class="time"><?php echo $time->timeAgoInWords($bigPhoto['datetime'], array('end'=>'+1month'))?></span></p>
-            <div class="comments">
-              <div class="commentblock">
-                <?php echo $this->element('user', array('user'=>$userobj))?> <div class="time">35 seconds ago</div>
-                <div class="comment">Give me a call when you get to school ok? Have fun on the drive down and be safe!</div>
-                <div class="clearer"></div>
-              </div>
-              <div class="commentblock">
-                <?php echo $this->element('user', array('user'=>$userobj))?> <div class="time">2 minutes ago</div>
-                <div class="comment">have fun! good luck at school</div>
-                <div class="clearer"></div>
-              </div>
-            </div>
+            <ul class="users comments">
+              <li>
+                <?php echo $this->element('user', array('user'=>$userobj))?> <span class="time">35 seconds ago</span>
+                <p>Give me a call when you get to school ok? Have fun on the drive down and be safe!</p>
+              </li>
+              <li>
+                <?php echo $this->element('user', array('user'=>$userobj))?> <span class="time">2 minutes ago</span>
+                <p>have fun! good luck at school</p>
+              </li>
+              <li>
+                <?php echo $this->element('user', array('user'=>$userobj))?>
+              </li>
+            </ul>
           </td>
         </tr>
       </table>
@@ -47,8 +47,8 @@
       <div class="bubble">Friends<div class="right"><a href="#">0</a></div></div> 
       <div class="bubble">About <?php echo $userobj['name']?> <div class="right"><a href="#">edit</a></div></div> 
       <ul>
-      <li><strong>bio:</strong> go chargers!</li>
-      <li><strong>occupation:</strong> student</li>
+        <li><strong>bio:</strong> go chargers!</li>
+        <li><strong>occupation:</strong> student</li>
       </ul>
       <div class="bubble">Interests <div class="right"><a href="#">edit</a></div></div> 
       <ul>
@@ -74,4 +74,3 @@
     </td>
   </tr>
 </table>
-</div>

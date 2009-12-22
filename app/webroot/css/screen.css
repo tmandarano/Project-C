@@ -310,20 +310,6 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   font-weight: bold;
   font-size: smaller;
 }
-.home.stream .stream .map .detail.map li {
-  height: 50px;
-  padding-left: 55px;
-  position: relative;
-}
-.home.stream .stream .map .detail.map li .time {
-  position: relative;
-  top: 20%;
-}
-.home.stream .stream .map .detail.map li img {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
 .home.stream .stream .detail.meta .summary {
   position: absolute;
   width: 200px;
@@ -467,7 +453,7 @@ ul.users > li {
 ul.users.centered > li {
   line-height: 50px;
 }
-ul.users > li img {
+ul.users > li > img {
   position: absolute;
   top:0; left:0; 
 }
@@ -531,6 +517,9 @@ div.caption p,
 }
 .photos.view td.pane {
   vertical-align: top;
+}
+.photos.view .tags * {
+  display: inline;
 }
 .photos.view .commentblock {
   position: relative;

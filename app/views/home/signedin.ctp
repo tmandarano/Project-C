@@ -1,7 +1,7 @@
 <table class="split"><tr>
 <td class="left pane">
   <ol class="stream">
-    <li class="comments">
+    <li class="map">
       <div class="state"></div>
       <div class="photo"><a href="/photos/view/4b12e638-f028-48b9-af33-0a572641192c"><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/3" /></a></div>
       <div class="detail comments">
@@ -23,10 +23,10 @@
         <div class="map"></div>
         <h1>Near <span class="location">Mercer Island, WA</span></h1>
         <h1 class="time">December 17, 2009 1:04pm</h1>
-        <ul>
-          <li><a href="/users/profile/11"><img src="/users/photo/11" /> <span class="time">20 seconds ago</span></a></li>
-          <li><a href="/users/profile/11"><img src="/users/photo/11" /> <span class="time">42 seconds ago</span></a></li>
-          <li><a href="/users/profile/11"><img src="/users/photo/11" /> <span class="time">3 minutes ago</span></a></li>
+        <ul class="users centered">
+          <li><img src="/users/photo/11" /> <span class="time">20 seconds ago</span></li>
+          <li><img src="/users/photo/11" /> <span class="time">42 seconds ago</span></li>
+          <li><img src="/users/photo/11" /> <span class="time">3 minutes ago</span></li>
         </ul>
       </div>
       <div class="detail meta">
@@ -41,14 +41,14 @@
           </ul>
           <div class="stars three"></div>
         </div>
-        <ul>
+        <ul class="users">
           <li>
             <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span>
             <p>Gave stars</p>
           </li>
           <li>
             <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span>
-            <p>Voted the photo <img src="/img/emotions/newsworthy_l.png" /></p>
+            <p>Voted the photo <img src="/img/emotions/newsworthy.png" /></p>
           </li>
           <li>
             <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span>
