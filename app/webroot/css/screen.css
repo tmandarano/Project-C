@@ -8,6 +8,7 @@ body {
 }
 a {
   text-decoration: none;
+  color: #3b0;
 }
 form th {
   text-align: right;
@@ -48,6 +49,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   height: 50px;
   background-color: #000;
   margin: auto;
+  overflow-x: hidden;
 }
 #headerstream li {
   height: inherit;
@@ -248,10 +250,10 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   position: absolute;
   display: table-cell;
   vertical-align: middle;
-  padding-top: 50px;
+  padding-top: 36px;
 }
 .home.stream .stream li .state div {
-  height: 32px;
+  height: 40px;
   width: 10px;
   background-color: #f9f9f9;
   border: 1px solid #aaa;
@@ -269,15 +271,17 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   position: absolute;
   height: inherit;
   width: 215px;
-  background-color: #aaa;
+  background-color: #fafafa;
 }
 .home.stream .stream li .photo a {
   display: block;
   width: 215px;
   height: 215px;
+  line-height: 215px;
 }
 .home.stream .stream li .photo img {
   width: 215px;
+  vertical-align: middle;
 }
 .home.stream .stream li .detail {
   left: 245px;
@@ -327,9 +331,10 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 }
 .home.stream .stream .detail.meta .summary .emotions ul {
   margin: auto;
+  display: block;
 }
 .home.stream .stream .detail.meta .summary .emotions li {
-  display: table-cell;
+  display: inline;
 }
 .home.stream .stream .detail.meta > ul {
   padding-left: 210px;
