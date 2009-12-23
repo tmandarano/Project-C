@@ -49,12 +49,18 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   height: 50px;
   background-color: #000;
   margin: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 #headerstream li {
-  height: inherit;
-  width: 50px;
+  width: 50px; height: inherit;
+  overflow: hidden;
   float: left;
+}
+#headerstream li a {
+  line-height: 50px;
+}
+#headerstream li a img {
+  vertical-align: middle;
 }
 #footer {
   background-color: #444;
@@ -356,14 +362,9 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .home.stream .stream li.meta .detail.meta {
   display: block;
 }
-.home.stream .right.pane h1 {
-  background-color: #9cda60;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  color: #fff;
-  font-size: medium;
-  padding-left: 1em;
-  margin-top: 0.5em;
+.home.stream .right.pane h1 .right {
+  margin-top: -0.1em;
+  top: 0;
 }
 .home.stream .social.stream > li {
   height: auto;
@@ -400,6 +401,9 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .explore.people .recent {
   width: 100%;
   margin-top: 1em;
+}
+.explore.people .recent td {
+  vertical-align: top;
 }
 .explore.people .recent h1 {
   color: #3b0;
@@ -807,6 +811,20 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 .infoed.photo .image:hover .hover {
   display: block;
+}
+
+h1.bubble {
+  padding-left: 0.5em;
+  margin-top: 0.5em;
+  background-color: #9cda60;
+  color: #fff;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  margin: 0.2em -1em 0.2em 0;
+  padding: 0.1em 0.5em 0.1em 0.5em;
+}
+h1.bubble .right {
+  float: right;
 }
 
 .cake-sql-log {

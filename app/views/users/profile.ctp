@@ -42,19 +42,19 @@
       <p><?php echo $userobj['name']?></p>
       <p><?php echo $userobj['location']?></p>
       </div>
-      <div class="bubble">Watchers<div class="right"><a href="#">0</a></div></div> 
-      <div class="bubble">Watching<div class="right"><a href="#">0</a></div></div> 
-      <div class="bubble">Friends<div class="right"><a href="#">0</a></div></div> 
-      <div class="bubble">About <?php echo $userobj['name']?> <div class="right"><a href="#">edit</a></div></div> 
+      <h1 class="bubble">Watchers<div class="right"><a href="#">0</a></div></h1> 
+      <h1 class="bubble">Watching<div class="right"><a href="#">0</a></div></h1> 
+      <h1 class="bubble">Friends<div class="right"><a href="#">0</a></div></h1> 
+      <h1 class="bubble">About <?php echo $userobj['name']?> <div class="right"><a href="#">edit</a></div></h1> 
       <ul>
         <li><strong>bio:</strong> go chargers!</li>
         <li><strong>occupation:</strong> student</li>
       </ul>
-      <div class="bubble">Interests <div class="right"><a href="#">edit</a></div></div> 
+      <h1 class="bubble">Interests <div class="right"><a href="#">edit</a></div></h1> 
       <ul>
         <?php $interests = array(); foreach ($interests as $interest) { $interests[] = '<a href="#">'.$interest.'</a>'; } echo join(', ', $interests); ?>
       </ul>
-      <div class="bubble">Similar people <div class="right"><img class="sm_icon" src="/img/sm_icon.png"/></div></div> 
+      <h1 class="bubble">Similar people <div class="right"><img class="sm_icon" src="/img/sm_icon.png"/></div></h1> 
         <table class="collage" cellpadding="0" cellspacing="3"> 
           <tr> 
             <td><a href="#"><img src="/img/mini_pic.jpg"></a></td> 

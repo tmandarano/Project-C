@@ -4,9 +4,7 @@ LG.G.HeaderStream = function(jdom) {
   this.jdom = jdom;
   this.timeBetween = 3000;
   this.slideWidth = 50;
-  this.slideHeight = 50;
   this.fadeTime = 400;
-  this.jdom.css('overflow', 'hidden');
   (function(self) { $(window).resize(function() {
     self.sync();
   }); })(this);
@@ -15,18 +13,7 @@ LG.G.HeaderStream = function(jdom) {
 LG.G.HeaderStream.prototype = function() {};
 LG.G.HeaderStream.prototype.append = function(photo) {
   var pic = photo.Photo;
-  var usr = photo.User;
-  this.jdom.children(':last').fadeTo(this.fadeTime, 0.5);
-  $('<li><a href="/photos/view/'+pic.id+'"><img src="/photos/'+pic.id+'/1" /></a></li>')
-    .css({'height': this.slideHeight, 'overflow-y': 'hidden', 'display': 'table-cell', 'vertical-align': 'middle'})
-    .fadeIn(this.fadeTime)
-    .hover(function() {
-      $(this).fadeTo(200, 1.0);
-    }, function() {
-      if ($(this)[0] !== $(this).parent().children(':last')[0]) {
-        $(this).fadeTo(200, 0.5);
-      }
-    })
+  $('<li><a href="/photos/view/'+pic.id+'"><img src="/photos/'+pic.id+'/1" title="'+photo.User.name+': '+pic.caption+'"/></a></li>')
     .appendTo(this.jdom);
 };
 LG.G.HeaderStream.prototype.getMaxPhotos = function() {

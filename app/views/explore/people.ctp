@@ -5,7 +5,7 @@
 <table class="recent">
   <tr>
     <td>
-      <h1>Recently near you.</h1>
+      <h1>Recently near you</h1>
       <ul class="users centered">
         <li><img src="/users/photo/11" /> <span class="username">Jim Johnson</span> <span class="time">14 seconds ago</span></li>
         <li><img src="/users/photo/11" /> <span class="username">Mat Smith</span> <span class="time">36 seconds ago</span></li>
