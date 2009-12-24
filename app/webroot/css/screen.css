@@ -429,7 +429,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .explore.people .search label {
   color: #3b0;
 }
-.explore.people .search .label {
+span.label {
   color: #555;
   font-size: small;
 }
@@ -452,17 +452,20 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   max-height: 215px;
 }
 
-ul.users > li {
+ul.users > li,
+div.users {
   position: relative;
   padding-left: 55px;
   min-height: 50px;
   margin-bottom: 0.5em;
   vertical-align: middle;
 }
-ul.users.centered > li {
+ul.users.centered > li,
+div.users.centered {
   line-height: 50px;
 }
-ul.users > li > img {
+ul.users > li a img,
+div.users a img {
   position: absolute;
   top:0; left:0; 
 }
@@ -611,28 +614,6 @@ table.stream {
 .comment {
   color: #000;
   font: small;
-}
-
-.bubble {
-  background-color: #9cda60;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-  color: #fff;
-  position: relative;
-  width: 100%;
-  margin: 4px -7px 4px -7px;
-  padding: 2px 7px;
-}
-.bubble .right {
-  position: absolute;
-  top: 50%;
-  margin-top: -0.5em;
-  right: 7px;
-}
-.bubble a {
-  position: relative;
-  top: -0.1em;
-  color: #53abbb;
 }
 
 .hrule {
@@ -820,7 +801,7 @@ h1.bubble {
   color: #fff;
   border-radius: 2px;
   -moz-border-radius: 2px;
-  margin: 0.2em -1em 0.2em 0;
+  margin: 0.2em -0.5em 0.2em -0.5em;
   padding: 0.1em 0.5em 0.1em 0.5em;
 }
 h1.bubble .right {

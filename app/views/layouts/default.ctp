@@ -32,14 +32,6 @@
 <div>
 <table><tr>
 <td>
-  <h1><a href="/share">Share</a></h1>
-  <ul>
-  <li><a href="/share/upload">Upload</a></li>
-  <li><a href="/share/mobile">Mobile</a></li>
-  <li><a href="/share/webcam">Webcam</a></li>
-  </ul>
-</td>
-<td>
   <h1><a href="/explore">Explore</a></h1>
   <ul>
   <li><a href="/explore/photos">Map</a></li>
@@ -53,6 +45,17 @@
   <li><a href="/about/contact">Contact</a></li>
   <li><a href="/about/faq">FAQ</a></li>
   </ul>
+</td>
+<td>
+  <h1><a href="/share">Share</a></h1>
+  <ul>
+  <li><a href="/share/mobile">Mobile</a></li>
+  <li><a href="/share/upload">Upload</a></li>
+  <li><a href="/share/webcam">Webcam</a></li>
+  </ul>
+</td>
+<td>
+  <h1><a href="/users/settings">Settings</a></h1>
 </td>
 </tr></table>
 </div>

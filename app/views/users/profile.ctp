@@ -9,15 +9,20 @@
             <p><span class="caption"><?php echo $bigPhoto['caption'] ?></span> <span class="time"><?php echo $time->timeAgoInWords($bigPhoto['datetime'], array('end'=>'+1month'))?></span></p>
             <ul class="users comments">
               <li>
-                <?php echo $this->element('user', array('user'=>$userobj))?> <span class="time">35 seconds ago</span>
+                <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+                <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+                <span class="time">35 seconds ago</span>
                 <p>Give me a call when you get to school ok? Have fun on the drive down and be safe!</p>
               </li>
               <li>
-                <?php echo $this->element('user', array('user'=>$userobj))?> <span class="time">2 minutes ago</span>
+                <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+                <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+                <span class="time">2 minutes ago</span>
                 <p>have fun! good luck at school</p>
               </li>
               <li>
-                <?php echo $this->element('user', array('user'=>$userobj))?>
+                <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+                <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
               </li>
             </ul>
           </td>
@@ -37,18 +42,19 @@
       </table> 
     </td>
     <td class='right pane'>
-      <div class="userinfo">
-      <?php echo $this->element('user', array('user'=>$userobj))?>
-      <p><?php echo $userobj['name']?></p>
-      <p><?php echo $userobj['location']?></p>
+      <div class="users">
+        <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+        <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+        <p><?php echo $userobj['name']?></p>
+        <p class="location"><?php echo $userobj['location']?></p>
       </div>
       <h1 class="bubble">Watchers<div class="right"><a href="#">0</a></div></h1> 
       <h1 class="bubble">Watching<div class="right"><a href="#">0</a></div></h1> 
       <h1 class="bubble">Friends<div class="right"><a href="#">0</a></div></h1> 
       <h1 class="bubble">About <?php echo $userobj['name']?> <div class="right"><a href="#">edit</a></div></h1> 
       <ul>
-        <li><strong>bio:</strong> go chargers!</li>
-        <li><strong>occupation:</strong> student</li>
+        <li><span class="label">Bio</span> go chargers!</li>
+        <li><span class="label">Occupation</span> student</li>
       </ul>
       <h1 class="bubble">Interests <div class="right"><a href="#">edit</a></div></h1> 
       <ul>
