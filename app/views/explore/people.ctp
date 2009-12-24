@@ -58,3 +58,4 @@
   </li>
 </ul>
 </div>
+<?php $javascript->link('explore_people', false); ?>
