@@ -14,6 +14,7 @@
 <div id='header'> 
   <ul class='nav'> 
     <li class='logo'><a href="/">LiveGather</a></li> 
+    <li<?php markSelected('Map', $title_for_layout)?>><a href="/explore/map">Map</a></li> 
     <li<?php markSelected('Photos', $title_for_layout)?>><a href="/explore/photos">Photos</a></li> 
     <li<?php markSelected('People', $title_for_layout)?>><a href="/explore/people">People</a></li> 
     <?php if ($user) { ?>
@@ -25,6 +26,9 @@
   </ul> 
   <ol id="headerstream"></ol>
 </div> 
+<noscript>
+<p>Although we respect your choice to browse the web without Javascript enabled or present, we believe that the emphasis of this site, real-time photo sharing, cannot be well served without it. Please enable Javascript to enable us to create an enjoyable experience.</p>
+</noscript>
 <div id="content">
   <?php echo $content_for_layout?>
 </div>

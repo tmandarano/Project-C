@@ -235,17 +235,17 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .home.out .footer .links .left { text-align: left; left: 0; }
 .home.out .footer .links .right { text-align: right; right: 0; }
 
-.home.stream .stream > li {
+ol.stream > li {
   height: 215px;
   padding: 5px 0;
   position: relative;
 }
-.home.stream .stream li .state {
+ol.stream li .state {
   width: 15px; height: inherit;
   position: absolute;
   padding-top: 36px;
 }
-.home.stream .stream li .state div {
+ol.stream li .state div {
   width: 10px; height: 40px;
   background-color: #f9f9f9;
   border: 1px solid #aaa;
@@ -253,80 +253,80 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   border-radius: 2px;
   -moz-border-radius: 2px;
 }
-.home.stream .stream .comments .state .comments,
-.home.stream .stream .map .state .map,
-.home.stream .stream .meta .state .meta {
+ol.stream .comments .state .comments,
+ol.stream .map .state .map,
+ol.stream .meta .state .meta {
   background-color: #a3c483;
 }
-.home.stream .stream li .photo {
+ol.stream li .photo {
   position: absolute; left: 20px;
   width: 215px; height: inherit;
   background-color: #f0f0f0;
   border-radius: 2px;
   -moz-border-radius: 2px;
 }
-.home.stream .stream li .photo a {
+ol.stream li .photo a {
   width: inherit; height: inherit;
   display: block;
   line-height: 215px;
 }
-.home.stream .stream .photo img {
+ol.stream .photo img {
   width: inherit; vertical-align: middle;
 }
-.home.stream .stream .detail {
+ol.stream .detail {
   position: absolute; left: 245px;
   width: 500px; height: inherit;
   display: none;
 }
-.home.stream .stream .comments .detail.comments ul {
+ol.stream .comments .detail.comments ul {
   padding-left: 1em;
 }
-.home.stream .stream .map .detail.map .map {
+ol.stream .map .detail.map .map {
   position: absolute;
   width: 215px; height: inherit;
   border: 1px solid #aaa;
   border-radius: 2px;
   -moz-border-radius: 2px;
 }
-.home.stream .stream .map .detail.map p,
-.home.stream .stream .map .detail.map ul {
+ol.stream .map .detail.map p,
+ol.stream .map .detail.map ul {
   padding-left: 225px;
 }
-.home.stream .stream .detail.meta .summary {
+ol.stream .detail.meta .summary {
   position: absolute;
   width: 200px;
   height: inherit;
   border: 1px solid #eee;
   text-align: center;
 }
-.home.stream .stream .detail.meta .summary h1 {
+ol.stream .detail.meta .summary h1 {
   font-size: medium;
   font-weight: bold;
 }
-.home.stream .stream .detail.meta .summary img.emotion {
+ol.stream .detail.meta .summary img.emotion {
   width: 150px;
   height: 100px;
 }
-.home.stream .stream .detail.meta .summary .emotions ul {
+ol.stream .detail.meta .summary .emotions ul {
   margin: auto;
   display: block;
 }
-.home.stream .stream .detail.meta .summary .emotions li {
+ol.stream .detail.meta .summary .emotions li {
   display: inline;
 }
-.home.stream .stream .detail.meta > ul {
+ol.stream .detail.meta > ul {
   padding-left: 210px;
 }
-.home.stream .stream .detail.meta > ul li {
+ol.stream .detail.meta > ul li {
   height: auto;
   display: block;
   position: relative;
   padding-left: 55px;
   margin: 5px 0;
 }
-.home.stream .stream li.comments .detail.comments,
-.home.stream .stream li.map .detail.map,
-.home.stream .stream li.meta .detail.meta {
+ol.stream li.comments .detail.comments,
+ol.stream li.map .detail.map,
+ol.stream li.meta .detail.meta {
   display: block;
 }
 .home.stream .right.pane h1 .right {
