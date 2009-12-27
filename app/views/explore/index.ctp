@@ -1,3 +1,7 @@
 <h1 style="text-align: center;">Explore photos and people sharing their moments right now</h1>
 
-<p style="text-align: center; font-size: x-large;"><a href="/explore/photos">Photos</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/explore/people">People</a></p>
+<ul style="display: block; text-align: center;">
+<li style="display: inline; padding: 0 2em;"><a href="/explore/map">Map</a></li>
+<li style="display: inline; padding: 0 2em;"><a href="/explore/people">People</a></li>
+<li style="display: inline; padding: 0 2em;"><a href="/explore/photos">Photos</a></li>
+</ul>

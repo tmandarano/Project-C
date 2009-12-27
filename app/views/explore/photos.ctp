@@ -1,27 +1,15 @@
-<div id="shelf">
-<table>
-<tr>
-<td>
-<?php echo $form->create(false, array('explore/search'));?>
-<input type="text" size="9" />
-<?php echo $form->end('Search');?>
-</td>
-<td><a href="#">Most Interesting</a></td>
-<td><a href="#">Most Recent</a></td>
-<td><p>__Current_Location</p></td>
-<td class="zeitgeist">
-  <h1>Zeitgeist</h1>
-  <p>
-    <a href="#" onclick="viewpic(1);">football</a>
-    <a href="#" onclick="viewpic(2);">game</a>
-    <a href="#" onclick="viewpic(3);">car</a>
-    <a href="#" onclick="viewpic(4);">speech</a>
-    <a href="#" onclick="viewpic(5);">beach</a>
-  </p>
-</td>
-</tr>
-</table>
+<h1>Explore Photos</h1>
+
+<div class="search photos">
+<h1>Search Photos</h1>
+<div class="searchbox">
+<form name="photos" class="search">
+<label for="photosof">See photos of</label>
+<input type="text" name="photosof" /><input type="image" src="/img/search.png" name="search" />
+</form>
 </div>
-<div id="map_explore" style="height: 700px;"></div>
-<?php $javascript->link('explore', false); ?>
-<?php $javascript->link('viewpic', false); ?>
+
+<ul>
+</ul>
+</div>
+<?php $javascript->link('explore_photos', false); ?>

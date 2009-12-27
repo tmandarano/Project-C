@@ -5,12 +5,16 @@ class ExploreController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('index', 'photos', 'people');
+    $this->Auth->allow('index', 'map', 'photos', 'people');
   }
 
   function index() {
     $this->pageTitle='Explore ';
     $this->set('pageClass', 'explore index');
+  }
+  function map() {
+    $this->pageTitle='Map | Explore ';
+    $this->set('pageClass', 'explore map');
   }
   function photos() {
     $this->pageTitle='Photos | Explore ';

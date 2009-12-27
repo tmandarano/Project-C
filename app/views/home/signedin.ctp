@@ -1,32 +1,39 @@
 <table class="split"><tr>
 <td class="left pane">
   <ol class="stream">
+
     <li class="comments">
       <div class="state"></div>
       <div class="photo"><a href="/photos/view/4b12e638-f028-48b9-af33-0a572641192c"><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/3" /></a></div>
       <div class="detail comments">
-        <div class="caption">
-          <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span> <span class="location">San Diego, CA</span>
+        <div class="users">
+          <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+          <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+          <span class="time">33 seconds ago</span>
+          <span class="location">San Diego, CA</span>
           <p>Just getting back from the game!</p>
         </div>
-        <ul class="comments">
-          <li class="comment">
-            <img src="/users/photo/12" /><a class="username" href="/users/profile/12">John Hanson</a> <span class="time">10 seconds ago</span>
+        <ul class="users">
+          <li>
+            <a href="/users/profile/12"><img src="/users/photo/12" /></a>
+            <a href="/users/profile/12" class="username">John Hanson</a>
+            <span class="time">10 seconds ago</span>
             <p>Looks like you had a great time! Can't wait to hear about it when you get back.</p>
           </li>
-          <li class="comment">
-            <img src="/users/photo/11" /><form><input type="text" /><input type="submit" /></form>
+          <li>
+            <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+            <form><input type="text" /><input type="submit" /></form>
           </li>
         </li>
       </div>
       <div class="detail map">
         <div class="map"></div>
-        <h1>Near <span class="location">Mercer Island, WA</span></h1>
-        <h1 class="time">December 17, 2009 1:04pm</h1>
+        <p>Near <span class="location">Mercer Island, WA</span></p>
+        <p class="time">December 17, 2009 1:04pm</p>
         <ul class="users centered">
-          <li><img src="/users/photo/11" /> <span class="time">20 seconds ago</span></li>
-          <li><img src="/users/photo/11" /> <span class="time">42 seconds ago</span></li>
-          <li><img src="/users/photo/11" /> <span class="time">3 minutes ago</span></li>
+          <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <span class="time">20 seconds ago</span></li>
+          <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <span class="time">42 seconds ago</span></li>
+          <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <span class="time">3 minutes ago</span></li>
         </ul>
       </div>
       <div class="detail meta">
@@ -43,20 +50,27 @@
         </div>
         <ul class="users">
           <li>
-            <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span>
+            <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+            <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+            <span class="time">33 seconds ago</span>
             <p>Gave stars</p>
           </li>
           <li>
-            <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span>
+            <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+            <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+            <span class="time">33 seconds ago</span>
             <p>Voted the photo <img src="/img/emotions/newsworthy.png" /></p>
           </li>
           <li>
-            <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span>
+            <a href="/usrs/profile/11"><img src="/users/photo/11" /></a>
+            <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+            <span class="time">33 seconds ago</span>
             <p>Voted the photo <img src="/img/emotions/funny_l.png" /></p>
           </li>
         </ul>
       </div>
     </li>
+
     <li class="comments">
       <div class="state"></div>
       <div class="photo"><a href="/photos/view/4b121c60-8f54-4d69-b4be-69e62641192c"><img src="/photos/4b121c60-8f54-4d69-b4be-69e62641192c/3" /></a></div>
@@ -172,8 +186,6 @@
   </ol>
 </td>
 <td class="right pane">
-<!--a class="username" href="/users/profile/<?php echo $user['id']?>"><?php echo $user['name']?></a>'s streams-->
-<!--img class="userpic" src="/users/photo/<?php echo $user['id']?>" /-->
 <ul>
 <li>2 new comments</li>
 <li>2 requests</li>

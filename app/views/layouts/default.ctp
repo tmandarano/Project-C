@@ -34,7 +34,7 @@
 <td>
   <h1><a href="/explore">Explore</a></h1>
   <ul>
-  <li><a href="/explore/photos">Map</a></li>
+  <li><a href="/explore/map">Map</a></li>
   <li><a href="/explore/people">People</a></li>
   <li><a href="/explore/photos">Photos</a></li>
   </ul>
