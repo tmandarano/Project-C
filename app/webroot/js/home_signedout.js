@@ -43,6 +43,7 @@ LG.HOME.init = function() {
   LG.HOME.arrow = $('<img src="/img/arrow_up.png" />').appendTo(document.body);
   HS.jdom.bind('change', function() {
     function findPhotoOverMap() {
+      var jdom = $('#map');
       var x = jdom.offset().left+jdom.width()/2;
       var photoPadWidth = parseInt(HS.jdom.css('padding-left').slice(0, -2), 10);
       var photoScrollWidth = HS.jdom.width()-2*photoPadWidth;
