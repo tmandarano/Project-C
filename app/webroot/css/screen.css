@@ -82,7 +82,8 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .home.out strong { font-weight: bold; color: #7a5; }
 .home.out .why { margin: 1em 0 1em 4em; font-size: large;}
 .home.out .connect { text-align: center; }
-.home.out .connect span { vertical-align: 50%; }
+.home.out .connect img { height: 40px; }
+.home.out .connect span { line-height: 40px; vertical-align: 40%; }
 .home.out .stream h1 {
   color: #7a5;
   margin: 0.5em 0 0 0;

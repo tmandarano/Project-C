@@ -40,7 +40,7 @@ LG.HOME.init = function() {
   LG.HOME.map = new google.maps.Map(jdom[0], mapOpts);
   LG.HOME.plot = new LG.HOME.PlotOverlay();
   LG.HOME.plot.setMap(LG.HOME.map);
-  LG.HOME.arrow = $('<img src="/img/arrow_up.png" />').appendTo(document.body);
+  LG.HOME.arrow = $('<img src="/img/arrow_up.png" />').hide().appendTo($('body'));
   HS.jdom.bind('change', function() {
     function findPhotoOverMap() {
       var jdom = $('#map');
@@ -53,11 +53,10 @@ LG.HOME.init = function() {
     var children = HS.jdom.children();
     var jdom = $(children[photo]);
     LG.HOME.arrow.css({'position': 'absolute', 'top': $('#map').offset().top-17,
-      'left': jdom.offset().left-jdom.width()+(jdom.width()-32)/2});
+      'left': jdom.offset().left-jdom.width()+(jdom.width()-32)/2}).show();
     LG.HOME.plot.show(jdom.data('json'));
     $(children[photo-1]).css('border', 'none');
     jdom.css('border', '1px solid #fff');
   });
-  HS.jdom.trigger('change');
 };
 $(document).ready(LG.HOME.init);

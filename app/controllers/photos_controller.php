@@ -11,7 +11,7 @@ class PhotosController extends AppController {
 
   function beforeFilter() {
     parent::beforeFilter();
-    $this->Auth->allow('index', 'view', 'json');
+    $this->Auth->allow('index', 'view', 'json', 'recent');
   }
 
   /* Linked to by photos/:id */
@@ -64,16 +64,26 @@ class PhotosController extends AppController {
     $this->set('pageClass', 'photos view');
   }
 
-  function json($id=null) {
-    if (!$id) { $id = $this->params['id']; }
-    $photo = $this->Photo->find('first',
-                                array('conditions'=>array('Photo.id'=>$id)));
-    unset($photo['Photo']['id']);
-    unset($photo['Photo']['user_id']);
-    unset($photo['User']['password']);
-    $this->set(compact('photo'));
+  function json($ids=null) {
+    if (!$ids) { $ids = $this->params['id']; }
+    if (!is_array($ids)) { $ids = explode(',', $ids); }
+    $photos = array();
+    $fields = array('Photo.id','Photo.caption','Photo.datetime','Photo.location','Photo.lat','Photo.lng','User.name','User.location','User.id');
+    foreach ($ids as $id) {
+      $photo = $this->Photo->find('first', array('fields'=>$fields, 'conditions'=>array('Photo.id'=>$id)));
+      if ($photo) {
+        $photos[] = $photo;
+      }
+    }
+    $this->set(compact('photos'));
     $this->layout = false;
     $this->render('/elements/json');
+  }
+
+  function recent($num=10) {
+    function getid($p) {return $p['Photo']['id'];};
+    $related = array_map("getid", $this->Photo->find('all', array('fields'=>'Photo.id', 'order'=>'Photo.datetime DESC', 'limit'=>$num)));
+    $this->json($related);
   }
 
   function add() {
@@ -180,7 +190,8 @@ class PhotosController extends AppController {
               'user_id'=>$userId,
               'file'=>$file['tmp_name'],
               'caption'=>$formdata['caption'],
-              'location'=>array($formdata['lng'], $formdata['lat']),
+              'lat'=>$formdata['lat'],
+              'lng'=>$formdata['lng'],
               'datetime'=>date('Y-m-d H:i:s', time()),
             );
             if ($this->Photo->save($photo_attribs)) {
