@@ -2,28 +2,34 @@
 <html> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<?php echo $html->css('screen')?>
+<link rel="stylesheet" type="text/css" href="/css/screen.css" />
 <title><?php echo $title_for_layout?> | LiveGather</title> 
 </head> 
 <body class="<?php echo $pageClass?>"> 
-<?php function markSelected($name, $env) {
+<?php function markSel($name, $env) {
   if (strpos($env, $name) !== false) {
     echo ' class="selected"';
   }
 }?>
 <div id='header'> 
+<?php if ($user) {?>
   <ul class='nav'> 
     <li class='logo'><a href="/">LiveGather</a></li> 
-    <li<?php markSelected('Map', $title_for_layout)?>><a href="/explore/map">Map</a></li> 
-    <li<?php markSelected('Photos', $title_for_layout)?>><a href="/explore/photos">Photos</a></li> 
-    <li<?php markSelected('People', $title_for_layout)?>><a href="/explore/people">People</a></li> 
+    <li<?php markSel('Map', $title_for_layout)?>><a href="/explore/map">Map</a></li> 
+    <li<?php markSel('Photos', $title_for_layout)?>><a href="/explore/photos">Photos</a></li> 
+    <li<?php markSel('People', $title_for_layout)?>><a href="/explore/people">People</a></li> 
     <?php if ($user) { ?>
-      <li<?php markSelected('Profile', $title_for_layout)?>><a href="/users/profile/<?php echo $user['id']?>"><?php echo $user['name']?></a></li> 
-      <li<?php markSelected('Share', $title_for_layout)?>><a href="/share/upload">Share</a></li>
-      <li<?php markSelected('Settings', $title_for_layout)?>><a href="/users/settings">Settings</a></li>
+      <li<?php markSel('Profile', $title_for_layout)?>><a href="/users/profile/<?php echo $user['id']?>"><?php echo $user['name']?></a></li> 
+      <li<?php markSel('Share', $title_for_layout)?>><a href="/share/upload">Share</a></li>
+      <li<?php markSel('Settings', $title_for_layout)?>><a href="/users/settings">Settings</a></li>
     <? } ?>
     <li><a href="/users/log<?php if ($user) {?>out<?php }else{?>in<?php }?>">Sign <?php if ($user) {?>out<?php }else{?>in<?php }?></a></li>
   </ul> 
+<?php } else {?>
+  <ul class='nav'> 
+    <li class="logo"><a href="/"><img src="/img/logo.png" /></a></li>
+  </ul>
+<?php }?>
   <ol id="headerstream"></ol>
 </div> 
 <noscript>
@@ -44,13 +50,6 @@
   </ul>
 </td>
 <td>
-  <h1><a href="/about">About</a></h1>
-  <ul>
-  <li><a href="/about/contact">Contact</a></li>
-  <li><a href="/about/faq">FAQ</a></li>
-  </ul>
-</td>
-<td>
   <h1><a href="/share">Share</a></h1>
   <ul>
   <li><a href="/share/mobile">Mobile</a></li>
@@ -60,6 +59,13 @@
 </td>
 <td>
   <h1><a href="/users/settings">Settings</a></h1>
+</td>
+<td>
+  <h1><a href="/about">About</a></h1>
+  <ul>
+  <li><a href="/about/contact">Contact</a></li>
+  <li><a href="/about/faq">FAQ</a></li>
+  </ul>
 </td>
 </tr></table>
 </div>
