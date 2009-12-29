@@ -46,12 +46,13 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 #footer a { color: #fff; font-size: small; }
 #footer h1 a { font-size: large; font-weight: bold; }
 #footer td { padding: 0.5em 2em 0.5em 0; vertical-align: top; }
+#softener { background: url('/img/grad_content.png') repeat-x; height: 30px; }
 #content, .nav, #footer div {
   position: relative;
   margin: auto;
   width: 960px;
 }
-#content { padding: 1em; }
+#content { padding: 1em; margin-top: -30px; }
 #content > h1 {
   color: #3b0;
   font-size: x-large;

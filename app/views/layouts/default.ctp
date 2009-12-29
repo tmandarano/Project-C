@@ -33,6 +33,7 @@
 <noscript>
 <p>Although we respect your choice to browse the web without Javascript enabled or present, we believe that the emphasis of this site, real-time photo sharing, cannot be well served without it. Please enable Javascript to enable us to create an enjoyable experience.</p>
 </noscript>
+<div id="softener"></div>
 <div id="content">
 <?php echo $content_for_layout?>
 </div>
