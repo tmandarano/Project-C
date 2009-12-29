@@ -1,61 +1,33 @@
-var LG = LG ? LG : {};
 LG.HOME = {};
-LG.HOME.TIME_BETWEEN = 5000;
-LG.HOME.MAX_PICS_IN_STREAM = 8;
-LG.HOME.map = null;
 /* Overlay displays a caption bubble over the map with the user, caption,
  * location, and time. Photo is displayed over the center of the map which
- * centers on the location. Photo is also faded into the right-most empty
- * spot of the stream. If there's too many, bump out the left-most photo.
- */
-LG.HOME.QueueOverlay = function() {
-  this.captionPane = $('<div id="map_caption"></div>');
-  this.photoPane = $('<div id="map_photo"></div>');
-  this.stream = $('#updating_map_stream');
-  this.photoPane.children('img').css({'width': '50px', 'height': '50px'});
+ * centers on the location. */
+LG.HOME.PlotOverlay = function() {
+  this.captionPane = $('<div id="map_caption"></div>').hide();
+  this.photoPane = $('<div id="map_photo"></div>').hide();
 };
-LG.HOME.QueueOverlay.prototype = new google.maps.OverlayView();
-LG.HOME.QueueOverlay.prototype.onAdd = function() {
-  $(this.getMap().getDiv()).append(this.captionPane);
-  $(this.getMap().getDiv()).append(this.photoPane);
+LG.HOME.PlotOverlay.prototype = new google.maps.OverlayView();
+LG.HOME.PlotOverlay.prototype.onAdd = function() { $(this.getMap().getDiv()).append(this.captionPane).append(this.photoPane); };
+LG.HOME.PlotOverlay.prototype.draw = function() {};
+LG.HOME.PlotOverlay.prototype.onRemove = function() { $(this.getMap().getDiv()).empty(); };
+LG.HOME.PlotOverlay.prototype.show = function(json) {
+  this.captionPane.hide();
+  this.photoPane.hide()
+  var photo = json.Photo;
+  var usr = json.User;
+  this.getMap().panTo(new google.maps.LatLng(photo.location[0], photo.location[1]));
+  var caption = '<div class="users">'+
+    '<a href="/users/profile/'+usr.id+'"><img src="/users/photo/'+usr.id+'" /></a>'+
+    '<a href="/users/profile/'+usr.id+'" class="username">'+usr.name+'</a> '+
+    '<span class="time">'+photo.datetime+'</span> '+
+    '<span class="location">'+(photo.location[2] || 'Location unknown')+'</span>'+
+    '<p class="caption">'+photo.caption+'</p></div>';
+  this.captionPane.html(caption).fadeIn(600);
+  this.photoPane.html($('<a href="#"><img src="/photos/'+photo.id+'/3" /></a>')).fadeIn(600);
 };
-LG.HOME.QueueOverlay.prototype.draw = function() {
-};
-LG.HOME.QueueOverlay.prototype.onRemove = function() {
-  $(this.getMap().getDiv()).empty();
-};
-LG.HOME.QueueOverlay.prototype.addPic = function(photo) {
-  var self = this;
-  function appendStream() {
-    var pic = photo.Photo;
-    var usr = photo.User;
-    self.getMap().panTo(new google.maps.LatLng(pic.lat, pic.lng));
-    var caption = '<img src="/users/photo/'+usr.id+'" /><a href="/users/profile/'+usr.id+'">'+
-      usr.name+'</a><p>'+pic.caption+
-      '</p><div class="location">San Diego, CA</div><div class="time">'+pic.time+'</div>';
-    self.captionPane.hide().html(caption).fadeIn(600);
-    self.photoPane.hide().html('<img src="/photos/'+pic.id+'/3" />').fadeIn(600);
-    self.stream.children().fadeTo(600, 0.5);
-    self.stream.append($('<img src="/photos/'+pic.id+'/1" />').fadeIn(600));
-  }
-  if (this.stream.children().length >= LG.HOME.MAX_PICS_IN_STREAM) {
-    this.stream.children(':first').hide(300, function() {
-      $(this).remove();
-      appendStream();
-    });
-  } else {
-    appendStream();
-  }
-};
-function cycleSamplePics() {
-  function swappic() {
-    LG.recentPhotos.push(LG.recentPhotos.shift());
-    LG.HOME.queue.addPic(LG.recentPhotos[0]);
-    setTimeout(swappic, LG.HOME.TIME_BETWEEN);
-  }
-  swappic();
-}
 LG.HOME.init = function() {
+  var jdom = $('#map');
+  var HS = LG.G.headerStream;
   var mapOpts = {
     zoom: 7,
     center: new google.maps.LatLng(32.77977,-117.137947),
@@ -65,10 +37,26 @@ LG.HOME.init = function() {
     disableDefaultUI: true,
     mapTypeControl: false
   };
-  LG.HOME.map = new google.maps.Map($("#map")[0], mapOpts);
-  LG.HOME.queue = new LG.HOME.QueueOverlay();
-  LG.HOME.queue.setMap(LG.HOME.map);
-
-  cycleSamplePics();
+  LG.HOME.map = new google.maps.Map(jdom[0], mapOpts);
+  LG.HOME.plot = new LG.HOME.PlotOverlay();
+  LG.HOME.plot.setMap(LG.HOME.map);
+  LG.HOME.arrow = $('<img src="/img/arrow_up.png" />').appendTo(document.body);
+  HS.jdom.bind('change', function() {
+    function findPhotoOverMap() {
+      var x = jdom.offset().left+jdom.width()/2;
+      var photoPadWidth = parseInt(HS.jdom.css('padding-left').slice(0, -2), 10);
+      var photoScrollWidth = HS.jdom.width()-2*photoPadWidth;
+      return Math.floor(1.0 * (x-photoPadWidth) / photoScrollWidth * HS.getMaxPhotos());
+    }
+    var photo = findPhotoOverMap();
+    var children = HS.jdom.children();
+    var jdom = $(children[photo]);
+    LG.HOME.arrow.css({'position': 'absolute', 'top': $('#map').offset().top-17,
+      'left': jdom.offset().left-jdom.width()+(jdom.width()-32)/2});
+    LG.HOME.plot.show(jdom.data('json'));
+    $(children[photo-1]).css('border', 'none');
+    jdom.css('border', '1px solid #fff');
+  });
+  HS.jdom.trigger('change');
 };
-$(document).ready(function(){LG.HOME.init();});
+$(document).ready(LG.HOME.init);

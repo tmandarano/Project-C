@@ -12,7 +12,7 @@
   }
 }?>
 <div id='header'> 
-<?php if ($user) {?>
+<?php if ($pageClass != 'home out') {?>
   <ul class='nav'> 
     <li class='logo'><a href="/">LiveGather</a></li> 
     <li<?php markSel('Map', $title_for_layout)?>><a href="/explore/map">Map</a></li> 

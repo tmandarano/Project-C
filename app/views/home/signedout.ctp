@@ -33,9 +33,6 @@
 </div>
 <script type="text/javascript">
 var LG=LG?LG:{};
-LG.recentPhotos=[<?php
-$jsons = array();
-foreach ($recentPhotos as &$photo) { $jsons[] = $this->element('json', array('photo' => $photo)); }
-echo join(',', $jsons)?>];
+LG.recentPhotos=['4b149b72-8780-47a2-8b73-663345a3cb7d', '4b12e638-f028-48b9-af33-0a572641192c', '4b12d768-4c24-4d29-bff2-7cac2641192c', '4b12d65c-f9dc-428d-ab64-7d3c2641192c', '4b12d1dd-e77c-4da9-b794-7c2f2641192c', '4b12d1cb-062c-4d22-aa0e-7ba22641192c', '4b121c60-8f54-4d69-b4be-69e62641192c', '4b11f698-68f8-409a-940c-3ec145a3cb7d', '4b11f662-a54c-4d45-9dae-3ec145a3cb7d', '4b11d228-06fc-4bd9-be47-55342641192c', '4b0ed330-4214-4677-92f7-5f702641192c', '4b0ed024-3ac4-4b80-a87d-235f2641192c', '4b0e63ea-4e64-4918-b088-2b942641192c'];
 </script>
 <?php $javascript->link('home_signedout', false); ?>
