@@ -12,8 +12,8 @@
   }
 }?>
 <div id='header'> 
-<?php if ($pageClass != 'home out') {?>
   <ul class='nav'> 
+<?php if ($pageClass != 'home out') {?>
     <li class='logo'><a href="/">LiveGather</a></li> 
     <li<?php markSel('Map', $title_for_layout)?>><a href="/explore/map">Map</a></li> 
     <li<?php markSel('Photos', $title_for_layout)?>><a href="/explore/photos">Photos</a></li> 
@@ -23,20 +23,18 @@
       <li<?php markSel('Share', $title_for_layout)?>><a href="/share/upload">Share</a></li>
       <li<?php markSel('Settings', $title_for_layout)?>><a href="/users/settings">Settings</a></li>
     <? } ?>
-    <li><a href="/users/log<?php if ($user) {?>out<?php }else{?>in<?php }?>">Sign <?php if ($user) {?>out<?php }else{?>in<?php }?></a></li>
-  </ul> 
 <?php } else {?>
-  <ul class='nav'> 
     <li class="logo"><a href="/"><img src="/img/logo.png" /></a></li>
-  </ul>
 <?php }?>
+    <li class="sign"><a href="/users/log<?php if ($user) {?>out<?php }else{?>in<?php }?>">Sign <?php if ($user) {?>out<?php }else{?>in<?php }?></a></li>
+  </ul> 
   <ol id="headerstream"></ol>
 </div> 
 <noscript>
 <p>Although we respect your choice to browse the web without Javascript enabled or present, we believe that the emphasis of this site, real-time photo sharing, cannot be well served without it. Please enable Javascript to enable us to create an enjoyable experience.</p>
 </noscript>
 <div id="content">
-  <?php echo $content_for_layout?>
+<?php echo $content_for_layout?>
 </div>
 <div id="footer">
 <div>

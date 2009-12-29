@@ -58,11 +58,6 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 }
 .nav { height: 2.5em; }
 .nav li { float: left; }
-.logo, .nav li:hover a, .nav li.selected {
-  color: #eee;
-  text-shadow: #444 0 0 5px;
-}
-.logo { margin-left: -20px; }
 .nav li a { /* block links provide big clickable area */
   display: block;
   padding: 0.75em 20px 0 20px;
@@ -70,6 +65,9 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   font-weight: bold;
   color: #fff;
 }
+.nav .logo, .nav li:hover a, .nav li.selected { color: #eee; text-shadow: #444 0 0 5px; }
+.nav .logo { margin-left: -20px; }
+.nav .sign { float: right; }
 
 .home.out #header .nav { height: 88px; }
 .home.out #header { height: 138px; }
