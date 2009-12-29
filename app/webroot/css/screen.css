@@ -465,44 +465,37 @@ input[type="text"]:focus, input[type="password"]:focus {
   width: 100%;
   background: url('/img/shelf_bg.png');
   height: 3em;
-  z-index: 1000;
+  z-index: 100;
 }
-
 #shelf table {
   width: 100%;
   text-align: center;
 }
-
 #shelf .zeitgeist {
   text-align: center;
 }
 
-/* viewpic */
 #viewpic_dimmer {
   position: absolute;
   background: url('/img/shelf_bg.png');
-  z-index: 9000;
-  width: inherit;
+  z-index: 900;
+  width: 100%;
 }
 #viewpic {
   position: relative;
   margin: auto;
-  width: 800px;
-  height: 600px;
+  width: 800px; height: 600px;
+  background-color: #dec;
+  padding: 1.5em;
   border-radius: 10px;
   -moz-border-radius: 10px;
-  z-index: 9100;
-  background-color: #CDECFF;
-  color: #000;
-  padding: 1.5em;
 }
-#viewpic table { width: 100%; }
+#viewpic .left.pane { width: 500px; }
+#viewpic .more { text-align: center; }
+#viewpic .the_image { margin: auto; text-align: center; }
+#viewpic #viewpic_map { width: 200px; height: 200px; margin: auto; }
 #viewpic .similar img { height: 55px; }
-#viewpic_close {
-  position: absolute;
-  top: 1.5em;
-  right: 1.5em;
-}
+#viewpic_close { position: absolute; top: 0.5em; right: 0.5em; }
 
 .actionbox {
   margin: 2px 0 2px 0;

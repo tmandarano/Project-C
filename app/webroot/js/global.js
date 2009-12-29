@@ -35,7 +35,6 @@ LG.G.HeaderStream.prototype.sync = function() {
 };
 /* returns true if the stream is not full yet */
 LG.G.HeaderStream.prototype.add = function(photo) {
-  console.log('adding', photo);
   if (this.isFull()) {
     var self = this;
     this.jdom.children(':first').hide(this.fadeTime, function() {
@@ -63,3 +62,55 @@ $(document).ready(function() {
     })();
   });
 });
+
+function viewpic(id) {
+  var dimmer = $('<div id="viewpic_dimmer"></div>')
+    .css('top', $('#header').height())
+    .height($('body').height()-$('#header').height())
+    .prependTo('body');
+  var close = $('<a id="viewpic_close" href="#">Close</a>');
+  var viewpic = $('<div id="viewpic"></div>')
+    .append(close)
+    .prependTo('#viewpic_dimmer');
+  var xhr = $.getJSON('/photos/json/'+id, function(json) {
+    var p = json.Photo;
+    var u = json.User;
+    var display = '<table class="split"><tr>'+
+'<td class="left pane">'+
+'<div class="users">'+
+'<a href="/users/profile/'+u.id+'"><img src="/users/photo/'+u.id+'" /></a>'+
+'<a href="/users/profile/'+u.id+'" class="username">'+u.name+'</a> '+
+'<span class="location">'+p.location+'</span> '+
+'<span class="time">'+p.datetime+'</span>'+
+'<p class="caption">crazy wildfires in LA!</p>'+
+'</div>'+
+'<div class="the_image s3"><img src="/photos/'+id+'" /></div>'+
+'<p class="more"><a href="/photos/view/'+p.id+'">View full photo</a>'+
+"</td>"+
+'<td class="right pane"><p><a href="#">Share to Facebook</a></p><p><a href="#">Share to Twitter</a>'+
+'<div class="similar"><h1 class="bubble">Similar pictures nearby</h1>'+
+'<img src="/photos/'+3+'" />'+'<img src="/photos/'+5+'" />'+'<img src="/photos/'+'fire_d'+'" />'+"<br />"+
+'<img src="/photos/'+'fire_e'+'" />'+'<img src="/photos/'+'fire_f'+'" />'+'<img src="/photos/'+'fire_g'+'" />'+"</div>"+
+'<div id="viewpic_map"></div></td></tr></table>';
+    viewpic.prepend(display);
+    var mapOpts = {
+      zoom: 7,
+      center: new google.maps.LatLng(p.lat, p.lng),
+      mapTypeId: google.maps.MapTypeId.TERRAIN,
+      scrollwheel: false,
+      draggable: false,
+      disableDefaultUI: true,
+      mapTypeControl: false,
+      navigationControl: false
+    };
+    var map = new google.maps.Map($("#viewpic_map")[0], mapOpts);
+    new google.maps.Marker({position: map.getCenter(), map: map});
+  });
+  function destroy() {
+    xhr.abort();
+    dimmer.remove();
+  }
+  dimmer.click(destroy);
+  viewpic.click(function(e) {e.stopPropagation();});
+  close.click(destroy);
+}

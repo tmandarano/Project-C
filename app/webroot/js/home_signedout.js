@@ -23,7 +23,8 @@ LG.HOME.PlotOverlay.prototype.show = function(json) {
     '<span class="location">'+(photo.location[2] || 'Location unknown')+'</span>'+
     '<p class="caption">'+photo.caption+'</p></div>';
   this.captionPane.html(caption).fadeIn(600);
-  this.photoPane.html($('<a href="#"><img src="/photos/'+photo.id+'/3" /></a>')).fadeIn(600);
+  this.photoPane.html($('<a href="#"><img src="/photos/'+photo.id+'/3" /></a>')
+    .click(function() {viewpic(photo.id);})).fadeIn(600);
 };
 LG.HOME.init = function() {
   var jdom = $('#map');
