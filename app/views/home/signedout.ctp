@@ -9,7 +9,7 @@
       <p><strong>Discover</strong> like-minded people.</p>
       </div>
       <div class="connect">
-        <a href="/users/add"><img src="/img/signup.png" /></a> <span>or</span> <a href="/users/add"><img src="http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif" /></a>
+        <a href="/users/add"><img src="http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif" /></a>
       </div>
       <div class="stream">
         <h1>Explore <div class="tools"><?php echo $this->element('timelocup')?><?php echo $this->element('emotion')?></div></h1>
