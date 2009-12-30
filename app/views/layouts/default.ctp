@@ -11,6 +11,7 @@
     echo ' class="selected"';
   }
 }?>
+<?php $signStatus = $user ? 'out' : 'in' ?>
 <div id='header'> 
   <ul class='nav'> 
 <?php if ($pageClass != 'home out') {?>
@@ -26,7 +27,7 @@
 <?php } else {?>
     <li class="logo"><a href="/"><img src="/img/logo.png" /></a></li>
 <?php }?>
-    <li class="sign"><a href="/users/log<?php if ($user) {?>out<?php }else{?>in<?php }?>">Sign <?php if ($user) {?>out<?php }else{?>in<?php }?></a></li>
+    <li class="sign <?php echo $signStatus ?>"><a href="/users/log<?php echo $signStatus ?>">Sign <?php echo $signStatus ?></a></li>
   </ul> 
   <ol id="headerstream"></ol>
 </div> 

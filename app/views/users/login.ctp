@@ -1,4 +1,4 @@
-<h1>We would like to customize our pages for you.</h1>
+<h1>We would like to customize our pages for you. Please sign in.</h1>
 <?php echo $form->create('User', array('action'=>'login'))?>
 <table>
 <tr><th>Email</th><td><input type="text" name="data[User][email]" id="UserEmail" /></td></tr>

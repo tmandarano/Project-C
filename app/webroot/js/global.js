@@ -48,7 +48,28 @@ LG.G.HeaderStream.prototype.add = function(photo) {
   }
 };
 
+LG.G.showSigninPrompt = function() {
+  var dimmer = $('<div class="dimmer"></div>').css('top', 0)
+    .appendTo('body');
+  (function(self) { $(window).resize((function() {
+    self.width($('body').width()).height($('body').height());
+  })()); })(dimmer);
+  var pedestal = $('<div></div>')
+    .css({'margin': 'auto', 'background-color': '#dec', 'width': 400,
+          'padding': '1em', 'border-radius': '1em', '-moz-border-radius': '1em'}).appendTo(dimmer);
+  var close = $('<a href="#">Close</a>');
+  var form = $('<form id="SigninForm" method="post" action="/users/login"><table>'+
+'<tr><th>Email</th><td><input type="text" name="data[User][email]" id="UserEmail" /></td></tr>'+
+'<tr><th>Password</th><td><input type="password" name="data[User][password]" id="UserPassword" /></td></tr>'+
+'<tr><th></th><td><input type="submit" value="Sign in"</td></tr></table></form>').appendTo(pedestal);
+  function destroy() { dimmer.remove(); }
+  close.click(destroy);
+  form.click(function(e) { e.stopPropagation(); });
+  dimmer.click(destroy);
+};
+
 $(document).ready(function() {
+  $('.sign.in a').click(function() {LG.G.showSigninPrompt(); return false;});
   LG.G.headerStream = new LG.G.HeaderStream($('#headerstream'));
   $.getJSON('/photos/recent/'+LG.G.headerStream.getMaxPhotos()*1.5, function(photos) {
     if (photos.length < 1) {return;}
@@ -64,12 +85,12 @@ $(document).ready(function() {
 });
 
 function viewpic(id) {
-  var dimmer = $('<div id="viewpic_dimmer"></div>')
+  var dimmer = $('<div id="viewpic_dimmer" class="dimmer"></div>')
     .css('top', $('#header').height())
     .height($('body').height()-$('#header').height())
     .prependTo('body');
   var close = $('<a id="viewpic_close" href="#">Close</a>');
-  var viewpic = $('<div id="viewpic"></div>')
+  var viewer = $('<div id="viewpic"></div>')
     .append(close)
     .prependTo('#viewpic_dimmer');
   var xhr = $.getJSON('/photos/json/'+id, function(json) {
@@ -92,7 +113,7 @@ function viewpic(id) {
 '<img src="/photos/'+3+'" />'+'<img src="/photos/'+5+'" />'+'<img src="/photos/'+'fire_d'+'" />'+"<br />"+
 '<img src="/photos/'+'fire_e'+'" />'+'<img src="/photos/'+'fire_f'+'" />'+'<img src="/photos/'+'fire_g'+'" />'+"</div>"+
 '<div id="viewpic_map"></div></td></tr></table>';
-    viewpic.prepend(display);
+    viewer.prepend(display);
     var mapOpts = {
       zoom: 7,
       center: new google.maps.LatLng(p.lat, p.lng),
@@ -104,13 +125,13 @@ function viewpic(id) {
       navigationControl: false
     };
     var map = new google.maps.Map($("#viewpic_map")[0], mapOpts);
-    new google.maps.Marker({position: map.getCenter(), map: map});
+    var marker = new google.maps.Marker({position: map.getCenter(), map: map});
   });
   function destroy() {
     xhr.abort();
     dimmer.remove();
   }
   dimmer.click(destroy);
-  viewpic.click(function(e) {e.stopPropagation();});
+  viewer.click(function(e) {e.stopPropagation();});
   close.click(destroy);
 }
