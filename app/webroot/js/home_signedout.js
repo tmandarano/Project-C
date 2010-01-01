@@ -1,16 +1,18 @@
-LG.HOME = {};
+LG.HOME = (function() {
+var H = {};
 /* Overlay displays a caption bubble over the map with the user, caption,
  * location, and time. Photo is displayed over the center of the map which
  * centers on the location. */
-LG.HOME.PlotOverlay = function() {
+H.PlotOverlay = (function() {
+var HP = function() {
   this.captionPane = $('<div id="map_caption"></div>').hide();
   this.photoPane = $('<div id="map_photo"></div>').hide();
 };
-LG.HOME.PlotOverlay.prototype = new google.maps.OverlayView();
-LG.HOME.PlotOverlay.prototype.onAdd = function() { $(this.getMap().getDiv()).append(this.captionPane).append(this.photoPane); };
-LG.HOME.PlotOverlay.prototype.draw = function() {};
-LG.HOME.PlotOverlay.prototype.onRemove = function() { $(this.getMap().getDiv()).empty(); };
-LG.HOME.PlotOverlay.prototype.show = function(json) {
+var HPP = HP.prototype = new google.maps.OverlayView();
+HPP.onAdd = function() { $(this.getMap().getDiv()).append(this.captionPane).append(this.photoPane); };
+HPP.draw = function() {};
+HPP.onRemove = function() { $(this.getMap().getDiv()).empty(); };
+HPP.show = function(json) {
   this.captionPane.hide();
   this.photoPane.hide()
   var photo = json.Photo;
@@ -26,7 +28,9 @@ LG.HOME.PlotOverlay.prototype.show = function(json) {
   this.photoPane.html($('<a href="#"><img src="/photos/'+photo.id+'/3" /></a>')
     .click(function() {viewpic(photo.id);})).fadeIn(600);
 };
-LG.HOME.init = function() {
+return HP;
+})();
+H.init = function() {
   var jdom = $('#map');
   var HS = LG.G.headerStream;
   var mapOpts = {
@@ -38,10 +42,10 @@ LG.HOME.init = function() {
     disableDefaultUI: true,
     mapTypeControl: false
   };
-  LG.HOME.map = new google.maps.Map(jdom[0], mapOpts);
-  LG.HOME.plot = new LG.HOME.PlotOverlay();
-  LG.HOME.plot.setMap(LG.HOME.map);
-  LG.HOME.arrow = $('<img src="/img/arrow_up.png" />').hide().appendTo($('body'));
+  H.map = new google.maps.Map(jdom[0], mapOpts);
+  H.plot = new H.PlotOverlay();
+  H.plot.setMap(H.map);
+  H.arrow = $('<img src="/img/arrow_up.png" />').hide().appendTo($('body'));
   HS.jdom.bind('change', function() {
     function findPhotoOverMap() {
       var jdom = $('#map');
@@ -53,11 +57,13 @@ LG.HOME.init = function() {
     var photo = findPhotoOverMap();
     var children = HS.jdom.children();
     var jdom = $(children[photo]);
-    LG.HOME.arrow.css({'position': 'absolute', 'top': $('#map').offset().top-17,
+    H.arrow.css({'position': 'absolute', 'top': $('#map').offset().top-17,
       'left': jdom.offset().left-jdom.width()+(jdom.width()-32)/2}).show();
-    LG.HOME.plot.show(jdom.data('json'));
+    H.plot.show(jdom.data('json'));
     $(children[photo-1]).css('border', 'none');
     jdom.css('border', '1px solid #fff');
   });
 };
+return H;
+})();
 $(document).ready(LG.HOME.init);

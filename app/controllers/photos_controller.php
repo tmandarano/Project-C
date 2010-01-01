@@ -31,24 +31,8 @@ class PhotosController extends AppController {
       }
     }
 
-    $photo = $this->Photo->find('first',
-      array('fields'=>array('Photo.id', 'Photo.caption'),
-            'conditions'=>array('Photo.id'=>$id)));
-    $photo = $photo['Photo'];
-
-    ///* Send the photo */
-    //$this->view = 'Media';
-    //$params = array(
-    //  'id'=>$photo['id'].'.jpg',
-    //  'name'=>$photo['caption'],
-    //  'download'=>false,
-    //  'extension'=>'jpg',
-    //  'path'=>$dir,
-    //  'mimeType'=>'image/jpeg',
-    //  'cache'=>60*60*24*7
-    //);
-    //$this->set($params);
-    $this->redirect(substr($dir, strlen(ROOT.DS.APP_DIR.DS.WEBROOT_DIR)).DS.$photo['id'].'.jpg', 303);
+    $photo = $this->getPhoto($id);
+    $this->redirect(substr($dir, strlen(ROOT.DS.APP_DIR.DS.WEBROOT_DIR)).DS.$photo['Photo']['id'].'.jpg', 303);
   }
 
   function view($id=null) {
@@ -57,20 +41,36 @@ class PhotosController extends AppController {
         $id = $this->params['id'];
       }
     }
-    $photo = $this->Photo->find('first', array('conditions'=>array('Photo.id'=>$id)));
-    //TODO find real related
-    $related = $this->Photo->find('all', array('limit'=>10));
+    $photo = $this->getPhoto($id);
+    $related = $this->Photo->find('all', array('limit'=>10)); //TODO find real related
     $this->set(compact('id', 'photo', 'related'));
     $this->set('pageClass', 'photos view');
+  }
+
+  function add() {
+    $this->pageTitle = 'Photo Upload';
+    $file = $this->data;
+    $photo = $file['Photo']['photo'];
+    if ($photo) {
+      $userId = $this->Auth->user('id');
+      $this->ensureUploadDirs();
+      $results = $this->saveUploadedFilesForUser($userId, $file['Photo']);
+      $this->set(compact('results'));
+    }
+    $this->set('pageClass', 'photos add');
+  }
+
+  function edit($id) {
+
+    $this->set('pageClass', 'photos edit');
   }
 
   function json($ids=null) {
     if (!$ids) { $ids = $this->params['id']; }
     if (!is_array($ids)) { $ids = explode(',', $ids); }
     $photos = array();
-    $fields = array('Photo.id','Photo.caption','Photo.datetime','Photo.location','Photo.lat','Photo.lng','User.name','User.location','User.id');
     foreach ($ids as $id) {
-      $photo = $this->Photo->find('first', array('fields'=>$fields, 'conditions'=>array('Photo.id'=>$id)));
+      $photo = $this->getPhoto($id);
       if ($photo) {
         $photos[] = $photo;
       }
@@ -86,22 +86,10 @@ class PhotosController extends AppController {
     $this->json($related);
   }
 
-  function add() {
-    $this->pageTitle = 'Photo Upload';
-    $file = $this->data;
-    $photo = $this->data['Photo']['photo'];
-    if ($photo) {
-      $userId = $this->Auth->user('id');
-      $this->ensureUploadDirs();
-      $results = $this->saveUploadedFilesForUser($userId, $this->data['Photo']);
-      $this->set(compact('results'));
-    }
-    $this->set('pageClass', 'photos add');
-  }
-
-  function edit($id) {
-
-    $this->set('pageClass', 'photos edit');
+  private function getPhoto($id) {
+    $P_INFO = array('Photo.id','Photo.caption','Photo.datetime','Photo.location',
+                    'Photo.lat','Photo.lng','User.name','User.location','User.id');
+    return $this->Photo->find('first', array('fields'=>$P_INFO, 'conditions'=>array('Photo.id'=>$id)));
   }
 
   private function mime_ok($permitted, $type) {

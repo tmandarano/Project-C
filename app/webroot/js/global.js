@@ -48,6 +48,16 @@ HP.add = function(photo) {
 return H;
 })();
 
+/* ExploreStreams are the small 10 photo horizontal streams that have icons to
+ * change the stream type. The actual workings need to be clarified. */
+LGG.ExploreStream = (function() {
+var E = function(jdom) {
+  this.jdom = jdom;
+};
+
+return E;
+});
+
 LGG.showSigninPrompt = function() {
   var dimmer = $('<div class="dimmer"></div>').css('top', 0)
     .appendTo('body');
@@ -67,6 +77,22 @@ LGG.showSigninPrompt = function() {
   close.click(destroy);
   form.click(function(e) { e.stopPropagation(); });
   dimmer.click(destroy);
+};
+
+LGG.init = function() {
+  $('.sign.in a').click(function() {LGG.showSigninPrompt(); return false;});
+  LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
+  $.getJSON('/photos/recent/'+LGG.headerStream.getMaxPhotos()*1.5, function(photos) {
+    if (photos.length < 1) {return;}
+    while (LGG.headerStream.add(photos[0])) { photos.push(photos.shift()); }
+    LGG.headerStream.ready = true;
+
+    (function() { /* Cycle through the photos */
+      LGG.headerStream.add(photos[0]);
+      photos.push(photos.shift());
+      setTimeout(arguments.callee, LGG.headerStream.timeBetween);
+    })();
+  });
 };
 return LGG;
 })();
@@ -123,20 +149,4 @@ function viewpic(id) {
   close.click(destroy);
 }
 
-$(document).ready(function() {
-  var LGG = LG.G
-  $('.sign.in a').click(function() {LGG.showSigninPrompt(); return false;});
-  LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
-  $.getJSON('/photos/recent/'+LGG.headerStream.getMaxPhotos()*1.5, function(photos) {
-    if (photos.length < 1) {return;}
-    while (LGG.headerStream.add(photos[0])) { photos.push(photos.shift()); }
-    LGG.headerStream.ready = true;
-
-    (function() { /* Cycle through the photos */
-      LGG.headerStream.add(photos[0]);
-      photos.push(photos.shift());
-      setTimeout(arguments.callee, LGG.headerStream.timeBetween);
-    })();
-  });
-});
-
+$(document).ready(LG.G.init);

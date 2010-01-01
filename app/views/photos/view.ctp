@@ -5,13 +5,11 @@
       <a href="/users/profile/11"><img src="/users/photo/11" /></a>
       <a class="username" href="/users/profile/11">Jimmy World</a>
       <span class="time"><?php echo $time->timeAgoInWords($photo['Photo']['datetime'], array('end'=>'+1month'))?></span>
-      <span class="location">Los Angeles</span>
+      <span class="location"><?php echo $photo['Photo']['location'] ?></span>
       <p class="caption"><?php echo $photo['Photo']['caption']?></p>
     </div>
     <div class="the_image">
-      <!--div class="left"><a href="#"><p>previous</p><img class="s1" src='/img/mini_pic.jpg' /></a></div-->
       <img id="the_image" class="s3" src="/photos/<?php echo $id; ?>" />
-      <!--div class="right"><a href="#"><p>next</p><img class="s1" src='/img/mini_pic.jpg' /></a></div-->
     </div>
     <div class="comments">
       <ul class="users comments">
@@ -74,7 +72,7 @@
       <h1 class="bubble">This photo is...</h1>
       <?php echo $this->element('emotion')?>
       <h1 class="bubble">Location</h1>
-      <p><a class="location" href="#">Los Angeles, CA</a></p>
+      <p class="location"><?php echo $photo['Photo']['location'] ?></p>
       <div id="map_location"></div>
     </div>
   </td>

@@ -10,7 +10,6 @@
 <td><a href="#">Most Recent</a></td>
 <td><p>__Current_Location</p></td>
 <td class="zeitgeist">
-  <h1>Zeitgeist</h1>
   <p>
     <a href="#" onclick="viewpic('4b11f662-a54c-4d45-9dae-3ec145a3cb7d');">football</a>
     <a href="#" onclick="viewpic('4b11f662-a54c-4d45-9dae-3ec145a3cb7d');">game</a>
@@ -24,4 +23,3 @@
 </div>
 <div id="map_explore" style="height: 700px;"></div>
 <?php $javascript->link('explore', false); ?>
-<?php $javascript->link('viewpic', false); ?>
