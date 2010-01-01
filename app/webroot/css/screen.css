@@ -122,26 +122,13 @@ ol.stream > li {
   padding: 5px 0;
   position: relative;
 }
-ol.stream li .state {
-  width: 15px; height: inherit;
-  position: absolute;
-  padding-top: 36px;
-}
-ol.stream li .state div {
-  width: 10px; height: 40px;
-  background-color: #f9f9f9;
-  border: 1px solid #aaa;
-  margin: 5px 0;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-}
 ol.stream .comments .state .comments,
 ol.stream .map .state .map,
 ol.stream .meta .state .meta {
   background-color: #a3c483;
 }
 ol.stream li .photo {
-  position: absolute; left: 20px;
+  position: absolute;
   width: 215px; height: inherit;
   background-color: #f0f0f0;
   border-radius: 2px;
@@ -155,9 +142,36 @@ ol.stream li .photo a {
 ol.stream .photo img {
   width: inherit; vertical-align: middle;
 }
+ol.stream .photo .emotions {
+  display: none;
+  position: absolute; bottom: 0;
+  width: inherit; height: 2em; line-height: 2em;
+  background-color: #444; color: #fff;
+  font-size: small;
+}
+ol.stream .photo .emotions li {
+  margin-left: 0.2em;
+  float: left;
+}
+ol.stream .photo:hover .emotions {
+  display: block;
+}
+ol.stream li .state {
+  position: relative; left: 225px;
+  width: 500px; height: 20px;
+}
+ol.stream li .state div {
+  float: left;
+  width: 5em; height: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #aaa;
+  margin: 0 5px 0 0;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+}
 ol.stream .detail {
-  position: absolute; left: 245px;
-  width: 500px; height: inherit;
+  position: absolute; left: 225px;
+  width: 500px; height: 195px;
   display: none;
 }
 ol.stream .comments .detail.comments ul {
@@ -170,7 +184,7 @@ ol.stream .map .detail.map .map {
   border-radius: 2px;
   -moz-border-radius: 2px;
 }
-ol.stream .map .detail.map p,
+ol.stream .map .detail.map h1,
 ol.stream .map .detail.map ul {
   padding-left: 225px;
 }
@@ -184,17 +198,6 @@ ol.stream .detail.meta .summary {
 ol.stream .detail.meta .summary h1 {
   font-size: medium;
   font-weight: bold;
-}
-ol.stream .detail.meta .summary img.emotion {
-  width: 150px;
-  height: 100px;
-}
-ol.stream .detail.meta .summary .emotions ul {
-  margin: auto;
-  display: block;
-}
-ol.stream .detail.meta .summary .emotions li {
-  display: inline;
 }
 ol.stream .detail.meta > ul {
   padding-left: 210px;

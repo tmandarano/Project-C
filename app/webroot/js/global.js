@@ -62,6 +62,7 @@ LG.G.showSigninPrompt = function() {
 '<tr><th>Email</th><td><input type="text" name="data[User][email]" id="UserEmail" /></td></tr>'+
 '<tr><th>Password</th><td><input type="password" name="data[User][password]" id="UserPassword" /></td></tr>'+
 '<tr><th></th><td><input type="submit" value="Sign in"</td></tr></table></form>').appendTo(pedestal);
+  $('#UserEmail', form).focus();
   function destroy() { dimmer.remove(); }
   close.click(destroy);
   form.click(function(e) { e.stopPropagation(); });

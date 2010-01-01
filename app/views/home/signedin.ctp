@@ -3,8 +3,17 @@
   <ol class="stream">
 
     <li class="comments">
+      <div class="photo">
+        <a href="/photos/view/4b12e638-f028-48b9-af33-0a572641192c"><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/3" /></a>
+        <ul class="emotions">
+          <li>I think this photo is</li>
+          <li><img src="/img/emotions/newsworthy.png" /></li>
+          <li><img src="/img/emotions/cute_l.png" /></li>
+          <li><img src="/img/emotions/happy_l.png" /></li>
+          <li><img src="/img/emotions/interesting_l.png" /></li>
+        </ul>
+      </div>
       <div class="state"></div>
-      <div class="photo"><a href="/photos/view/4b12e638-f028-48b9-af33-0a572641192c"><img src="/photos/4b12e638-f028-48b9-af33-0a572641192c/3" /></a></div>
       <div class="detail comments">
         <div class="users">
           <a href="/users/profile/11"><img src="/users/photo/11" /></a>
@@ -28,8 +37,8 @@
       </div>
       <div class="detail map">
         <div class="map"></div>
-        <p>Near <span class="location">Mercer Island, WA</span></p>
-        <p class="time">December 17, 2009 1:04pm</p>
+        <h1>Near <span class="location">Mercer Island, WA</span></h1>
+        <h1 class="time">December 17, 2009 1:04pm</h1>
         <ul class="users centered">
           <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <span class="time">20 seconds ago</span></li>
           <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <span class="time">42 seconds ago</span></li>
@@ -38,15 +47,16 @@
       </div>
       <div class="detail meta">
         <div class="summary">
-          <h1>Newsworthy</h1>
-          <img class="emotion" src="/img/emotions/l/newsworthy.png" />
-          <ul class="emotions">
-            <li><img src="/img/emotions/newsworthy.png" /></li>
-            <li><img src="/img/emotions/cute_l.png" /></li>
-            <li><img src="/img/emotions/happy_l.png" /></li>
-            <li><img src="/img/emotions/interesting_l.png" /></li>
+          <p>This photo is <img src="/img/emotions/newsworthy.png" title="Newsworthy" alt="Newsworthy" /></p>
+          <h1>Tags</h1>
+          <ul>
+            <li>football</li>
+            <li>playoffs</li>
+            <li>giants</li>
+            <li>beer</li>
+            <li>seahawks</li>
+            <li>kouchdown</li>
           </ul>
-          <div class="stars three"></div>
         </div>
         <ul class="users">
           <li>
@@ -72,8 +82,8 @@
     </li>
 
     <li class="comments">
-      <div class="state"></div>
       <div class="photo"><a href="/photos/view/4b121c60-8f54-4d69-b4be-69e62641192c"><img src="/photos/4b121c60-8f54-4d69-b4be-69e62641192c/3" /></a></div>
+      <div class="state"></div>
       <div class="detail comments">
         <div class="caption">
           <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span> <span class="location">San Diego, CA</span>
@@ -128,8 +138,8 @@
       </div>
     </li>
     <li class="comments">
-      <div class="state"></div>
       <div class="photo"><a href="/photos/view/4b12d1dd-e77c-4da9-b794-7c2f2641192c"><img src="/photos/4b12d1dd-e77c-4da9-b794-7c2f2641192c/3" /></a></div>
+      <div class="state"></div>
       <div class="detail comments">
         <div class="caption">
           <img src="/users/photo/11" /><a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">33 seconds ago</span> <span class="location">San Diego, CA</span>
