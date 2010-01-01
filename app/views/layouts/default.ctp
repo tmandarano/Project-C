@@ -14,8 +14,11 @@
 <?php $signStatus = $user ? 'out' : 'in' ?>
 <div id='header'> 
   <ul class='nav'> 
-<?php if ($pageClass != 'home out') {?>
+<?php if ($pageClass == 'home out') {?>
+    <li class="logo"><a href="/"><img src="/img/logo.png" /></a></li>
+<?php } else {?>
     <li class='logo'><a href="/">LiveGather</a></li> 
+<?php }?>
     <li<?php markSel('Map', $title_for_layout)?>><a href="/explore/map">Map</a></li> 
     <li<?php markSel('Photos', $title_for_layout)?>><a href="/explore/photos">Photos</a></li> 
     <li<?php markSel('People', $title_for_layout)?>><a href="/explore/people">People</a></li> 
@@ -24,9 +27,6 @@
       <li<?php markSel('Share', $title_for_layout)?>><a href="/share/upload">Share</a></li>
       <li<?php markSel('Settings', $title_for_layout)?>><a href="/users/settings">Settings</a></li>
     <? } ?>
-<?php } else {?>
-    <li class="logo"><a href="/"><img src="/img/logo.png" /></a></li>
-<?php }?>
     <li class="sign <?php echo $signStatus ?>"><a href="/users/log<?php echo $signStatus ?>">Sign <?php echo $signStatus ?></a></li>
   </ul> 
   <ol id="headerstream"></ol>
