@@ -1,6 +1,8 @@
 var LG = LG ? LG: {};
-LG.G = {};
-LG.G.HeaderStream = function(jdom) {
+LG.G = (function() {
+var LGG = {};
+LGG.HeaderStream = (function() {
+var H = function(jdom) {
   this.jdom = jdom;
   this.timeBetween = 6000;
   this.slideWidth = 50;
@@ -11,8 +13,8 @@ LG.G.HeaderStream = function(jdom) {
   this.sync();
   this.ready = false;
 };
-LG.G.HeaderStream.prototype = function() {};
-LG.G.HeaderStream.prototype.append = function(json) {
+var HP = H.prototype = function() {};
+HP.append = function(json) {
   var p = json.Photo;
   $('<li><a href="/photos/view/'+p.id+'"><img src="/photos/'+p.id+'/1" title="'+json.User.name+': '+p.caption+'"/></a></li>')
     .data('json', json)
@@ -21,12 +23,11 @@ LG.G.HeaderStream.prototype.append = function(json) {
     this.jdom.trigger('change');
   }
 };
-LG.G.HeaderStream.prototype.getMaxPhotos = function() { return Math.floor(this.jdom.width() / this.slideWidth); };
-LG.G.HeaderStream.prototype.getNumPhotos = function() { return this.jdom.children().length; };
-LG.G.HeaderStream.prototype.isOverFull = function() { return this.getNumPhotos() > this.getMaxPhotos(); };
-LG.G.HeaderStream.prototype.isFull = function() { return this.getNumPhotos() == this.getMaxPhotos(); };
-/* Call this after a window resize */
-LG.G.HeaderStream.prototype.sync = function() {
+HP.getMaxPhotos = function() { return Math.floor(this.jdom.width() / this.slideWidth); };
+HP.getNumPhotos = function() { return this.jdom.children().length; };
+HP.isOverFull = function() { return this.getNumPhotos() > this.getMaxPhotos(); };
+HP.isFull = function() { return this.getNumPhotos() == this.getMaxPhotos(); };
+HP.sync = function() {
   var padding = (this.jdom.width()-this.getMaxPhotos()*this.slideWidth)/2;
   this.jdom.css('padding-left', padding);
   while (this.isOverFull()) {
@@ -34,21 +35,20 @@ LG.G.HeaderStream.prototype.sync = function() {
   }
 };
 /* returns true if the stream is not full yet */
-LG.G.HeaderStream.prototype.add = function(photo) {
+HP.add = function(photo) {
   if (this.isFull()) {
-    var self = this;
-    this.jdom.children(':first').hide(this.fadeTime, function() {
-      $(this).remove();
-    });
-    self.append(photo);
+    this.jdom.children(':first').hide(this.fadeTime, function() { $(this).remove(); });
+    this.append(photo);
     return false;
   } else {
     this.append(photo);
     return !this.isFull();
   }
 };
+return H;
+})();
 
-LG.G.showSigninPrompt = function() {
+LGG.showSigninPrompt = function() {
   var dimmer = $('<div class="dimmer"></div>').css('top', 0)
     .appendTo('body');
   (function(self) { $(window).resize((function() {
@@ -68,22 +68,8 @@ LG.G.showSigninPrompt = function() {
   form.click(function(e) { e.stopPropagation(); });
   dimmer.click(destroy);
 };
-
-$(document).ready(function() {
-  $('.sign.in a').click(function() {LG.G.showSigninPrompt(); return false;});
-  LG.G.headerStream = new LG.G.HeaderStream($('#headerstream'));
-  $.getJSON('/photos/recent/'+LG.G.headerStream.getMaxPhotos()*1.5, function(photos) {
-    if (photos.length < 1) {return;}
-    while (LG.G.headerStream.add(photos[0])) { photos.push(photos.shift()); }
-    LG.G.headerStream.ready = true;
-
-    (function() { /* Cycle through the photos */
-      LG.G.headerStream.add(photos[0]);
-      photos.push(photos.shift());
-      setTimeout(arguments.callee, LG.G.headerStream.timeBetween);
-    })();
-  });
-});
+return LGG;
+})();
 
 function viewpic(id) {
   var dimmer = $('<div id="viewpic_dimmer" class="dimmer"></div>')
@@ -136,3 +122,21 @@ function viewpic(id) {
   viewer.click(function(e) {e.stopPropagation();});
   close.click(destroy);
 }
+
+$(document).ready(function() {
+  var LGG = LG.G
+  $('.sign.in a').click(function() {LGG.showSigninPrompt(); return false;});
+  LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
+  $.getJSON('/photos/recent/'+LGG.headerStream.getMaxPhotos()*1.5, function(photos) {
+    if (photos.length < 1) {return;}
+    while (LGG.headerStream.add(photos[0])) { photos.push(photos.shift()); }
+    LGG.headerStream.ready = true;
+
+    (function() { /* Cycle through the photos */
+      LGG.headerStream.add(photos[0]);
+      photos.push(photos.shift());
+      setTimeout(arguments.callee, LGG.headerStream.timeBetween);
+    })();
+  });
+});
+

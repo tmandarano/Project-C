@@ -160,6 +160,13 @@ ol.stream li .state {
   position: relative; left: 225px;
   width: 500px; height: 20px;
 }
+ol.stream li .state p {
+  float: left;
+  width: 5em; height: 10px;
+  margin: 0 5px 0 0;
+  font-size: small;
+  line-height: 10px;
+}
 ol.stream li .state div {
   float: left;
   width: 5em; height: 10px;
@@ -192,13 +199,20 @@ ol.stream .detail.meta .summary {
   position: absolute;
   width: 200px;
   height: inherit;
-  border: 1px solid #eee;
   text-align: center;
 }
 ol.stream .detail.meta .summary h1 {
   font-size: medium;
   font-weight: bold;
 }
+ol.stream .detail.meta .summary ul li {
+  float: left;
+  margin-right: 0.2em;
+  color: #1aa;
+  font-size: small;
+}
+ol.stream .detail.meta .summary ul li p { line-height: 1em; }
+ol.stream .detail.meta .summary ul li p img { vertical-align: middle; }
 ol.stream .detail.meta > ul {
   padding-left: 210px;
 }
