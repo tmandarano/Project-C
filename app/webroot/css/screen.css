@@ -342,9 +342,10 @@ table.stream {
   font: small;
 }
 
-.collage { margin: auto; }
-.collage tr { height: 34px; }
-.collage td { width: 34px; }
+ul.collage { margin: auto; width: 170px; }
+ul.collage li { display: inline-block; margin: 2px 0.5px; width: 30px; height: 30px; line-height: 30px; }
+ul.collage li a { display: block; width: 30px; height: 30px; background-color: #000; }
+ul.collage li img { vertical-align: middle; width: 30px; max-height: 30px; }
 
 h2 {
   font-weight:bold;

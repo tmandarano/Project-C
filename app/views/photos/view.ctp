@@ -31,31 +31,17 @@
   <td class="right pane">
     <div class="similar">
       <h1 class="bubble">Similar photos nearby</h1>
-      <table class="collage">
-        <tr>
-        <?php for ($i=0; $i<min(5, count($related)); $i++) { $result = $related[$i];?>
-          <td><?php echo $this->element('collagepic', array('photo'=>$result))?></td>
+      <ul class="collage">
+        <?php for ($i=0; $i<min(10, count($related)); $i++) { $result = $related[$i]['Photo'];?>
+<li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
         <?php } ?>
-        </tr>
-        <tr>
-        <?php for ($i=4; $i<min(9, count($related)); $i++) { $result = $related[$i];?>
-          <td><?php echo $this->element('collagepic', array('photo'=>$result))?></td>
-        <?php } ?>
-        </tr>
-      </table>
+      </ul>
       <h1 class="bubble">Similar photos</h1>
-      <table class="collage">
-        <tr>
-        <?php for ($i=0; $i<min(5, count($related)); $i++) { $result = $related[$i];?>
-          <td><?php echo $this->element('collagepic', array('photo'=>$result))?></td>
+      <ul class="collage">
+        <?php for ($i=0; $i<min(10, count($related)); $i++) { $result = $related[$i]['Photo'];?>
+<li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
         <?php } ?>
-        </tr>
-        <tr>
-        <?php for ($i=4; $i<min(9, count($related)); $i++) { $result = $related[$i];?>
-          <td><?php echo $this->element('collagepic', array('photo'=>$result))?></td>
-        <?php } ?>
-        </tr>
-      </table>
+      </ul>
       <h1 class="bubble">Share</h1>
         <p><a href="#">Share to Facebook</a></p>
         <p><a href="#">Share to Twitter</a></p>
