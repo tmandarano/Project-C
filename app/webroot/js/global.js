@@ -58,6 +58,17 @@ var E = function(jdom) {
 return E;
 });
 
+/* DetailStreams are the large type of stream showing the photo and three tabs
+ * of info: comments, location, and tags. TODO what happens when there are
+ * more than one comments? Other info that might overflow? */
+LGG.DetailStream = (function() {
+var D = function(jdom) {
+  this.jdom = jdom;
+};
+
+return D;
+});
+
 LGG.showSigninPrompt = function() {
   var dimmer = $('<div class="dimmer"></div>').css('top', 0)
     .appendTo('body');
@@ -80,18 +91,39 @@ LGG.showSigninPrompt = function() {
 };
 
 LGG.init = function() {
+  /* JSify sign in */
   $('.sign.in a').click(function() {LGG.showSigninPrompt(); return false;});
+  /* Setup headerStream */
   LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
   $.getJSON('/photos/recent/'+LGG.headerStream.getMaxPhotos()*1.5, function(photos) {
     if (photos.length < 1) {return;}
     while (LGG.headerStream.add(photos[0])) { photos.push(photos.shift()); }
     LGG.headerStream.ready = true;
-
     (function() { /* Cycle through the photos */
       LGG.headerStream.add(photos[0]);
       photos.push(photos.shift());
       setTimeout(arguments.callee, LGG.headerStream.timeBetween);
     })();
+  });
+  /* Setup detailed streams */
+  var classToState = {
+    'comments': 'Comments',
+    'map': 'Location',
+    'meta': 'Tags'
+  };
+  $('.detailed.stream li .state').each(function() {
+    var state = $('<p></p>');
+    var jdom = $(this);
+    for (var className in classToState) {
+      (function(c) {
+      jdom.append($('<div class="'+c+'"></div>').mouseover(function() {
+        $(this).parent().parent().attr('class', c);
+        state.html(classToState[c]);
+      }));
+      })(className);
+    }
+    jdom.append(state);
+    state.html(classToState[$(this).parent().attr('class')]);
   });
 };
 return LGG;

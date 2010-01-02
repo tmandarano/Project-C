@@ -1,6 +1,6 @@
 <table class="split"><tr>
 <td class="left pane">
-  <ol class="stream">
+  <ol class="detailed stream">
 
     <li class="comments">
       <div class="photo">

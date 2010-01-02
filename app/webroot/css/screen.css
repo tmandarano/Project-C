@@ -116,118 +116,6 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .home.out #map_photo img {
   width: 180px; max-height: 180px;
 }
-
-ol.stream > li {
-  height: 215px;
-  padding: 5px 0;
-  position: relative;
-}
-ol.stream .comments .state .comments,
-ol.stream .map .state .map,
-ol.stream .meta .state .meta {
-  background-color: #a3c483;
-}
-ol.stream li .photo {
-  position: absolute;
-  width: 215px; height: inherit;
-  background-color: #f0f0f0;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-}
-ol.stream li .photo a {
-  width: inherit; height: inherit;
-  display: block;
-  line-height: 215px;
-}
-ol.stream .photo img {
-  width: inherit; vertical-align: middle;
-}
-ol.stream .photo .emotions {
-  display: none;
-  position: absolute; bottom: 0;
-  width: inherit; height: 2em; line-height: 2em;
-  background-color: #444; color: #fff;
-  font-size: small;
-}
-ol.stream .photo .emotions li {
-  margin-left: 0.2em;
-  float: left;
-}
-ol.stream .photo:hover .emotions {
-  display: block;
-}
-ol.stream li .state {
-  position: relative; left: 225px;
-  width: 500px; height: 20px;
-}
-ol.stream li .state p {
-  float: left;
-  width: 5em; height: 10px;
-  margin: 0 5px 0 0;
-  font-size: small;
-  line-height: 10px;
-}
-ol.stream li .state div {
-  float: left;
-  width: 5em; height: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #aaa;
-  margin: 0 5px 0 0;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-}
-ol.stream .detail {
-  position: absolute; left: 225px;
-  width: 500px; height: 195px;
-  display: none;
-}
-ol.stream .comments .detail.comments ul {
-  padding-left: 1em;
-}
-ol.stream .map .detail.map .map {
-  position: absolute;
-  width: 215px; height: inherit;
-  border: 1px solid #aaa;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
-}
-ol.stream .map .detail.map h1,
-ol.stream .map .detail.map ul {
-  padding-left: 225px;
-}
-ol.stream .detail.meta .summary {
-  position: absolute;
-  width: 200px;
-  height: inherit;
-  text-align: center;
-}
-ol.stream .detail.meta .summary h1 {
-  font-size: medium;
-  font-weight: bold;
-}
-ol.stream .detail.meta .summary ul li {
-  float: left;
-  margin-right: 0.2em;
-  color: #1aa;
-  font-size: small;
-}
-ol.stream .detail.meta .summary ul li p { line-height: 1em; }
-ol.stream .detail.meta .summary ul li p img { vertical-align: middle; }
-ol.stream .detail.meta > ul {
-  padding-left: 210px;
-}
-ol.stream .detail.meta > ul li {
-  height: auto;
-  display: block;
-  position: relative;
-  padding-left: 55px;
-  margin: 5px 0;
-}
-ol.stream li.comments .detail.comments,
-ol.stream li.map .detail.map,
-ol.stream li.meta .detail.meta {
-  display: block;
-}
 .home.stream .right.pane h1 .right {
   margin-top: -0.2em;
   top: 0;
@@ -561,6 +449,118 @@ input[type="text"]:focus, input[type="password"]:focus {
   opacity: 0.7;
 }
 .infoed.photo .image:hover .hover {
+  display: block;
+}
+
+.detailed.stream > li {
+  height: 215px;
+  padding: 5px 0;
+  position: relative;
+}
+.detailed.stream .comments .state .comments,
+.detailed.stream .map .state .map,
+.detailed.stream .meta .state .meta {
+  background-color: #a3c483;
+}
+.detailed.stream li .photo {
+  position: absolute;
+  width: 215px; height: inherit;
+  background-color: #f0f0f0;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+.detailed.stream li .photo a {
+  width: inherit; height: inherit;
+  display: block;
+  line-height: 215px;
+}
+.detailed.stream .photo img {
+  width: inherit; vertical-align: middle;
+}
+.detailed.stream .photo .emotions {
+  display: none;
+  position: absolute; bottom: 0;
+  width: inherit; height: 2em; line-height: 2em;
+  background-color: #444; color: #fff;
+  font-size: small;
+}
+.detailed.stream .photo .emotions li {
+  margin-left: 0.2em;
+  float: left;
+}
+.detailed.stream .photo:hover .emotions {
+  display: block;
+}
+.detailed.stream li .state {
+  position: relative; left: 225px;
+  width: 500px; height: 20px;
+}
+.detailed.stream li .state p {
+  float: left;
+  width: 5em; height: 10px;
+  margin: 0 5px 0 0;
+  font-size: small;
+  line-height: 10px;
+}
+.detailed.stream li .state div {
+  float: left;
+  width: 5em; height: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #aaa;
+  margin: 0 5px 0 0;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+.detailed.stream .detail {
+  position: absolute; left: 225px;
+  width: 500px; height: 195px;
+  display: none;
+}
+.detailed.stream .comments .detail.comments ul {
+  padding-left: 1em;
+}
+.detailed.stream .map .detail.map .map {
+  position: absolute;
+  width: 215px; height: inherit;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+.detailed.stream .map .detail.map h1,
+.detailed.stream .map .detail.map ul {
+  padding-left: 225px;
+}
+.detailed.stream .detail.meta .summary {
+  position: absolute;
+  width: 200px;
+  height: inherit;
+  text-align: center;
+}
+.detailed.stream .detail.meta .summary h1 {
+  font-size: medium;
+  font-weight: bold;
+}
+.detailed.stream .detail.meta .summary ul li {
+  float: left;
+  margin-right: 0.2em;
+  color: #1aa;
+  font-size: small;
+}
+.detailed.stream .detail.meta .summary p,
+.detailed.stream .detail.meta ul li p { line-height: 1em; }
+.detailed.stream .detail.meta .summary p img,
+.detailed.stream .detail.meta ul li p img { vertical-align: middle; }
+.detailed.stream .detail.meta > ul { padding-left: 210px; }
+.detailed.stream .detail.meta > ul li {
+  height: auto;
+  display: block;
+  position: relative;
+  padding-left: 55px;
+  margin: 5px 0;
+}
+.detailed.stream li.comments .detail.comments,
+.detailed.stream li.map .detail.map,
+.detailed.stream li.meta .detail.meta {
   display: block;
 }
 
