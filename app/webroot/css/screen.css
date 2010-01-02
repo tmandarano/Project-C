@@ -220,6 +220,18 @@ div.users a img {
   top:0; left:0; 
 }
 
+input[type="text"], input[type="password"] {
+  border: 1px solid #ddd;
+  background-color: #eee;
+  font-size: 1.2em;
+  vertical-align: middle;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+  background-color: #efa;
+  border: 1px solid #9cda60;
+}
+input[type="text"].default { color: #aaa; }
+
 form.search input[type="text"] {
   border-radius: 4px;
   -moz-border-radius: 4px;
@@ -229,7 +241,6 @@ form.search input[type="image"] {
   margin-left: -20px;
   vertical-align: middle;
 }
-form.comments { padding-left: 0 !important; }
 form.comments input[type="text"],
 form.tags input[type="text"] {
   border: 1px solid #aaa;
@@ -246,7 +257,7 @@ form.tags input[type="submit"] {
   -moz-border-radius-bottomright: 2px;
   background-color: #a3c483;
   color: #fff;
-  height: 1.8em;
+  height: 1.6em;
   vertical-align: middle;
   margin-left: -3.9ex;
 }
@@ -345,7 +356,7 @@ table.stream {
 ul.collage { margin: auto; width: 170px; }
 ul.collage li { display: inline-block; margin: 2px 0.5px; width: 30px; height: 30px; line-height: 30px; }
 ul.collage li a { display: block; width: 30px; height: 30px; background-color: #000; }
-ul.collage li img { vertical-align: middle; width: 30px; max-height: 30px; }
+ul.collage li img { vertical-align: top; width: 30px; max-height: 30px; }
 
 h2 {
   font-weight:bold;
@@ -375,18 +386,6 @@ input.comment:focus {
   outline:none;
 }
 
-input[type="text"], input[type="password"] {
-  border: 1px solid #ddd;
-  background-color: #eee;
-  font-size: 1.5em;
-  vertical-align: middle;
-}
-input[type="text"]:focus, input[type="password"]:focus {
-  background-color: #efa;
-  border: 1px solid #9cda60;
-}
-input[type="text"].default { color: #aaa; }
-
 #shelf {
   position: absolute;
   top: 0;
@@ -399,9 +398,7 @@ input[type="text"].default { color: #aaa; }
   width: 100%;
   text-align: center;
 }
-#shelf .zeitgeist {
-  text-align: center;
-}
+#shelf .zeitgeist { text-align: center; }
 
 .dimmer {
   position: absolute;
@@ -424,10 +421,6 @@ input[type="text"].default { color: #aaa; }
 #viewpic #viewpic_map { width: 200px; height: 200px; margin: auto; }
 #viewpic .similar img { height: 55px; }
 #viewpic_close { position: absolute; top: 0.5em; right: 0.5em; }
-
-.actionbox {
-  margin: 2px 0 2px 0;
-}
 
 .infoed.photo {
   position: relative;

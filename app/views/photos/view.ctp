@@ -15,7 +15,7 @@
       <ul class="users comments">
         <li>
           <a href="/users/profile/11"><img src="/users/photo/11" /></a> <a class="username" href="/users/profile/11">Etaoin Shrdlu</a>
-          <form><input type="text" name="comment" /><input type="submit" value="Comment" /></form>
+          <form class="comments" name="comments" action="/comments/add" method="post"><input type="text" class="default" value="add comment" /><input type="submit" value="add" /></form>
         </li>
         <li>
           <a href="/users/profile/11"><img src="/users/photo/11" /></a> <a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">35 seconds ago</span>
