@@ -61,7 +61,7 @@
           <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
           <span class="time">33 seconds ago</span>
           <span class="location">San Diego, CA</span>
-          <p>Just getting back from the game!</p>
+          <p class="caption">Just getting back from the game!</p>
         </div>
         <ul class="users">
           <li>
@@ -72,7 +72,7 @@
           </li>
           <li>
             <a href="/users/profile/11"><img src="/users/photo/11" /></a>
-            <form><input type="text" /><input type="submit" /></form>
+            <form class="comments" name="comments" action="/comments/add" method="post"><input type="text" class="default" value="add comment" /><input type="submit" value="add" /></form>
           </li>
         </li>
       </div>
@@ -98,6 +98,7 @@
             <li>seahawks</li>
             <li>kouchdown</li>
           </ul>
+          <form class="tags" name="tag" action="/tags/add" method="post"><input type="text" size="5" class="default" value="add tag" /><input type="submit" value="add" /></form>
         </div>
         <ul class="users">
           <li>

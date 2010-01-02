@@ -52,7 +52,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   margin: auto;
   width: 960px;
 }
-#content { padding: 1em; margin-top: -30px; }
+#content { padding: 1em; margin-top: -30px; min-height: 30em; }
 #content > h1 {
   color: #3b0;
   font-size: x-large;
@@ -229,6 +229,27 @@ form.search input[type="image"] {
   margin-left: -20px;
   vertical-align: middle;
 }
+form.comments { padding-left: 0 !important; }
+form.comments input[type="text"],
+form.tags input[type="text"] {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  padding: 0 20px 0 4px;
+}
+form.comments input[type="submit"],
+form.tags input[type="submit"] {
+  border: 0;
+  border-top-right-radius: 2px;
+  -moz-border-radius-topright: 2px;
+  border-bottom-right-radius: 2px;
+  -moz-border-radius-bottomright: 2px;
+  background-color: #a3c483;
+  color: #fff;
+  height: 1.8em;
+  vertical-align: middle;
+  margin-left: -3.9ex;
+}
 
 div.caption,
 .comment {
@@ -354,8 +375,8 @@ input.comment:focus {
 }
 
 input[type="text"], input[type="password"] {
-  border: 1px solid #eee;
-  background-color: #ddd;
+  border: 1px solid #ddd;
+  background-color: #eee;
   font-size: 1.5em;
   vertical-align: middle;
 }
@@ -363,6 +384,7 @@ input[type="text"]:focus, input[type="password"]:focus {
   background-color: #efa;
   border: 1px solid #9cda60;
 }
+input[type="text"].default { color: #aaa; }
 
 #shelf {
   position: absolute;
@@ -488,9 +510,7 @@ input[type="text"]:focus, input[type="password"]:focus {
   margin-left: 0.2em;
   float: left;
 }
-.detailed.stream .photo:hover .emotions {
-  display: block;
-}
+.detailed.stream .photo:hover .emotions { display: block; }
 .detailed.stream li .state {
   position: relative; left: 225px;
   width: 500px; height: 20px;
@@ -516,9 +536,7 @@ input[type="text"]:focus, input[type="password"]:focus {
   width: 500px; height: 195px;
   display: none;
 }
-.detailed.stream .comments .detail.comments ul {
-  padding-left: 1em;
-}
+.detailed.stream .comments .detail.comments ul { padding-left: 1em; }
 .detailed.stream .map .detail.map .map {
   position: absolute;
   width: 215px; height: inherit;
@@ -527,9 +545,7 @@ input[type="text"]:focus, input[type="password"]:focus {
   -moz-border-radius: 2px;
 }
 .detailed.stream .map .detail.map h1,
-.detailed.stream .map .detail.map ul {
-  padding-left: 225px;
-}
+.detailed.stream .map .detail.map ul { padding-left: 225px; }
 .detailed.stream .detail.meta .summary {
   position: absolute;
   width: 200px;
@@ -560,9 +576,7 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 .detailed.stream li.comments .detail.comments,
 .detailed.stream li.map .detail.map,
-.detailed.stream li.meta .detail.meta {
-  display: block;
-}
+.detailed.stream li.meta .detail.meta { display: block; }
 
 h1.bubble {
   padding-left: 0.5em;

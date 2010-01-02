@@ -93,6 +93,12 @@ LGG.showSigninPrompt = function() {
 LGG.init = function() {
   /* JSify sign in */
   $('.sign.in a').click(function() {LGG.showSigninPrompt(); return false;});
+  /* Default form clearing */
+  var def = 'default';
+  $(':text.'+def)
+    .each(function() {$(this).data(def, $(this).val());})
+    .focus(function() { if ($(this).val() == $(this).data(def)) { $(this).val('').removeClass(def); } })
+    .blur(function() { if ($(this).val() == '') { $(this).val($(this).data(def)).addClass(def); } });
   /* Setup headerStream */
   LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
   $.getJSON('/photos/recent/'+LGG.headerStream.getMaxPhotos()*1.5, function(photos) {
