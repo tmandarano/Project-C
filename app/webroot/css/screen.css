@@ -167,16 +167,16 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .explore.people div.search {
   margin-top: 1em;
 }
-.explore.people .search h1 {
+.search h1 {
   color: #3b0;
   font-size: large;
 }
-.explore.people .search .searchbox {
+.search .searchbox {
   width: 80%;
   text-align: center;
   margin: 0.5em auto;
 }
-.explore.people .search label {
+.search label {
   color: #3b0;
 }
 span.label {
@@ -550,7 +550,6 @@ input[type="text"].default { color: #aaa; }
   position: absolute;
   width: 200px;
   height: inherit;
-  text-align: center;
 }
 .detailed.stream .detail.meta .summary h1 {
   font-size: medium;

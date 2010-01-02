@@ -237,4 +237,3 @@
     </li>
   </ol>
 </div>
-<?php $javascript->link('explore_photos', false); ?>
