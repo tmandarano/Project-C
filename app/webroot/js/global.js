@@ -131,6 +131,23 @@ LGG.init = function() {
     jdom.append(state);
     state.html(classToState[$(this).parent().attr('class')]);
   });
+  $('.detailed.stream li .detail.map .map').each(function() {
+    var state = $(this).parent().parent().children('.state');
+    state.children('.map').mouseover();
+    var mapOpts = {
+      zoom: 8,
+      center: new google.maps.LatLng(-34.397, 150.644),
+      mapTypeId: google.maps.MapTypeId.TERRAIN,
+      scrollwheel: false,
+      draggable: false,
+      disableDefaultUI: true,
+      mapTypeControl: false,
+      navigationControl: false
+    };
+    var map = new google.maps.Map($(this)[0], mapOpts);
+    var marker = new google.maps.Marker({position: map.getCenter(), map: map});
+    setTimeout(function() { state.children('.comments').mouseover(); }, 150);
+  });
 };
 return LGG;
 })();
