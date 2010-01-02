@@ -72,7 +72,7 @@
           </li>
           <li>
             <a href="/users/profile/11"><img src="/users/photo/11" /></a>
-            <form class="comments" name="comments" action="/comments/add" method="post"><input type="text" class="default" value="add comment" /><input type="submit" value="add" /></form>
+            <form class="comments" name="comments" action="/photos/comment" method="post"><input type="text" class="default" value="add comment" /><input type="submit" value="add" /></form>
           </li>
         </li>
       </div>

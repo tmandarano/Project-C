@@ -295,36 +295,17 @@ div.caption p,
   text-align: center;
   display: block;
 }
-.the_image {
-  position: relative;
-}
+.the_image { position: relative; }
 .the_image .left, .the_image .right {
   position: absolute;
   top: 50%;
   margin-top: -30px;
 }
-.the_image .left {
-  left: 0;
-}
-.the_image .right {
-  right: 0;
-}
-.photos.view td.pane {
-  vertical-align: top;
-}
-.photos.view .tags * {
-  display: inline;
-}
-.photos.view .commentblock {
-  position: relative;
-  border-top: 1px solid #999;
-  padding: 0.5em;
-}
-.photos.view .commentblock .time {
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-}
+.the_image .left { left: 0; }
+.the_image .right { right: 0; }
+.photos.view td.pane { vertical-align: top; }
+.photos.view .tags * { display: inline; }
+.photos.view .comments p { margin-bottom: 1em; }
 
 .users.profile .mostrecent { border-spacing: 1em; }
 .users.profile .mostrecent .left.pane, .users.profile .mostrecent .left.pane img { width: 215px; }

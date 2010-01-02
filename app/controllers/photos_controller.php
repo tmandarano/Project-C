@@ -8,6 +8,7 @@ define('S3_DIR', UPLOAD_DIR.'3'.DS);
 
 class PhotosController extends AppController {
   var $name = 'Photos';
+  var $uses = array('Photo', 'Comment');
 
   function beforeFilter() {
     parent::beforeFilter();
@@ -61,8 +62,18 @@ class PhotosController extends AppController {
   }
 
   function edit($id) {
-
     $this->set('pageClass', 'photos edit');
+  }
+
+  function comment() {
+    $pid = $_REQUEST['photo_id'];
+    $comment = $_REQUEST['comment'];
+    $this->Comment->save(array(
+      'photo_id'=>$pid,
+      'datetime'=>date('Y-m-d H:i:s', time()),
+      'comment'=>$comment,
+      'user_id'=>$this->Auth->user('id')));
+    $this->redirect($this->referer());
   }
 
   function json($ids=null) {
@@ -89,7 +100,15 @@ class PhotosController extends AppController {
   private function getPhoto($id) {
     $P_INFO = array('Photo.id','Photo.caption','Photo.datetime','Photo.location',
                     'Photo.lat','Photo.lng','User.name','User.location','User.id');
-    return $this->Photo->find('first', array('fields'=>$P_INFO, 'conditions'=>array('Photo.id'=>$id)));
+    $result = $this->Photo->find('first', array('fields'=>$P_INFO, 'conditions'=>array('Photo.id'=>$id)));
+
+    $result['Photo']['location'] = implode(' ', $result['Photo']['location']);
+    foreach ($result['Comment'] as &$comment) {
+      $row = mysql_query('SELECT users.name FROM users WHERE users.id = '.mysql_real_escape_string($comment['user_id']));
+      $comment['User']['name'] = mysql_result($row, 0);
+      mysql_free_result($row);
+    }
+    return $result;
   }
 
   private function mime_ok($permitted, $type) {

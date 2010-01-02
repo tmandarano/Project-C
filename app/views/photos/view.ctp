@@ -2,8 +2,8 @@
 <tr>
   <td class="left pane">
     <div class="users">
-      <a href="/users/profile/11"><img src="/users/photo/11" /></a>
-      <a class="username" href="/users/profile/11">Jimmy World</a>
+      <a href="/users/profile/<?php echo $photo['User']['id']?>"><img src="/users/photo/<?php echo $photo['User']['name']?>" /></a>
+      <a class="username" href="/users/profile/<?php echo $photo['User']['id']?>"><?php echo $photo['User']['name']?></a>
       <span class="time"><?php echo $time->timeAgoInWords($photo['Photo']['datetime'], array('end'=>'+1month'))?></span>
       <span class="location"><?php echo $photo['Photo']['location'] ?></span>
       <p class="caption"><?php echo $photo['Photo']['caption']?></p>
@@ -12,19 +12,27 @@
       <img id="the_image" class="s3" src="/photos/<?php echo $id; ?>" />
     </div>
     <div class="comments">
+      <?php if (count($photo['Comment']) <= 0) {?>
+        <p>No comments yet. Be the first to add one!</p>
+      <?php }?>
+      <?php if (!$user) {?>
+          <p>Please <a href="#" class="sign in">Sign in</a> to add comments.</p>
+      <?php }?>
       <ul class="users comments">
+        <?php if ($user) {?>
         <li>
-          <a href="/users/profile/11"><img src="/users/photo/11" /></a> <a class="username" href="/users/profile/11">Etaoin Shrdlu</a>
-          <form class="comments" name="comments" action="/comments/add" method="post"><input type="text" class="default" value="add comment" /><input type="submit" value="add" /></form>
+        <a href="/users/profile/<?php echo $user['id']?>"><img src="/users/photo/<?php echo $user['id']?>" /></a> <a class="username" href="/users/profile/<?php echo $user['id']?>"><?php echo $user['name']?></a>
+          <form class="comments" name="comments" action="/photos/comment" method="post"><input type="hidden" name="photo_id" value="<?php echo $photo['Photo']['id']?>" /><input type="text" name="comment" class="default" value="add comment" /><input type="submit" value="add" /></form>
         </li>
-        <li>
-          <a href="/users/profile/11"><img src="/users/photo/11" /></a> <a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">35 seconds ago</span>
-          <p>Give me a call when you get to school ok? Have fun on the drive down and be safe!</p>
-        </li>
-        <li>
-          <a href="/users/profile/11"><img src="/users/photo/11" /></a> <a class="username" href="/users/profile/11">Etaoin Shrdlu</a> <span class="time">2 minutes ago</span>
-          <p>have fun! good luck at school</p>
-        </li>
+        <?php }?>
+        <?php foreach ($photo['Comment'] as $comment) {?>
+          <li>
+            <a href="/users/profile/<?php echo $comment['user_id']?>"><img src="/users/photo/<?php echo $comment['user_id']?>" /></a>
+            <a class="username" href="/users/profile/<?php echo $comment['user_id']?>"><?php echo $comment['User']['name']?></a>
+            <span class="time"><?php echo $time->timeAgoInWords($comment['datetime'], array('end'=>'+1month'))?></span>
+            <p><?php echo $comment['comment']?></p>
+          </li>
+        <? }?>
       </ul>
     </div>
   </td>
@@ -33,13 +41,13 @@
       <h1 class="bubble">Similar photos nearby</h1>
       <ul class="collage">
         <?php for ($i=0; $i<min(10, count($related)); $i++) { $result = $related[$i]['Photo'];?>
-<li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
+          <li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
         <?php } ?>
       </ul>
       <h1 class="bubble">Similar photos</h1>
       <ul class="collage">
         <?php for ($i=0; $i<min(10, count($related)); $i++) { $result = $related[$i]['Photo'];?>
-<li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
+          <li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
         <?php } ?>
       </ul>
       <h1 class="bubble">Share</h1>

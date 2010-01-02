@@ -92,7 +92,7 @@ LGG.showSigninPrompt = function() {
 
 LGG.init = function() {
   /* JSify sign in */
-  $('.sign.in a').click(function() {LGG.showSigninPrompt(); return false;});
+  $('.sign.in').click(function() {LGG.showSigninPrompt(); return false;});
   /* Default form clearing */
   var def = 'default';
   $(':text.'+def)
