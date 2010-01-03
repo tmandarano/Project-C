@@ -24,4 +24,3 @@
 </ul>
 </td>
 </tr></table>
-<?php $javascript->link('home_signedin', false); ?>
