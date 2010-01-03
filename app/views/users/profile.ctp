@@ -57,8 +57,8 @@
       </ul>
       <h1 class="bubble">Similar people <div class="right"><img class="sm_icon" src="/img/sm_icon.png"/></div></h1> 
         <ul class="collage">
-          <?php //for ($i=0; $i<min(10, count($related)); $i++) { $result = $related[$i]['Photo'];?>
-          <?php for ($i=0; $i<10; $i++) { $result = array('id'=>'', 'caption'=>''); ?>
+          <?php //for ($i=0; $i<min(8, count($related)); $i++) { $result = $related[$i]['Photo'];?>
+          <?php for ($i=0; $i<8; $i++) { $result = array('id'=>'', 'caption'=>''); ?>
             <li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
           <?php } ?>
         </ul>

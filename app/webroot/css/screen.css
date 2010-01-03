@@ -334,22 +334,14 @@ table.stream {
   font: small;
 }
 
-ul.collage { margin: auto; width: 170px; }
-ul.collage li { display: inline-block; margin: 2px 0.5px; width: 30px; height: 30px; line-height: 30px; }
-ul.collage li a { display: block; width: 30px; height: 30px; background-color: #000; }
-ul.collage li img { vertical-align: top; width: 30px; max-height: 30px; }
-
-h2 {
-  font-weight:bold;
-  color:#b61818;
-  font-size:14px;
-  padding-top:0px;
-  padding-bottom:10px;
-  padding-left:0;
-  padding-right:0;
-  width:100px;
-  margin:0;
-}
+ul.collage
+{ margin: auto; width: 212px; }
+ul.collage li,
+.explore.stream li { display: inline-block; margin: 2px 0.5px; width: 50px; height: 50px; line-height: 50px; }
+ul.collage li a,
+.explore.stream li a { display: block; width: 50px; height: 50px; background-color: #000; }
+ul.collage li img,
+.explore.stream li img { vertical-align: top; width: 50px; max-height: 50px; }
 
 input.comment {
   border: 2px solid #ccc;

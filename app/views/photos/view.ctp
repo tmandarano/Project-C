@@ -40,13 +40,13 @@
     <div class="similar">
       <h1 class="bubble">Similar photos nearby</h1>
       <ul class="collage">
-        <?php for ($i=0; $i<min(10, count($related)); $i++) { $result = $related[$i]['Photo'];?>
+        <?php for ($i=0; $i<min(8, count($related)); $i++) { $result = $related[$i]['Photo'];?>
           <li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
         <?php } ?>
       </ul>
       <h1 class="bubble">Similar photos</h1>
       <ul class="collage">
-        <?php for ($i=0; $i<min(10, count($related)); $i++) { $result = $related[$i]['Photo'];?>
+        <?php for ($i=0; $i<min(8, count($related)); $i++) { $result = $related[$i]['Photo'];?>
           <li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
         <?php } ?>
       </ul>

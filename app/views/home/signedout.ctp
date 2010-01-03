@@ -11,17 +11,7 @@
       <div class="connect">
         <a href="/users/add"><img src="http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif" /></a>
       </div>
-      <div class="stream">
-        <h1>Explore <div class="tools"><?php echo $this->element('timelocup')?><?php echo $this->element('emotion')?></div></h1>
-        <table class="photos">
-          <tr>
-            <?php for ($i=0; $i<min(8,count($recentPhotos)); $i++) {?>
-              <?php $photo = $recentPhotos[$i]['Photo']?>
-              <td class="s1"><a href="#" onclick="viewpic('<?php echo $photo['id']?>')"><img src="/photos/<?php echo $photo['id']?>/1" /></a></td>
-            <?php }?>
-          </tr>
-        </table>
-      </div>
+      <?php echo $this->element('explore_stream', array('h'=>'Explore', 'photos'=>$recentPhotos))?>
     </td>
     <td class="right pane">
       <div class="updating_map">

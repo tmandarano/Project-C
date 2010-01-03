@@ -2,27 +2,8 @@
 
 <table class="split"><tr>
 <td class="left pane">
-  <div class="stream">
-    <h1>Local <div class="tools"><?php echo $this->element('timelocup')?><?php echo $this->element('emotion')?></div></h1>
-    <table class="photos">
-      <tr>
-        <?php for ($i=0; $i<8; $i++) {?>
-          <td><img src="/img/mini_pic.jpg" /></td>
-        <?php }?>
-      </tr>
-    </table>
-  </div>
-
-  <div class="stream">
-    <h1>World <div class="tools"><?php echo $this->element('timelocup')?><?php echo $this->element('emotion')?></div></h1>
-    <table class="photos">
-      <tr>
-        <?php for ($i=0; $i<8; $i++) {?>
-          <td><img src="/img/mini_pic.jpg" /></td>
-        <?php }?>
-      </tr>
-    </table>
-  </div>
+  <?php echo $this->element('explore_stream', array('h'=>'Local', 'photos'=>array()))?>
+  <?php echo $this->element('explore_stream', array('h'=>'World', 'photos'=>array()))?>
 </td>
 <td class="right pane">
   <h1>Popular keywords</h1>
