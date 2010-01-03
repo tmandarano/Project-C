@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="/css/screen.css" />
 <title><?php echo $title_for_layout?> | LiveGather</title> 
 </head> 
+<?php $pageClass = isset($pageClass) ? $pageClass : '' ?>
 <body class="<?php echo $pageClass?>"> 
 <?php function markSel($name, $env) {
   if (strpos($env, $name) !== false) {
