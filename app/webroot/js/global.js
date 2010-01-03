@@ -147,6 +147,7 @@ LGG.init = function() {
     var map = new google.maps.Map($(this)[0], mapOpts);
     var marker = new google.maps.Marker({position: map.getCenter(), map: map});
     setTimeout(function() { state.children('.comments').mouseover(); }, 150);
+    $(this).css('position', 'absolute');
   });
 };
 return LGG;

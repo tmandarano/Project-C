@@ -65,8 +65,8 @@ class UsersController extends AppController {
       $this->pageTitle = $userobj['name']."'s Profile";
       $recentPhotos = $this->User->Photo->find('all', array('order'=>'DateTime DESC',
         'conditions'=>array('User.id'=>$userobj['id']), 'limit'=>20));
-      $interests = explode(';', $userobj['interests']);
-      $this->set(compact('userobj', 'recentPhotos', 'interests'));
+      $userobj['interests'] = explode(';', $userobj['interests']);
+      $this->set(compact('userobj', 'recentPhotos'));
     }
     $this->set('pageClass', 'users profile');
   }

@@ -246,7 +246,7 @@ form.tags input[type="text"] {
   border: 1px solid #aaa;
   border-radius: 4px;
   -moz-border-radius: 4px;
-  padding: 0 20px 0 4px;
+  padding: 0 3.9ex 0 4px;
 }
 form.comments input[type="submit"],
 form.tags input[type="submit"] {
