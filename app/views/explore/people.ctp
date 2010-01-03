@@ -36,26 +36,22 @@
 </div>
 
 <ul class="users">
-  <li>
-    <a href="/users/profile/11"><img src="/users/photo/11" /></a>
-    <a href="/users/profile/11" class="username">Tony Mandarano</a>
-    <ul>
-      <li><span class="label">Location</span> <span class="location">Seattle, WA</span></li>
-      <li><span class="label">Bio</span> A true <span class="match">audi</span> s4 enthusiast! Oh, and I love Seattle!</li>
-      <li><span class="label">Interests</span> <span class="match">audi</span>, <span class="match">cars</span>, hiking, Seahawks, Seattle Sounders, Formula One.</li>
-    </ul>
-    <div class="photo"><img src="/photos/4b12d65c-f9dc-428d-ab64-7d3c2641192c/3" /></div>
-  </li>
-  <li>
-    <a href="/users/profile/11"><img src="/users/photo/11" /></a>
-    <a href="/users/profile/11" class="username">John Matthews</a>
-    <ul>
-      <li><span class="label">Location</span> <span class="location">Seattle, WA</span></li>
-      <li><span class="label">Bio</span> I am a <span class="match">car</span> blogger and columnist, say hi!</li>
-      <li><span class="label">Interests</span> <span class="match">cars</span>, lamborghini, <span class="match">audi</span>, autoclubs, autocross events, kayaking, waterskiing.</li>
-    </ul>
-    <div class="photo"><img src="/photos/4b12d65c-f9dc-428d-ab64-7d3c2641192c/3" /></div>
-  </li>
+  <?php echo $this->element('user_summary', array(
+    'userinfo'=>array(
+      'id'=>11,'name'=>'Tony Mandarano', 
+      'location' => 'Seattle, WA',
+      'bio'=>'A true audi s4 enthusiast! Oh, and I love Seattle!',
+      'interests'=>array('audi', 'cars', 'hiking', 'Seahawks', 'Seattle Sounders', 'Formula One')),
+    'mostRecentPhoto'=>array('id'=>'4b12d65c-f9dc-428d-ab64-7d3c2641192c')
+  ))?>
+  <?php echo $this->element('user_summary', array(
+    'userinfo'=>array(
+      'id'=>12,'name'=>'John Matthews', 
+      'location' => 'Seattle, WA',
+      'bio'=>'I am a car blogger and columnist, say hi!',
+      'interests'=>array('cars', 'lamboghini', 'audi', 'autoclubs', 'autocross events', 'kayaking', 'waterskiing')),
+    'mostRecentPhoto'=>array('id'=>'4b12d65c-f9dc-428d-ab64-7d3c2641192c')
+  ))?>
 </ul>
 </div>
 <?php $javascript->link('explore_people', false); ?>
