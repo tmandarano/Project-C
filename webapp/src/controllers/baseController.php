@@ -12,5 +12,10 @@ abstract class BaseController extends Smarty {
     $this->config_dir = 'smarty_pants/config';
     $this->cache_dir = 'smarty_pants/cache';
   }
+
+  function fetch($template) {
+    $this->assign('content', $template);
+    return parent::fetch('base.tpl');
+  }
 }
 ?>

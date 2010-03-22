@@ -1,30 +1,28 @@
 <?php
 /* Routes for the app */
 
-  $home_route = new Route('/');
-  $home_route->setMapClass('viscous');
-  $home_route->setMapMethod('home');
-  $router->addRoute('home', $home_route );
+  function staticRoute($router, $route, $class, $method, $name) {
+    $r = new Route($route);
+    $r->setMapClass($class);
+    $r->setMapMethod($method);
+    $router->addRoute($name, $r);
+  }
 
-  $settings_route = new Route('/settings');
-  $settings_route->setMapClass('viscous');
-  $settings_route->setMapMethod('settings');
-  $router->addRoute('settings', $settings_route );
+  function dynMethodRoute($router, $class) {
+    $r = new Route('/'.$class.'/:method');
+    $r->setMapClass($class);
+    $r->addDynamicElement(':method', ':method');
+    $router->addRoute($class, $r);
+  }
 
-  $explore_route = new Route('/explore/:method');
-  $explore_route->setMapClass('explore');
-  $explore_route->addDynamicElement(':method', ':method');
-  $router->addRoute('explore', $explore_route );
+  staticRoute($router, '/', 'viscous', 'home', 'home');
 
-  $share_route = new Route('/share/:method');
-  $share_route->setMapClass('share');
-  $share_route->addDynamicElement(':method', ':method');
-  $router->addRoute('share', $share_route );
+  dynMethodRoute($router, 'users');
+  dynMethodRoute($router, 'explore');
+  dynMethodRoute($router, 'share');
 
-  $about_route = new Route('/about/:method');
-  $about_route->setMapClass('about');
-  $about_route->addDynamicElement(':method', ':method');
-  $router->addRoute('about', $about_route );
+  staticRoute($router, '/about/contact', 'viscous', 'about_contact', 'about_contact');
+  staticRoute($router, '/about/faq', 'viscous', 'about_faq', 'about_faq');
 
   $photos_show_route = new Route('/photos/show/:photo_id');
   $photos_show_route->setMapClass('photos');
