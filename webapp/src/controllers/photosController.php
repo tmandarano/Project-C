@@ -1,10 +1,9 @@
 <?php
-require_once('src/utils/restutils.php');
-require_once('src/utils/logging.php');
+require_once('baseController.php');
 require_once('src/model/photo.php');
 require_once('src/model/dao/photo_dao.php');
 
-class PhotosController 
+class PhotosController extends BaseController
 {       
     public function show()
     {
