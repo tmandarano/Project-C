@@ -12,7 +12,7 @@ class PhotoService extends BaseService
         
         switch($data->getMethod())
         {
-        	case 'get':
+            case 'get':
                 $vars = $data->getRequestVars();
               	$photos = PhotoDAO::getPhotos($vars['id']);
 
@@ -20,7 +20,7 @@ class PhotoService extends BaseService
                 break;
             case 'post':
                 $vars = $data->getRequestVars();
-            	
+
                 $photo = new Photo();
 
                 $tagVal = $vars['tags'];
