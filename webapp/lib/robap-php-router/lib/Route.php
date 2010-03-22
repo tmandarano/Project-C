@@ -154,6 +154,16 @@ class Route
     }
 
     /**
+     * Emulates ereg_replace('^/', '', $str)
+     */
+    private function ltrimSlash($str) {
+      if (strlen($str) > 0 && $str[0] == '/') {
+        return substr($str, 1);
+      }
+      return $str;
+    }
+
+    /**
      * Attempt to match this route to a supplied path
      * @param string $path_to_match
      * @return boolean
@@ -166,8 +176,8 @@ class Route
         $found_dynamic_args   = array();
 
         //The process of matching is easier if there are no preceding slashes
-        $temp_this_path     = ereg_replace('^/', '', $this->_path);
-        $temp_path_to_match = ereg_replace('^/', '', $path_to_match);
+        $temp_this_path     = $this->ltrimSlash($this->_path);
+        $temp_path_to_match = $this->ltrimSlash($path_to_match);
 
         //Get the path elements used for matching later
         $this_path_elements  = explode('/', $temp_this_path);
