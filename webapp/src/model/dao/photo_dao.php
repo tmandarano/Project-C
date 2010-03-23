@@ -22,26 +22,15 @@ class PhotoDAO
             $rs = $conn->query("SELECT * FROM photo")->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        $photos = array();
-        foreach($rs as $record)
-        {
-        	$photo = new Photo();
-        	$photo->setId($record['id']);
-        	$photo->setUrl($record['url']);
-        	$photo->setLocation($record['location']);
-        	$photo->setDateAdded($record['date_added']);
-            $photo->setDateModified($record['date_added']);
-        	
-            $comments = CommentDAO::getComments(null, $record['id']);
-            $photo->setComments($comments);
-            
-            $tags = TagDAO::getTags(null, $record['id']);
-            $photo->setTags($tags);
-            
-            $photos[$record['id']] = $photo;
-        }
-    
-        return $photos;
+        return PhotoDAO::recordsToPhotos($rs);
+    }
+
+    public static function getRecentPhotos($limit = 10) {
+      $conn = ConnectionFactory::getFactory()->getConnection();
+
+      $rs = $conn->query("SELECT * FROM photo ORDER BY date_added DESC LIMIT ". $limit)->fetchAll(PDO::FETCH_ASSOC);
+
+      return PhotoDAO::recordsToPhotos($rs);
     }
     
     public function save($photo)
@@ -98,5 +87,26 @@ class PhotoDAO
             debug('failure');
         }
 	}
+
+    private static function recordsToPhotos($records) {
+      $photos = array();
+      foreach($records as $record) {
+        $photo = new Photo();
+        $photo->setId($record['id']);
+        $photo->setUrl($record['url']);
+        $photo->setLocation($record['location']);
+        $photo->setDateAdded($record['date_added']);
+        $photo->setDateModified($record['date_added']);
+            
+        $comments = CommentDAO::getComments(null, $record['id']);
+        $photo->setComments($comments);
+        
+        $tags = TagDAO::getTags(null, $record['id']);
+        $photo->setTags($tags);
+        
+        $photos[$record['id']] = $photo;
+      }
+      return $photos;
+    }
 }
 ?>

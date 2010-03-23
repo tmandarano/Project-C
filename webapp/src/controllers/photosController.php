@@ -69,6 +69,14 @@ class PhotosController extends BaseController
     {
     	
     }
+
+    public function recent() {
+      $num_recent = $number;
+      if (!$number) {
+        $num_recent = 10;
+      }
+      RestUtils::sendResponse(200, json_encode(PhotoDAO::getRecentPhotos($num_recent)), 'application/json');
+    }
     
     private function savePhoto($photo)
     {

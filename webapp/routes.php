@@ -24,6 +24,12 @@
   staticRoute($router, '/about/contact', 'viscous', 'about_contact', 'about_contact');
   staticRoute($router, '/about/faq', 'viscous', 'about_faq', 'about_faq');
 
+  $photos_recent_route = new Route('/photos/recent/:number');
+  $photos_recent_route->setMapClass('photos');
+  $photos_recent_route->setMapMethod('recent');
+  $photos_recent_route->addDynamicElement(':number', '^\d+$');
+  $router->addRoute('photos_recent', $photos_recent_route);
+
   $photos_show_route = new Route('/photos/show/:photo_id');
   $photos_show_route->setMapClass('photos');
   $photos_show_route->setMapMethod('show');

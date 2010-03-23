@@ -1,4 +1,5 @@
 <?php
+require_once('config.php');
 require_once('src/utils/logging.php');
 
 class ConnectionFactory
@@ -18,9 +19,16 @@ class ConnectionFactory
     {
     	if (!$this->dbh)
         {
-            $this->dbh = new PDO("mysql:dbname=projectc;host=localhost", "projectc", "projectc");
+          try {
+            $this->dbh = new PDO(PDO_DSN, PDO_USER, PDO_PASSWORD);
             $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            debug('new connection created');
+            if ($debug) {
+              debug('new connection created');
+            }
+          } catch (PDOException $e) {
+            debug('DB connection failed: ' . $e->getMessage());
+            return False;
+          }
         }
 
         return $this->dbh;

@@ -31,12 +31,12 @@ CREATE TABLE `comment` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `emtion`
+-- Table structure for table `emotion`
 --
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `emtion` (
+CREATE TABLE `emotion` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `emotion` varchar(255) NOT NULL,
   `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
