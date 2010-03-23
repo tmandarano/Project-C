@@ -1,0 +1,3 @@
+Set this directory up in the web root.
+Make sure .htaccess has redirect and mod_rewrite is on.
+Set up the db using schema
