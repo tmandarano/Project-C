@@ -20,4 +20,6 @@
   </tr>
 </table>
 </div>
-<!--php $javascript->link('home_signedout', false); -->
+{capture name=scripts}
+<script type="text/javascript" src="/js/home_signedout.js"></script>
+{/capture}

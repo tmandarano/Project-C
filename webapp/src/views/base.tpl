@@ -12,9 +12,8 @@ function markSel($name, $env) {
     echo ' class="selected"';
   }
 }
-$signStatus = $user ? 'out' : 'in';
 {/php}
-{assign var='signStatus' value=`$signStatus`}
+{capture name=signStatus}{$user|ternary:'out':'in'}{/capture}
 <div id='header'> 
   <ul class='nav'> 
 {if $class eq 'home out'}
@@ -31,7 +30,7 @@ $signStatus = $user ? 'out' : 'in';
       <li{php} markSel('Share', $title){/php}><a href="/share/upload">Share</a></li>
       <li{php} markSel('Settings', $title){/php}><a href="/users/settings">Settings</a></li>
     {/if}
-    <li class="sign {$signStatus}"><a href="/users/log{$signStatus}">Sign {$signStatus}</a></li>
+    <li class="sign {$smarty.capture.signStatus}"><a href="/users/log{$smarty.capture.signStatus}">Sign {$smarty.capture.signStatus}</a></li>
   </ul> 
   <ol id="headerstream"></ol>
 </div> 
@@ -82,6 +81,7 @@ us to create an enjoyable experience.</p>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 {include file=$scripts}
+{$smarty.capture.scripts}
 </div>
 </body> 
 </html> 

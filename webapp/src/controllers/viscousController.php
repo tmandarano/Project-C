@@ -4,9 +4,15 @@ require_once('baseController.php');
 /* Viscous represents the semi-dynamic, semi-static nature of these pages. */
 class ViscousController extends baseController {       
   public function home() {
-    $this->assign('title', '');
-    $this->assign('class', 'home out');
-    RestUtils::sendResponse(200, $this->fetch('home.tpl'));
+    if ($user or true) {
+      $this->assign('title', '');
+      $this->assign('class', 'home in');
+      RestUtils::sendResponse(200, $this->fetch('signedin.tpl'));
+    } else {
+      $this->assign('title', '');
+      $this->assign('class', 'home out');
+      RestUtils::sendResponse(200, $this->fetch('home.tpl'));
+    }
   }
       
   public function about_contact() {
