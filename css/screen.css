@@ -7,7 +7,7 @@ body {
 }
 a {
   text-decoration: none;
-  color: #3b0;
+  color: #1584b2;
 }
 form th { text-align: right; }
 form td { padding: 1em 0 1em 1em; }
@@ -80,6 +80,9 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   border-radius: 15px;
   -moz-border-radius: 15px;
   border: 2px solid #dfdfdf;
+  -moz-box-shadow: 4px 4px 4px #aaa;
+  box-shadow: 4px 4px 4px #aaa;
+  -webkit-box-shadow: 4px 4px 4px #aaa;
 }
 .home.out .pedestal .split { width: 100%; margin: auto; }
 .home.out .left.pane { width: 560px; }
@@ -316,11 +319,32 @@ div.caption p,
 .photos.view .tags * { display: inline; }
 .photos.view .comments p { margin-bottom: 1em; }
 
+h1.bichrome { color: #bbb; font-size: larger; margin-top: 0.6em; }
+h1.bichrome em { color: #a3e267; }
+
+.users.profile .left.pane { width: 180px; }
+.users.profile .left.pane .actions { text-align: center; }
+.users.profile .left.pane .actions a { color: #bb2727; }
+.users.profile .left.pane ul.collage { width: 180px; }
+.users.profile .left.pane h1.username { text-align: center; }
+.users.profile .left.pane .username { font-size: large; font-weight: bold; color: #a3d277; }
+.users.profile .left.pane .userphoto { width: 180px; height: 180px; text-align: center; }
+.users.profile dl.user.info dt:after { content: ":"; }
+.users.profile dl.user.info dt {
+  float: left;
+  clear: left;
+  margin-right: 0.5em;
+}
+.users.profile .right.pane { padding-left: 3em; }
 .users.profile .mostrecent { border-spacing: 1em; }
 .users.profile .mostrecent .left.pane, .users.profile .mostrecent .left.pane img { width: 215px; }
 .users.profile .mostrecent .left.pane { height: 215px; }
 .users.profile .mostrecent .right.pane .caption { font-size: x-large; color: #3b0; }
 .users.profile .userinfo { margin-bottom: 0.5em; } 
+
+.users.profile .photo.stub { position: relative; height: 270px; margin-bottom: 10px; }
+.users.profile .photo.stub .photo { position: absolute; clear: left; line-height: 270px; }
+.users.profile .photo.stub .detail { padding-left: 280px; }
 
 .share.upload h1 { font-size: x-large; color: #3b0; }
 
@@ -343,14 +367,13 @@ table.stream {
   font: small;
 }
 
-ul.collage
-{ margin: auto; width: 212px; }
+ul.collage { margin: auto; width: 212px; }
 ul.collage li,
-.explore.stream li { display: inline-block; margin: 2px 0.5px; width: 50px; height: 50px; line-height: 50px; }
+.explore.stream li { display: inline-block; margin: 2px 0.5px; width: 40px; height: 40px; line-height: 40px; }
 ul.collage li a,
-.explore.stream li a { display: block; width: 50px; height: 50px; background-color: #000; }
+.explore.stream li a { display: block; width: 40px; height: 40px; background-color: #000; }
 ul.collage li img,
-.explore.stream li img { vertical-align: top; width: 50px; max-height: 50px; }
+.explore.stream li img { vertical-align: top; width: 40px; max-height: 40px; }
 
 input.comment {
   border: 2px solid #ccc;

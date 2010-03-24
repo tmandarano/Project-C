@@ -80,10 +80,37 @@ class ViscousController extends baseController {
     RestUtils::sendResponse(200, $this->fetch('signup.tpl'));
   }
 
+  public function find_people() {
+    RestUtils::sendResponse(503, "I don't know how to find unknown people yet.");
+  }
+
   public function profile() {
     // TODO get the proper user's profile data
-    $user = array('name' => 'Test name');
+    $user = array('name' => 'Tony Mandarano',
+      'location' => 'Seattle, WA',
+      'occupation' => 'Student',
+      'bio' => 'I love life!',
+    );
+    $similarPeople = array(
+      array('id' => 1, 'name' => 'Other person 1'),
+      array('id' => 1, 'name' => 'Other person 2'),
+      array('id' => 1, 'name' => 'Other person 3'),
+      array('id' => 1, 'name' => 'Other person 4'),
+      array('id' => 1, 'name' => 'Other person 5'),
+      array('id' => 1, 'name' => 'Other person 6'),
+      array('id' => 1, 'name' => 'Other person 7'),
+      array('id' => 1, 'name' => 'Other person 8')
+    );
+    $tags = array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6,
+      'concert' => 8, 'fishing' => 6);
+    $mostRecent = 451;
+    $recentPhotos = array(452, 453, 451);
+
     $this->assign('user', $user);
+    $this->assign('similarPeople', $similarPeople);
+    $this->assign('tags', $tags);
+    $this->assign('mostRecent', $mostRecent);
+    $this->assign('recentPhotos', $recentPhotos);
     $this->assign('title', $user['name']);
     $this->assign('class', 'users profile'); // TODO change to match route
     RestUtils::sendResponse(200, $this->fetch('users_profile.tpl'));
@@ -96,6 +123,11 @@ class ViscousController extends baseController {
   }
 
   /* Photos pages */
+  public function photo() {
+    header('Location: /img/270x270.jpg');
+    exit;
+  }
+
   public function photos_view() {
     // TODO get photo data and related photo data.
     $this->assign('title', 'Photo');

@@ -36,6 +36,7 @@
   /* users routes */
   staticRoute($router, '/signup', 'viscous', 'signup');
   staticRoute($router, '/settings', 'viscous', 'settings');
+  staticRoute($router, '/profile', 'viscous', 'find_people');
   singleArgRoute($router, '/profile/', ':number', 'viscous', 'profile', '^\d+$', 'profile');
   dynMethodRoute($router, 'users');
   dynMethodArgRoute($router, 'users', ':number', '^\d+$');
@@ -56,9 +57,20 @@
   staticRoute($router, '/share/webcam', 'viscous', 'share_webcam');
 
   /* photos routes */
+  singleArgRoute($router, '/photos/', ':number', 'viscous', 'photo', '^\d+$', 'photo');
+  $photos_r = new Route('/photos/:number/:ignore');
+  $photos_r->setMapClass('viscous');
+  $photos_r->setMapMethod('photo');
+  $photos_r->addDynamicElement(':number', '^\d+$');
+  $photos_r->addDynamicElement(':ignore', '^\d+$');
+  $router->addRoute('photos', $photos_r);
+
   singleArgRoute($router, '/photos/view/', ':number', 'viscous', 'photos_view', '^\d+$', 'photos_view');
   singleArgRoute($router, '/photos/recent/', ':number', 'photos', 'recent', '^\d+$', 'photos_recent');
   singleArgRoute($router, '/photos/show/', ':photo_id', 'photos', 'show', '^\d{5}$', 'photos_show');
+
+  /* shard route */
+  /* Let catch all catch the shard route /shard/:method/:id */
 
   // Set up a 'catch all' default route and add it to the Router.
   $default_route = new Route('/:class/:method/:id');

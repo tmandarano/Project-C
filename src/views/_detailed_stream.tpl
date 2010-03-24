@@ -1,6 +1,6 @@
 <li class="comments">
   <div class="photo">
-    <a href="/photos/view/<?php echo $photo['Photo']['id']?>"><img src="/photos/<?php echo $photo['Photo']['id']?>/3" /></a>
+    <a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/3" /></a>
     <ul class="emotions">
       <li>I think this photo is</li>
       <li><img src="/img/emotions/newsworthy.png" /></li>
