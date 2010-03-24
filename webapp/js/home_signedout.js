@@ -15,14 +15,18 @@ HPP.onRemove = function() { $(this.getMap().getDiv()).empty(); };
 HPP.show = function(json) {
   this.captionPane.hide();
   this.photoPane.hide()
-  var photo = json.Photo;
-  var usr = json.User;
-  this.getMap().panTo(new google.maps.LatLng(photo.location[0], photo.location[1]));
+  var photo = json;
+  photo.location = "location";
+  photo.lat = 32;
+  photo.lng = -117;
+  photo.user = {'id': 1, 'name': 'name'}; // TODO
+  var usr = photo.user;
+  this.getMap().panTo(new google.maps.LatLng(photo.lat, photo.lng));
   var caption = '<div class="users">'+
     '<a href="/users/profile/'+usr.id+'"><img src="/users/photo/'+usr.id+'" /></a>'+
     '<a href="/users/profile/'+usr.id+'" class="username">'+usr.name+'</a> '+
     '<span class="time">'+photo.datetime+'</span> '+
-    '<span class="location">'+(photo.location[2] || 'Location unknown')+'</span>'+
+    '<span class="location">'+(photo.location || 'Location unknown')+'</span>'+
     '<p class="caption">'+photo.caption+'</p></div>';
   this.captionPane.html(caption).fadeIn(600);
   this.photoPane.html($('<a href="#"><img src="/photos/'+photo.id+'/3" /></a>')

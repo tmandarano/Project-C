@@ -2,9 +2,12 @@
 <html> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<link rel="icon" type="image/png" href="/img/favicon.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="/css/screen.css" />
 <title>{if $title}{$title} | {/if}LiveGather</title> 
 </head> 
+{php}flush(){/php}
 <body class="{$class}"> 
 {php}
 function markSel($name, $env) {
@@ -21,14 +24,14 @@ function markSel($name, $env) {
 {else}
     <li class='logo'><a href="/">LiveGather</a></li> 
 {/if}
-    <li{php} markSel('Map', $title){/php}><a href="/explore/map">Map</a></li> 
-    <li{php} markSel('Photos', $title){/php}><a href="/explore/photos">Photos</a></li> 
-    <li{php} markSel('People', $title){/php}><a href="/explore/people">People</a></li> 
+    <li{php}markSel('Map', $title){/php}><a href="/explore/map">Map</a></li> 
+    <li{php}markSel('Photos', $title){/php}><a href="/explore/photos">Photos</a></li> 
+    <li{php}markSel('People', $title){/php}><a href="/explore/people">People</a></li> 
     {if $user != null}
       <li{php} markSel('Profile', $title){/php}><a
       href="/users/profile/{$user.id}">{$user.name}</a></li> 
-      <li{php} markSel('Share', $title){/php}><a href="/share/upload">Share</a></li>
-      <li{php} markSel('Settings', $title){/php}><a href="/users/settings">Settings</a></li>
+      <li{php}markSel('Share', $title){/php}><a href="/share/upload">Share</a></li>
+      <li{php}markSel('Settings', $title){/php}><a href="/users/settings">Settings</a></li>
     {/if}
     <li class="sign {$smarty.capture.signStatus}"><a href="/users/log{$smarty.capture.signStatus}">Sign {$smarty.capture.signStatus}</a></li>
   </ul> 
@@ -42,13 +45,14 @@ us to create an enjoyable experience.</p>
 </noscript>
 <div id="softener"></div>
 <div id="content">
+{php}flush(){/php}
 {include file=$content}
 </div>
 <div id="footer">
 <div>
 <table><tr>
 <td>
-  <h1><a href="/explore">Explore</a></h1>
+  <h1>Explore</h1>
   <ul>
   <li><a href="/explore/map">Map</a></li>
   <li><a href="/explore/people">People</a></li>
@@ -56,7 +60,7 @@ us to create an enjoyable experience.</p>
   </ul>
 </td>
 <td>
-  <h1><a href="/share">Share</a></h1>
+  <h1>Share</h1>
   <ul>
   <li><a href="/share/mobile">Mobile</a></li>
   <li><a href="/share/upload">Upload</a></li>
@@ -64,7 +68,7 @@ us to create an enjoyable experience.</p>
   </ul>
 </td>
 <td>
-  <h1><a href="/users/settings">Settings</a></h1>
+  <h1><a href="/settings">Settings</a></h1>
 </td>
 <td>
   <h1>About</h1>

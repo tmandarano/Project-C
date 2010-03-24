@@ -1,8 +1,8 @@
 <?php
-require_once('/var/www/src/utils/logging.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/src/utils/logging.php');
 
-$uploaddir = '/var/www/uploads/';
-$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
+$uploadfile = UPLOAD_DIR . basename($_FILES['userfile']['name']);
 $thefile = $_FILES['userfile']['tmp_name'];
 
 if (move_uploaded_file($thefile, $uploadfile)) {

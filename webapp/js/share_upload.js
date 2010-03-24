@@ -34,3 +34,12 @@ LG.PICTURES.ADD.init = function() {
   });
 };
 $(document).ready(LG.PICTURES.ADD.init);
+$(function() {
+  $('#photo_submit_share').click(function() {
+    $('#photo_photo').val();
+    $('#photo_tags').val();
+    // TODO lat lng
+    $.post('/photos/create/', data, function(xhr) {
+    }, 'json');
+  });
+});

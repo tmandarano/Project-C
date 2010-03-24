@@ -3,10 +3,11 @@ require_once('baseController.php');
 
 /* Viscous represents the semi-dynamic, semi-static nature of these pages. */
 class ViscousController extends baseController {       
+  /* Home pages */
   public function home() {
-    if ($user or true) {
+    if ($user/* or true*/) { // TODO This needs to be auth
       $this->assign('title', '');
-      $this->assign('class', 'home in');
+      $this->assign('class', 'home stream');
       RestUtils::sendResponse(200, $this->fetch('signedin.tpl'));
     } else {
       $this->assign('title', '');
@@ -15,6 +16,7 @@ class ViscousController extends baseController {
     }
   }
       
+  /* About pages */
   public function about_contact() {
     $this->assign('title', 'Contact | About');
     $this->assign('class', 'about contact');
@@ -25,6 +27,80 @@ class ViscousController extends baseController {
     $this->assign('title', 'FAQ | About');
     $this->assign('class', 'about faq');
     RestUtils::sendResponse(200, $this->fetch('about_faq.tpl'));
+  }
+
+  /* Explore pages */
+  public function explore_map() {
+    $this->assign('title', 'Map | Explore');
+    $this->assign('class', 'explore map');
+    RestUtils::sendResponse(200, $this->fetch('explore_map.tpl'));
+  }
+
+  public function explore_photos() {
+    $this->assign('title', 'Photos | Explore');
+    $this->assign('class', 'explore photos');
+    RestUtils::sendResponse(200, $this->fetch('explore_photos.tpl'));
+  }
+
+  public function explore_people() {
+    $this->assign('title', 'People | Explore');
+    $this->assign('class', 'explore people');
+    RestUtils::sendResponse(200, $this->fetch('explore_people.tpl'));
+  }
+
+  /* Share pages */
+  public function share_index() {
+    $this->assign('title', 'Share');
+    $this->assign('class', 'share index');
+    RestUtils::sendResponse(200, $this->fetch('share_index.tpl'));
+  }
+
+  public function share_upload() {
+    $this->assign('title', 'Upload | Share');
+    $this->assign('class', 'share upload');
+    RestUtils::sendResponse(200, $this->fetch('share_upload.tpl'));
+  }
+
+  public function share_mobile() {
+    $this->assign('title', 'Mobile | Share');
+    $this->assign('class', 'share mobile');
+    RestUtils::sendResponse(200, $this->fetch('share_mobile.tpl'));
+  }
+
+  public function share_webcam() {
+    $this->assign('title', 'Webcam | Share');
+    $this->assign('class', 'share webcam');
+    RestUtils::sendResponse(200, $this->fetch('share_webcam.tpl'));
+  }
+
+  /* Users pages */
+  public function signup() {
+    $this->assign('title', 'Sign up');
+    $this->assign('class', 'users add'); // TODO change to match route
+    RestUtils::sendResponse(200, $this->fetch('signup.tpl'));
+  }
+
+  public function profile() {
+    // TODO get the proper user's profile data
+    $user = array('name' => 'Test name');
+    $this->assign('user', $user);
+    $this->assign('title', $user['name']);
+    $this->assign('class', 'users profile'); // TODO change to match route
+    RestUtils::sendResponse(200, $this->fetch('profile.tpl'));
+  }
+
+  public function settings() {
+    $this->assign('title', 'Settings');
+    $this->assign('class', 'users settings'); // TODO change to match route
+    RestUtils::sendResponse(200, $this->fetch('settings.tpl'));
+  }
+
+  /* Photos pages */
+  public function photos_view() {
+    // TODO get photo data and related photo data.
+    $this->assign('title', 'Photo');
+    $this->assign('class', 'photos view');
+    RestUtils::sendResponse(200, $this->fetch('photos_view.tpl'));
   }
 }
 ?>

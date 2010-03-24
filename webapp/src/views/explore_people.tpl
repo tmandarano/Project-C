@@ -36,22 +36,24 @@
 </div>
 
 <ul class="users">
-  <?php echo $this->element('user_summary', array(
-    'userinfo'=>array(
+  {php}$this->assign('user', array(
       'id'=>11,'name'=>'Tony Mandarano', 
       'location' => 'Seattle, WA',
       'bio'=>'A true audi s4 enthusiast! Oh, and I love Seattle!',
-      'interests'=>array('audi', 'cars', 'hiking', 'Seahawks', 'Seattle Sounders', 'Formula One')),
-    'mostRecentPhoto'=>array('id'=>'4b12d65c-f9dc-428d-ab64-7d3c2641192c')
-  ))?>
-  <?php echo $this->element('user_summary', array(
-    'userinfo'=>array(
+      'interests'=>array('audi', 'cars', 'hiking', 'Seahawks',
+                         'Seattle Sounders', 'Formula One')));
+      $this->assign('photo', array('id'=>'451'));
+  {/php}
+  {include file='_user_summary.tpl' userinfo=$user photo=$photo}
+  {php}$this->assign('user', array(
       'id'=>12,'name'=>'John Matthews', 
       'location' => 'Seattle, WA',
       'bio'=>'I am a car blogger and columnist, say hi!',
-      'interests'=>array('cars', 'lamboghini', 'audi', 'autoclubs', 'autocross events', 'kayaking', 'waterskiing')),
-    'mostRecentPhoto'=>array('id'=>'4b12d65c-f9dc-428d-ab64-7d3c2641192c')
-  ))?>
+      'interests'=>array('cars', 'lamboghini', 'audi', 'autoclubs', 'autocross
+      events', 'kayaking', 'waterskiing')));
+    $this->assign('photo', array('id'=>'452'));
+  {/php}
+  {include file='_user_summary.tpl' userinfo=$user photo=$photo}
 </ul>
 </div>
 <?php $javascript->link('explore_people', false); ?>

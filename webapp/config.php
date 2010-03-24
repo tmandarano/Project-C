@@ -16,4 +16,7 @@ define('PDO_PASSWORD', 'liv3g@th3r');
 //define('PDO_DSN', 'mysql:dbname=projectc;host=localhost');
 //define('PDO_USER', 'projectc');
 //define('PDO_PASSWORD', 'projectc');
+
+// Upload directories
+define('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/uploads/');
 ?>

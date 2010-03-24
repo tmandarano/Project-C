@@ -51,7 +51,7 @@
             $("#getPhotoButton").click(function() {
                 var data = new Object();
                 data.id = $("#retrieveId").val();   
-             	$.get("/photos/show/", data,   
+             	$.get("/photos/show/"+data.id, null,   
                 function(result) {
                     $("#retrieveCommentsDisplay").html("");
                     $("#retrieveTagsDisplay").html("");
@@ -82,8 +82,8 @@
         $(function() {   
             $("#editPhotoButton").click(function() {
                 var data = new Object();
-                data.id = $("#retrieveId").val();   
-                $.get("/photos/show/", data,   
+                data.id = $("#editId").val();   
+                $.get("/photos/show/"+data.id, null,   
                 function(result) {
                     AjaxSucceeded(result);
                 }, "json");
@@ -91,7 +91,10 @@
         });   
 
         function AjaxSucceeded(result) {
-          	$("#result").html(result.toSource());   
+        // toSource doesn't exist outside of Firefox Gecko
+        // use Firebug and console.log instead
+          	//$("#result").html(result.toSource());
+                console.log(result);
         }   
         function AjaxFailed(result) {   
             $("#result").html(result.statusText);   
@@ -110,7 +113,7 @@
     <br />
     <h2><a href="#" id="upload-toggle">Upload an Image</a></h2>
     <br />
-    <div id="uploadImageDiv" style="display:none">
+    <div id="uploadImageContainer" style="display:none">
         <form id="UploadPhotoForm" method="post" enctype="multipart/form-data">
             <fieldset>
                 <input type="hidden" id="uploadedFile" />

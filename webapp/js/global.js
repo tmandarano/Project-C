@@ -15,8 +15,12 @@ var H = function(jdom) {
 };
 var HP = H.prototype = function() {};
 HP.append = function(json) {
-  var p = json.Photo;
-  $('<li><a href="/photos/view/'+p.id+'"><img src="/photos/'+p.id+'/1" title="'+json.User.name+': '+p.caption+'"/></a></li>')
+  var p = json;
+  p.location="location";
+  p.lat = 32;
+  p.lng = -117;
+  p.user = {name: 'name'}; // TODO
+  $('<li><a href="/photos/view/'+p.id+'"><img src="/images/IMG'+p.id+'.jpg" title="'+p.user.name+': '+p.name+'"/></a></li>')
     .data('json', json)
     .appendTo(this.jdom);
   if (this.ready) {
@@ -101,8 +105,13 @@ LGG.init = function() {
     .blur(function() { if ($(this).val() == '') { $(this).val($(this).data(def)).addClass(def); } });
   /* Setup headerStream */
   LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
-  $.getJSON('/photos/recent/'+LGG.headerStream.getMaxPhotos()*1.5, function(photos) {
+  $.getJSON('/photos/recent/'+Math.round(LGG.headerStream.getMaxPhotos()*1.5), function(photos) {
     if (photos.length < 1) {return;}
+    var temp = [];
+    for (i in photos) {
+      temp.push(photos[i]);
+    }
+    photos = temp;
     while (LGG.headerStream.add(photos[0])) { photos.push(photos.shift()); }
     LGG.headerStream.ready = true;
     (function() { /* Cycle through the photos */
@@ -162,9 +171,13 @@ function viewpic(id) {
   var viewer = $('<div id="viewpic"></div>')
     .append(close)
     .prependTo('#viewpic_dimmer');
-  var xhr = $.getJSON('/photos/json/'+id, function(json) {
-    var p = json.Photo;
-    var u = json.User;
+  var xhr = $.getJSON('/photos/show/'+id, function(json) {
+    var p = json;
+    p.location = "location";
+    p.lat = 32;
+    p.lng = -117;
+    p.user = {'id': 1, 'name': 'name'}; // TODO
+    var u = p.user;
     var display = '<table class="split"><tr>'+
 '<td class="left pane">'+
 '<div class="users">'+

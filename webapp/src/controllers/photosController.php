@@ -71,7 +71,7 @@ class PhotosController extends BaseController
     }
 
     public function recent() {
-      $num_recent = $number;
+      $num_recent = $path[3];
       if (!$number) {
         $num_recent = 10;
       }
@@ -82,11 +82,11 @@ class PhotosController extends BaseController
     {
         $extension = substr($photo->getName(), strrpos($photo->getName(), '.') + 1); 
         $new_file_name = "IMG" . $photo->getId() . "." . $extension;
-    	$target_path = "/var/www/images/" . $new_file_name;
+    	$target_path = UPLOAD_DIR. $new_file_name;
         
         $photo->setUrl("/images/" . $new_file_name);
         
-        $upload_path = "/var/www/uploads/" . $photo->getName();
+        $upload_path = UPLOAD_DIR . $photo->getName();
         
         copy($upload_path, $target_path);
         unlink($upload_path);
