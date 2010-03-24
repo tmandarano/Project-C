@@ -86,7 +86,7 @@ class ViscousController extends baseController {
     $this->assign('user', $user);
     $this->assign('title', $user['name']);
     $this->assign('class', 'users profile'); // TODO change to match route
-    RestUtils::sendResponse(200, $this->fetch('profile.tpl'));
+    RestUtils::sendResponse(200, $this->fetch('users_profile.tpl'));
   }
 
   public function settings() {
