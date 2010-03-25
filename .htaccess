@@ -1,4 +1,4 @@
-AuthUserFile /home/myshen/src/livegather/livegather.com/.htpasswd
+AuthUserFile /home/tmandarano/livegather.com/.htpasswd
 AuthGroupFile /null
 AuthName "Log in"
 AuthType Basic
@@ -7,5 +7,7 @@ require valid-user
   RewriteEngine on
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+  RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+# The question mark is to get PATH_INFO to work. This is because PHP is running
+# as CGI on Dreamhost
 </IfModule>
