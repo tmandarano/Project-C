@@ -12,21 +12,21 @@
   <div class="state"></div>
   <div class="detail comments">
     <div class="users">
-      <a href="/users/profile/11"><img src="/users/photo/11" /></a>
-      <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+      <a href="/profile/11"><img src="/users/photo/11" /></a>
+      <a href="/profile/11" class="username">Etaoin Shrdlu</a>
       <span class="time">33 seconds ago</span>
       <span class="location">San Diego, CA</span>
       <p class="caption">Just getting back from the game!</p>
     </div>
     <ul class="users">
       <li>
-        <a href="/users/profile/12"><img src="/users/photo/12" /></a>
-        <a href="/users/profile/12" class="username">John Hanson</a>
+        <a href="/profile/12"><img src="/users/photo/12" /></a>
+        <a href="/profile/12" class="username">John Hanson</a>
         <span class="time">10 seconds ago</span>
         <p>Looks like you had a great time! Can't wait to hear about it when you get back.</p>
       </li>
       <li>
-        <a href="/users/profile/11"><img src="/users/photo/11" /></a>
+        <a href="/profile/11"><img src="/users/photo/11" /></a>
         <form class="comments" name="comments" action="/photos/comment" method="post"><input type="text" class="default" value="add comment" /><input type="submit" value="add" /></form>
       </li>
     </li>
@@ -36,9 +36,9 @@
     <h1>Near <span class="location">Mercer Island, WA</span></h1>
     <h1 class="time">December 17, 2009 1:04pm</h1>
     <ul class="users centered">
-      <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <span class="time">20 seconds ago</span></li>
-      <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <span class="time">42 seconds ago</span></li>
-      <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <span class="time">3 minutes ago</span></li>
+      <li><a href="/profile/11"><img src="/users/photo/11" /></a> <span class="time">20 seconds ago</span></li>
+      <li><a href="/profile/11"><img src="/users/photo/11" /></a> <span class="time">42 seconds ago</span></li>
+      <li><a href="/profile/11"><img src="/users/photo/11" /></a> <span class="time">3 minutes ago</span></li>
     </ul>
   </div>
   <div class="detail meta">
@@ -57,20 +57,20 @@
     </div>
     <ul class="users">
       <li>
-        <a href="/users/profile/11"><img src="/users/photo/11" /></a>
-        <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+        <a href="/profile/11"><img src="/users/photo/11" /></a>
+        <a href="/profile/11" class="username">Etaoin Shrdlu</a>
         <span class="time">33 seconds ago</span>
         <p>Gave stars</p>
       </li>
       <li>
-        <a href="/users/profile/11"><img src="/users/photo/11" /></a>
-        <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+        <a href="/profile/11"><img src="/users/photo/11" /></a>
+        <a href="/profile/11" class="username">Etaoin Shrdlu</a>
         <span class="time">33 seconds ago</span>
         <p>Voted the photo <img src="/img/emotions/newsworthy.png" /></p>
       </li>
       <li>
-        <a href="/usrs/profile/11"><img src="/users/photo/11" /></a>
-        <a href="/users/profile/11" class="username">Etaoin Shrdlu</a>
+        <a href="/profile/11"><img src="/users/photo/11" /></a>
+        <a href="/profile/11" class="username">Etaoin Shrdlu</a>
         <span class="time">33 seconds ago</span>
         <p>Voted the photo <img src="/img/emotions/funny_l.png" /></p>
       </li>

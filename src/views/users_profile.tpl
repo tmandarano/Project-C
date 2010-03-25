@@ -1,8 +1,8 @@
 <table class="split">
   <tr>
     <td class="left pane">
-      <h1 class="username"><a href="/users/profile/11" class="username">{$user.name}</a></h1>
-      <a href="/users/profile/11"><img src="/users/photo/11" class="userphoto" /></a>
+      <h1 class="username"><a href="/profile/11" class="username">{$user.name}</a></h1>
+      <a href="/profile/11"><img src="/users/photo/11" class="userphoto" /></a>
       <ul class="actions">
         <li><a href="/users/watch/{$user.id}">Watch this person</a></li>
         <li><a href="/users/message/{$user.id}">Send message</a></li>

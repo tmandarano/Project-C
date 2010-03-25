@@ -7,9 +7,9 @@
     <td>
       <h1>Recently near you</h1>
       <ul class="users centered">
-        <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <a href="/users/profile/11" class="username">Jim Johnson</a> <span class="time">14 seconds ago</span></li>
-        <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <a href="/users/profile/11" class="username">Mat Smith</a> <span class="time">36 seconds ago</span></li>
-        <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <a href="/users/profile/11" class="username">Becca John</a> <span class="time">55 seconds ago</span></li>
+        <li><a href="/profile/11"><img src="/users/photo/11" /></a> <a href="/profile/11" class="username">Jim Johnson</a> <span class="time">14 seconds ago</span></li>
+        <li><a href="/profile/11"><img src="/users/photo/11" /></a> <a href="/profile/11" class="username">Mat Smith</a> <span class="time">36 seconds ago</span></li>
+        <li><a href="/profile/11"><img src="/users/photo/11" /></a> <a href="/profile/11" class="username">Becca John</a> <span class="time">55 seconds ago</span></li>
       </ul>
     </td>
     <td>
@@ -18,9 +18,9 @@
     <td>
       <h1>Popular people</h1>
       <ul class="users centered">
-        <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <a href="/users/profile/11" class="username">Tony Mandarano</a> <span class="popularity">+253 watchers</span></li>
-        <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <a href="/users/profile/11" class="username">John Stone</a> <span class="popularity">+133 watchers</span></li>
-        <li><a href="/users/profile/11"><img src="/users/photo/11" /></a> <a href="/users/profile/11" class="username">Jimmy John</a> <span class="popularity">+121 watchers</span></li>
+        <li><a href="/profile/11"><img src="/users/photo/11" /></a> <a href="/profile/11" class="username">Tony Mandarano</a> <span class="popularity">+253 watchers</span></li>
+        <li><a href="/profile/11"><img src="/users/photo/11" /></a> <a href="/profile/11" class="username">John Stone</a> <span class="popularity">+133 watchers</span></li>
+        <li><a href="/profile/11"><img src="/users/photo/11" /></a> <a href="/profile/11" class="username">Jimmy John</a> <span class="popularity">+121 watchers</span></li>
       </ul>
     </td>
   </tr>

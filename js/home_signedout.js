@@ -23,8 +23,8 @@ HPP.show = function(json) {
   var usr = photo.user;
   this.getMap().panTo(new google.maps.LatLng(photo.lat, photo.lng));
   var caption = '<div class="users">'+
-    '<a href="/users/profile/'+usr.id+'"><img src="/users/photo/'+usr.id+'" /></a>'+
-    '<a href="/users/profile/'+usr.id+'" class="username">'+usr.name+'</a> '+
+    '<a href="/profile/'+usr.id+'"><img src="/users/photo/'+usr.id+'" /></a>'+
+    '<a href="/profile/'+usr.id+'" class="username">'+usr.name+'</a> '+
     '<span class="time">'+photo.datetime+'</span> '+
     '<span class="location">'+(photo.location || 'Location unknown')+'</span>'+
     '<p class="caption">'+photo.caption+'</p></div>';

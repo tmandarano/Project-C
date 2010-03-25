@@ -188,8 +188,8 @@ function viewpic(id) {
     var display = '<table class="split"><tr>'+
 '<td class="left pane">'+
 '<div class="users">'+
-'<a href="/users/profile/'+u.id+'"><img src="/users/photo/'+u.id+'" /></a>'+
-'<a href="/users/profile/'+u.id+'" class="username">'+u.name+'</a> '+
+'<a href="/profile/'+u.id+'"><img src="/users/photo/'+u.id+'" /></a>'+
+'<a href="/profile/'+u.id+'" class="username">'+u.name+'</a> '+
 '<span class="location">'+p.location+'</span> '+
 '<span class="time">'+p.datetime+'</span>'+
 '<p class="caption">crazy wildfires in LA!</p>'+

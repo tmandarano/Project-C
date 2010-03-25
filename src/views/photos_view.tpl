@@ -2,8 +2,8 @@
 <tr>
   <td class="left pane">
     <div class="users">
-      <a href="/users/profile/<?php echo $photo['User']['id']?>"><img src="/users/photo/<?php echo $photo['User']['name']?>" /></a>
-      <a class="username" href="/users/profile/<?php echo $photo['User']['id']?>"><?php echo $photo['User']['name']?></a>
+      <a href="/profile/<?php echo $photo['User']['id']?>"><img src="/users/photo/<?php echo $photo['User']['name']?>" /></a>
+      <a class="username" href="/profile/<?php echo $photo['User']['id']?>"><?php echo $photo['User']['name']?></a>
       <span class="time"><?php echo $time->timeAgoInWords($photo['Photo']['datetime'], array('end'=>'+1month'))?></span>
       <span class="location"><?php echo $photo['Photo']['location'] ?></span>
       <p class="caption"><?php echo $photo['Photo']['caption']?></p>
@@ -21,14 +21,14 @@
       <ul class="users comments">
         <?php if ($user) {?>
         <li>
-        <a href="/users/profile/<?php echo $user['id']?>"><img src="/users/photo/<?php echo $user['id']?>" /></a> <a class="username" href="/users/profile/<?php echo $user['id']?>"><?php echo $user['name']?></a>
+        <a href="/profile/<?php echo $user['id']?>"><img src="/users/photo/<?php echo $user['id']?>" /></a> <a class="username" href="/profile/<?php echo $user['id']?>"><?php echo $user['name']?></a>
           <form class="comments" name="comments" action="/photos/comment" method="post"><input type="hidden" name="photo_id" value="<?php echo $photo['Photo']['id']?>" /><input type="text" name="comment" class="default" value="add comment" /><input type="submit" value="add" /></form>
         </li>
         <?php }?>
         <?php foreach ($photo['Comment'] as $comment) {?>
           <li>
-            <a href="/users/profile/<?php echo $comment['user_id']?>"><img src="/users/photo/<?php echo $comment['user_id']?>" /></a>
-            <a class="username" href="/users/profile/<?php echo $comment['user_id']?>"><?php echo $comment['User']['name']?></a>
+            <a href="/profile/<?php echo $comment['user_id']?>"><img src="/users/photo/<?php echo $comment['user_id']?>" /></a>
+            <a class="username" href="/profile/<?php echo $comment['user_id']?>"><?php echo $comment['User']['name']?></a>
             <span class="time"><?php echo $time->timeAgoInWords($comment['datetime'], array('end'=>'+1month'))?></span>
             <p><?php echo $comment['comment']?></p>
           </li>
