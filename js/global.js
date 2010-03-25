@@ -99,10 +99,17 @@ LGG.init = function() {
   $('.sign.in').click(function() {LGG.showSigninPrompt(); return false;});
   /* Default form clearing */
   var def = 'default';
-  $(':text.'+def)
-    .each(function() {$(this).data(def, $(this).val());})
-    .focus(function() { if ($(this).val() == $(this).data(def)) { $(this).val('').removeClass(def); } })
-    .blur(function() { if ($(this).val() == '') { $(this).val($(this).data(def)).addClass(def); } });
+  $(':text')
+    .live('focus', function() {
+      if (!$(this).data(def)) { $(this).data(def, $(this).val());}
+      if ($(this).val() == $(this).data(def)) { $(this).val('').removeClass(def); }
+    })
+    .live('blur', function() {
+      if ($(this).val() == '') {
+        $(this).val($(this).data(def)).addClass(def);
+      }
+    })
+
   /* Setup headerStream */
   LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
   $.getJSON('/photos/recent/'+Math.round(LGG.headerStream.getMaxPhotos()*1.5), function(photos) {
@@ -218,4 +225,4 @@ function viewpic(id) {
   close.click(destroy);
 }
 
-$(document).ready(LG.G.init);
+$(LG.G.init);

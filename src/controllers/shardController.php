@@ -19,8 +19,12 @@ class ShardController extends baseController {
     if (! $photo_id) {
       $photo_id = $vars[':id'];
     }
-    $photo = PhotoDAO::getPhotos($photo_id);
-    $this->assign('photo', objToArr($photo[$photo_id]));
+    $photos = PhotoDAO::getPhotos($photo_id);
+    $photo = objToArr($photos[$photo_id]);
+    $photo['datetime'] = '25 minutes ago';
+    $photo['location'] = 'Bellevue, WA';
+    $photo['caption'] = 'A caption';
+    $this->assign('photo', $photo);
     RestUtils::sendResponse(200, $this->untemplatedFetch('shards/photo_stub_profile_stream.tpl'));
   }
 }

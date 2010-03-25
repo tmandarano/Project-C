@@ -103,7 +103,7 @@ class ViscousController extends baseController {
     );
     $tags = array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6,
       'concert' => 8, 'fishing' => 6);
-    $mostRecent = 451;
+    $mostRecent = array('id' => 451, 'caption' => 'Just getting to the party! Hope to have some fun watching the Seahawks', 'datetime' => '30 seconds ago', 'location' => 'Mercer Island, WA', 'lat' => 47.571, 'lng' => -122.221, 'tags' => array(array('id' => 1, 'tag' => 'party'), array('id' => 2, 'tag' => 'seahawks')), 'comments' => array());
     $recentPhotos = array(452, 453, 451);
 
     $this->assign('user', $user);

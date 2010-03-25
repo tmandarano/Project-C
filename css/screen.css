@@ -256,22 +256,23 @@ form.search input[type="image"] {
 form.comments input[type="text"],
 form.tags input[type="text"] {
   border: 1px solid #aaa;
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  padding: 0 3.9ex 0 4px;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  padding: 0 4ex 0 2px;
 }
 form.comments input[type="submit"],
 form.tags input[type="submit"] {
-  border: 0;
-  border-top-right-radius: 2px;
-  -moz-border-radius-topright: 2px;
-  border-bottom-right-radius: 2px;
-  -moz-border-radius-bottomright: 2px;
-  background-color: #a3c483;
-  color: #fff;
+  padding: 0 0.5em;
+  font-effect: emboss;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  background-color: #c7f499;
+  color: #000;
   height: 1.6em;
   vertical-align: middle;
-  margin-left: -3.9ex;
+  margin-left: -4ex;
+  text-shadow: 1px 1px 1px #fff;
 }
 
 div.caption,
@@ -291,15 +292,6 @@ div.caption p,
 .comment p {
   font-size: normal;
   color: #000;
-}
-
-.location {
-  font-size: small !important;
-  color: #a3c483 !important;
-}
-.time {
-  color: #555 !important;
-  font-size: small !important;
 }
 
 .photos.view #the_image {
@@ -336,15 +328,22 @@ h1.bichrome em { color: #a3e267; }
   margin-right: 0.5em;
 }
 .users.profile .right.pane { padding-left: 3em; }
-.users.profile .mostrecent { border-spacing: 1em; }
-.users.profile .mostrecent .left.pane, .users.profile .mostrecent .left.pane img { width: 215px; }
-.users.profile .mostrecent .left.pane { height: 215px; }
-.users.profile .mostrecent .right.pane .caption { font-size: x-large; color: #3b0; }
+.users.profile .most_recent p { font-size: larger; max-width: 60ex; margin-bottom: 1em; }
+.users.profile .most_recent .map { height: 50%; width: 100%; border: 1px solid #aaa; }
 .users.profile .userinfo { margin-bottom: 0.5em; } 
+.users.profile .detail { position: relative; height: inherit; } 
+.users.profile .detail .bottom { position: absolute; bottom: 0;} 
+.users.profile p.comments { font-size: small; } 
 
-.users.profile .photo.stub { position: relative; height: 270px; margin-bottom: 10px; }
-.users.profile .photo.stub .photo { position: absolute; clear: left; line-height: 270px; }
-.users.profile .photo.stub .detail { padding-left: 280px; }
+.users.profile .profile.stream li { position: relative; height: 270px; margin-bottom: 10px; }
+.users.profile .profile.stream li .photo { position: absolute; clear: left; z-index: 1;}
+.users.profile .profile.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none; }
+.users.profile .profile.stream li .detail { padding-left: 280px; }
+
+p.loadmore {
+  text-align: center;
+  font-size: larger;
+}
 
 .share.upload h1 { font-size: x-large; color: #3b0; }
 
@@ -354,7 +353,16 @@ h1.bichrome em { color: #a3e267; }
   margin-right: 0.5em;
 }
 .username { color: #bb2727; }
-.caption { color: #1584b2; }
+.caption { color: #000; font-weight: bold; }
+.location {
+  font-size: small !important;
+  color: #1584b2 !important;
+}
+.time {
+  color: #555 !important;
+  font-size: small !important;
+}
+
 
 table.stream {
   width:100%;

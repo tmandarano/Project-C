@@ -31,13 +31,39 @@
         <p><span class="caption">{$mostRecent.caption}</span>
            <span class="time">{$mostRecent.datetime} from</span>
            <span class="location">{$mostRecent.location}</span></p>
+        <ol class="profile stream">
+          <li>
+            <div class="photo">
+              <a href="/photos/view/{$mostRecent.id}"><img
+              src="/photos/{$mostRecent.id}/3" /></a>
+              <a class="like" href="#like">Like</a>
+            </div>
+            <div class="detail">
+              <div class="map" lat="{$mostRecent.lat}" lng="{$mostRecent.lng}"></div>
+              <div class="bottom">
+                <p class="comments"><a href="#">7 people</a> have commented</p>
+                <form class="comments" name="comments"
+                action="/photos/edit/{$mostRecent.id}" method="post">
+                  <input name="photo[comment]" type="text" class="default" value="add comment" />
+                  <input type="submit" value="comment" />
+                </form>
+                <p>Tags {foreach from=$mostRecent.tags item=tag}<a href="#">{$tag.tag}</a>, {/foreach}</p>
+                <form class="tags" name="tags"
+                action="/photos/edit/{$mostRecent.id}" method="post">
+                  <input name="photo[tag]" type="text" class="default" value="add tag" />
+                  <input type="submit" value="tag" />
+                </form>
+              </div>
+            </div>
+          </li>
+        </ol>
       </div>
-      <ol class="profile stream">
+      <ol id="stream" class="profile stream">
         {foreach from=$recentPhotos item=photo_id}
           <li class="photo stub" stub="profile_stream|{$photo_id}"></li>
         {/foreach}
       </ol>
-      <p style="text-align: center; font-size: larger;"><a href="#">Load older photos</a></p>
+      <p class="loadmore"><a href="javascript:void(0);">Load older photos</a></p>
     </td>
   </tr>
 </table>
