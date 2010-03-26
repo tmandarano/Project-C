@@ -5,10 +5,41 @@ require_once('baseController.php');
 class ViscousController extends baseController {       
   /* Home pages */
   public function home() {
-    if ($user/* or true*/) { // TODO This needs to be auth
+    if ($user or true) { // TODO This needs to be auth
+      $streamPhotos = array(451, 452, 453);
+      $socialStream = array(
+        array('user' => array('name'=>'Tony Mandarano'),
+              'action' => 'commented on',
+              'actionee' => array('name' => 'John Last'),
+              'photo' => array('id' => 451)),
+        array('user' => array('name'=>'Tony Mandarano'),
+              'action' => 'commented on',
+              'actionee' => array('name' => 'John Last'),
+              'photo' => array('id' => 451),
+              'descriptor' => 'nice'),
+        array('user' => array('name'=>'John Tamaguchi'),
+              'action' => 'tagged',
+              'actionee' => array('name' => 'Jessica Parker'),
+              'photo' => array('id' => 451),
+              'descriptor' => 'cute')
+      );
+      $suggestedPhotos = array(
+        array('id'=>451), array('id'=>452), array('id'=>453),
+        array('id'=>452), array('id'=>453), array('id'=>451),
+        array('id'=>452), array('id'=>453), array('id'=>451), array('id'=>452)
+      );
+      $suggestedPeople = array(
+        array('id'=>1), array('id'=>2), array('id'=>3),
+        array('id'=>1), array('id'=>2), array('id'=>3),
+        array('id'=>2), array('id'=>3), array('id'=>1), array('id'=>2)
+      );
       $this->assign('title', '');
-      $this->assign('class', 'home stream');
-      RestUtils::sendResponse(200, $this->fetch('signedin.tpl'));
+      $this->assign('class', 'livestreams');
+      $this->assign('stream', $streamPhotos);
+      $this->assign('social', $socialStream);
+      $this->assign('suggestedPhotos', $suggestedPhotos);
+      $this->assign('suggestedPeople', $suggestedPeople);
+      RestUtils::sendResponse(200, $this->fetch('live_streams.tpl'));
     } else {
       $this->assign('title', '');
       $this->assign('class', 'home out');
@@ -112,7 +143,7 @@ class ViscousController extends baseController {
     $this->assign('mostRecent', $mostRecent);
     $this->assign('recentPhotos', $recentPhotos);
     $this->assign('title', $user['name']);
-    $this->assign('class', 'users profile'); // TODO change to match route
+    $this->assign('class', 'profile');
     RestUtils::sendResponse(200, $this->fetch('users_profile.tpl'));
   }
 
@@ -123,9 +154,14 @@ class ViscousController extends baseController {
   }
 
   /* Photos pages */
-  public function photo() {
-    header('Location: /img/270x270.jpg');
-    exit;
+  public function photo($vars) {
+    switch ($vars[':size']) {
+    case 0: header('Location: /img/30x30.jpg'); exit;
+    case 1: header('Location: /img/50x50.jpg'); exit;
+    case 2: header('Location: /img/50x50.jpg'); exit;
+    case 3: header('Location: /img/270x270.jpg'); exit;
+    case 'o': header('Location: /img/270x270.jpg'); exit;
+    }
   }
 
   public function photos_view() {

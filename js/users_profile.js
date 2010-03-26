@@ -11,15 +11,15 @@ $(function() {
     'colormin': '2594c2',
     'colormax': '1584b2'});
   $('.photo.stub').each(function(index, elem) {
-    var stubarr = $(elem).attr('stub').split('|');
-    var call = stubarr[0];
-    var photo_id = stubarr[1];
-    if (call == "profile_stream") {
-      photo_stub_profile_stream($(elem), photo_id);
-    } else {
-      // Error. Unknown stub.
-    }
-  });
+      var stubarr = $(elem).attr('stub').split('|');
+      var call = stubarr[0];
+      var photo_id = stubarr[1];
+      if (call == "profile_stream") {
+        photo_stub_profile_stream($(elem), photo_id);
+      } else {
+        // Error. Unknown stub.
+      }
+    });
   $('.photo')
     .live('hover', function(event) {
       if (event.type == 'mouseover') {

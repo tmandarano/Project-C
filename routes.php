@@ -57,12 +57,12 @@
   staticRoute($router, '/share/webcam', 'viscous', 'share_webcam');
 
   /* photos routes */
-  singleArgRoute($router, '/photos/', ':number', 'viscous', 'photo', '^\d+$', 'photo');
-  $photos_r = new Route('/photos/:number/:ignore');
+  //singleArgRoute($router, '/photos/', ':number', 'viscous', 'photo', '^\d+$', 'photo');
+  $photos_r = new Route('/photos/:number/:size');
   $photos_r->setMapClass('viscous');
   $photos_r->setMapMethod('photo');
   $photos_r->addDynamicElement(':number', '^\d+$');
-  $photos_r->addDynamicElement(':ignore', '^\d+$');
+  $photos_r->addDynamicElement(':size', '^\d+$');
   $router->addRoute('photos', $photos_r);
 
   singleArgRoute($router, '/photos/view/', ':number', 'viscous', 'photos_view', '^\d+$', 'photos_view');

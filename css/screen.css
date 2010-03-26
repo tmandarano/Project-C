@@ -3,7 +3,8 @@ html { background: #000; }
 body {
   font: 15px Helvetica,Arial,sans-serif;
   color: #444;
-  background: #f0f9fd;
+  /*background: #f0f9fd;*/
+  background: #fff;
 }
 a {
   text-decoration: none;
@@ -81,7 +82,6 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   -moz-border-radius: 15px;
   border: 2px solid #dfdfdf;
   -moz-box-shadow: 4px 4px 4px #aaa;
-  box-shadow: 4px 4px 4px #aaa;
   -webkit-box-shadow: 4px 4px 4px #aaa;
 }
 .home.out .pedestal .split { width: 100%; margin: auto; }
@@ -128,21 +128,53 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .home.out #map_photo img {
   width: 180px; max-height: 180px;
 }
-.home.stream .right.pane h1 .right {
-  margin-top: -0.2em;
-  top: 0;
+
+.livestreams .left.pane .controls {
+  border-bottom: 2px solid #cbeda9;
+  width: 100%;
+  margin-bottom: 0.5em;
+  line-height: 2em; 
 }
-.home.stream .social.stream > li {
-  height: auto;
+.livestreams .left.pane .controls .stream_type li {
+  display: inline;
+  padding: 0.3em 0.3em 0.2em 0.3em; /* slightly different for centering text in button */
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  text-shadow: 1px 1px 1px #fff;
+}
+.livestreams .controls .stream_type li.type { background-color: #cbeda9; }
+.livestreams .controls #specific_button {
+  background-color: #ccc;
   text-align: center;
+  border: 1px solid #aaa;
+  text-shadow: 1px 1px 1px #fff;
+  border-radius: 1em;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
 }
-.home.stream .social.stream > li p {
-  text-align: left;
-  font-size: smaller;
-}
-.home.stream .social.stream > li p img {
-  vertical-align: middle;
-}
+.livestreams .controls .right { text-align: right; }
+.livestreams .controls .buttons li { display: inline; }
+.livestreams .tags { margin-bottom: 0.5em; }
+.livestreams .tags h1 { display: inline; color: #777; }
+.livestreams .tags ul { display: inline; }
+.livestreams .tags ul li { display: inline; }
+.livestreams .tags a { color: #1584B2; }
+.livestreams #photo_map { width: 100%; height: 300px; margin-bottom: 10px;}
+.livestreams #social_stream { line-height: 2.5em; margin-top: 1em; }
+.livestreams #social_stream .right { vertical-align: middle; }
+.livestreams .social.stream > li { height: auto; text-align: center; }
+.livestreams .social.stream > li p { text-align: left; font-size: smaller; }
+.livestreams .social.stream > li p img { vertical-align: middle; }
+.livestreams .collage { width: 216px; }
+
+/* This is very similar to .profile.stream */
+.live.stream li { position: relative; height: 270px; margin-bottom: 10px; }
+.live.stream li .photo { position: absolute; clear: left; z-index: 1;}
+.live.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none; }
+.live.stream li .detail { padding-left: 280px; position: relative; height: inherit; } 
+.live.stream li .detail .bottom { position: absolute; bottom: 0;} 
+.live.stream li .detail h1 { font-size: 1.5em; color: #a3e267; } 
 
 .explore.map #content {
   width: 100%;
@@ -313,37 +345,38 @@ div.caption p,
 
 h1.bichrome { color: #bbb; font-size: larger; margin-top: 0.6em; }
 h1.bichrome em { color: #a3e267; }
+h1.monochrome { color: #444; font-size: 2.5em; }
+h1.monochrome em { font-weight: bold; }
 
-.users.profile .left.pane { width: 180px; }
-.users.profile .left.pane .actions { text-align: center; }
-.users.profile .left.pane .actions a { color: #bb2727; }
-.users.profile .left.pane ul.collage { width: 180px; }
-.users.profile .left.pane h1.username { text-align: center; }
-.users.profile .left.pane .username { font-size: large; font-weight: bold; color: #a3d277; }
-.users.profile .left.pane .userphoto { width: 180px; height: 180px; text-align: center; }
-.users.profile dl.user.info dt:after { content: ":"; }
-.users.profile dl.user.info dt {
+.profile .left.pane { width: 180px; }
+.profile .left.pane .actions { text-align: center; }
+.profile .left.pane .actions a { color: #bb2727; }
+.profile .left.pane ul.collage { width: 180px; }
+.profile .left.pane h1.username { text-align: center; }
+.profile .left.pane .username { font-size: large; font-weight: bold; color: #a3d277; }
+.profile .left.pane .userphoto { width: 180px; height: 180px; text-align: center; }
+.profile dl.user.info dt:after { content: ":"; }
+.profile dl.user.info dt {
   float: left;
   clear: left;
   margin-right: 0.5em;
 }
-.users.profile .right.pane { padding-left: 3em; }
-.users.profile .most_recent p { font-size: larger; max-width: 60ex; margin-bottom: 1em; }
-.users.profile .most_recent .map { height: 50%; width: 100%; border: 1px solid #aaa; }
-.users.profile .userinfo { margin-bottom: 0.5em; } 
-.users.profile .detail { position: relative; height: inherit; } 
-.users.profile .detail .bottom { position: absolute; bottom: 0;} 
-.users.profile p.comments { font-size: small; } 
+.profile .right.pane { padding-left: 3em; }
+.profile .most_recent p { font-size: larger; max-width: 60ex; margin-bottom: 1em; }
+.profile .most_recent .map { height: 50%; width: 100%; border: 1px solid #aaa; }
+.profile .userinfo { margin-bottom: 0.5em; } 
+.profile p.comments { font-size: small; } 
 
-.users.profile .profile.stream li { position: relative; height: 270px; margin-bottom: 10px; }
-.users.profile .profile.stream li .photo { position: absolute; clear: left; z-index: 1;}
-.users.profile .profile.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none; }
-.users.profile .profile.stream li .detail { padding-left: 280px; }
+/* This is very similar to .live.stream */
+.profile.stream li { position: relative; height: 270px; margin-bottom: 10px; }
+.profile.stream li .photo { position: absolute; clear: left; z-index: 1;}
+.profile.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none; }
+.profile.stream li .detail { padding-left: 280px; position: relative; height: inherit; } 
+.profile.stream li .detail .bottom { position: absolute; bottom: 0;} 
 
-p.loadmore {
-  text-align: center;
-  font-size: larger;
-}
+p.loadmore { text-align: center; font-size: larger; }
+p.loadmore a { display: block; padding: 0.5em; }
+p.loadmore:hover { background-color: #cff; text-shadow: 1px 1px 1px #fff; }
 
 .share.upload h1 { font-size: x-large; color: #3b0; }
 
@@ -585,14 +618,14 @@ input.comment:focus {
 .detailed.stream li.meta .detail.meta { display: block; }
 
 h1.bubble {
-  padding-left: 0.5em;
   margin-top: 0.5em;
   background-color: #9cda60;
   color: #fff;
-  border-radius: 2px;
-  -moz-border-radius: 2px;
   margin: 0.2em -0.5em 0.2em -0.5em;
   padding: 0.1em 0.5em 0.1em 0.5em;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
 }
 h1.bubble .right {
   float: right;
