@@ -2,37 +2,39 @@
 <tr>
   <td class="left pane">
     <div class="users">
-      <a href="/profile/<?php echo $photo['User']['id']?>"><img src="/users/photo/<?php echo $photo['User']['name']?>" /></a>
-      <a class="username" href="/profile/<?php echo $photo['User']['id']?>"><?php echo $photo['User']['name']?></a>
-      <span class="time"><?php echo $time->timeAgoInWords($photo['Photo']['datetime'], array('end'=>'+1month'))?></span>
-      <span class="location"><?php echo $photo['Photo']['location'] ?></span>
-      <p class="caption"><?php echo $photo['Photo']['caption']?></p>
+      <a href="/profile/{$user.id}"><img src="/users/photo/{$user.name}" /></a>
+      <a class="username" href="/profile/{$user.id}">{$user.name}</a>
+      <span class="time">{$photo.datetime}</span>
+      <span class="location">{$photo.location}</span>
+      <p class="caption">{$photo.caption}</p>
     </div>
     <div class="the_image">
-      <img id="the_image" class="s3" src="/photos/<?php echo $id; ?>" />
+      <img id="the_image" class="s3" src="/photos/{$photo.id}/3" />
     </div>
     <div class="comments">
-      <?php if (count($photo['Comment']) <= 0) {?>
+      {if count($photo.comment) <= 0}
         <p>No comments yet. Be the first to add one!</p>
-      <?php }?>
-      <?php if (!$user) {?>
-          <p>Please <a href="#" class="sign in">Sign in</a> to add comments.</p>
-      <?php }?>
+      {/if}
+      {if !$session.user}
+        <p>Please <a href="#" class="sign in">Sign in</a> to add comments.</p>
+      {/if}
       <ul class="users comments">
-        <?php if ($user) {?>
+        {if $session.user}
         <li>
-        <a href="/profile/<?php echo $user['id']?>"><img src="/users/photo/<?php echo $user['id']?>" /></a> <a class="username" href="/profile/<?php echo $user['id']?>"><?php echo $user['name']?></a>
-          <form class="comments" name="comments" action="/photos/comment" method="post"><input type="hidden" name="photo_id" value="<?php echo $photo['Photo']['id']?>" /><input type="text" name="comment" class="default" value="add comment" /><input type="submit" value="add" /></form>
+        <a href="/profile/{$user.id}"><img src="/users/photo/{$user.id}" /></a> <a class="username" href="/profile/{$user.id}">{$user.name}</a>
+          <form class="comments" name="comments" action="/photos/comment"
+          method="post"><input type="hidden" name="photo_id"
+          value="{$photo.id}" /><input type="text" name="comment" class="default" value="add comment" /><input type="submit" value="add" /></form>
         </li>
-        <?php }?>
-        <?php foreach ($photo['Comment'] as $comment) {?>
+        {/if}
+        {foreach from=$photo.comment item=comment}
           <li>
-            <a href="/profile/<?php echo $comment['user_id']?>"><img src="/users/photo/<?php echo $comment['user_id']?>" /></a>
-            <a class="username" href="/profile/<?php echo $comment['user_id']?>"><?php echo $comment['User']['name']?></a>
-            <span class="time"><?php echo $time->timeAgoInWords($comment['datetime'], array('end'=>'+1month'))?></span>
-            <p><?php echo $comment['comment']?></p>
+            <a href="/profile/{$comment.user.id}"><img src="/users/photo/{$comment.user.id}" /></a>
+            <a class="username" href="/profile/{$comment.user.id}">{$comment.user.name}</a>
+            <span class="time">{$comment.datetime}</span>
+            <p>{$comment.comment}</p>
           </li>
-        <? }?>
+        {/foreach}
       </ul>
     </div>
   </td>
@@ -40,15 +42,15 @@
     <div class="similar">
       <h1 class="bubble">Similar photos nearby</h1>
       <ul class="collage">
-        <?php for ($i=0; $i<min(8, count($related)); $i++) { $result = $related[$i]['Photo'];?>
-          <li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
-        <?php } ?>
+        {foreach from=$related item=photo}
+          <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/0" title="{$photo.caption}" /></a></li>
+        {/foreach}
       </ul>
       <h1 class="bubble">Similar photos</h1>
       <ul class="collage">
-        <?php for ($i=0; $i<min(8, count($related)); $i++) { $result = $related[$i]['Photo'];?>
-          <li><a href="/photos/view/<?php echo $result['id']?>"><img src="/photos/<?php echo $result['id']?>/0" title="<?php echo $result['caption']?>" /></a></li>
-        <?php } ?>
+        {foreach from=$similarPhotos item=photo}
+          <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/0" title="{$photo.caption}" /></a></li>
+        {/foreach}
       </ul>
       <h1 class="bubble">Share</h1>
         <p><a href="#">Share to Facebook</a></p>
@@ -64,12 +66,14 @@
         <li><a href="#">+</a></li>
       </ul>
       <h1 class="bubble">This photo is...</h1>
-      <?php echo $this->element('emotion')?>
+      {include file=_emotion.tpl}
       <h1 class="bubble">Location</h1>
-      <p class="location"><?php echo $photo['Photo']['location'] ?></p>
+      <p class="location">{$photo.location}</p>
       <div id="map_location"></div>
     </div>
   </td>
 </tr>
 </table>
-<?php $javascript->link('photos_view', false); ?>
+{capture name=scripts}
+<script type="text/javascript" src="/js/photos_view.js"></script>
+{/capture}
