@@ -181,6 +181,46 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   padding: 0;
 }
 
+.explore.photos .controls div { margin-bottom: 0.5em; }
+.explore.photos .controls h1 { display: inline; color: #8c8c8c;}
+.explore.photos .controls h1:after { content: "."; }
+.explore.photos .controls ul { display: inline; }
+.explore.photos .controls ul li { display: inline; }
+.explore.photos .controls .search { line-height: 1.5em; padding-bottom: 0.5em; border-bottom: 2px solid #90d54b; }
+.explore.photos .controls .search label {
+  font-size: 1.5em;
+  color: #555;
+  font-weight: bold;
+  vertical-align: middle;
+}
+.explore.photos .controls .search input[type=text] {
+  vertical-align: middle;
+  line-height: 1.5em;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+.explore.photos .controls .search input[type=submit] {
+  color: #fff;
+  background-color: #90d54b;
+  border: 1px solid #555;
+  font-weight: bold;
+  padding: 0.3em 0.5em;
+  vertical-align: middle;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+.explore.photos .most h1 { color: #aaa; font-weight: bold; font-size: large; }
+.explore.photos .most.streams { position: relative; }
+.explore.photos .details { position: relative; top: 0; left: 100px; }
+.explore.photos .details { position: relative; top: 0; left: 100px; }
+.explore.photos #most_recent { position: relative; }
+.explore.photos #most_viewed { position: absolute; top: 0; left: 50%; }
+.explore.photos #most_liked { position: absolute; top: 50%; left: 50%; }
+.exp.stream img { /* TODO  make the images actual size */ width: 90px; height: 90px; }
+.exp.stream li { margin-bottom: 0.5em; }
+
 .explore.people .location.selector {
   position: absolute;
   top: 1em;

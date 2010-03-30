@@ -1,5 +1,4 @@
-#AuthUserFile /home/myshen/livegather/livegather.com/.htpasswd
-AuthUserFile /home/tmandarano/livegather.com/.htpasswd
+AuthUserFile /home/livegather/dev.livegather.com/.htpasswd
 AuthGroupFile /null
 AuthName "Log in"
 AuthType Basic

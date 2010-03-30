@@ -1,30 +1,64 @@
-<h1>Explore Photos</h1>
-
 <table class="split"><tr>
 <td class="left pane">
-  {include file='_explore_stream.tpl' h=Local photos=array()}
-  {include file='_explore_stream.tpl' h=World photos=array()}
+  <div class="controls">
+    <div class="cities">
+      <h1>Popular Cities</h1>
+      <ul>
+        {foreach from=$popCities item=city}
+          <li><a href="{$city}">{$city}</a></li>
+        {/foreach}
+      </ul>
+    </div>
+    <div class="tags">
+      <h1>Trending Tags</h1>
+      <ul>
+        {foreach from=$trending item=tag}
+          <li><a href="{$tag}">{$tag}</a></li>
+        {/foreach}
+      </ul>
+    </div>
+
+    <div class="search">
+      <label for="see">See</label> <input name="see" type="text" /> 
+      <label for="near">Near</label> <input name="near" type="text" />
+      <input name="explore" type="submit" value="explore" />
+    </div>
+  </div>
+  <div class="most streams">
+    <div id="most_recent" class="most recent">
+      <h1>most recent <div class="controls"></div></h1>
+      <ul class="exp stream">
+      </ul>
+    </div>
+    <div id="most_viewed" class="most viewed">
+      <h1>most viewed <div class="controls"></div></h1>
+      <ul class="exp stream">
+      </ul>
+    </div>
+    <div id="most_liked" class="most liked">
+      <h1>most liked <div class="controls"></div></h1>
+      <ul class="exp stream">
+      </ul>
+    </div>
+  </div>
 </td>
 <td class="right pane">
-  <h1>Popular keywords</h1>
-  Tags here
+  <h1 class="monochrome"><em>Explore</em>.</h1>
+  <h1 class="bichrome"><em>Photos</em> you might like.</h1>
+  <ul class="collage">
+    {foreach from=$suggestedPhotos item=photo}
+      <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/1" /></a></li>
+    {/foreach}
+  </ul>
+
+  <h1 class="bichrome"><em>People</em> you might like.</h1>
+  <ul class="collage">
+    {foreach from=$suggestedPeople item=person}
+      <li><a href="/profile/{$person.id}"><img src="/users/photo/{$person.id}" /></a></li>
+    {/foreach}
+  </ul>
 </td>
 </tr></table>
-
-<div class="search photos">
-  <h1>Search Photos</h1>
-  <div class="searchbox">
-  <form name="photos" class="search">
-  <label for="photosof">See photos of</label>
-  <input type="text" name="photosof" /><input type="image" src="/img/search.png" name="search" />
-  </form>
-  </div>
-  <ol class="detailed stream">
-    {php}$this->assign('photo', array('id'=>'451'));{/php}
-    {include file='_detailed_stream.tpl'}
-    {php}$this->assign('photo', array('id'=>'452'));{/php}
-    {include file='_detailed_stream.tpl'}
-    {php}$this->assign('photo', array('id'=>'451'));{/php}
-    {include file='_detailed_stream.tpl'}
-  </ol>
-</div>
+{capture name=scripts}
+<script type="text/javascript" src="/js/explore_photos.js"></script>
+{/capture}
