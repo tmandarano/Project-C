@@ -11,6 +11,18 @@
     <div class="the_image">
       <img id="the_image" class="s3" src="/photos/{$photo.id}/3" />
     </div>
+    <div class="tags">
+      <h1>tags:</h1>
+      <ul class="tags">
+        <li><a href="#">driving</a></li>
+        <li><a href="#">road</a></li>
+        <li><a href="#">greenery</a></li>
+        <li><a href="#">trip</a></li>
+        <li><a href="#">radar</a></li>
+        <li><a href="#">detector</a></li>
+        <li><a href="#">+</a></li>
+      </ul>
+    </div>
     <div class="comments">
       {if count($photo.comment) <= 0}
         <p>No comments yet. Be the first to add one!</p>
@@ -40,34 +52,19 @@
   </td>
   <td class="right pane">
     <div class="similar">
-      <h1 class="bubble">Similar photos nearby</h1>
+      <h1 class="bichrome"><em>Recent</em> photos nearby.</h1>
       <ul class="collage">
         {foreach from=$related item=photo}
           <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/0" title="{$photo.caption}" /></a></li>
         {/foreach}
       </ul>
-      <h1 class="bubble">Similar photos</h1>
+      <h1 class="bichrome"><em>Similar</em> photos.</h1>
       <ul class="collage">
         {foreach from=$similarPhotos item=photo}
           <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/0" title="{$photo.caption}" /></a></li>
         {/foreach}
       </ul>
-      <h1 class="bubble">Share</h1>
-        <p><a href="#">Share to Facebook</a></p>
-        <p><a href="#">Share to Twitter</a></p>
-      <h1 class="bubble">Tags</h1>
-      <ul class="tags">
-        <li><a href="#">driving</a></li>
-        <li><a href="#">road</a></li>
-        <li><a href="#">greenery</a></li>
-        <li><a href="#">trip</a></li>
-        <li><a href="#">radar</a></li>
-        <li><a href="#">detector</a></li>
-        <li><a href="#">+</a></li>
-      </ul>
-      <h1 class="bubble">This photo is...</h1>
-      {include file=_emotion.tpl}
-      <h1 class="bubble">Location</h1>
+      <h1 class="bichrome"><em>Location</em>.</h1>
       <p class="location">{$photo.location}</p>
       <div id="map_location"></div>
     </div>
