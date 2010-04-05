@@ -1,5 +1,5 @@
 <?php /* Entry point for Project C */
-
+//phpinfo();
 require_once('config.php');
 
 // See robap-php-router for routing information

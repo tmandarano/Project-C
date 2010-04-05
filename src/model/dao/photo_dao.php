@@ -11,32 +11,30 @@ class PhotoDAO
     public static function getPhotos($id = null)
     {
         $conn = ConnectionFactory::getFactory()->getConnection();
-
-        $rs;
+    
+        $sql = "SELECT * FROM photo";
         if($id)
         {
-            $rs = $conn->query("SELECT * FROM photo WHERE id = ". $id)->fetchAll(PDO::FETCH_ASSOC);
+            $sql .= " WHERE id = ". $id;
         }
-        else
-        {
-            $rs = $conn->query("SELECT * FROM photo")->fetchAll(PDO::FETCH_ASSOC);
-        }
-
+    
+        $rs = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         return PhotoDAO::recordsToPhotos($rs);
     }
 
-    public static function getRecentPhotos($limit = 10) {
-      $conn = ConnectionFactory::getFactory()->getConnection();
-
-      $rs = $conn->query("SELECT * FROM photo ORDER BY date_added DESC LIMIT ". $limit)->fetchAll(PDO::FETCH_ASSOC);
-
-      return PhotoDAO::recordsToPhotos($rs);
+    public static function getRecentPhotos($limit = 10) 
+    {
+        $conn = ConnectionFactory::getFactory()->getConnection();
+    
+        $rs = $conn->query("SELECT * FROM photo ORDER BY date_added DESC LIMIT ". $limit)->fetchAll(PDO::FETCH_ASSOC);
+    
+        return PhotoDAO::recordsToPhotos($rs);
     }
     
     public function save($photo)
     {
-    	$conn = ConnectionFactory::getFactory()->getConnection();
-		
+        $conn = ConnectionFactory::getFactory()->getConnection();
+        
         $sql = "INSERT INTO photo (url, location) VALUES (:url, :location)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":url", $photo->getUrl(), PDO::PARAM_STR);
@@ -44,7 +42,7 @@ class PhotoDAO
         $stmt->execute();
         $photo_id = $conn->lastInsertId();
         $photo->setId($photo_id); 
-
+        
         $comments = $photo->getComments();
         foreach($comments as $comment)
         {
@@ -59,7 +57,7 @@ class PhotoDAO
 
         foreach($photo->getTags() as $tag)
         {
-        	$tag_id = TagDAO::save($tag);
+            $tag_id = TagDAO::save($tag);
             
             $sql = "INSERT INTO photo_tags (photo_id, tag_id) VALUES (:photo_id, :tag_id)";
             $stmt = $conn->prepare($sql);
@@ -67,46 +65,47 @@ class PhotoDAO
             $stmt->bindParam(":tag_id", $tag_id, PDO::PARAM_INT);
             $stmt->execute();
         }
-        
+    
         return $photo_id;
-	}
+    }
 	
-	public function update($photo)
-	{
+    public function update($photo)
+    {
         $conn = ConnectionFactory::getFactory()->getConnection();
-        
+    
         $sql = "UPDATE photo set url = :url where id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":url", $photo->getUrl(), PDO::PARAM_STR);
         $stmt->bindParam(":id", $photo->getId(), PDO::PARAM_INT);
-        
+    
         if($stmt->execute())
             debug('success');
         else {
             debug($conn->errorCode());
             debug('failure');
         }
-	}
+    }
 
-    private static function recordsToPhotos($records) {
-      $photos = array();
-      foreach($records as $record) {
-        $photo = new Photo();
-        $photo->setId($record['id']);
-        $photo->setUrl($record['url']);
-        $photo->setLocation($record['location']);
-        $photo->setDateAdded($record['date_added']);
-        $photo->setDateModified($record['date_added']);
+    private static function recordsToPhotos($records) 
+    {
+        $photos = array();
+        foreach($records as $record) {
+            $photo = new Photo();
+            $photo->setId($record['id']);
+            $photo->setUrl($record['url']);
+            $photo->setLocation($record['location']);
+            $photo->setDateAdded($record['date_added']);
+            $photo->setDateModified($record['date_added']);
             
-        $comments = CommentDAO::getComments(null, $record['id']);
-        $photo->setComments($comments);
-        
-        $tags = TagDAO::getTags(null, $record['id']);
-        $photo->setTags($tags);
-        
-        $photos[$record['id']] = $photo;
-      }
-      return $photos;
+            $comments = CommentDAO::getComments(null, $record['id']);
+            $photo->setComments($comments);
+            
+            $tags = TagDAO::getTags(null, $record['id']);
+            $photo->setTags($tags);
+            
+            $photos[$record['id']] = $photo;
+        }
+        return $photos;
     }
 }
 ?>

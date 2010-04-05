@@ -5,19 +5,9 @@ require_once('src/model/dao/photo_dao.php');
 
 class PhotosController extends BaseController
 {       
-    public function show()
+    public function show($vars)
     {
-        $PATH_INFO = $_SERVER["PATH_INFO"];
-        $path = explode('/', $PATH_INFO);
-        $photo_id = $path[3];
-        $data = RestUtils::processRequest();
-        $vars = $data->getRequestVars();
-        
-        if(! $photo_id)
-        {
-        	$photo_id = $vars['id'];
-        }
-
+        $photo_id = $vars[':id'];
         $photos = PhotoDAO::getPhotos($photo_id);
         RestUtils::sendResponse(200, json_encode($photos), 'application/json');
     }
@@ -82,12 +72,11 @@ class PhotosController extends BaseController
     {
         $extension = substr($photo->getName(), strrpos($photo->getName(), '.') + 1); 
         $new_file_name = "IMG" . $photo->getId() . "." . $extension;
-    	$target_path = UPLOAD_DIR. $new_file_name;
+    	$target_path = IMAGES_DIR. $new_file_name;
         
         $photo->setUrl("/images/" . $new_file_name);
         
         $upload_path = UPLOAD_DIR . $photo->getName();
-        
         copy($upload_path, $target_path);
         unlink($upload_path);
         PhotoDAO::update($photo);
