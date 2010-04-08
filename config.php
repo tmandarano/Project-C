@@ -1,5 +1,8 @@
 <?php /* global settings for PHP when in Project C */
 
+// Enable Project C logging
+require_once('src/utils/logging.php');
+
 // Set timezone so apache doesn't complain about relying on server time.
 date_default_timezone_set('America/Los_Angeles');
 

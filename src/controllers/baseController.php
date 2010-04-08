@@ -1,7 +1,6 @@
 <?php
 require_once('config.php');
 require_once('src/utils/restutils.php');
-require_once('src/utils/logging.php');
 require_once('Smarty.class.php');
 
 /* BaseController extends Smarty to get the Smarty templating */

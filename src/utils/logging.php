@@ -17,7 +17,7 @@ function debug($msg)
     $code_line = $call_info['line'];
     $file = array_pop( explode('/', $call_info['file']));
 
-    $msg = "DEBUG on line ".$code_line." of ".$file.": ".toString($msg);
+    $msg = "DEBUG on line ".$code_line." of ".$file.": '".toString($msg)."'";
     error_log($msg);
 }
 ?>
