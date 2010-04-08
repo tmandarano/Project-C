@@ -91,10 +91,8 @@
         });   
 
         function AjaxSucceeded(result) {
-        // toSource doesn't exist outside of Firefox Gecko
-        // use Firebug and console.log instead
-          	//$("#result").html(result.toSource());
-                console.log(result);
+            // use Firebug and console.log
+            console.log(result);
         }   
         function AjaxFailed(result) {   
             $("#result").html(result.statusText);   

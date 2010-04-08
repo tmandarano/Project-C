@@ -22,4 +22,5 @@ define('PDO_PASSWORD', 'liv3g@th3r');
 
 // Upload directories
 define('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/uploads/');
+define('IMAGES_DIR', $_SERVER['DOCUMENT_ROOT'].'/images/');
 ?>
