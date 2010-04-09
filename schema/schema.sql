@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.37, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: projectc
 -- ------------------------------------------------------
--- Server version	5.1.37-1ubuntu5.1
+-- Server version	5.1.41-3ubuntu11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -19,30 +19,30 @@
 -- Table structure for table `comment`
 --
 
+DROP TABLE IF EXISTS `comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-DROP TABLE `comment`;
 CREATE TABLE `comment` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `comment` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `date_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `emotion`
 --
 
+DROP TABLE IF EXISTS `emotion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-DROP TABLE `emotion`;
 CREATE TABLE `emotion` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `emotion` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `date_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -51,41 +51,44 @@ CREATE TABLE `emotion` (
 -- Table structure for table `photo`
 --
 
+DROP TABLE IF EXISTS `photo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-DROP TABLE `photo`;
 CREATE TABLE `photo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `url` varchar(255) DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
+  `caption` varchar(255) DEFAULT NULL,
+  `latitude` float DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `date_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `photo_comments`
 --
 
+DROP TABLE IF EXISTS `photo_comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-DROP TABLE `photo_comments`;
 CREATE TABLE `photo_comments` (
   `photo_id` bigint(20) NOT NULL,
   `comment_id` bigint(20) NOT NULL,
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `photo_emotions`
 --
 
+DROP TABLE IF EXISTS `photo_emotions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-DROP TABLE `photo_emotions`;
 CREATE TABLE `photo_emotions` (
   `id` varchar(255) NOT NULL,
   `photo_id` varchar(255) NOT NULL,
@@ -98,51 +101,59 @@ CREATE TABLE `photo_emotions` (
 -- Table structure for table `photo_tags`
 --
 
+DROP TABLE IF EXISTS `photo_tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-DROP TABLE `photo_tags`;
 CREATE TABLE `photo_tags` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `tag_id` bigint(20) NOT NULL,
   `photo_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tag`
 --
 
+DROP TABLE IF EXISTS `tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-DROP TABLE `tag`;
 CREATE TABLE `tag` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `tag` varchar(255) NOT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `date_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `id` varchar(255) NOT NULL,
-  `facebook_id` varchar(255) NOT NULL,
-  `index` varchar(255) DEFAULT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `date_of_birth` datetime NOT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `date_added` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user_photos`
 --
 
+DROP TABLE IF EXISTS `user_photos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_photos` (
@@ -162,4 +173,4 @@ CREATE TABLE `user_photos` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-03-18 20:38:16
+-- Dump completed on 2010-04-08 19:33:43
