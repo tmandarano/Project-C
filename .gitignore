@@ -1,5 +1,6 @@
 *.swp
 *.swo
+*~
 app/tmp/*
 app/webroot/img/db/*
 empty

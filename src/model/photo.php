@@ -7,6 +7,7 @@ class Photo
 	public $latitude;
 	public $longitude;
 	public $location;
+        public $caption;
 	public $comments;
 	public $tags;
 	public $data_added;
@@ -70,6 +71,16 @@ class Photo
     public function getLocation()
     {
         return $this->location;
+    }
+
+    public function setCaption($caption)
+    {
+      $this->caption = $caption;
+    }
+
+    public function getCaption()
+    {
+      return $this->caption;
     }
 
     public function getTags()
