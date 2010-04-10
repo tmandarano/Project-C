@@ -20,7 +20,7 @@ class TagDAO
 		if($photo_id)
 		{
             $sql = "SELECT t.id, t.tag as tag, t.date_added as date_added, t.date_modified as date_modified ";
-            $sql .= "FROM photo_tags pt join tag t on pt.tag_id = t.id WHERE pt.photo_id = " . $photo_id)
+            $sql .= "FROM photo_tags pt join tag t on pt.tag_id = t.id WHERE pt.photo_id = " . $photo_id;
 			$rs = $conn->query($sql)->fetchAll(PDO::FETCH_OBJ);
 		}
 
