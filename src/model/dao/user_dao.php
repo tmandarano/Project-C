@@ -22,14 +22,16 @@ class UserDAO
     {
         $conn = ConnectionFactory::getFactory()->getConnection();
         
-        $sql = "INSERT INTO user (fullname, email, password, age, location, date_added, date_modified) ";
-        $sql .= "VALUES (:fullname, :email, :password, :age, :location, NOW(), NOW())";
+        $sql = "INSERT INTO user (fullname, email, password, date_of_birth, location, date_added, date_modified) ";
+        $sql .= "VALUES (:fullname, :email, :password, :date_of_birth, :location, NOW(), NOW())";
         $stmt = $conn->prepare($sql);
-        debug(serialize($user));
+
+        $birthday = date("Y-m-d H:i:s", strtotime($user->getDateOfBirth())); 
+        
         $stmt->bindParam(":fullname", $user->getFullname(), PDO::PARAM_STR);
         $stmt->bindParam(":email", $user->getEmail(), PDO::PARAM_STR);
         $stmt->bindParam(":password", $user->getPassword(), PDO::PARAM_STR);
-        $stmt->bindParam(":age", $user->getAge(), PDO::PARAM_STR);
+        $stmt->bindParam(":date_of_birth", $birthday, PDO::PARAM_STR);
         $stmt->bindParam(":location", $user->getLocation(), PDO::PARAM_STR);
         $stmt->execute();
         $user_id = $conn->lastInsertId();
@@ -64,7 +66,7 @@ class UserDAO
             $user->setFullname($record['fullname']);
             $user->setEmail($record['email']);
             $user->setPassword($record['password']);
-            $user->setAge($record['age']);
+            $user->setDateOfBirth($record['date_of_birth']);
             $user->setLocation($record['location']);
             $user->setDateAdded($record['date_added']);
             $user->setDateModified($record['date_modified']);

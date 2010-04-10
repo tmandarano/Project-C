@@ -5,7 +5,7 @@ class User
 	public $fullname;
 	public $email;
 	public $password;
-    public $age;
+    public $date_of_birth;
     public $location;
 	public $date_added;
 	public $date_modified;
@@ -50,14 +50,14 @@ class User
         $this->password = $password;
     }
 
-    public function getAge()
+    public function getDateOfBirth()
     {
-        return $this->age;
+        return $this->date_of_birth;
     }
     
-    public function setAge($age)
+    public function setDateOfBirth($date_of_birth)
     {
-        $this->age = $age;
+        $this->date_of_birth = $date_of_birth;
     }
 
     public function getLocation()

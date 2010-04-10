@@ -10,8 +10,8 @@
     <td><input id="fullname" name="fullname" type="text"></input></td>
   </tr>
   <tr>
-    <td><label for="age">Age</label></td>
-    <td><input id="age" name="age" type="text"></input></td>
+    <td><label for="date_of_birth">Date of Birth</label></td>
+    <td><input id="date_of_birth" name="date_of_birth" type="text"></input></td>
   </tr>
   <tr>
     <td><label for="email">Email</label></td>

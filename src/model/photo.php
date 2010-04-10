@@ -4,6 +4,8 @@ class Photo
 	public $id;
 	public $url;
 	public $name;
+	public $latitude;
+	public $longitude;
 	public $location;
 	public $comments;
 	public $tags;
@@ -40,6 +42,26 @@ class Photo
         $this->name = $name;
     }
 	
+    public function setLatitude($latitude)
+	{
+		$this->latitude = $latitude;
+	}
+
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    public function setLongitude($longitude)
+	{
+		$this->longitude = $longitude;
+	}
+
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
     public function setLocation($location)
 	{
 		$this->location = $location;
