@@ -3,19 +3,23 @@
 {else}
   <h1>Sign up now!</h1>
 {/if}
-<form action="/users/add" method="post">
+<form action="/users/create" method="post">
 <table>
   <tr>
-    <td><label for="user">Username</label></td>
-    <td><input id="user_name" name="user[name]" type="text"></input></td>
+    <td><label for="fullname">Fullname</label></td>
+    <td><input id="fullname" name="fullname" type="text"></input></td>
   </tr>
   <tr>
-    <td><label for="Email">Email</label></td>
-    <td><input id="user_email" name="user[email]" type="text"></input></td>
+    <td><label for="date_of_birth">Date of Birth</label></td>
+    <td><input id="date_of_birth" name="date_of_birth" type="text"></input></td>
   </tr>
   <tr>
-    <td><label for="Password">Password</label></td>
-    <td><input id="user_password" name="user[password]" type="password"></input></td>
+    <td><label for="email">Email</label></td>
+    <td><input id="email" name="email" type="text"></input></td>
+  </tr>
+  <tr>
+    <td><label for="password">Password</label></td>
+    <td><input id="password" name="password" type="password"></input></td>
   </tr>
 </table>
 <input name="commit" type="submit" value="Add" />

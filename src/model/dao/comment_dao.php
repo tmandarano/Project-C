@@ -20,7 +20,9 @@ class CommentDAO
 
         if($photo_id)
         {
-        	$rs = $conn->query("SELECT c.id, c.comment as comment, c.date_added as date_added, c.date_modified as date_modified FROM comment c JOIN photo_comments pc on c.id = pc.comment_id WHERE pc.photo_id = " . $photo_id)->fetchAll(PDO::FETCH_OBJ);
+        	$sql = "SELECT c.id, c.comment as comment, c.date_added as date_added, c.date_modified as date_modified ";
+            $sql .= "FROM comment c JOIN photo_comments pc on c.id = pc.comment_id WHERE pc.photo_id = " . $photo_id;
+        	$rs = $conn->query($sql)->fetchAll(PDO::FETCH_OBJ);
         }
 
         return $rs;
@@ -30,9 +32,10 @@ class CommentDAO
 	{
         $conn = ConnectionFactory::getFactory()->getConnection();
 
-        $sql = "INSERT INTO comment (comment) VALUES (:comment)";
+        $sql = "INSERT INTO comment (comment, date_added, date_modified) VALUES (:comment, NOW(), NOW())";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":comment", $comment->getComment(), PDO::PARAM_STR);
+
         $stmt->execute();
 
         $return_id = $conn->lastInsertId(); 

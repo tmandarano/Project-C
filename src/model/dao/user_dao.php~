@@ -35,7 +35,7 @@ class PhotoDAO
     {
         $conn = ConnectionFactory::getFactory()->getConnection();
         
-        $sql = "INSERT INTO photo (url, location, date_added, date_modified) VALUES (:url, :location, NOW(), NOW())";
+        $sql = "INSERT INTO photo (url, location) VALUES (:url, :location)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":url", $photo->getUrl(), PDO::PARAM_STR);
         $stmt->bindParam(":location", $photo->getLocation(), PDO::PARAM_STR);
@@ -73,7 +73,7 @@ class PhotoDAO
     {
         $conn = ConnectionFactory::getFactory()->getConnection();
     
-        $sql = "UPDATE photo set url = :url, date_modified = NOW() where id = :id";
+        $sql = "UPDATE photo set url = :url where id = :id";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":url", $photo->getUrl(), PDO::PARAM_STR);
         $stmt->bindParam(":id", $photo->getId(), PDO::PARAM_INT);
@@ -93,13 +93,10 @@ class PhotoDAO
             $photo = new Photo();
             $photo->setId($record['id']);
             $photo->setUrl($record['url']);
-            $photo->setLatitude($record['latitude']);
-            $photo->setLongitude($record['longitude']);
             $photo->setLocation($record['location']);
-            $photo->setCaption($record['caption']);
             $photo->setDateAdded($record['date_added']);
-            $photo->setDateModified($record['date_modified']);
-
+            $photo->setDateModified($record['date_added']);
+            
             $comments = CommentDAO::getComments(null, $record['id']);
             $photo->setComments($comments);
             
