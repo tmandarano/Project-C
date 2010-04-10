@@ -9,13 +9,22 @@ set_include_path(get_include_path() .
   PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/lib/smarty/libs/'
 );
 
+$dev = true;
+
 // Database connection information
-define('PDO_DSN', 'mysql:dbname=livegather;host=db.livegather.com');
-define('PDO_USER', 'livegather');
-define('PDO_PASSWORD', 'liv3g@th3r');
-//define('PDO_DSN', 'mysql:dbname=projectc;host=localhost');
-//define('PDO_USER', 'projectc');
-//define('PDO_PASSWORD', 'projectc');
+if($dev)
+{
+    define('PDO_DSN', 'mysql:dbname=projectc;host=localhost');
+    define('PDO_USER', 'projectc');
+    define('PDO_PASSWORD', 'projectc');
+}
+else
+{    
+    define('PDO_DSN', 'mysql:dbname=livegather;host=db.livegather.com');
+    define('PDO_USER', 'livegather');
+    define('PDO_PASSWORD', 'liv3g@th3r');
+}
+
 
 // Upload directories
 define('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/uploads/');
