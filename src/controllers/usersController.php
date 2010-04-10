@@ -18,14 +18,11 @@ class UsersController extends BaseController
     	$vars = $data->getRequestVars();
         
         $user = new User();
-        debug(serialize($vars));
-        debug('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        debug($vars['first_name']);
-        $user->setFirstName($vars['first_name']);
-        $user->setLastName($vars['last_name']);
+
+        $user->setFullname($vars['fullname']);
         $user->setEmail($vars['email']);
         $user->setPassword(md5($vars['password']));
-        $user->setDateOfBirth($vars['date_of_birth']);
+        $user->setAge($vars['age']);
         
         $returned_id = UserDAO::save($user);
         $user->setId($returned_id);

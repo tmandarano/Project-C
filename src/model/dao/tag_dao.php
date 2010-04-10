@@ -19,11 +19,14 @@ class TagDAO
 
 		if($photo_id)
 		{
-			$rs = $conn->query("SELECT t.id, t.tag as tag, t.date_added as date_added, t.date_modified as date_modified FROM photo_tags pt join tag t on pt.tag_id = t.id WHERE pt.photo_id = " . $photo_id)->fetchAll(PDO::FETCH_OBJ);
+            $sql = "SELECT t.id, t.tag as tag, t.date_added as date_added, t.date_modified as date_modified ";
+            $sql .= "FROM photo_tags pt join tag t on pt.tag_id = t.id WHERE pt.photo_id = " . $photo_id)
+			$rs = $conn->query($sql)->fetchAll(PDO::FETCH_OBJ);
 		}
 
 		return $rs;
 	}
+
 
 	public function save($tag)
 	{
@@ -35,9 +38,10 @@ class TagDAO
         	return $rs->id;
         }
 	
-        $sql = "INSERT INTO tag (tag) VALUES (:tag)";
+        $sql = "INSERT INTO tag (tag, date_added, date_modified) VALUES (:tag, NOW(), NOW())";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":tag", $tag->getTag(), PDO::PARAM_STR);
+        $stmt->bindParam(":date_added", $tag->getDateAdded(), PDO::PARAM_STR);
         $stmt->execute();
 
 		$return_id = $conn->lastInsertId();

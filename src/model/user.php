@@ -2,11 +2,10 @@
 class User
 {
 	public $id;
-	public $first_name;
-	public $last_name;
+	public $fullname;
 	public $email;
 	public $password;
-    public $date_of_birth;
+    public $age;
     public $location;
 	public $date_added;
 	public $date_modified;
@@ -21,25 +20,15 @@ class User
         $this->id = $id;
     }
 
-    public function getFirstName()
+    public function getFullname()
     {
-        return $this->first_name;    	
+        return $this->fullname;    	
     }
     
-    public function setFirstName($first_name)
+    public function setFullname($fullname)
 	{
-	    $this->first_name = $first_name;
+	    $this->fullname = $fullname;
 	}
-	
-    public function getLastName()
-    {
-        return $this->last_name;      
-    }
-    
-    public function setLastName($last_name)
-    {
-        $this->last_name = $last_name;
-    }
 	
     public function setEmail($email)
 	{
@@ -61,14 +50,14 @@ class User
         $this->password = $password;
     }
 
-    public function getDateOfBirth()
+    public function getAge()
     {
-        return $this->date_of_birth;
+        return $this->age;
     }
     
-    public function setDateOfBirth($date_of_birth)
+    public function setAge($age)
     {
-        $this->date_of_birth = $date_of_birth;
+        $this->age = $age;
     }
 
     public function getLocation()

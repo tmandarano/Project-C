@@ -22,15 +22,14 @@ class UserDAO
     {
         $conn = ConnectionFactory::getFactory()->getConnection();
         
-        $sql = "INSERT INTO user (first_name, last_name, email, password, date_of_birth, location, date_added, date_modified) ";
-        $sql .= "VALUES (:first_name, :last_name, :email, :password, :date_of_birth, :location, NOW(), NOW())";
+        $sql = "INSERT INTO user (fullname, email, password, age, location, date_added, date_modified) ";
+        $sql .= "VALUES (:fullname, :email, :password, :age, :location, NOW(), NOW())";
         $stmt = $conn->prepare($sql);
         debug(serialize($user));
-        $stmt->bindParam(":first_name", $user->getFirstName(), PDO::PARAM_STR);
-        $stmt->bindParam(":last_name", $user->getLastName(), PDO::PARAM_STR);
+        $stmt->bindParam(":fullname", $user->getFullname(), PDO::PARAM_STR);
         $stmt->bindParam(":email", $user->getEmail(), PDO::PARAM_STR);
         $stmt->bindParam(":password", $user->getPassword(), PDO::PARAM_STR);
-        $stmt->bindParam(":date_of_birth", $user->getDateOfBirth(), PDO::PARAM_STR);
+        $stmt->bindParam(":age", $user->getAge(), PDO::PARAM_STR);
         $stmt->bindParam(":location", $user->getLocation(), PDO::PARAM_STR);
         $stmt->execute();
         $user_id = $conn->lastInsertId();
@@ -62,11 +61,10 @@ class UserDAO
         foreach($records as $record) {
             $user = new User();
             $user->setId($record['id']);
-            $user->setFirstName($record['first_name']);
-            $user->setLastName($record['last_name']);
+            $user->setFullname($record['fullname']);
             $user->setEmail($record['email']);
             $user->setPassword($record['password']);
-            $user->setDateOfBirth($record['date_of_birth']);
+            $user->setAge($record['age']);
             $user->setLocation($record['location']);
             $user->setDateAdded($record['date_added']);
             $user->setDateModified($record['date_modified']);
