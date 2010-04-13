@@ -181,6 +181,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   padding: 0;
 }
 
+.explore.photos .left.pane { width: 700px; }
 .explore.photos .controls div { margin-bottom: 0.5em; }
 .explore.photos .controls h1 { display: inline; color: #8c8c8c;}
 .explore.photos .controls h1:after { content: "."; }
@@ -218,6 +219,9 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .explore.photos #most_recent { position: relative; }
 .explore.photos #most_viewed { position: absolute; top: 0; left: 50%; }
 .explore.photos #most_liked { position: absolute; top: 50%; left: 50%; }
+.explore.photos .most.streams li { position: relative; }
+.explore.photos .most.streams li img { position: absolute; }
+.explore.photos .most.streams li .details { position: relative; top: 0; left: 100px; height: 90px; }
 .exp.stream img { /* TODO  make the images actual size */ width: 90px; height: 90px; }
 .exp.stream li { margin-bottom: 0.5em; }
 

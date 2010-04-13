@@ -73,12 +73,12 @@ class ViscousController extends baseController {
     $suggestedPhotos = array(
       array('id'=>451), array('id'=>452), array('id'=>453),
       array('id'=>452), array('id'=>453), array('id'=>451),
-      array('id'=>452), array('id'=>453)
+      array('id'=>452), array('id'=>453), array('id'=>452), array('id'=>453)
     );
     $suggestedPeople = array(
       array('id'=>1), array('id'=>2), array('id'=>3),
       array('id'=>1), array('id'=>2), array('id'=>3),
-      array('id'=>2), array('id'=>3)
+      array('id'=>2), array('id'=>3), array('id'=>2), array('id'=>3)
     );
     $this->assign('popCities', $popCities);
     $this->assign('trending', $trending);
