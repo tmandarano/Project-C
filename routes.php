@@ -72,6 +72,9 @@
   /* shard route */
   /* Let catch all catch the shard route /shard/:method/:id */
 
+  /* TODO disallow routing images */
+  //singleArgRout($router, '/images/', ':string', '', '');
+
   // Set up a 'catch all' default route and add it to the Router.
   $default_route = new Route('/:class/:method/:id');
   $default_route->addDynamicElement(':class', ':class');
