@@ -32,8 +32,13 @@ function markSel($name, $env) {
       href="/profile/{$user.id}">{$user.name}</a></li> 
       <li{php}markSel('Share', $title){/php}><a href="/share/upload">Share</a></li>
       <li{php}markSel('Settings', $title){/php}><a href="/settings">Settings</a></li>
+      <li class="sign out"><a href="/signout">Sign out</a></li>
+    {else}
+      <li class="sign in">
+        <img src="/img/signup/signup.png" />
+        <img src="/img/signup/signin.png" />
+      </li>
     {/if}
-    <li class="sign {$smarty.capture.signStatus}"><a href="/sign{$smarty.capture.signStatus}">Sign {$smarty.capture.signStatus}</a></li>
   </ul> 
   <ol id="headerstream"></ol>
 </div> 
@@ -80,8 +85,9 @@ us to create an enjoyable experience.</p>
 </tr></table>
 </div>
 </div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript"
-src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 {if $smarty.capture.scripts}{$smarty.capture.scripts}{/if}

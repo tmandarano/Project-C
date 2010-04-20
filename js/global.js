@@ -82,13 +82,23 @@ LGG.showSigninPrompt = function() {
   var pedestal = $('<div></div>')
     .css({'margin': 'auto', 'background-color': 'white',
           'border': '0.5em solid #91cf55', 'width': 400,
+          "position": "relative", "top": "3em",
           'padding': '1em', 'border-radius': '1em',
           '-moz-border-radius': '1em'}).appendTo(dimmer);
-  var close = $('<a href="#">Close</a>');
-  var form = $('<form id="SigninForm" method="post" action="/users/login"><table>'+
+  var close = $('<img src="/img/button_close.png" />').appendTo(pedestal)
+    .css({"position": "absolute", "top": "-24px", "right": "-24px"});
+  var tabs = $(["<div>",
+                "<ul><li><a href='#tab1'><span>Sign in</span></a></li>",
+                "<li><a href='#tab2'><span>Sign up</span></a></li>",
+                "</ul>",
+                "</div>"].join(''))
+               .tabs().appendTo(pedestal);
+  var form = $('<div id="tab1"><form id="SigninForm" method="post" action="/users/login"><table>'+
 '<tr><th>Email</th><td><input type="text" name="data[User][email]" id="UserEmail" /></td></tr>'+
 '<tr><th>Password</th><td><input type="password" name="data[User][password]" id="UserPassword" /></td></tr>'+
-'<tr><th></th><td><input type="submit" value="Sign in"</td></tr></table></form>').appendTo(pedestal);
+'<tr><th></th><td><input type="submit" value="Sign in"</td></tr></table></form></div>').appendTo(tabs);
+  $(["<div id=\"tab2\">Signup",
+     "</div>"].join('')).appendTo(tabs);
   $('#UserEmail', form).focus();
   function destroy() { dimmer.remove(); }
   close.click(destroy);

@@ -71,6 +71,16 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .nav .logo, .nav li:hover a, .nav li.selected { color: #eee; text-shadow: #444 0 0 5px; }
 .nav .logo { margin-left: -20px; }
 .nav .sign { float: right; }
+.nav .sign.in {
+  background-color: #bbff99;
+  padding: 0.4em;
+  margin-top: 1.5em;
+  vertical-align: middle;
+  height: 28px;
+  border-radius: 0.4em;
+  -moz-border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+}
 
 .home.out #header .nav { height: 88px; }
 .home.out #header { height: 138px; }
