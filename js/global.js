@@ -80,8 +80,10 @@ LGG.showSigninPrompt = function() {
     self.width($('body').width()).height($('body').height());
   })()); })(dimmer);
   var pedestal = $('<div></div>')
-    .css({'margin': 'auto', 'background-color': '#dec', 'width': 400,
-          'padding': '1em', 'border-radius': '1em', '-moz-border-radius': '1em'}).appendTo(dimmer);
+    .css({'margin': 'auto', 'background-color': 'white',
+          'border': '0.5em solid #91cf55', 'width': 400,
+          'padding': '1em', 'border-radius': '1em',
+          '-moz-border-radius': '1em'}).appendTo(dimmer);
   var close = $('<a href="#">Close</a>');
   var form = $('<form id="SigninForm" method="post" action="/users/login"><table>'+
 '<tr><th>Email</th><td><input type="text" name="data[User][email]" id="UserEmail" /></td></tr>'+

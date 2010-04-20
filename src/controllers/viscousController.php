@@ -5,7 +5,7 @@ require_once('baseController.php');
 class ViscousController extends baseController {       
   /* Home pages */
   public function home() {
-    if ($user or true) { // TODO This needs to be auth
+    if ($user/* or true*/) { // TODO This needs to be auth
       $streamPhotos = array(451, 452, 453);
       $socialStream = array(
         array('user' => array('name'=>'Tony Mandarano'),

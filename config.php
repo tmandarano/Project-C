@@ -12,7 +12,7 @@ set_include_path(get_include_path() .
   PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/lib/smarty/libs/'
 );
 
-$dev = true;
+$dev = false;
 
 // Database connection information
 if($dev)
