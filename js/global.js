@@ -73,42 +73,91 @@ var D = function(jdom) {
 return D;
 });
 
-LGG.showSigninPrompt = function() {
+LGG.showSigninPrompt = function(jdom) {
   var dimmer = $('<div class="dimmer"></div>').css('top', 0)
     .appendTo('body');
   (function(self) { $(window).resize((function() {
     self.width($('body').width()).height($('body').height());
   })()); })(dimmer);
-  var pedestal = $('<div></div>')
-    .css({'margin': 'auto', 'background-color': 'white',
-          'border': '0.5em solid #91cf55', 'width': 400,
-          "position": "relative", "top": "3em",
-          'padding': '1em', 'border-radius': '1em',
-          '-moz-border-radius': '1em'}).appendTo(dimmer);
-  var close = $('<img src="/img/button_close.png" />').appendTo(pedestal)
-    .css({"position": "absolute", "top": "-24px", "right": "-24px"});
-  var tabs = $(["<div>",
+  var tabs = $(["<div class=\"signinup\">",
                 "<ul><li><a href='#tab1'><span>Sign in</span></a></li>",
                 "<li><a href='#tab2'><span>Sign up</span></a></li>",
                 "</ul>",
                 "</div>"].join(''))
-               .tabs().appendTo(pedestal);
-  var form = $('<div id="tab1"><form id="SigninForm" method="post" action="/users/login"><table>'+
-'<tr><th>Email</th><td><input type="text" name="data[User][email]" id="UserEmail" /></td></tr>'+
-'<tr><th>Password</th><td><input type="password" name="data[User][password]" id="UserPassword" /></td></tr>'+
-'<tr><th></th><td><input type="submit" value="Sign in"</td></tr></table></form></div>').appendTo(tabs);
-  $(["<div id=\"tab2\">Signup",
+    .css({'margin': 'auto', 'background-color': 'white',
+          'border': '0.7em solid #91cf55', 'width': 580,
+          "position": "relative", "top": "5em",
+          'border-radius': '1.4em',
+          '-webkit-border-radius': '1.4em',
+          '-moz-border-radius': '1.4em'}).appendTo(dimmer);
+  var close = $('<img src="/img/button_close.png" />').appendTo(tabs)
+    .css({"position": "absolute", "top": "-24px",
+          "right": "-24px", "cursor": "pointer"});
+  var form = $([
+    '<div id="tab1">',
+    '<form id="SigninForm" method="post" action="/users/login">',
+    '<table>',
+      '<tr><th>Email</th>',
+      '<td><input type="text" name="data[User][email]" id="UserEmail" /></td>',
+      '</tr>',
+      '<tr><th>Password</th>',
+      '<td><input type="password" name="data[User][password]" id="UserPassword" /></td>',
+      '</tr>',
+      '<tr><th></th><td><input type="submit" value="Sign in"</td></tr>',
+      '</table></form></div>'].join('')).appendTo(tabs);
+  $(["<div id=\"tab2\">",
+     "<h1><strong>Step 1.</strong> Create an account using your Google Account or Facebook information.</h1>",
+     "<table class=\"auths\"><tr>",
+     "<td><img src=\"/img/signup/connect_google.png\" /></td>",
+     "<td><img src=\"http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>",
+     "<td><a href=\"\">Direct Sign Up</a></td>",
+     "</tr></table>",
+     "<h1><strong>Step 2.</strong> Fill in the missing information.</h1>",
+     "<form action=\"/\">",
+     "<div class=\"info\">",
+     "<div class=\"userphoto\">",
+       "<h1>Profile Photo</h1>",
+       "<img src=\"/img/50x50.jpg\" /><br />",
+       "<p><a href=\"#\">Choose a photo</a></p>",
+     "</div>",
+     "<table>",
+     "<tr><th>Display name</th><td><input type=\"text\" /></td>",
+     "<tr><th>       Email</th><td><input type=\"text\" /></td>",
+     "<tr><th>    Birthday</th><td><input class=\"birthday\" type=\"text\" /></td>",
+     "<tr><th>    Location</th><td><input type=\"text\" /></td>",
+     "</table>",
+     "</div>",
+     "<p><input name=\"privacy\" type=\"checkbox\" />",
+       "<label for=\"privacy\">I agree to the LiveGather's ",
+       "<a href=\"\">privacy policy</a> and ",
+       "<a href=\"\">terms and conditions</a></label></p>",
+     "<p><input name=\"email\" type=\"checkbox\" />",
+       "<label for=\"email\">I am ok with receiving emails from LiveGather",
+       "</label></p>",
+     "<input type=\"image\" src=\"/img/signup/create.png\" />",
+     "</form>",
      "</div>"].join('')).appendTo(tabs);
+  $(".birthday", tabs).datepicker({maxDate: "-13y", changeMonth: true,
+                                   changeYear: true});
+  if (jdom.hasClass('up')) {
+    tabs.tabs({selected: 1});
+  } else {
+    tabs.tabs();
+  }
+  $('ul', tabs).removeClass('ui-corner-all').addClass('ui-corner-top');
   $('#UserEmail', form).focus();
   function destroy() { dimmer.remove(); }
+  tabs.click(function (e) { e.stopPropagation(); });
   close.click(destroy);
-  form.click(function(e) { e.stopPropagation(); });
   dimmer.click(destroy);
 };
 
 LGG.init = function() {
   /* JSify sign in */
-  $('.sign.in').click(function() {LGG.showSigninPrompt(); return false;});
+  $('.sign.in img').click(function () {
+    LGG.showSigninPrompt($(this));
+    return false;
+  });
   /* Default form clearing */
   var def = 'default';
   $(':text')

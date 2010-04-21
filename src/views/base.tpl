@@ -5,6 +5,7 @@
 <link rel="icon" type="image/png" href="/img/favicon.png" />
 <link rel="shortcut icon" href="/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+<link rel="stylesheet" type="text/css" href="/css/jquery-ui.css" />
 <title>{if $title}{$title} | {/if}LiveGather</title> 
 </head> 
 {php}flush(){/php}
@@ -35,8 +36,8 @@ function markSel($name, $env) {
       <li class="sign out"><a href="/signout">Sign out</a></li>
     {else}
       <li class="sign in">
-        <img src="/img/signup/signup.png" />
-        <img src="/img/signup/signin.png" />
+        <img class="up" src="/img/signup/signup.png" />
+        <img class="in" src="/img/signup/signin.png" />
       </li>
     {/if}
   </ul> 
