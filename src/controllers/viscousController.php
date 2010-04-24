@@ -183,6 +183,30 @@ class ViscousController extends baseController {
 
   public function photos_view() {
     // TODO get photo data and related photo data.
+    $user = array('id' => 1, 'name' => 'jonnyApple', 'location' => 'San Diego, CA',
+                  'datetime' => '33 minutes ago');
+    $photo = array('id' => 453, 'location' => 'San Diego, CA',
+      'datetime' => '33 minutes ago',
+      'caption' => 'Chillin out and watching some TV',
+      'tags' => array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6, 'concert' => 8, 'fishing' => 6));
+    $nearbyPhotos = array(
+      array('id'=>1), array('id'=>2), array('id'=>3),
+      array('id'=>1), array('id'=>2), array('id'=>3),
+      array('id'=>2), array('id'=>3), array('id'=>2), array('id'=>3)
+    );
+    $similarPhotos = array(
+      array('id'=>451), array('id'=>452), array('id'=>453),
+      array('id'=>452), array('id'=>453), array('id'=>451),
+      array('id'=>452), array('id'=>453), array('id'=>452), array('id'=>453)
+    );
+    $prevPhotoId = 453;
+    $nextPhotoId = 453;
+    $this->assign('user', $user);
+    $this->assign('photo', $photo);
+    $this->assign('nearbyPhotos', $nearbyPhotos);
+    $this->assign('similarPhotos', $similarPhotos);
+    $this->assign('prevPhotoId', $prevPhotoId);
+    $this->assign('nextPhotoId', $nextPhotoId);
     $this->assign('title', 'Photo');
     $this->assign('class', 'photos view');
     RestUtils::sendResponse(200, $this->fetch('photos_view.tpl'));

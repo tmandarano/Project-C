@@ -1,12 +1,26 @@
 <table class="split">
 <tr>
   <td class="left pane">
-    <div class="users">
-      <a href="/profile/{$user.id}"><img src="/users/photo/{$user.name}" /></a>
-      <a class="username" href="/profile/{$user.id}">{$user.name}</a>
-      <span class="time">{$photo.datetime}</span>
-      <span class="location">{$photo.location}</span>
-      <p class="caption">{$photo.caption}</p>
+    <div class="info">
+      <div class="users">
+        <a href="/profile/{$user.id}"><img src="/users/photo/{$user.name}" /></a>
+        <a class="username" href="/profile/{$user.id}">{$user.name}</a>
+        is in 
+        <span class="location">{$photo.location}</span>
+        as of
+        <span class="time">{$photo.datetime}</span>
+        <p class="caption">{$photo.caption}</p>
+      </div>
+      <div class="prevnext">
+        <a href="/photos/view/{$prevPhotoId}">
+          <img src="/img/prevnext/prev.png" />
+          <img class="thumb" src="/photos/{$prevPhotoId}/2" />
+        </a>
+        <a href="/photos/view/{$nextPhotoId}">
+          <img class="thumb" src="/photos/{$nextPhotoId}/2" />
+          <img src="/img/prevnext/next.png" />
+        </a>
+      </div>
     </div>
     <div class="the_image">
       <img id="the_image" class="s3" src="/photos/{$photo.id}/3" />
@@ -14,12 +28,9 @@
     <div class="tags">
       <h1>tags:</h1>
       <ul class="tags">
-        <li><a href="#">driving</a></li>
-        <li><a href="#">road</a></li>
-        <li><a href="#">greenery</a></li>
-        <li><a href="#">trip</a></li>
-        <li><a href="#">radar</a></li>
-        <li><a href="#">detector</a></li>
+        {foreach from=$photo.tags key=tag item=count}
+        <li value="{$count}" title="{$tag}"><a href="{$tag}">{$tag}</a></li>
+        {/foreach}
         <li><a href="#">+</a></li>
       </ul>
     </div>
@@ -54,7 +65,7 @@
     <div class="similar">
       <h1 class="bichrome"><em>Recent</em> photos nearby.</h1>
       <ul class="collage">
-        {foreach from=$related item=photo}
+        {foreach from=$nearbyPhotos item=photo}
           <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/0" title="{$photo.caption}" /></a></li>
         {/foreach}
       </ul>

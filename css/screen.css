@@ -474,22 +474,35 @@ div.caption p,
   color: #000;
 }
 
+.photos.view .left.pane { position: relative; }
+.photos.view .info { position: relative; }
+.photos.view .info .prevnext { position: absolute; top: 0; right: 0; }
+.photos.view .prevnext a {
+  float: left;
+  margin-left: 0.5em;
+  display: block;
+  line-height: 50px;
+}
+.photos.view .prevnext a img { vertical-align: middle; }
+.photos.view .prevnext a img.thumb { height: 50px; }
 .photos.view #the_image {
   margin: 1em auto 1em auto;
   text-align: center;
   display: block;
 }
-.the_image { position: relative; }
+.the_image { position: relative; text-align: center; }
 .the_image .left, .the_image .right {
   position: absolute;
   top: 50%;
   margin-top: -30px;
 }
+.the_image img { max-width: 585px; }
 .the_image .left { left: 0; }
 .the_image .right { right: 0; }
 .photos.view td.pane { vertical-align: top; }
 .photos.view .tags * { display: inline; }
 .photos.view .comments p { margin-bottom: 1em; }
+.photos.view ul.collage { width: 216px; margin: 0; }
 
 h1.bichrome { color: #bbb; font-size: larger; margin-top: 0.6em; }
 h1.bichrome em { color: #a3e267; }
