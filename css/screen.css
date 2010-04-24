@@ -142,12 +142,13 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   font-weight: bold;
   color: #2686cf;
 }
-.signinup #tab2 .auths {
+.signinup .auths {
   width: 100%;
   margin-bottom: 1em;
   vertical-align: middle;
+  text-align: center;
 }
-.signinup #tab2 .auths img {
+.signinup .auths img {
   cursor: pointer;
 }
 .signinup #tab2 form td {

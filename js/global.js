@@ -95,6 +95,12 @@ LGG.showSigninPrompt = function(jdom) {
           "right": "-24px", "cursor": "pointer"});
   var form = $([
     '<div id="tab1">',
+    '<table class="auths">',
+      '<tr>',
+        "<td><img src=\"/img/signup/connect_google.png\" /></td>",
+        "<td><img src=\"http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>",
+      '</tr>',
+    '</table>',
     '<form id="SigninForm" method="post" action="/users/login">',
     '<table>',
       '<tr><th>Email</th>',
