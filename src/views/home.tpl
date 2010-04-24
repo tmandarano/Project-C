@@ -6,10 +6,8 @@
       <div class="why">
       <p><strong>Show</strong> your friends what you are doing.</p>
       <p><strong>See</strong> what they are doing.</p>
+      <p><strong>See</strong> what's happening in the world.</p>
       <p><strong>Discover</strong> like-minded people.</p>
-      </div>
-      <div class="connect">
-        <a href="/users/add"><img src="http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif" /></a>
       </div>
       <div class="tags">
         <h1>Trending Tags</h1>

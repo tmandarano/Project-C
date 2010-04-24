@@ -73,18 +73,18 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .nav .sign { float: right; }
 .nav .sign.in {
   background-color: #bbff99;
-  padding: 0.4em;
-  margin-top: 1.5em;
   vertical-align: middle;
   height: 28px;
-  border-radius: 0.4em;
-  -moz-border-radius: 0.4em;
-  -webkit-border-radius: 0.4em;
+  padding: 0.3em;
+  border-radius: 0.3em;
+  -moz-border-radius: 0.3em;
+  -webkit-border-radius: 0.3em;
 }
 .nav .sign.in img {
   cursor: pointer;
 }
 
+.home.out .nav .sign.in { margin-top: 1.5em; }
 .home.out #header .nav { height: 88px; }
 .home.out #header { height: 138px; }
 .home.out .pedestal {
@@ -195,11 +195,8 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .home.out .left.pane .title { color: #444; font-size: xx-large; text-align: center; margin-top: 0.6em; margin-bottom: -0.6em; }
 .home.out .title em { font-style: italic; }
 .home.out strong { font-weight: bold; color: #7a5; }
-.home.out .why { margin: 1em 0 1em 4em; font-size: larger;}
-.home.out .connect { text-align: center; }
-.home.out .connect img { height: 40px; }
-.home.out .connect span { line-height: 40px; vertical-align: 40%; }
-.home.out .tags h1 { text-align: center; font-size: x-large; margin-top: 1.5em;}
+.home.out .why { margin: 4em 0 1em 4em; font-size: larger;}
+.home.out .tags h1 { text-align: center; font-size: x-large; margin-top: 3.5em;}
 .home.out .tags ul { text-align: center; }
 .home.out .tags li { display: inline; }
 .home.out .tags li a { color: skyblue; font-size: larger; }
