@@ -26,7 +26,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 
 /* Setup large page elements */
 #header, #footer { position: relative; width: 100%; }
-#header { background-color: #73a247; }
+#header { background-color: #45a136; }
 #headerstream {
   position: relative;
   height: 50px;
@@ -63,12 +63,13 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .nav li { float: left; }
 .nav li a { /* block links provide big clickable area */
   display: block;
-  padding: 0.75em 20px 0 20px;
+  padding: 0.75em 10px 0 10px;
   height: 1.75em;
-  font-weight: bold;
   color: #fff;
 }
+.nav li a strong { font-weight: bold; }
 .nav .logo, .nav li:hover a, .nav li.selected { color: #eee; text-shadow: #444 0 0 5px; }
+.nav .logo a { padding: 5px 20px 0 0; }
 .nav .logo { margin-left: -20px; }
 .nav .sign { float: right; }
 .nav .sign.in {
@@ -195,7 +196,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 .home.out .left.pane { width: 560px; }
 .home.out .left.pane .title { color: #444; font-size: xx-large; text-align: center; margin-top: 0.6em; margin-bottom: -0.6em; }
 .home.out .title em { font-style: italic; }
-.home.out strong { font-weight: bold; color: #7a5; }
+.home.out #content strong { font-weight: bold; color: #7a5; }
 .home.out .why { margin: 4em 0 1em 4em; font-size: larger;}
 .home.out .tags h1 { text-align: center; font-size: x-large; margin-top: 3.5em;}
 .home.out .tags ul { text-align: center; }
@@ -502,7 +503,7 @@ div.caption p,
 .photos.view td.pane { vertical-align: top; }
 .photos.view .tags * { display: inline; }
 .photos.view .comments p { margin-bottom: 1em; }
-.photos.view ul.collage { width: 216px; margin: 0; }
+.photos.view ul.collage { margin: 0; }
 
 h1.bichrome { color: #bbb; font-size: larger; margin-top: 0.6em; }
 h1.bichrome em { color: #a3e267; }
@@ -569,7 +570,7 @@ table.stream {
   font: small;
 }
 
-ul.collage { margin: auto; width: 212px; }
+ul.collage { margin: auto; width: 216px; }
 ul.collage li,
 .explore.stream li { display: inline-block; margin: 2px 0.5px; width: 40px; height: 40px; line-height: 40px; }
 ul.collage li a,

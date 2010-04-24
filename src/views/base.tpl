@@ -21,13 +21,19 @@ function markSel($name, $env) {
 <div id='header'> 
   <ul class='nav'> 
 {if $class eq 'home out'}
-    <li class="logo"><a href="/"><img src="/img/logo.png" /></a></li>
+    <li class="logo"><a href="/"><img src="/img/logo/medium_w_tagline.png" /></a></li>
 {else}
-    <li class='logo'><a href="/">LiveGather</a></li> 
+    <li class="logo"><a href="/"><img src="/img/logo/small_no_tagline.png" /></a></li>
 {/if}
-    <li{php}markSel('Map', $title){/php}><a href="/explore/map">Map</a></li> 
-    <li{php}markSel('Photos', $title){/php}><a href="/explore/photos">Photos</a></li> 
-    <li{php}markSel('People', $title){/php}><a href="/explore/people">People</a></li> 
+    <li{php}markSel('Map', $title){/php}>
+      <a href="/explore/map"><strong>Explore</strong>Map</a>
+    </li> 
+    <li{php}markSel('Photos', $title){/php}>
+      <a href="/explore/photos"><strong>Explore</strong>Photos</a>
+    </li> 
+    <li{php}markSel('People', $title){/php}>
+      <a href="/explore/people"><strong>Explore</strong>People</a>
+    </li> 
     {if $user != null}
       <li{php} markSel('Profile', $title){/php}><a
       href="/profile/{$user.id}">{$user.name}</a></li> 
