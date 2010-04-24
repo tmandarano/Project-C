@@ -414,10 +414,13 @@ div.users a img {
 }
 
 input[type="text"], input[type="password"] {
-  border: 1px solid #ddd;
-  background-color: #eee;
+  border: 1px solid #aaa;
+  background-color: #ddd;
   font-size: 1.2em;
   vertical-align: middle;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
 }
 input[type="text"]:focus, input[type="password"]:focus {
   background-color: #efa;
@@ -779,6 +782,40 @@ input.comment:focus {
 .detailed.stream li.map .detail.map,
 .detailed.stream li.meta .detail.meta { display: block; }
 
+.settings h1 {
+}
+
+.settings .expandable {
+  margin: auto;
+  width: 680px;
+  margin-bottom: 1em;
+}
+.settings .expandable h1 {
+  margin-left: -2%;
+  background: url('/img/settings_bar.png') no-repeat;
+  height: 39px;
+  line-height: 39px;
+  padding-left: 10px;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+.settings .expandable .content {
+  background-color: #ededed;
+  padding: 1em;
+  width: 92%;
+  text-align: center;
+}
+.settings .basic .content h1 { background: none; color: black; }
+.settings .basic .content .userphoto { float: right; margin-right: 2em; }
+.settings .basic td { padding: 0.5em 0 0.5em 1em; }
+.settings .auths .content .auths { margin: auto; }
+.settings .privacy .content table { margin: auto; font-weight: bold; }
+.settings .privacy .content table tr { line-height: 2em; }
+.settings .privacy .content table th { text-align: right; padding-right: 1em; }
+
 h1.bubble {
   margin-top: 0.5em;
   background-color: #9cda60;
@@ -792,5 +829,3 @@ h1.bubble {
 h1.bubble .right {
   float: right;
 }
-
-.cake-sql-log { display: none; }
