@@ -234,6 +234,34 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   width: 180px; max-height: 180px;
 }
 
+.getapp #content { text-align: center; }
+.getapp table {
+  margin: auto;
+}
+.getapp table a {
+  display: block;
+  color: black;
+  font-size: large;
+}
+.getapp table .apps td {
+  padding: 0 2em 0 2em;
+  line-height: 224px;
+}
+.getapp #content img {
+  vertical-align: middle;
+}
+.getapp button {
+  background-color: #45a136;
+  padding: 0.5em 1em;
+  font-size: larger;
+  font-weight: bold;
+  color: white;
+  border: 1px solid #359126;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+
 .livestreams .left.pane .controls {
   border-bottom: 2px solid #cbeda9;
   width: 100%;

@@ -47,6 +47,12 @@ class ViscousController extends baseController {
       RestUtils::sendResponse(200, $this->fetch('home.tpl'));
     }
   }
+
+  public function getapp() {
+    $this->assign('title', 'Download App');
+    $this->assign('class', 'getapp');
+    RestUtils::sendResponse(200, $this->fetch('getapp.tpl'));
+  }
       
   /* About pages */
   public function about_contact() {
