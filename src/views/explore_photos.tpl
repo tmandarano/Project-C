@@ -43,7 +43,7 @@
   </div>
 </td>
 <td class="right pane">
-  <h1 class="monochrome"><em>Explore</em>.</h1>
+  <h1 class="monochrome"><em>Explore</em> <img src="/img/explore_photos.png" /></h1>
   <h1 class="bichrome"><em>Photos</em> you might like.</h1>
   <ul class="collage">
     {foreach from=$suggestedPhotos item=photo}
