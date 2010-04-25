@@ -59,7 +59,7 @@ $(function() {
   var mapOpts = {
     zoom: 7,
     center: new google.maps.LatLng(0, 0),
-    mapTypeId: google.maps.MapTypeId.HYBRID,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
     scrollwheel: true,
     draggable: true,
     disableDefaultUI: false,

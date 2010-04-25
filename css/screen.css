@@ -304,7 +304,18 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 /* This is very similar to .profile.stream */
 .live.stream li { position: relative; height: 270px; margin-bottom: 10px; }
 .live.stream li .photo { position: absolute; clear: left; z-index: 1;}
-.live.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none; }
+.live.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none;
+  border: 1px solid #aaa;
+  background: #f0f0f0 url('/img/like.png') no-repeat center right;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 32px 0 4px;
+  color: #45a136;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+.live.stream li .photo a.like:hover { background-color: #fafafa; }
 .live.stream li .detail { padding-left: 280px; position: relative; height: inherit; } 
 .live.stream li .detail .bottom { position: absolute; bottom: 0;} 
 .live.stream li .detail h1 { font-size: 1.5em; color: #a3e267; } 
@@ -846,7 +857,7 @@ input.comment:focus {
 
 h1.bubble {
   margin-top: 0.5em;
-  background-color: #9cda60;
+  background-color: #45a136;
   color: #fff;
   margin: 0.2em -0.5em 0.2em -0.5em;
   padding: 0.1em 0.5em 0.1em 0.5em;
