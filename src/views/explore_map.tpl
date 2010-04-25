@@ -7,6 +7,13 @@
 <input name="commit" type="submit" value="Search" />
 </form>
 </td>
+<td>
+  <ul class="stream_type">
+    <li class="type">Friends</li>
+    <li>Watching</li>
+    <li>Everyone</li>
+  </ul>
+</td>
 <td><a href="#">Most Interesting</a></td>
 <td><a href="#">Most Recent</a></td>
 <td><p>__Current_Location</p></td>
@@ -24,5 +31,5 @@
 </div>
 <div id="map_explore" style="height: 700px;"></div>
 {capture name="scripts"}
-<script type="text/javascript" src="/js/explore.js"></script>
+<script type="text/javascript" src="/js/explore_map.js"></script>
 {/capture}

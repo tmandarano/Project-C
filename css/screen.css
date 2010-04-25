@@ -268,7 +268,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   margin-bottom: 0.5em;
   line-height: 2em; 
 }
-.livestreams .left.pane .controls .stream_type li {
+.stream_type li {
   display: inline;
   padding: 0.3em 0.3em 0.2em 0.3em; /* slightly different for centering text in button */
   -moz-border-radius: 8px;
@@ -276,7 +276,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   border-radius: 8px;
   text-shadow: 1px 1px 1px #fff;
 }
-.livestreams .controls .stream_type li.type { background-color: #cbeda9; }
+.stream_type li.type { background-color: #cbeda9; }
 .livestreams .controls #specific_button {
   background-color: #ccc;
   text-align: center;
@@ -313,6 +313,20 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   width: 100%;
   padding: 0;
 }
+.explore.map #shelf {
+  background-color: black;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 3em;
+  z-index: 100;
+}
+.explore.map #shelf table {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.explore.map #shelf .zeitgeist { text-align: center; }
 
 .explore.photos .left.pane { width: 700px; }
 .explore.photos .controls div { margin-bottom: 0.5em; }
@@ -624,20 +638,6 @@ input.comment {
 input.comment:focus {
   outline:none;
 }
-
-#shelf {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  background: url('/img/shelf_bg.png');
-  height: 3em;
-  z-index: 100;
-}
-#shelf table {
-  width: 100%;
-  text-align: center;
-}
-#shelf .zeitgeist { text-align: center; }
 
 .dimmer {
   position: absolute;
