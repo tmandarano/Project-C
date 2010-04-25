@@ -164,6 +164,10 @@ LGG.init = function() {
     LGG.showSigninPrompt($(this));
     return false;
   });
+  $('.sign.in').click(function () {
+    LGG.showSigninPrompt($(this));
+    return false;
+  });
   /* Default form clearing */
   var def = 'default';
   $(':text')
