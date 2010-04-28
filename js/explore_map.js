@@ -21,7 +21,7 @@ PROJC.mapAddPic = function(map, pic) {
 
 var map;
 
-function init() {
+$(function () {
   var latlng = new google.maps.LatLng(32.77977,-117.137947);
   var mapOpts = {
     zoom: 7,
@@ -47,7 +47,7 @@ function init() {
     lng:'-114',
     User:{name:'testuser!123'}
   });
-}
 
-$(document).ready(function(){init();});
-
+  // Shelf needs to be transparent
+  $('#shelf').fadeTo(0, 0.9);
+});

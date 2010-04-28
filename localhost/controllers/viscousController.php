@@ -5,8 +5,8 @@ require_once('baseController.php');
 class ViscousController extends baseController {       
   /* Home pages */
   public function home() {
-    if ($user) { // TODO This needs to be auth
-    //if (true) {
+    //if ($user) { // TODO This needs to be auth
+    if (true) {
       $streamPhotos = array(451, 452, 453);
       $socialStream = array(
         array('user' => array('name'=>'Tony Mandarano'),
@@ -46,6 +46,12 @@ class ViscousController extends baseController {
       $this->assign('class', 'home out');
       RestUtils::sendResponse(200, $this->fetch('home.tpl'));
     }
+  }
+
+  public function getapp() {
+    $this->assign('title', 'Download App');
+    $this->assign('class', 'getapp');
+    RestUtils::sendResponse(200, $this->fetch('getapp.tpl'));
   }
       
   /* About pages */

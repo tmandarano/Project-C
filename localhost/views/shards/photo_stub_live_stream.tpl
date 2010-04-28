@@ -1,6 +1,6 @@
 <div class="photo">
   <a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/3" /></a>
-  <a class="like" href="#like">Like</a>
+  <a class="like" href="#like">230</a>
 </div>
 <div class="detail">
   <h1>{$photo.user.name}</h1>

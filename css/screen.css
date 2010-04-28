@@ -234,13 +234,41 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   width: 180px; max-height: 180px;
 }
 
+.getapp #content { text-align: center; }
+.getapp table {
+  margin: auto;
+}
+.getapp table a {
+  display: block;
+  color: black;
+  font-size: large;
+}
+.getapp table .apps td {
+  padding: 0 2em 0 2em;
+  line-height: 224px;
+}
+.getapp #content img {
+  vertical-align: middle;
+}
+.getapp button {
+  background-color: #45a136;
+  padding: 0.5em 1em;
+  font-size: larger;
+  font-weight: bold;
+  color: white;
+  border: 1px solid #359126;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+
 .livestreams .left.pane .controls {
   border-bottom: 2px solid #cbeda9;
   width: 100%;
   margin-bottom: 0.5em;
   line-height: 2em; 
 }
-.livestreams .left.pane .controls .stream_type li {
+.stream_type li {
   display: inline;
   padding: 0.3em 0.3em 0.2em 0.3em; /* slightly different for centering text in button */
   -moz-border-radius: 8px;
@@ -248,7 +276,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   border-radius: 8px;
   text-shadow: 1px 1px 1px #fff;
 }
-.livestreams .controls .stream_type li.type { background-color: #cbeda9; }
+.stream_type li.type { background-color: #cbeda9; }
 .livestreams .controls #specific_button {
   background-color: #ccc;
   text-align: center;
@@ -276,7 +304,18 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 /* This is very similar to .profile.stream */
 .live.stream li { position: relative; height: 270px; margin-bottom: 10px; }
 .live.stream li .photo { position: absolute; clear: left; z-index: 1;}
-.live.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none; }
+.live.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none;
+  border: 1px solid #aaa;
+  background: #f0f0f0 url('/img/like.png') no-repeat center right;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 32px 0 4px;
+  color: #45a136;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+.live.stream li .photo a.like:hover { background-color: #fafafa; }
 .live.stream li .detail { padding-left: 280px; position: relative; height: inherit; } 
 .live.stream li .detail .bottom { position: absolute; bottom: 0;} 
 .live.stream li .detail h1 { font-size: 1.5em; color: #a3e267; } 
@@ -285,6 +324,20 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   width: 100%;
   padding: 0;
 }
+.explore.map #shelf {
+  background-color: black;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 3em;
+  z-index: 100;
+}
+.explore.map #shelf table {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.explore.map #shelf .zeitgeist { text-align: center; }
 
 .explore.photos .left.pane { width: 700px; }
 .explore.photos .controls div { margin-bottom: 0.5em; }
@@ -597,20 +650,6 @@ input.comment:focus {
   outline:none;
 }
 
-#shelf {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  background: url('/img/shelf_bg.png');
-  height: 3em;
-  z-index: 100;
-}
-#shelf table {
-  width: 100%;
-  text-align: center;
-}
-#shelf .zeitgeist { text-align: center; }
-
 .dimmer {
   position: absolute;
   width: 100%;
@@ -818,7 +857,7 @@ input.comment:focus {
 
 h1.bubble {
   margin-top: 0.5em;
-  background-color: #9cda60;
+  background-color: #45a136;
   color: #fff;
   margin: 0.2em -0.5em 0.2em -0.5em;
   padding: 0.1em 0.5em 0.1em 0.5em;

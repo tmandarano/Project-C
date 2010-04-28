@@ -32,6 +32,7 @@
   }
 
   staticRoute($router, '/', 'viscous', 'home');
+  staticRoute($router, '/getapp', 'viscous', 'getapp');
 
   /* users routes */
   staticRoute($router, '/signup', 'viscous', 'signup');

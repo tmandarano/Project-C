@@ -17,7 +17,6 @@ function markSel($name, $env) {
   }
 }
 {/php}
-{capture name=signStatus}{$user|ternary:'out':'in'}{/capture}
 <div id='header'> 
   <ul class='nav'> 
 {if $class eq 'home out'}
