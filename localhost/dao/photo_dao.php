@@ -1,10 +1,10 @@
 <?php
 require_once('comment_dao.php');
 require_once('tag_dao.php');
-require_once('src/model/photo.php');
-require_once('src/model/comment.php');
-require_once('src/model/tag.php');
-require_once('src/utils/connection_factory.php');
+require_once('localhost/models/photo.php');
+require_once('localhost/models/comment.php');
+require_once('localhost/models/tag.php');
+require_once('localhost/utils/connection_factory.php');
 
 class PhotoDAO
 {

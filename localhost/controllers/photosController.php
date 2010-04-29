@@ -1,7 +1,7 @@
 <?php
 require_once('baseController.php');
-require_once('src/model/photo.php');
-require_once('src/model/dao/photo_dao.php');
+require_once('localhost/models/photo.php');
+require_once('localhost/dao/photo_dao.php');
 
 class PhotosController extends BaseController
 {       

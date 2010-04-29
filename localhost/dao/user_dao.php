@@ -1,6 +1,6 @@
 <?php
-require_once('src/model/user.php');
-require_once('src/utils/connection_factory.php');
+require_once('localhost/models/user.php');
+require_once('localhost/utils/connection_factory.php');
 
 class UserDAO
 {

@@ -1,12 +1,6 @@
 <?php /* Entry point for Project C */
 //phpinfo();
-require_once('config.php');
-
-// See robap-php-router for routing information
-// See smarty for templating information
-
-include_once('PageError.php'); 
-include_once('php-router.php');
+require_once('localhost/config/config.php');
 
 // TODO Use factory/singleton for Router and Dispatcher?
 // Find the Route for your url
@@ -17,11 +11,11 @@ $found_route    = $router->findRoute($url);
 
 $dispatcher = new Dispatcher();
 $dispatcher->setSuffix('Controller');
-$dispatcher->setClassPath($_SERVER['DOCUMENT_ROOT'] . '/src/controllers/');
+$dispatcher->setClassPath($_SERVER['DOCUMENT_ROOT'] . '/localhost/controllers/');
 
 // Dispatch the Route
 if( FALSE === $found_route ) {
-  PageError::show('404', $url, 'route not found');
+  PageError::show('404', $url, 'Not Found');
 } else {
   // Note: you would likely use some other http status codes depending
   // on the specific Exception thrown.

@@ -1,16 +1,24 @@
 <?php /* global settings for PHP when in Project C */
 
-// Enable Project C logging
-require_once('src/utils/logging.php');
-
 // Set timezone so apache doesn't complain about relying on server time.
 date_default_timezone_set('America/Los_Angeles');
 
 // Set the include path so routing and templating libraries can be included.
 set_include_path(get_include_path() .
-  PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/lib/robap-php-router/'.
-  PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/lib/smarty/libs/'
+  PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/localhost/config/'.
+  PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/localhost/utils/'.
+  PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/libraries/robap-php-router/'.
+  PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/libraries/smarty/libs/'
 );
+
+// Enable Project C logging
+require_once('logging.php');
+
+// See robap-php-router for routing information
+// See smarty for templating information
+
+include_once('page_error.php'); 
+include_once('php-router.php');
 
 $dev = false;
 

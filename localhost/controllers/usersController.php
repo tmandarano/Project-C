@@ -1,7 +1,7 @@
 <?php
 require_once('baseController.php');
-require_once('src/model/user.php');
-require_once('src/model/dao/user_dao.php');
+require_once('localhost/models/user.php');
+require_once('localhost/dao/user_dao.php');
 
 class UsersController extends BaseController
 {       
