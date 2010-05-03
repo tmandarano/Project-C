@@ -1,16 +1,16 @@
 <?php
-require_once('config.php');
-require_once('src/utils/restutils.php');
+require_once('localhost/config/config.php');
+require_once('localhost/utils/restutils.php');
 require_once('Smarty.class.php');
 
 /* BaseController extends Smarty to get the Smarty templating */
 abstract class BaseController extends Smarty {
   function __construct() {
     $this->Smarty();
-    $this->template_dir = 'src/views/';
-    $this->compile_dir = 'smarty_pants/compiled';
-    $this->config_dir = 'smarty_pants/config';
-    $this->cache_dir = 'smarty_pants/cache';
+    $this->template_dir = 'localhost/views/';
+    $this->compile_dir = 'special/smarty_pants/compiled';
+    $this->config_dir = 'special/smarty_pants/config';
+    $this->cache_dir = 'special/smarty_pants/cache';
     $this->plugins_dir[] = 'smarty_pants/plugins';
   }
 

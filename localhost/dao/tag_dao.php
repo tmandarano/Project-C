@@ -1,5 +1,5 @@
 <?php
-require_once('src/utils/connection_factory.php');
+require_once('localhost/utils/connection_factory.php');
 
 class TagDAO
 {

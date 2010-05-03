@@ -1,6 +1,6 @@
 <?php
-require_once('config.php');
-require_once('src/utils/logging.php');
+require_once('localhost/config/config.php');
+require_once('localhost/utils/logging.php');
 
 class ConnectionFactory
 {

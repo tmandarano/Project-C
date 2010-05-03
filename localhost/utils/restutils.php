@@ -58,6 +58,7 @@ class RestUtils
         {  
             // send the body  
             echo $body;  
+            debug($body);
             exit;  
         }  
         // we need to create the body if none is passed  

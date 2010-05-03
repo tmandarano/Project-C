@@ -1,6 +1,6 @@
 <?php
-require_once('src/model/comment.php');
-require_once('src/utils/connection_factory.php');
+require_once('localhost/models/comment.php');
+require_once('localhost/utils/connection_factory.php');
 
 class CommentDAO
 {

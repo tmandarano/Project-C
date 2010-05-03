@@ -1,6 +1,6 @@
 <?php
 require_once('baseController.php');
-require_once('src/model/dao/photo_dao.php');
+require_once('localhost/dao/photo_dao.php');
 
 function objToArr($obj) {
   if (!is_object($obj) && !is_array($obj)) {
