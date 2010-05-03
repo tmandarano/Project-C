@@ -13,7 +13,7 @@ set_include_path(get_include_path() .
 );
 
 $dev = false;
-$dev = true;
+//$dev = true;
 
 // Database connection information
 if($dev)
