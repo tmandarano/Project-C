@@ -11,7 +11,7 @@ abstract class BaseController extends Smarty {
     $this->compile_dir = 'special/smarty_pants/compiled';
     $this->config_dir = 'special/smarty_pants/config';
     $this->cache_dir = 'special/smarty_pants/cache';
-    $this->plugins_dir[] = 'smarty_pants/plugins';
+    $this->plugins_dir[] = 'special/smarty_pants/plugins';
   }
 
   function fetch($template) {

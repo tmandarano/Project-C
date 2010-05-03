@@ -1,8 +1,8 @@
 <?php
 require_once('baseservice.php');
-require_once('src/utils/restutils.php');
-require_once('src/model/photo.php');
-require_once('src/model/dao/photo_dao.php');
+require_once('localhost/utils/restutils.php');
+require_once('localhost/models/photo.php');
+require_once('localhost/models/dao/photo_dao.php');
 
 class PhotoService extends BaseService 
 {       

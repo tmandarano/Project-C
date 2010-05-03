@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/src/utils/logging.php');
+require_once('logging.php');
 
 $uploadfile = UPLOAD_DIR . basename($_FILES['userfile']['name']);
 $thefile = $_FILES['userfile']['tmp_name'];
