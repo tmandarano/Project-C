@@ -11,8 +11,7 @@ function toString($msg) {
   }
 }
 
-function debug($msg)
-{
+function debug($msg) {
     $call_info = array_shift( debug_backtrace() );
     $code_line = $call_info['line'];
     $file = array_pop( explode('/', $call_info['file']));

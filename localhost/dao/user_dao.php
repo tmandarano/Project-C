@@ -7,7 +7,7 @@ class UserDAO
     public static function getUsers($id = null)
     {
         $conn = ConnectionFactory::getFactory()->getConnection();
-    
+
         $sql = "SELECT * FROM user";
         if($id)
         {
@@ -15,7 +15,21 @@ class UserDAO
         }
     
         $rs = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-        return PhotoDAO::recordsToPhotos($rs);
+        return UserDAO::recordsToUsers($rs);
+    }
+
+    public static function getUserByStandardAuth($username, $password)
+    {
+        $conn = ConnectionFactory::getFactory()->getConnection();
+    
+        $sql = "SELECT * FROM user where fullname = :fullname and password = :password";
+
+        $stmt = $conn.prepare($sql);
+        $stmt->bindParam(":fullname", $username, PDO::PARAM_STR);
+        $stmt->bindParam(":password", md5($password), PDO::PARAM_STR);
+
+        $rs = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return UserDAO::recordsToUsers($rs);
     }
 
     public function save($user)
@@ -27,7 +41,6 @@ class UserDAO
         $stmt = $conn->prepare($sql);
 
         $birthday = date("Y-m-d H:i:s", strtotime($user->getDateOfBirth())); 
-        
         $stmt->bindParam(":fullname", $user->getFullname(), PDO::PARAM_STR);
         $stmt->bindParam(":email", $user->getEmail(), PDO::PARAM_STR);
         $stmt->bindParam(":password", $user->getPassword(), PDO::PARAM_STR);

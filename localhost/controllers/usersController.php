@@ -23,6 +23,7 @@ class UsersController extends BaseController
         $user->setEmail($vars['email']);
         $user->setPassword(md5($vars['password']));
         $user->setDateOfBirth($vars['date_of_birth']);
+        $user->setLocation($vars['location']);
         
         $returned_id = UserDAO::save($user);
         $user->setId($returned_id);

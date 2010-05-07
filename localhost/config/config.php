@@ -1,5 +1,8 @@
 <?php /* global settings for PHP when in Project C */
 
+// Enable Project C logging
+require_once('localhost/utils/logging.php');
+
 // Set timezone so apache doesn't complain about relying on server time.
 date_default_timezone_set('America/Los_Angeles');
 
@@ -11,9 +14,6 @@ set_include_path(get_include_path() .
   PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] . '/libraries/smarty/libs/'
 );
 
-// Enable Project C logging
-require_once('logging.php');
-
 // See robap-php-router for routing information
 // See smarty for templating information
 
@@ -21,6 +21,7 @@ include_once('page_error.php');
 include_once('php-router.php');
 
 $dev = false;
+//$dev = true;
 
 // Database connection information
 if($dev)
@@ -38,6 +39,6 @@ else
 
 
 // Upload directories
-define('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/uploads/');
+define('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/special/uploads/');
 define('IMAGES_DIR', $_SERVER['DOCUMENT_ROOT'].'/images/');
 ?>

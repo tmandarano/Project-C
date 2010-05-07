@@ -13,17 +13,29 @@ class SessionsController extends BaseController
 	
     public function create()
     {
+        if (!isset($_SERVER['PHP_AUTH_USER'])) {
+            debug('zzzzzzzzzzzz');
+            RestUtils::sendResponse(401, '', 'text/html');
+        } else {
+            debug("Hello {$_SERVER['PHP_AUTH_USER']}.");
+            debug("You entered {$_SERVER['PHP_AUTH_PW']} as your password.");
+        }
+
     	$data = RestUtils::processRequest();
     	$vars = $data->getRequestVars();
         
-        $users = UserDAO::getUserByStandardAuth($vars['username'], $vars['password']);
+        $users = UserDAO::getUserByStandardAuth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
         if(len($users) > 0)
         {
             $user = $users[0];
         }
 
-        RestUtils::sendResponse(200, json_encode($session), 'application/json');
+        session_start();
+        $_SESSION['fullname'] = $user->getFullname();
+        $_SESSION['email'] = $user->getEmail();
+
+        RestUtils::sendResponse(200, json_encode($user), 'application/json');
     }
 }
 
