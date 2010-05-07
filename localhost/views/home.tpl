@@ -2,7 +2,7 @@
 <table class="split">
   <tr>
     <td class="left pane">
-      <h1 class="title"><em>Show</em> your life as you live it, in real-time.</h1>
+      <h1 class="title"><em>See</em> and <em>show</em> your world in real-time.</h1>
       <div class="why">
       <p><strong>Show</strong> your friends what you are doing.</p>
       <p><strong>See</strong> what they are doing.</p>

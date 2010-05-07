@@ -20,7 +20,7 @@ function markSel($name, $env) {
 <div id='header'> 
   <ul class='nav'> 
 {if $class eq 'home out'}
-    <li class="logo"><a href="/"><img src="/img/logo/medium_w_tagline.png" /></a></li>
+    <li class="logo"><a href="/"><img src="/img/logo/medium_no_tagline.png" /></a></li>
 {else}
     <li class="logo"><a href="/"><img src="/img/logo/small_no_tagline.png" /></a></li>
 {/if}
