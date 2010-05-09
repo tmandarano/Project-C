@@ -19,7 +19,7 @@ class UsersController extends BaseController
         
         $user = new User();
 
-        $user->setFullname($vars['fullname']);
+        $user->setUsername($vars['username']);
         $user->setEmail($vars['email']);
         $user->setPassword(md5($vars['password']));
         $user->setDateOfBirth($vars['date_of_birth']);

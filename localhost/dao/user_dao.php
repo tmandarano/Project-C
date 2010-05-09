@@ -22,13 +22,15 @@ class UserDAO
     {
         $conn = ConnectionFactory::getFactory()->getConnection();
     
-        $sql = "SELECT * FROM user where fullname = :fullname and password = :password";
+        $sql = "SELECT * FROM user where username = :username and password = :password";
 
-        $stmt = $conn.prepare($sql);
-        $stmt->bindParam(":fullname", $username, PDO::PARAM_STR);
-        $stmt->bindParam(":password", md5($password), PDO::PARAM_STR);
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+        $stmt->bindParam(":password", $password, PDO::PARAM_STR);
 
-        $rs = $conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->execute();
+        $rs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         return UserDAO::recordsToUsers($rs);
     }
 
@@ -36,12 +38,12 @@ class UserDAO
     {
         $conn = ConnectionFactory::getFactory()->getConnection();
         
-        $sql = "INSERT INTO user (fullname, email, password, date_of_birth, location, date_added, date_modified) ";
-        $sql .= "VALUES (:fullname, :email, :password, :date_of_birth, :location, NOW(), NOW())";
+        $sql = "INSERT INTO user (username, email, password, date_of_birth, location, date_added, date_modified) ";
+        $sql .= "VALUES (:username, :email, :password, :date_of_birth, :location, NOW(), NOW())";
         $stmt = $conn->prepare($sql);
 
         $birthday = date("Y-m-d H:i:s", strtotime($user->getDateOfBirth())); 
-        $stmt->bindParam(":fullname", $user->getFullname(), PDO::PARAM_STR);
+        $stmt->bindParam(":username", $user->getUsername(), PDO::PARAM_STR);
         $stmt->bindParam(":email", $user->getEmail(), PDO::PARAM_STR);
         $stmt->bindParam(":password", $user->getPassword(), PDO::PARAM_STR);
         $stmt->bindParam(":date_of_birth", $birthday, PDO::PARAM_STR);
@@ -76,7 +78,7 @@ class UserDAO
         foreach($records as $record) {
             $user = new User();
             $user->setId($record['id']);
-            $user->setFullname($record['fullname']);
+            $user->setUsername($record['username']);
             $user->setEmail($record['email']);
             $user->setPassword($record['password']);
             $user->setDateOfBirth($record['date_of_birth']);
@@ -86,6 +88,7 @@ class UserDAO
             
             $users[$record['id']] = $user;
         }
+
         return $users;
     }
 }

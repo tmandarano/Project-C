@@ -3,17 +3,16 @@ require_once('baseController.php');
 require_once('localhost/models/photo.php');
 require_once('localhost/dao/photo_dao.php');
 
-class PhotosController extends BaseController
-{       
-    public function show($vars)
-    {
+class PhotosController extends BaseController {       
+    public function show($vars) {
         $photo_id = $vars[':id'];
         $photos = PhotoDAO::getPhotos($photo_id);
         RestUtils::sendResponse(200, json_encode($photos), 'application/json');
     }
 	
-    public function create()
-    {
+    public function create() {
+        parent::checkAuth();
+
     	$data = RestUtils::processRequest();
     	$vars = $data->getRequestVars();
         
@@ -22,8 +21,8 @@ class PhotosController extends BaseController
         $tag_str = $vars['tags'];
         $tag_strs = explode(',', $tag_str);
         $tags = array();
-        foreach($tag_strs as $tag_var)
-        {
+
+        foreach($tag_strs as $tag_var) {
             $tag = new Tag();
             $tag->setTag($tag_var);
             $tags[] = $tag;
@@ -33,12 +32,13 @@ class PhotosController extends BaseController
         $comment_str = $vars['comments'];
         $comment_strs = explode(',', $comment_str);
         $comments = array();
-        foreach($comment_strs as $comment_var)
-        {
+
+        foreach($comment_strs as $comment_var) {
             $comment = new Comment();
             $comment->setComment($comment_var);
             $comments[] = $comment;
         }
+
         $photo->setComments($comments);
         $photo->setName($vars['userfile']);
         $photo->setLocation($vars['location']);
@@ -61,15 +61,14 @@ class PhotosController extends BaseController
     }
 
     public function recent($vars) {
-      $num_recent = $vars[':number'];
-      if (!$number) {
-        $num_recent = 10;
-      }
-      RestUtils::sendResponse(200, json_encode(PhotoDAO::getRecentPhotos($num_recent)), 'application/json');
+        $num_recent = $vars[':number'];
+        if (!$number) {
+            $num_recent = 10;
+        }
+        RestUtils::sendResponse(200, json_encode(PhotoDAO::getRecentPhotos($num_recent)), 'application/json');
     }
     
-    private function savePhoto($photo)
-    {
+    private function savePhoto($photo) {
         $extension = substr($photo->getName(), strrpos($photo->getName(), '.') + 1); 
         $new_file_name = "IMG" . $photo->getId() . "." . $extension;
     	$target_path = IMAGES_DIR. $new_file_name;

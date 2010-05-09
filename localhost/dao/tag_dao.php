@@ -41,7 +41,6 @@ class TagDAO
         $sql = "INSERT INTO tag (tag, date_added, date_modified) VALUES (:tag, NOW(), NOW())";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(":tag", $tag->getTag(), PDO::PARAM_STR);
-        $stmt->bindParam(":date_added", $tag->getDateAdded(), PDO::PARAM_STR);
         $stmt->execute();
 
 		$return_id = $conn->lastInsertId();

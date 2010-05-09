@@ -1,8 +1,8 @@
-AuthUserFile /home/livegather/dev.livegather.com/.htpasswd
-AuthGroupFile /null
-AuthName "Log in"
-AuthType Basic
-require valid-user
+#AuthUserFile /home/prestonc/temp/Project-C/.htpasswd
+#AuthGroupFile /null
+#AuthName "Log in"
+#AuthType Basic
+#require valid-user
 
 # Leave out guard so server will fail if mod_rewrite is not present.
 #<IfModule mod_rewrite.c>
@@ -15,3 +15,4 @@ require valid-user
 
 ServerSignature Off
 Options -Indexes
+

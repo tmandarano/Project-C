@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
-require_once('logging.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/localhost/config/config.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/localhost/utils/logging.php');
 
 $uploadfile = UPLOAD_DIR . basename($_FILES['userfile']['name']);
 $thefile = $_FILES['userfile']['tmp_name'];
@@ -13,3 +13,4 @@ if (move_uploaded_file($thefile, $uploadfile)) {
   // Otherwise onSubmit event will not be fired
   debug("Error: File upload failed for " . $thefile);
 }
+?>

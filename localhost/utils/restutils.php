@@ -1,4 +1,5 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/localhost/models/user.php');
 
 class RestUtils 
 {
@@ -34,14 +35,18 @@ class RestUtils
         // store the method  
         $return_obj->setMethod($request_method);  
   
+        $data = json_decode(file_get_contents("php://input"), true);
+
         // set the raw data, so we can access it if needed (there may be  
         // other pieces to your requests)  
         $return_obj->setRequestVars($data);  
   
-        if(isset($data['data'])) { 
-            // translate the JSON to an Object for use however you want  
-            $return_obj->setData(json_decode($data['data']));  
-        }  
+
+
+        //        if(isset($data['data'])) { 
+        //     // translate the JSON to an Object for use however you want  
+        //    $return_obj->setData(json_decode($data['data']));  
+        //}  
         return $return_obj;  
     }
 
@@ -58,7 +63,6 @@ class RestUtils
         {  
             // send the body  
             echo $body;  
-            debug($body);
             exit;  
         }  
         // we need to create the body if none is passed  

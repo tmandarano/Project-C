@@ -1,6 +1,6 @@
 <?php
-require_once('localhost/utils/restutils.php');
-require_once('localhost/utils/logging.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/localhost/utils/restutils.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/localhost/utils/logging.php');
 
 class PageError {
   public static function show($code, $url, $exception) {

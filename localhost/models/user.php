@@ -2,7 +2,7 @@
 class User
 {
 	public $id;
-	public $fullname;
+	public $username;
 	public $email;
 	public $password;
     public $date_of_birth;
@@ -20,14 +20,14 @@ class User
         $this->id = $id;
     }
 
-    public function getFullname()
+    public function getUsername()
     {
-        return $this->fullname;    	
+        return $this->username;    	
     }
     
-    public function setFullname($fullname)
+    public function setUsername($username)
 	{
-	    $this->fullname = $fullname;
+	    $this->username = $username;
 	}
 	
     public function setEmail($email)
@@ -75,7 +75,7 @@ class User
         return $this->date_added;
     }
     
-    public function setDateAdded($dateAdded)
+    public function setDateAdded($date_added)
     {
         $this->date_added = $date_added;
     }

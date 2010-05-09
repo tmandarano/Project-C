@@ -1,7 +1,7 @@
 <?php /* global settings for PHP when in Project C */
 
 // Enable Project C logging
-require_once('localhost/utils/logging.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/localhost/utils/logging.php');
 
 // Set timezone so apache doesn't complain about relying on server time.
 date_default_timezone_set('America/Los_Angeles');
