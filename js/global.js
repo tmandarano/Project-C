@@ -112,7 +112,7 @@ LGG.showSigninPrompt = function(jdom) {
       '<tr><th></th><td><input type="submit" value="Sign in"</td></tr>',
       '</table></form></div>'].join('')).appendTo(tabs);
   $(["<div id=\"tab2\">",
-     "<h1><strong>Step 1.</strong> Create an account using your Google Account or Facebook information.</h1>",
+     "<h1><strong>Step 1.</strong> Create an account using your Google or Facebook Account.</h1>",
      "<table class=\"auths\"><tr>",
      "<td><img src=\"/img/signup/connect_google.png\" /></td>",
      "<td><img src=\"http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>",

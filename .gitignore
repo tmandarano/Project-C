@@ -6,3 +6,4 @@ app/webroot/img/db/*
 empty
 #*#
 images/*.jpg
+special/smarty_pants/compiled/*
