@@ -80,8 +80,8 @@ LGG.showSigninPrompt = function(jdom) {
     self.width($('body').width()).height($('body').height());
   })()); })(dimmer);
   var tabs = $(["<div class=\"signinup\">",
-                "<ul><li><a href='#tab1'><span>Sign in</span></a></li>",
-                "<li><a href='#tab2'><span>Sign up</span></a></li>",
+                "<ul><li><a href='#tab1'><span>Sign up</span></a></li>",
+                "<li><a href='#tab2'><span>Sign in</span></a></li>",
                 "</ul>",
                 "</div>"].join(''))
     .css({'margin': 'auto', 'background-color': 'white',
@@ -93,25 +93,7 @@ LGG.showSigninPrompt = function(jdom) {
   var close = $('<img src="/img/button_close.png" />').appendTo(tabs)
     .css({"position": "absolute", "top": "-24px",
           "right": "-24px", "cursor": "pointer"});
-  var form = $([
-    '<div id="tab1">',
-    '<table class="auths">',
-      '<tr>',
-        "<td><img src=\"/img/signup/connect_google.png\" /></td>",
-        "<td><img src=\"http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>",
-      '</tr>',
-    '</table>',
-    '<form id="SigninForm" method="post" action="/users/login">',
-    '<table>',
-      '<tr><th>Email</th>',
-      '<td><input type="text" name="data[User][email]" id="UserEmail" /></td>',
-      '</tr>',
-      '<tr><th>Password</th>',
-      '<td><input type="password" name="data[User][password]" id="UserPassword" /></td>',
-      '</tr>',
-      '<tr><th></th><td><input type="submit" value="Sign in"</td></tr>',
-      '</table></form></div>'].join('')).appendTo(tabs);
-  $(["<div id=\"tab2\">",
+  $(["<div id=\"tab1\">",
      "<h1><strong>Step 1.</strong> Create an account using your Google or Facebook Account.</h1>",
      "<table class=\"auths\"><tr>",
      "<td><img src=\"/img/signup/connect_google.png\" /></td>",
@@ -143,12 +125,30 @@ LGG.showSigninPrompt = function(jdom) {
      "<input type=\"image\" src=\"/img/signup/create.png\" />",
      "</form>",
      "</div>"].join('')).appendTo(tabs);
+  var form = $([
+    '<div id="tab2">',
+    '<table class="auths">',
+      '<tr>',
+        "<td><img src=\"/img/signup/connect_google.png\" /></td>",
+        "<td><img src=\"http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>",
+      '</tr>',
+    '</table>',
+    '<form id="SigninForm" method="post" action="/users/login">',
+    '<table>',
+      '<tr><th>Email</th>',
+      '<td><input type="text" name="data[User][email]" id="UserEmail" /></td>',
+      '</tr>',
+      '<tr><th>Password</th>',
+      '<td><input type="password" name="data[User][password]" id="UserPassword" /></td>',
+      '</tr>',
+      '<tr><th></th><td><input type="submit" value="Sign in"</td></tr>',
+      '</table></form></div>'].join('')).appendTo(tabs);
   $(".birthday", tabs).datepicker({maxDate: "-13y", changeMonth: true,
                                    changeYear: true});
   if (jdom.hasClass('up')) {
-    tabs.tabs({selected: 1});
+    tabs.tabs({selected: 0});
   } else {
-    tabs.tabs();
+    tabs.tabs({selected: 1});
   }
   $('ul', tabs).removeClass('ui-corner-all').addClass('ui-corner-top');
   $('#UserEmail', form).focus();
