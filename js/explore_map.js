@@ -1,6 +1,6 @@
-var PROJC = PROJC ? PROJC : {};
-PROJC.pics = [];
-PROJC.picMarker = function(pic) {
+var LG = LG ? LG : {};
+LG.pics = [];
+LG.picMarker = function(pic) {
   var markerOpts = {
     title: pic.User.name+': '+pic.caption,
     position: new google.maps.LatLng(pic.lat, pic.lng),
@@ -10,13 +10,13 @@ PROJC.picMarker = function(pic) {
   }
   return new google.maps.Marker(markerOpts);
 };
-PROJC.mapAddPic = function(map, pic) {
-  var marker = PROJC.picMarker(pic);
+LG.mapAddPic = function(map, pic) {
+  var marker = LG.picMarker(pic);
   marker.setMap(map);
   google.maps.event.addListener(marker, 'click', function() {
     viewpic(pic.id);
   });
-  PROJC.pics.push(marker);
+  LG.pics.push(marker);
 };
 
 var map;
@@ -33,14 +33,14 @@ $(function () {
   
   map = new google.maps.Map(document.getElementById("map_explore"), mapOpts);
 
-  PROJC.mapAddPic(map, {
+  LG.mapAddPic(map, {
     id:'2',
     caption:'',
     lat:'34',
     lng:'-117',
     User:{name:'testuser!123'}
   });
-  PROJC.mapAddPic(map, {
+  LG.mapAddPic(map, {
     id:'3',
     caption:'',
     lat:'39',
