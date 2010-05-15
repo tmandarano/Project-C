@@ -10,7 +10,7 @@ class PhotoDAO {
         $photos = find_objects_by_sql($sql, null, 'Photo');
 
         foreach($photos as $photo) {
-            $comments = CommentDAO::get_comments_for_photo($photo->getId());
+            $comments = CommentDAO::get_comments_for_photo($photo->get_id());
             $photo->set_comments($comments);
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
@@ -41,7 +41,7 @@ class PhotoDAO {
         foreach($photos as $photo) {
             $comments = CommentDAO::get_comments(null, $photo->get_id());
             $photo->set_comments($comments);
-            $tags = TagDAO::get_tags(null, $photo->getId());            
+            $tags = TagDAO::get_tags(null, $photo->get_id());            
             $photo->set_tags($tags);
         }
         
