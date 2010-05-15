@@ -17,7 +17,7 @@ abstract class BaseController extends Smarty {
         return parent::fetch('base.tpl');
     }
 
-    function untemplatedFetch($template) {
+    function untemplated_fetch($template) {
         return parent::fetch($template);
     }
 

@@ -19,8 +19,7 @@ function configure() {
     option('IMAGES_DIR', $_SERVER['DOCUMENT_ROOT'].'/images/');
 }
 
-
-dispatch        ('/',          'home');
+/* REST routes */
 dispatch_get    ('/users/',    'users_get');
 dispatch_get    ('/users/:id', 'users_get_by_id');
 dispatch_post   ('/users/',    'users_create');
@@ -28,6 +27,8 @@ dispatch_post   ('/sessions/', 'sessions_create');
 dispatch_get    ('/photos/',   'photos_get');
 dispatch_get    ('/photos/:id','photos_get_by_id');
 dispatch_post   ('/photos/',   'photos_create');
+
+dispatch        ('/',          'home');
 
 run();
 

@@ -13,100 +13,100 @@ class Photo {
 	public $data_added;
 	public $date_modified;
 	
-	public function getUserId() {
+	public function get_user_id() {
 		return $this->user_id;
 	}
 	
-    public function setUserId($user_id) {
+    public function set_user_id($user_id) {
         $this->user_id = $user_id;
     }
 
-	public function getId() {
+	public function get_id() {
 		return $this->id;
 	}
 	
-    public function setId($id) {
+    public function set_id($id) {
         $this->id = $id;
     }
 
-    public function getUrl() {
+    public function get_url() {
         return $this->url;    	
     }
     
-    public function setUrl($url) {
+    public function set_url($url) {
 	    $this->url = $url;
 	}
 	
-    public function getName() {
+    public function get_name() {
         return $this->name;      
     }
     
-    public function setName($name) {
+    public function set_name($name) {
         $this->name = $name;
     }
 	
-    public function setLatitude($latitude) {
+    public function set_latitude($latitude) {
 		$this->latitude = $latitude;
 	}
 
-    public function getLatitude() {
+    public function get_latitude() {
         return $this->latitude;
     }
 
-    public function setLongitude($longitude) {
+    public function set_longitude($longitude) {
 		$this->longitude = $longitude;
 	}
 
-    public function getLongitude() {
+    public function get_longitude() {
         return $this->longitude;
     }
 
-    public function setLocation($location) {
+    public function set_location($location) {
 		$this->location = $location;
 	}
 
-    public function getLocation() {
+    public function get_location() {
         return $this->location;
     }
 
-    public function setCaption($caption) {
+    public function set_caption($caption) {
         $this->caption = $caption;
     }
 
-    public function getCaption() {
+    public function get_caption() {
       return $this->caption;
     }
 
-    public function getTags() {
+    public function get_tags() {
         return $this->tags;
     }
     
-    public function setTags($tags) {
+    public function set_tags($tags) {
         $this->tags = $tags;
     }
 
-    public function getComments() {
+    public function get_comments() {
         return $this->comments;
     }
     
-    public function setComments($comments) {
+    public function set_comments($comments) {
         $this->comments = $comments;
     }
 
-    public function getDateAdded() {
+    public function get_date_added() {
         return $this->date_added;
     }
     
-    public function setDateAdded($dateAdded) {
+    public function set_date_added($date_added) {
         $this->date_added = $date_added;
     }
 
-    public function getDateModified() {
+    public function get_date_modified() {
         return $this->date_modified;
     }
     
-    public function setDateModified($dateModified) {
-        $this->date_modified = $dateModified;
+    public function set_date_modified($date_modified) {
+        $this->date_modified = $date_modified;
     }
 }
 ?>
