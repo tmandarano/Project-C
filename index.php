@@ -12,7 +12,7 @@ function configure() {
     option('env', $env);
     option('dsn', $dsn);
     option('db_conn', $db);
-    option('controllers_dir', 'localhost/controllers');
+    option('controllers_dir', 'src/controllers');
     option('debug', TRUE);
     option('session', 'LiveGather');
     option('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/special/uploads/');
