@@ -2,39 +2,39 @@
 class Tag {
 	public $id;
 	public $tag;
-    public $dataAdded;
-    public $dateModified;
+    public $data_added;
+    public $date_modified;
 	
-	public function getId() {
+	public function get_id() {
 		return $this->id;
 	}
 	
-    public function setId($id) {
+    public function set_id($id) {
         $this->id = $id;
     }
 	
-    public function getTag() {
+    public function get_tag() {
         return $this->tag;
     }
     
-    public function setTag($tag) {
+    public function set_tag($tag) {
 	    $this->tag = $tag;
 	}
 
-    public function getDateAdded() {
-        return $this->dateAdded;
+    public function get_date_added() {
+        return $this->date_added;
     }
     
-    public function setDateAdded($dateAdded) {
-        $this->dateAdded = $dateAdded;
+    public function set_date_added($date_added) {
+        $this->date_added = $date_added;
     }
 
-    public function getDateModified() {
-        return $this->dateModified;
+    public function get_date_modified() {
+        return $this->date_modified;
     }
     
-    public function setDateModified($dateModified) {
-        $this->dateModified = $dateModified;
+    public function set_date_modified($date_modified) {
+        $this->date_modified = $date_modified;
     }
 }
 ?>

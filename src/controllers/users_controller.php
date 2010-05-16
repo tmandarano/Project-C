@@ -4,29 +4,29 @@ require_once('src/dao/user_dao.php');
 require_once('src/utils/helpers.php'); 
 
 function users_get() {
-    $users = UserDAO::getUsers();
+    $users = UserDAO::get_users();
     return html(json($users));
 }
 
 function users_get_by_id() {
     $user_id = filter_var(params('id'));
-    $users = UserDAO::getUsersById($user_id);
+    $users = UserDAO::get_users_by_id($user_id);
     return html(json($users));
 }
 	
 function users_create() {
-    $data = getJSONInput();
+    $data = get_json_input();
     
     $user = new User();
     
-    $user->setUsername($data['username']);
-    $user->setEmail($data['email']);
-    $user->setPassword(md5($data['password']));
-    $user->setDateOfBirth($data['date_of_birth']);
-    $user->setLocation($data['location']);
+    $user->set_username($data['username']);
+    $user->set_email($data['email']);
+    $user->set_password(md5($data['password']));
+    $user->set_date_of_birth($data['date_of_birth']);
+    $user->set_location($data['location']);
     
     $returned_id = UserDAO::save($user);
-    $user->setId($returned_id);
+    $user->set_id($returned_id);
     
     return html(json($user));
 }

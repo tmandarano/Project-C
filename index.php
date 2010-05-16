@@ -27,39 +27,41 @@ function configure() {
   option('IMAGES_DIR', $_SERVER['DOCUMENT_ROOT'].'/images/');
 }
 
-dispatch        ('/',               'home');
-dispatch        ('/getapp',         'getapp');
-dispatch        ('/download',       'getapp');
+dispatch        ('/',                     'home');
+dispatch        ('/getapp',               'getapp');
+dispatch        ('/download',             'getapp');
 
-dispatch        ('/about/contact',  'about_contact');
-dispatch        ('/about/faq',      'about_faq');
+dispatch        ('/about/contact',        'about_contact');
+dispatch        ('/about/faq',            'about_faq');
 
-dispatch        ('/explore/map',    'explore_map');
-dispatch        ('/explore/photos', 'explore_photos');
-//dispatch        ('/explore/people', 'explore_people');
+dispatch        ('/explore/map',          'explore_map');
+dispatch        ('/explore/photos',       'explore_photos');
+//dispatch        ('/explore/people',       'explore_people');
 
-dispatch        ('/share/upload',   'share_upload');
-dispatch        ('/share/mobile',   'share_mobile');
-dispatch        ('/share/webcam',   'share_webcam');
+dispatch        ('/share/upload',         'share_upload');
+dispatch        ('/share/mobile',         'share_mobile');
+dispatch        ('/share/webcam',         'share_webcam');
 
-dispatch        ('/photos/view/:id', 'photos_view_by_id');
+dispatch        ('/photos/view/:id',      'photos_view_by_id');
 
-dispatch        ('/photo/:id',       'photo');
-dispatch        ('/photo/:id/:size', 'photo_by_size');
+dispatch        ('/photo/:id',            'photo');
+dispatch        ('/photo/:id/:size',      'photo_by_size');
 
-dispatch        ('/profile/:id',     'profile');
-dispatch        ('/settings',       'settings');
+dispatch        ('/profile/:id',          'profile');
+dispatch        ('/settings',             'settings');
 
-dispatch_get    ('/users/',         'users_get');
-dispatch_get    ('/users/:id',      'users_get_by_id');
-dispatch_post   ('/users/',         'users_create');
+/* REST routes */
 
-dispatch_post   ('/sessions/',      'sessions_create');
+dispatch_get    ('/users/',               'users_get');
+dispatch_get    ('/users/:id',            'users_get_by_id');
+dispatch_post   ('/users/',               'users_create');
 
-dispatch_get    ('/photos/',        'photos_get');
-dispatch_get    ('/photos/:id',     'photos_get_by_id');
+dispatch_post   ('/sessions/',            'sessions_create');
+
+dispatch_get    ('/photos/',              'photos_get');
+dispatch_get    ('/photos/:id',           'photos_get_by_id');
 dispatch_get    ('/photos/recent/:limit', 'photos_recent');
-dispatch_post   ('/photos/',        'photos_create');
+dispatch_post   ('/photos/',              'photos_create');
 
 run();
 

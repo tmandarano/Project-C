@@ -9,68 +9,68 @@ class User {
 	public $date_added;
 	public $date_modified;
 	
-	public function getId() {
+	public function get_id() {
 		return $this->id;
 	}
 	
-    public function setId($id) {
+    public function set_id($id) {
         $this->id = $id;
     }
 
-    public function getUsername() {
+    public function get_username() {
         return $this->username;    	
     }
     
-    public function setUsername($username) {
+    public function set_username($username) {
 	    $this->username = $username;
 	}
 	
-    public function setEmail($email) {
+    public function set_email($email) {
 		$this->email = $email;
 	}
 
-    public function getEmail() {
+    public function get_email() {
         return $this->email;
     }
 
-    public function getPassword() {
+    public function get_password() {
         return $this->password;
     }
     
-    public function setPassword($password) {
+    public function set_password($password) {
         $this->password = $password;
     }
 
-    public function getDateOfBirth() {
+    public function get_date_of_birth() {
         return $this->date_of_birth;
     }
     
-    public function setDateOfBirth($date_of_birth) {
+    public function set_date_of_birth($date_of_birth) {
         $this->date_of_birth = $date_of_birth;
     }
 
-    public function getLocation() {
+    public function get_location() {
         return $this->location;
     }
     
-    public function setLocation($location) {
+    public function set_location($location) {
         $this->location = $location;
     }
 
-    public function getDateAdded() {
+    public function get_date_added() {
         return $this->date_added;
     }
     
-    public function setDateAdded($date_added) {
+    public function set_date_added($date_added) {
         $this->date_added = $date_added;
     }
 
-    public function getDateModified() {
+    public function get_date_modified() {
         return $this->date_modified;
     }
     
-    public function setDateModified($dateModified) {
-        $this->date_modified = $dateModified;
+    public function set_date_modified($date_modified) {
+        $this->date_modified = $date_modified;
     }
 }
 ?>

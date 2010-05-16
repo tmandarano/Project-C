@@ -1,9 +1,9 @@
 <?php
-function toString($msg) {
+function to_string($msg) {
   if (is_array($msg)) {
     $str = '[';
     foreach ($msg as $key => $value) {
-      $str .= "'".$key."': ".toString($value).', ';
+      $str .= "'".$key."': ".to_string($value).', ';
     }
     return ($str.substr(0, -2)).']';
   } else {
@@ -16,7 +16,7 @@ function debug($msg) {
     $code_line = $call_info['line'];
     $file = array_pop( explode('/', $call_info['file']));
 
-    $msg = "DEBUG on line ".$code_line." of ".$file.": '".toString($msg)."'";
+    $msg = "DEBUG on line ".$code_line." of ".$file.": '".to_string($msg)."'";
     error_log($msg);
 }
 ?>

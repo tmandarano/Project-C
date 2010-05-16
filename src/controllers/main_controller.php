@@ -1,6 +1,6 @@
 <?php
 /* Viscous represents the semi-dynamic, semi-static nature of these pages. */
-require_once('baseController.php');
+require_once('base_controller.php');
 
 function home() {
     $template = new BaseController();

@@ -4,27 +4,27 @@ class Session {
 	public $email;
 	public $password;
 	
-	public function getId() {
+	public function get_id() {
 		return $this->id;
 	}
 	
-    public function setId($id) {
+    public function set_id($id) {
         $this->id = $id;
     }
 
-    public function setEmail($email) {
+    public function set_email($email) {
 		$this->email = $email;
 	}
 
-    public function getEmail() {
+    public function get_email() {
         return $this->email;
     }
 
-    public function getPassword() {
+    public function get_password() {
         return $this->password;
     }
     
-    public function setPassword($password) {
+    public function set_password($password) {
         $this->password = $password;
     }
 }

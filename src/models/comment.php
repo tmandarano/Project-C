@@ -5,35 +5,35 @@ class Comment {
     public $data_added;
     public $date_modified;
 	
-	public function getId() {
+	public function get_id() {
 		return $this->id;
 	}
 	
-    public function setId($id) {
+    public function set_id($id) {
         $this->id = $id;
     }
 	
-    public function getComment() {
+    public function get_comment() {
         return $this->comment;
     }
     
-    public function setComment($comment) {
+    public function set_comment($comment) {
 	    $this->comment = $comment;
 	}
 
-    public function getDateAdded() {
+    public function get_date_added() {
         return $this->date_added;
     }
     
-    public function setDateAdded($date_added) {
+    public function set_date_added($date_added) {
         $this->date_added = $date_added;
     }
 
-    public function getDateModified() {
+    public function get_date_modified() {
         return $this->date_modified;
     }
     
-    public function setDateModified($date_modified) {
+    public function set_date_modified($date_modified) {
         $this->date_modified = $date_modified;
     }
 }
