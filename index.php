@@ -15,18 +15,23 @@ function configure() {
     option('controllers_dir', 'src/controllers');
     option('debug', TRUE);
     option('session', 'LiveGather');
+    option('system_username', 'projc');
+    option('system_password', 'pr0j(');
     option('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/special/uploads/');
     option('IMAGES_DIR', $_SERVER['DOCUMENT_ROOT'].'/images/');
 }
 
 /* REST routes */
-dispatch_get    ('/users/',    'users_get');
-dispatch_get    ('/users/:id', 'users_get_by_id');
-dispatch_post   ('/users/',    'users_create');
-dispatch_post   ('/sessions/', 'sessions_create');
-dispatch_get    ('/photos/',   'photos_get');
-dispatch_get    ('/photos/:id','photos_get_by_id');
-dispatch_post   ('/photos/',   'photos_create');
+dispatch_get    ('/users/',                           'users_get');
+dispatch_get    ('/users/:id',                        'users_get_by_id');
+dispatch_get    ('/users/:id/photos/',                'photos_get_by_user_id');
+dispatch_get    ('/users/:id/photos/days/:days',      'photos_get_by_user_id_recent');
+dispatch_post   ('/users/',                           'users_create');
+dispatch_post   ('/sessions/',                        'sessions_create');
+dispatch_get    ('/photos/',                          'photos_get');
+dispatch_get    ('/photos/:id',                       'photos_get_by_id');
+dispatch_get    ('/photos/:id/user/',                 'users_get_by_photo_id');
+dispatch_post   ('/photos/',                          'photos_create');
 
 dispatch        ('/',          'home');
 

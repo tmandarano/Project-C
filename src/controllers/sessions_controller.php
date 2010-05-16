@@ -22,7 +22,7 @@ function sessions_create() {
         return html(json($user));
     }
     else {
-        return error_default_handler(401);
+        return error_default_handler(401, "", "", "");
     }
 }
 

@@ -1,3 +1,4 @@
+\
 <?php
 require_once('src/models/user.php');
 
@@ -13,7 +14,15 @@ class UserDAO {
         $users = find_objects_by_sql($sql, array(':id'=>$id), 'User');
 
         $user = $users[0];
-        return $users;
+        return $user;
+    }
+
+    public static function get_user_by_photo_id($photo_id) {
+        $sql = 'SELECT * FROM user u join user_photos up on u.id = up.user_id WHERE photo_id = :photo_id';
+        $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id), 'User');
+
+        $user = $users[0];
+        return $user;
     }
 
     public static function get_user_by_standard_auth($username, $password) {

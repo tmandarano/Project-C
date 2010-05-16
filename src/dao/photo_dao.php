@@ -34,6 +34,29 @@ class PhotoDAO {
         return $photos;
     }
 
+    public static function get_photos_by_user_id($user_id) {
+        $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
+        $sql .= 'WHERE up.user_id = :user_id';
+
+        $params = array('user_id'=>$user_id);
+
+        $photos = find_objects_by_sql($sql, $params, 'Photo');
+
+        return $photos;
+    }
+
+    public static function get_photos_by_user_id_recent($user_id, $days) {
+        $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
+        $sql .= 'WHERE up.user_id = :user_id ';
+        $sql .= 'AND p.date_added > DATE_SUB(NOW(), INTERVAL :days DAY)';
+
+        $params = array('user_id'=>$user_id, 'days'=>$days);
+
+        $photos = find_objects_by_sql($sql, $params, 'Photo');
+
+        return $photos;
+    }
+
     public static function get_recent_photos($limit = 10) {
         $sql = 'SELECT * FROM photo ORDER BY date_added DESC LIMIT :limit';
         $photos = find_objects_by_sql($sql, NULL, 'Photo');
