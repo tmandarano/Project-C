@@ -72,7 +72,7 @@ function save_photo($photo) {
 
 function photos_recent() {
     $limit = intval(filter_var(params('limit'), FILTER_VALIDATE_INT));
-    return json(PhotoDao::getRecentPhotos($limit));
+    return json(PhotoDao::get_recent_photos($limit));
 }
 
 ?>

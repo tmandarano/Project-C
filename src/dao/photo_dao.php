@@ -27,8 +27,8 @@ class PhotoDAO {
             $comments = CommentDAO::get_comments_for_photo($photo->get_id());
             $photo->set_comments($comments);
 
-            $tags = TagDAO::get_tags_for_photo($photo->getId());            
-            $photo->setTags($tags);
+            $tags = TagDAO::get_tags_for_photo($photo->get_id());            
+            $photo->set_tags($tags);
         }
 
         return $photos;
