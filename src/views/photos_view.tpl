@@ -14,16 +14,16 @@
       <div class="prevnext">
         <a href="/photos/view/{$prevPhotoId}">
           <img src="/img/prevnext/prev.png" />
-          <img class="thumb" src="/photos/{$prevPhotoId}/2" />
+          <img class="thumb" src="/photo/{$prevPhotoId}/2" />
         </a>
         <a href="/photos/view/{$nextPhotoId}">
-          <img class="thumb" src="/photos/{$nextPhotoId}/2" />
+          <img class="thumb" src="/photo/{$nextPhotoId}/2" />
           <img src="/img/prevnext/next.png" />
         </a>
       </div>
     </div>
     <div class="the_image">
-      <img id="the_image" class="s3" src="/photos/{$photo.id}/3" />
+      <img id="the_image" class="s3" src="/photo/{$photo.id}/3" />
     </div>
     <div class="tags">
       <h1>tags:</h1>
@@ -66,13 +66,13 @@
       <h1 class="bichrome"><em>Recent</em> photos nearby.</h1>
       <ul class="collage">
         {foreach from=$nearbyPhotos item=photo}
-          <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/0" title="{$photo.caption}" /></a></li>
+          <li><a href="/photos/view/{$photo.id}"><img src="/photo/{$photo.id}/0" title="{$photo.caption}" /></a></li>
         {/foreach}
       </ul>
       <h1 class="bichrome"><em>Similar</em> photos.</h1>
       <ul class="collage">
         {foreach from=$similarPhotos item=photo}
-          <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/0" title="{$photo.caption}" /></a></li>
+          <li><a href="/photos/view/{$photo.id}"><img src="/photo/{$photo.id}/0" title="{$photo.caption}" /></a></li>
         {/foreach}
       </ul>
       <h1 class="bichrome"><em>Location</em>.</h1>

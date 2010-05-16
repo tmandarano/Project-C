@@ -36,15 +36,15 @@ class PhotoDAO {
 
     public static function getRecentPhotos($limit = 10) {
         $sql = 'SELECT * FROM photo ORDER BY date_added DESC LIMIT :limit';
-        $photos = find_objects_by_sql($sql, NULL, 'Photo');
-        
+        $photos = find_objects_by_sql($sql, array(':limit' => $limit), 'Photo');
+
         foreach($photos as $photo) {
-            $comments = CommentDAO::getComments(null, $photo->getId());
+            $comments = CommentDAO::getCommentsForPhoto($photo->getId());
             $photo->setComments($comments);
-            $tags = TagDAO::getTags(null, $photo->getId());            
+            $tags = TagDAO::getTagsForPhoto($photo->getId());
             $photo->setTags($tags);
         }
-        
+
         return $photos;
     }
     
@@ -64,7 +64,8 @@ class PhotoDAO {
             $photo_comment->photo_id = $photo_id;
             $photo_comment->comment_id = $comment_id;
 
-            create_object($photo_comment, 'photo_comments', array('photo_id', 'comment_id'));
+            create_object($photo_comment, 'photo_comments',
+                          array('photo_id', 'comment_id'));
         }
 
         foreach($photo->getTags() as $tag) {
@@ -91,7 +92,8 @@ class PhotoDAO {
     }
 
     private static function photo_columns() {
-        return array('id', 'url', 'latitude', 'longitude', 'location', 'caption', 'date_added', 'date_modified');
+        return array('id', 'url', 'latitude', 'longitude', 'location',
+                     'caption', 'date_added', 'date_modified');
     }
 }
 ?>

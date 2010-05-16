@@ -1,16 +1,10 @@
 <?php
+/* Viscous represents the semi-dynamic, semi-static nature of these pages. */
 require_once('baseController.php');
 
 function home() {
-    $test = new ViscousController();
-    return html($test->home());
-}
-
-/* Viscous represents the semi-dynamic, semi-static nature of these pages. */
-class ViscousController extends baseController {       
-  /* Home pages */
-  public function home() {
-    if ($user) { // TODO This needs to be auth
+    $template = new BaseController();
+    if ($user) { // TODO template needs to be auth
     //if (true) {
       $streamPhotos = array(451, 452, 453);
       $socialStream = array(
@@ -39,48 +33,52 @@ class ViscousController extends baseController {
         array('id'=>1), array('id'=>2), array('id'=>3),
         array('id'=>2), array('id'=>3), array('id'=>1), array('id'=>2)
       );
-      $this->assign('title', '');
-      $this->assign('class', 'livestreams');
-      $this->assign('stream', $streamPhotos);
-      $this->assign('social', $socialStream);
-      $this->assign('suggestedPhotos', $suggestedPhotos);
-      $this->assign('suggestedPeople', $suggestedPeople);
-      echo 'hey';
-      return html($this->fetch('live_streams.tpl'));
+      $template->assign('title', '');
+      $template->assign('class', 'livestreams');
+      $template->assign('stream', $streamPhotos);
+      $template->assign('social', $socialStream);
+      $template->assign('suggestedPhotos', $suggestedPhotos);
+      $template->assign('suggestedPeople', $suggestedPeople);
+      return html($template->fetch('live_streams.tpl'));
     } else {
-      $this->assign('title', '');
-      $this->assign('class', 'home out');
-      return html($this->fetch('home.tpl'));
+      $template->assign('title', '');
+      $template->assign('class', 'home out');
+      return html($template->fetch('home.tpl'));
     }
-  }
+}
 
-  public function getapp() {
-    $this->assign('title', 'Download App');
-    $this->assign('class', 'getapp');
-    RestUtils::sendResponse(200, $this->fetch('getapp.tpl'));
-  }
-      
-  /* About pages */
-  public function about_contact() {
-    $this->assign('title', 'Contact | About');
-    $this->assign('class', 'about contact');
-    RestUtils::sendResponse(200, $this->fetch('about_contact.tpl'));
-  }
-      
-  public function about_faq() {
-    $this->assign('title', 'FAQ | About');
-    $this->assign('class', 'about faq');
-    RestUtils::sendResponse(200, $this->fetch('about_faq.tpl'));
-  }
+function getapp() {
+    $template = new BaseController();
+    $template->assign('title', 'Download App');
+    $template->assign('class', 'getapp');
+    return html($template->fetch('getapp.tpl'));
+}
 
-  /* Explore pages */
-  public function explore_map() {
-    $this->assign('title', 'Map | Explore');
-    $this->assign('class', 'explore map');
-    RestUtils::sendResponse(200, $this->fetch('explore_map.tpl'));
-  }
+/* About pages */
+function about_contact() {
+    $template = new BaseController();
+    $template->assign('title', 'Contact | About');
+    $template->assign('class', 'about contact');
+    return html($template->fetch('about_contact.tpl'));
+}
+    
+function about_faq() {
+    $template = new BaseController();
+    $template->assign('title', 'FAQ | About');
+    $template->assign('class', 'about faq');
+    return html($template->fetch('about_faq.tpl'));
+}
 
-  public function explore_photos() {
+/* Explore pages */
+function explore_map() {
+    $template = new BaseController();
+    $template->assign('title', 'Map | Explore');
+    $template->assign('class', 'explore map');
+    return html($template->fetch('explore_map.tpl'));
+}
+
+function explore_photos() {
+    $template = new BaseController();
     $popCities = array('San Diego', 'Seattle', 'New York', 'Los Angeles', 'Miami');
     $trending = array('party', 'baseball', 'seahawks', 'car', 'funny', 'happy');
     $suggestedPhotos = array(
@@ -93,58 +91,46 @@ class ViscousController extends baseController {
       array('id'=>1), array('id'=>2), array('id'=>3),
       array('id'=>2), array('id'=>3), array('id'=>2), array('id'=>3)
     );
-    $this->assign('popCities', $popCities);
-    $this->assign('trending', $trending);
-    $this->assign('suggestedPhotos', $suggestedPhotos);
-    $this->assign('suggestedPeople', $suggestedPeople);
-    $this->assign('title', 'Photos | Explore');
-    $this->assign('class', 'explore photos');
-    RestUtils::sendResponse(200, $this->fetch('explore_photos.tpl'));
-  }
+    $template->assign('popCities', $popCities);
+    $template->assign('trending', $trending);
+    $template->assign('suggestedPhotos', $suggestedPhotos);
+    $template->assign('suggestedPeople', $suggestedPeople);
+    $template->assign('title', 'Photos | Explore');
+    $template->assign('class', 'explore photos');
+    return html($template->fetch('explore_photos.tpl'));
+}
 
-  public function explore_people() {
-    $this->assign('title', 'People | Explore');
-    $this->assign('class', 'explore people');
-    RestUtils::sendResponse(200, $this->fetch('explore_people.tpl'));
-  }
+//function explore_people() {
+//  $template = new BaseController();
+//  $template->assign('title', 'People | Explore');
+//  $template->assign('class', 'explore people');
+//  return html($template->fetch('explore_people.tpl'));
+//}
 
-  /* Share pages */
-  public function share_index() {
-    $this->assign('title', 'Share');
-    $this->assign('class', 'share index');
-    RestUtils::sendResponse(200, $this->fetch('share_index.tpl'));
-  }
+/* Share pages */
+function share_upload() {
+    $template = new BaseController();
+    $template->assign('title', 'Upload | Share');
+    $template->assign('class', 'share upload');
+    return html($template->fetch('share_upload.tpl'));
+}
 
-  public function share_upload() {
-    $this->assign('title', 'Upload | Share');
-    $this->assign('class', 'share upload');
-    RestUtils::sendResponse(200, $this->fetch('share_upload.tpl'));
-  }
+function share_mobile() {
+    $template = new BaseController();
+    $template->assign('title', 'Mobile | Share');
+    $template->assign('class', 'share mobile');
+    return html($template->fetch('share_mobile.tpl'));
+}
 
-  public function share_mobile() {
-    $this->assign('title', 'Mobile | Share');
-    $this->assign('class', 'share mobile');
-    RestUtils::sendResponse(200, $this->fetch('share_mobile.tpl'));
-  }
+function share_webcam() {
+    $template = new BaseController();
+    $template->assign('title', 'Webcam | Share');
+    $template->assign('class', 'share webcam');
+    return html($template->fetch('share_webcam.tpl'));
+}
 
-  public function share_webcam() {
-    $this->assign('title', 'Webcam | Share');
-    $this->assign('class', 'share webcam');
-    RestUtils::sendResponse(200, $this->fetch('share_webcam.tpl'));
-  }
-
-  /* Users pages */
-  public function signup() {
-    $this->assign('title', 'Sign up');
-    $this->assign('class', 'users add'); // TODO change to match route
-    RestUtils::sendResponse(200, $this->fetch('signup.tpl'));
-  }
-
-  public function find_people() {
-    RestUtils::sendResponse(503, "I don't know how to find unknown people yet.");
-  }
-
-  public function profile() {
+function profile() {
+    $template = new BaseController();
     // TODO get the proper user's profile data
     $user = array('name' => 'Tony Mandarano',
       'location' => 'Seattle, WA',
@@ -166,41 +152,48 @@ class ViscousController extends baseController {
     $mostRecent = array('id' => 451, 'caption' => 'Just getting to the party! Hope to have some fun watching the Seahawks', 'datetime' => '30 seconds ago', 'location' => 'Mercer Island, WA', 'lat' => 47.571, 'lng' => -122.221, 'tags' => array(array('id' => 1, 'tag' => 'party'), array('id' => 2, 'tag' => 'seahawks')), 'comments' => array());
     $recentPhotos = array(452, 453, 451);
 
-    $this->assign('user', $user);
-    $this->assign('similarPeople', $similarPeople);
-    $this->assign('tags', $tags);
-    $this->assign('mostRecent', $mostRecent);
-    $this->assign('recentPhotos', $recentPhotos);
-    $this->assign('title', $user['name']);
-    $this->assign('class', 'profile');
-    RestUtils::sendResponse(200, $this->fetch('users_profile.tpl'));
-  }
+    $template->assign('user', $user);
+    $template->assign('similarPeople', $similarPeople);
+    $template->assign('tags', $tags);
+    $template->assign('mostRecent', $mostRecent);
+    $template->assign('recentPhotos', $recentPhotos);
+    $template->assign('title', $user['name']);
+    $template->assign('class', 'profile');
+    return html($template->fetch('users_profile.tpl'));
+}
 
-  public function settings() {
-    $this->assign('title', 'Settings');
-    $this->assign('class', 'users settings'); // TODO change to match route
-    RestUtils::sendResponse(200, $this->fetch('settings.tpl'));
-  }
+function settings() {
+    $template = new BaseController();
+    $template->assign('title', 'Settings');
+    $template->assign('class', 'users settings'); // TODO change to match route
+    return html($template->fetch('settings.tpl'));
+}
 
-  /* Photos pages */
-  public function photo($vars) {
-    switch ($vars[':size']) {
+/* Photos pages */
+function photo_by_size() {
+    switch (params('size')) {
     case 0: header('Location: /img/30x30.jpg'); exit;
     case 1: header('Location: /img/50x50.jpg'); exit;
     case 2: header('Location: /img/50x50.jpg'); exit;
     case 3: header('Location: /img/270x270.jpg'); exit;
     case 'o': header('Location: /img/270x270.jpg'); exit;
     }
-  }
+}
+function photo() {
+    params('size', 'o');
+    return photo_by_size();
+}
 
-  public function photos_view() {
+function photos_view_by_id() {
+    $template = new BaseController();
     // TODO get photo data and related photo data.
     $user = array('id' => 1, 'name' => 'jonnyApple', 'location' => 'San Diego, CA',
                   'datetime' => '33 minutes ago');
     $photo = array('id' => 453, 'location' => 'San Diego, CA',
       'datetime' => '33 minutes ago',
       'caption' => 'Chillin out and watching some TV',
-      'tags' => array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6, 'concert' => 8, 'fishing' => 6));
+      'tags' => array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6,
+                      'concert' => 8, 'fishing' => 6));
     $nearbyPhotos = array(
       array('id'=>1), array('id'=>2), array('id'=>3),
       array('id'=>1), array('id'=>2), array('id'=>3),
@@ -213,15 +206,15 @@ class ViscousController extends baseController {
     );
     $prevPhotoId = 453;
     $nextPhotoId = 453;
-    $this->assign('user', $user);
-    $this->assign('photo', $photo);
-    $this->assign('nearbyPhotos', $nearbyPhotos);
-    $this->assign('similarPhotos', $similarPhotos);
-    $this->assign('prevPhotoId', $prevPhotoId);
-    $this->assign('nextPhotoId', $nextPhotoId);
-    $this->assign('title', 'Photo');
-    $this->assign('class', 'photos view');
-    RestUtils::sendResponse(200, $this->fetch('photos_view.tpl'));
-  }
+    $template->assign('user', $user);
+    $template->assign('photo', $photo);
+    $template->assign('nearbyPhotos', $nearbyPhotos);
+    $template->assign('similarPhotos', $similarPhotos);
+    $template->assign('prevPhotoId', $prevPhotoId);
+    $template->assign('nextPhotoId', $nextPhotoId);
+    $template->assign('title', 'Photo');
+    $template->assign('class', 'photos view');
+    return html($template->fetch('photos_view.tpl'));
 }
+
 ?>

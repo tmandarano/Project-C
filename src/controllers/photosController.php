@@ -5,12 +5,12 @@ require_once('src/utils/helpers.php');
 
 function photos_get() {
     $photos = PhotoDao::getPhotos();
-    return html(json($photos));
+    return json($photos);
 }
 
 function photos_get_by_id() {
     $photos = PhotoDao::getPhotoById(filter_var(params('id')));
-    return html(json($photos));
+    return json($photos);
 }
 
 function photos_create() {
@@ -53,7 +53,7 @@ function photos_create() {
     $photo->setId($returned_id);
     savePhoto($photo);
 
-    return html(json($photo));
+    return json($photo);
 }
 
 function savePhoto($photo) {
@@ -68,6 +68,11 @@ function savePhoto($photo) {
 
     unlink($upload_path);
     PhotoDAO::update($photo);
+}
+
+function photos_recent() {
+    $limit = intval(filter_var(params('limit'), FILTER_VALIDATE_INT));
+    return json(PhotoDao::getRecentPhotos($limit));
 }
 
 ?>
