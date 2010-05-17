@@ -64,8 +64,8 @@ define('E_LIM_PHP',             65536);
 define('E_LIM_DEPRECATED',      35000);
 define('NOT_FOUND',             404);
 define('SERVER_ERROR',          500);
-define('ENV_PRODUCTION',        10);
-define('ENV_DEVELOPMENT',       100);
+define('ENV_PRODUCTION',        'www.livegather.com');
+define('ENV_DEVELOPMENT',       'localhost');
 define('X-SENDFILE',            10);
 define('X-LIGHTTPD-SEND-FILE',  20);
 
