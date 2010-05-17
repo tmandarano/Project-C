@@ -1,11 +1,12 @@
-\
 <?php
 require_once('src/models/user.php');
+require_once('src/utils/logging.php');
 
 class UserDAO {
     public static function get_users() {
         $sql = 'SELECT * FROM user';
         $users = find_objects_by_sql($sql, null, 'User');
+        
         return $users;
     }
 

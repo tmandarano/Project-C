@@ -16,8 +16,7 @@ function sessions_create() {
     if(!is_null($users) && count($users) > 0) {
         $user = $users[0];
         session_start();
-        $_SESSION['username'] = $user->get_username();
-        $_SESSION['email'] = $user->get_email();
+        $_SESSION['user'] = $user;
 
         return html(json($user));
     }

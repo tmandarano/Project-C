@@ -4,8 +4,7 @@ require_once('lib/limonade.php');
 
 function configure() {
     $env = ($_SERVER['HTTP_HOST'] == 'dev.livegather.com') ? ENV_PRODUCTION : ENV_DEVELOPMENT;
-    $env = ENV_PRODUCTION; // OVERRIDE FOR TESTING.
-
+    //    $env = ENV_PRODUCTION; // OVERRIDE FOR TESTING.
     $dsn = ($env == ENV_PRODUCTION) ?
         'mysql:dbname=livegather;host=db.livegather.com' :
         'mysql:dbname=projectc;host=localhost';
