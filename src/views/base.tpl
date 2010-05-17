@@ -30,9 +30,6 @@ function markSel($name, $env) {
     <li{php}markSel('Photos', $title){/php}>
       <a href="/explore/photos"><strong>Explore</strong>Photos</a>
     </li> 
-    <li{php}markSel('People', $title){/php}>
-      <a href="/explore/people"><strong>Explore</strong>People</a>
-    </li> 
     {if $user != null}
       <li{php} markSel('Profile', $title){/php}><a
       href="/profile/{$user.id}">{$user.name}</a></li> 
@@ -66,7 +63,6 @@ us to create an enjoyable experience.</p>
   <h1>Explore</h1>
   <ul>
   <li><a href="/explore/map">Map</a></li>
-  <li><a href="/explore/people">People</a></li>
   <li><a href="/explore/photos">Photos</a></li>
   </ul>
 </td>

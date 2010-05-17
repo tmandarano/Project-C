@@ -76,7 +76,7 @@ function photos_create() {
     $photo->set_id($returned_id);
     save_photo($photo);
 
-    return html(json($photo));
+    return json($photo);
 }
 
 function save_photo($photo) {
@@ -91,6 +91,11 @@ function save_photo($photo) {
 
     unlink($upload_path);
     PhotoDAO::update($photo);
+}
+
+function photos_recent() {
+    $limit = intval(filter_var(params('limit'), FILTER_VALIDATE_INT));
+    return json(PhotoDao::get_recent_photos($limit));
 }
 
 ?>

@@ -1,8 +1,9 @@
 <?php
 require_once('lib/smarty/libs/Smarty.class.php');
 
-/* BaseController extends Smarty to get the Smarty templating */
-abstract class BaseController extends Smarty {
+/* BaseController extends Smarty to get the Smarty templating with special 
+ * settings. */
+class BaseController extends Smarty {
     function __construct() {
         $this->Smarty();
         $this->template_dir = 'src/views/';
@@ -20,7 +21,5 @@ abstract class BaseController extends Smarty {
     function untemplated_fetch($template) {
         return parent::fetch($template);
     }
-
-
 }
 ?>
