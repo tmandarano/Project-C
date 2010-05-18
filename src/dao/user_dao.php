@@ -14,8 +14,12 @@ class UserDAO {
         $sql = 'SELECT * FROM user WHERE id = :id';
         $users = find_objects_by_sql($sql, array(':id'=>$id), 'User');
 
-        $user = $users[0];
-        return $user;
+	if($users && count($users) > 0) {
+	    $user = $users[0];
+            return $user;
+        } else {
+            return null;
+        }
     }
 
     public static function get_user_by_photo_id($photo_id) {
@@ -30,8 +34,12 @@ class UserDAO {
         $sql = 'SELECT * FROM user where username = :username and password = :password';
         $users = find_objects_by_sql($sql, array(':username'=>$username,':password'=>$password), 'User');
 
-        $user = $users[0];
-        return $users;
+	if($users && count($users) > 0) {
+	    $user = $users[0];
+            return $user;
+        } else {
+            return null;	
+        }
     }
 
     public function save($user) {

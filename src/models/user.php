@@ -1,33 +1,33 @@
 <?php
 class User {
-	public $id;
-	public $username;
-	public $email;
-	public $password;
+    public $id;
+    public $username;
+    public $email;
+    public $password;
     public $date_of_birth;
     public $location;
-	public $date_added;
-	public $date_modified;
-	
-	public function get_id() {
-		return $this->id;
-	}
-	
+    public $date_added;
+    public $date_modified;
+    
+    public function get_id() {
+        return $this->id;
+    }
+    
     public function set_id($id) {
         $this->id = $id;
     }
 
     public function get_username() {
-        return $this->username;    	
+        return $this->username;        
     }
     
     public function set_username($username) {
-	    $this->username = $username;
-	}
-	
+        $this->username = $username;
+    }
+    
     public function set_email($email) {
-		$this->email = $email;
-	}
+        $this->email = $email;
+    }
 
     public function get_email() {
         return $this->email;

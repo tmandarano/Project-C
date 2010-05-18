@@ -6,7 +6,7 @@ require_once('src/utils/helpers.php');
 function home() {
     check_system_auth();
 
-    $user = $_SESSION['user'];
+    $user = (empty($_SESSION['user'])) ? 0 : $_SESSION['user'];
     $template = new BaseController();
     if ($user) { // TODO template needs to be auth
     //if (true) {

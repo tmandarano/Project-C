@@ -14,7 +14,7 @@ function users_get_by_id() {
     check_system_auth();
 
     $user_id = filter_var(params('id'));
-    $users = UserDAO::get_users_by_id($user_id);
+    $users = UserDAO::get_user_by_id($user_id);
     return html(json($users));
 }
 

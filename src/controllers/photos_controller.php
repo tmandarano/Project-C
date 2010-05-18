@@ -40,7 +40,11 @@ function photos_create() {
     $user = check_auth();
     
     $data = get_json_input();
-        
+
+    if(! $user) {
+	return array();	
+    }    
+
     $photo = new Photo();
     $photo->set_user_id($user->get_id());
     
@@ -64,7 +68,11 @@ function photos_create() {
         $comment->set_comment($comment_var);
         $comments[] = $comment;
     }
-
+ 
+    if(empty($data['userfile'])) {
+	halt(400, "", "");        
+    }
+ 
     $photo->set_caption($data['caption']);
     $photo->set_comments($comments);
     $photo->set_name($data['userfile']);
