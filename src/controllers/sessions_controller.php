@@ -11,10 +11,9 @@ function sessions_create() {
         $password = md5($password);
     }
 
-    $users = UserDAO::get_user_by_standard_auth($data['username'], $password);
+    $user = UserDAO::get_user_by_standard_auth($data['username'], $password);
 
-    if(!is_null($users) && count($users) > 0) {
-        $user = $users[0];
+    if(!is_null($user)) {
         session_start();
         $_SESSION['user'] = $user;
 
