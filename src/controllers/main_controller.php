@@ -1,8 +1,12 @@
 <?php
 /* Viscous represents the semi-dynamic, semi-static nature of these pages. */
 require_once('base_controller.php');
+require_once('src/utils/helpers.php');
 
 function home() {
+    check_system_auth();
+
+    $user = (empty($_SESSION['user'])) ? 0 : $_SESSION['user'];
     $template = new BaseController();
     if ($user) { // TODO template needs to be auth
     //if (true) {

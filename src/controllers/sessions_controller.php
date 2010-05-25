@@ -11,18 +11,16 @@ function sessions_create() {
         $password = md5($password);
     }
 
-    $users = UserDAO::get_user_by_standard_auth($data['username'], $password);
+    $user = UserDAO::get_user_by_standard_auth($data['username'], $password);
 
-    if(!is_null($users) && count($users) > 0) {
-        $user = $users[0];
+    if(!is_null($user)) {
         session_start();
-        $_SESSION['username'] = $user->get_username();
-        $_SESSION['email'] = $user->get_email();
+        $_SESSION['user'] = $user;
 
         return html(json($user));
     }
     else {
-        return error_default_handler(401);
+        return halt(401, "", "");
     }
 }
 

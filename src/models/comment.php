@@ -1,25 +1,25 @@
 <?php
 class Comment {
-	public $id;
-	public $comment;
-    public $data_added;
+    public $id;
+    public $comment;
+    public $date_added;
     public $date_modified;
-	
-	public function get_id() {
-		return $this->id;
-	}
-	
+    
+    public function get_id() {
+        return $this->id;
+    }
+    
     public function set_id($id) {
         $this->id = $id;
     }
-	
+    
     public function get_comment() {
         return $this->comment;
     }
     
     public function set_comment($comment) {
-	    $this->comment = $comment;
-	}
+        $this->comment = $comment;
+    }
 
     public function get_date_added() {
         return $this->date_added;

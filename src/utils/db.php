@@ -3,17 +3,20 @@ require_once('src/models/photo.php');
 require_once('src/models/user.php');
 require_once('src/models/tag.php');
 require_once('src/models/comment.php');
+require_once('src/utils/logging.php');
 
 function find_objects_by_sql($sql = '', $params = array(), $classname) {
     $db = option('db_conn');
 
     $result = array();
     $stmt = $db->prepare($sql);
+
     if ($stmt->execute($params)) {
         while ($obj = $stmt->fetchObject($classname)) {
             $result[] = $obj;
         }
     }
+
     return $result;
 }
 

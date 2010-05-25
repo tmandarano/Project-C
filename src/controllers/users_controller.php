@@ -4,17 +4,31 @@ require_once('src/dao/user_dao.php');
 require_once('src/utils/helpers.php'); 
 
 function users_get() {
+    check_system_auth();
+
     $users = UserDAO::get_users();
     return json($users);
 }
 
 function users_get_by_id() {
+    check_system_auth();
+
     $user_id = filter_var(params('id'));
-    $users = UserDAO::get_users_by_id($user_id);
+    $users = UserDAO::get_user_by_id($user_id);
     return json($users);
+}
+
+function users_get_by_photo_id() {
+    check_system_auth();
+
+    $photo_id = filter_var(params('id'));
+    $user = UserDAO::get_user_by_photo_id($photo_id);
+    return json($user);
 }
 	
 function users_create() {
+    check_system_auth();
+
     $data = get_json_input();
     
     $user = new User();
