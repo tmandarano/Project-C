@@ -11,12 +11,15 @@ function to_string($msg) {
   }
 }
 
-function debug($msg) {
+function debug() {
     $call_info = array_shift( debug_backtrace() );
     $code_line = $call_info['line'];
     $file = array_pop( explode('/', $call_info['file']));
 
-    $msg = "DEBUG on line ".$code_line." of ".$file.": '".to_string($msg)."'";
+    $msg = "DEBUG on line ".$code_line." of ".$file.": ";
+    for ($i = 0; $i < func_num_args(); $i += 1) {
+        $msg .= "'".to_string(func_get_arg($i))."', ";
+    }
     error_log($msg);
 }
 ?>

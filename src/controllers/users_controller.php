@@ -29,7 +29,9 @@ function users_get_by_photo_id() {
 function users_create() {
     check_system_auth();
 
-    $data = get_json_input();
+    $data = $_POST;
+
+    debug('Creating a user', $data);
     
     $user = new User();
     
