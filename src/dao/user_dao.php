@@ -17,7 +17,7 @@ class UserDAO {
     }
 
     public static function get_user_by_standard_auth($username, $password) {
-        $sql = 'SELECT * FROM user where username = :username and password = :password';
+        $sql = 'SELECT * FROM user where username = :username AND password = :password';
         $users = find_objects_by_sql($sql, array(':username'=>$username,':password'=>$password), 'User');
 
         $user = $users[0];
@@ -39,5 +39,6 @@ class UserDAO {
         $users = find_objects_by_sql($sql, $params, 'User');
         return $users;
     }
+
 }
 ?>

@@ -5,13 +5,13 @@ require_once('src/utils/helpers.php');
 
 function users_get() {
     $users = UserDAO::get_users();
-    return html(json($users));
+    return json($users);
 }
 
 function users_get_by_id() {
     $user_id = filter_var(params('id'));
     $users = UserDAO::get_users_by_id($user_id);
-    return html(json($users));
+    return json($users);
 }
 	
 function users_create() {
@@ -28,6 +28,7 @@ function users_create() {
     $returned_id = UserDAO::save($user);
     $user->set_id($returned_id);
     
-    return html(json($user));
+    return json($user);
 }
+
 ?>

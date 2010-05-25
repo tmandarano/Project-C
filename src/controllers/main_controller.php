@@ -33,12 +33,11 @@ function home() {
         array('id'=>1), array('id'=>2), array('id'=>3),
         array('id'=>2), array('id'=>3), array('id'=>1), array('id'=>2)
       );
-      $template->assign('title', '');
-      $template->assign('class', 'livestreams');
-      $template->assign('stream', $streamPhotos);
-      $template->assign('social', $socialStream);
-      $template->assign('suggestedPhotos', $suggestedPhotos);
-      $template->assign('suggestedPeople', $suggestedPeople);
+      $template->assign(array('title' => '', 'class' => 'livestreams'));
+      $template->assign(array('stream' => $streamPhotos,
+                              'social' => $socialStream,
+                              'suggestedPhotos' => $suggestedPhotos,
+                              'suggestedPeople' => $suggestedPeople));
       return html($template->fetch('live_streams.tpl'));
     } else {
       $template->assign('title', '');
@@ -101,10 +100,10 @@ function explore_photos() {
 }
 
 //function explore_people() {
-//  $template = new BaseController();
-//  $template->assign('title', 'People | Explore');
-//  $template->assign('class', 'explore people');
-//  return html($template->fetch('explore_people.tpl'));
+//    $template = new BaseController();
+//    $template->assign('title', 'People | Explore');
+//    $template->assign('class', 'explore people');
+//    return html($template->fetch('explore_people.tpl'));
 //}
 
 /* Share pages */
@@ -131,12 +130,8 @@ function share_webcam() {
 
 function profile() {
     $template = new BaseController();
-    // TODO get the proper user's profile data
-    $user = array('name' => 'Tony Mandarano',
-      'location' => 'Seattle, WA',
-      'occupation' => 'Student',
-      'bio' => 'I love life!',
-    );
+    $user_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
+    $user = UserDAO::get_user_by_id($user_id);
     $similarPeople = array(
       array('id' => 1, 'name' => 'Other person 1'),
       array('id' => 1, 'name' => 'Other person 2'),
@@ -149,16 +144,21 @@ function profile() {
     );
     $tags = array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6,
       'concert' => 8, 'fishing' => 6);
-    $mostRecent = array('id' => 451, 'caption' => 'Just getting to the party! Hope to have some fun watching the Seahawks', 'datetime' => '30 seconds ago', 'location' => 'Mercer Island, WA', 'lat' => 47.571, 'lng' => -122.221, 'tags' => array(array('id' => 1, 'tag' => 'party'), array('id' => 2, 'tag' => 'seahawks')), 'comments' => array());
-    $recentPhotos = array(452, 453, 451);
+    $recent_photos = PhotoDAO::get_recent_photos_by_user($user_id, 4);
+    $mostRecent = array_shift($recent_photos);
+    $recentPhotos = array();
+    foreach ($recent_photos as $photo) {
+        $recentPhotos[] = $recent_photos['id'];
+    }
 
-    $template->assign('user', $user);
-    $template->assign('similarPeople', $similarPeople);
-    $template->assign('tags', $tags);
-    $template->assign('mostRecent', $mostRecent);
-    $template->assign('recentPhotos', $recentPhotos);
-    $template->assign('title', $user['name']);
-    $template->assign('class', 'profile');
+    $template->assign(array(
+      'user' => $user,
+      'similarPeople' => $similarPeople,
+      'tags' => $tags,
+      'mostRecent' => $mostRecent,
+      'recentPhotos' => $recentPhotos,
+      'title' => $user['name'],
+      'class' => 'profile'));
     return html($template->fetch('users_profile.tpl'));
 }
 
@@ -186,7 +186,7 @@ function photo() {
 
 function photos_view_by_id() {
     $template = new BaseController();
-    // TODO get photo data and related photo data.
+    $photo_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
     $user = array('id' => 1, 'name' => 'jonnyApple', 'location' => 'San Diego, CA',
                   'datetime' => '33 minutes ago');
     $photo = array('id' => 453, 'location' => 'San Diego, CA',
@@ -206,12 +206,13 @@ function photos_view_by_id() {
     );
     $prevPhotoId = 453;
     $nextPhotoId = 453;
-    $template->assign('user', $user);
-    $template->assign('photo', $photo);
-    $template->assign('nearbyPhotos', $nearbyPhotos);
-    $template->assign('similarPhotos', $similarPhotos);
-    $template->assign('prevPhotoId', $prevPhotoId);
-    $template->assign('nextPhotoId', $nextPhotoId);
+    $template->assign(array(
+      'user' => $user,
+      'photo' => $photo,
+      'nearbyPhotos' => $nearbyPhotos,
+      'similarPhotos' => $similarPhotos,
+      'prevPhotoId' => $prevPhotoId,
+      'nextPhotoId' => $nextPhotoId));
     $template->assign('title', 'Photo');
     $template->assign('class', 'photos view');
     return html($template->fetch('photos_view.tpl'));
