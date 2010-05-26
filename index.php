@@ -3,15 +3,20 @@ require_once('lib/limonade.php');
 
 function configure() {
     $env = ($_SERVER['HTTP_HOST'] == 'dev.livegather.com') ? ENV_PRODUCTION : ENV_DEVELOPMENT;
-    //    $env = ENV_PRODUCTION; // OVERRIDE FOR TESTING.
-    $dsn = ($env == ENV_PRODUCTION) ?
+    $is_production = $env == ENV_PRODUCTION;
+    $dsn = $is_production ?
         'mysql:dbname=livegather;host=db.livegather.com' :
         'mysql:dbname=projectc;host=localhost';
-    $dbuser = ($env == ENV_PRODUCTION) ? 'livegather' : 'projectc';
-    $dbpass = ($env == ENV_PRODUCTION) ? 'liv3g@th3r' : 'projectc';
+    $dbuser = $is_production ? 'livegather' : 'projectc';
+    $dbpass = $is_production ? 'liv3g@th3r' : 'projectc';
 
-    $db = new PDO($dsn, $dbuser, $dbpass);
-    $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+    try {
+        $db = new PDO($dsn, $dbuser, $dbpass);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    } catch (PDOException $e) {
+        header('Status Code: 500 Internal Server Error');
+        exit();
+    }
 
     option('env', $env);
     option('dsn', $dsn);
@@ -55,6 +60,7 @@ dispatch_get    ('/users/:id/photos/',                'photos_get_by_user_id');
 dispatch_get    ('/users/:id/photos/days/:days',      'photos_get_by_user_id_recent');
 dispatch_post   ('/users/',                           'users_create');
 dispatch_post   ('/sessions/',                        'sessions_create');
+dispatch        ('/signout',                          'sessions_delete');
 dispatch_get    ('/photos/',                          'photos_get');
 dispatch_get    ('/photos/:id',                       'photos_get_by_id');
 dispatch_get    ('/photos/recent/:limit',             'photos_recent');

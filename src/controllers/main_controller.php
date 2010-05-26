@@ -6,10 +6,9 @@ require_once('src/utils/helpers.php');
 function home() {
     check_system_auth();
 
-    $user = (empty($_SESSION['user'])) ? 0 : $_SESSION['user'];
     $template = new BaseController();
-    if ($user) { // TODO template needs to be auth
-    //if (true) {
+    $user = (empty($_SESSION['user'])) ? null : unserialize($_SESSION['user']);
+    if ($user) {
       $streamPhotos = array(451, 452, 453);
       $socialStream = array(
         array('user' => array('name'=>'Tony Mandarano'),
@@ -37,7 +36,8 @@ function home() {
         array('id'=>1), array('id'=>2), array('id'=>3),
         array('id'=>2), array('id'=>3), array('id'=>1), array('id'=>2)
       );
-      $template->assign(array('title' => '', 'class' => 'livestreams'));
+      $template->assign(array('title' => '', 'class' => 'livestreams', 'user' =>
+                             array('id' => $user->get_id(), 'name' => $user->get_username())));
       $template->assign(array('stream' => $streamPhotos,
                               'social' => $socialStream,
                               'suggestedPhotos' => $suggestedPhotos,

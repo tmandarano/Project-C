@@ -74,26 +74,24 @@ return D;
 });
 
 LGG.showSigninPrompt = function(jdom) {
-  var dimmer = $('<div class="dimmer"></div>').css('top', 0)
-    .appendTo('body');
-  (function(self) { $(window).resize((function() {
-    self.width($('body').width()).height($('body').height());
-  })()); })(dimmer);
-  var tabs = $(["<div class=\"signinup\">",
-                "<ul><li><a href='#tab1'><span>Sign up</span></a></li>",
-                "<li><a href='#tab2'><span>Sign in</span></a></li>",
-                "</ul>",
-                "</div>"].join(''))
-    .css({'margin': 'auto', 'background-color': 'white',
-          'border': '0.7em solid #91cf55', 'width': 580,
-          "position": "relative", "top": "5em",
-          'border-radius': '1.4em',
-          '-webkit-border-radius': '1.4em',
-          '-moz-border-radius': '1.4em'}).appendTo(dimmer);
-  var close = $('<img src="/img/button_close.png" />').appendTo(tabs)
-    .css({"position": "absolute", "top": "-24px",
-          "right": "-24px", "cursor": "pointer"});
-  $(["<div id=\"tab1\">",
+  const HTML_DIMMER = '<div class="dimmer"></div>';
+  const STYLE_DIMMER = {'top': 0, 'width': '100%', 'height': '100%'};
+  const HTML_SIGNINUP = [
+    "<div class=\"signinup\">",
+    "<ul><li><a href='#tab1'><span>Sign up</span></a></li>",
+    "<li><a href='#tab2'><span>Sign in</span></a></li>",
+    "</ul>",
+    "</div>"].join('');
+  const STYLE_SIGNINUP = {'margin': 'auto', 'background-color': 'white',
+      'border': '0.7em solid #91cf55', 'width': 580,
+      "position": "relative", "top": "5em",
+      'border-radius': '1.4em',
+      '-webkit-border-radius': '1.4em',
+      '-moz-border-radius': '1.4em'};
+  const HTML_TAB_CLOSE = '<img src="/img/button_close.png" />';
+  const STYLE_TAB_CLOSE = {"position": "absolute", "top": "-24px",
+          "right": "-24px", "cursor": "pointer"};
+  const HTML_TAB_ONE = ["<div id=\"tab1\">",
      "<h1><strong>Step 1.</strong> Create an account using your Google or Facebook Account.</h1>",
      "<table class=\"auths\"><tr>",
      "<td><img src=\"/img/signup/connect_google.png\" /></td>",
@@ -101,7 +99,7 @@ LGG.showSigninPrompt = function(jdom) {
      "<td><a href=\"\">Direct Sign Up</a></td>",
      "</tr></table>",
      "<h1><strong>Step 2.</strong> Fill in the missing information.</h1>",
-     "<form action=\"/\">",
+     "<form action=\"/users\" method=\"POST\">",
      "<div class=\"info\">",
      "<div class=\"userphoto\">",
        "<h1>Profile Photo</h1>",
@@ -109,10 +107,10 @@ LGG.showSigninPrompt = function(jdom) {
        "<p><a href=\"#\">Choose a photo</a></p>",
      "</div>",
      "<table>",
-     "<tr><th>Display name</th><td><input type=\"text\" /></td>",
-     "<tr><th>       Email</th><td><input type=\"text\" /></td>",
-     "<tr><th>    Birthday</th><td><input class=\"birthday\" type=\"text\" /></td>",
-     "<tr><th>    Location</th><td><input type=\"text\" /></td>",
+     "<tr><th>Display name</th><td><input type=\"text\" name=\"username\" /></td>",
+     "<tr><th>       Email</th><td><input type=\"text\" name=\"email\" /></td>",
+     "<tr><th>    Birthday</th><td><input class=\"birthday\" type=\"text\" name=\"date_of_birth\" /></td>",
+     "<tr><th>    Location</th><td><input type=\"text\" name=\"location\" /></td>",
      "</table>",
      "</div>",
      "<p><input name=\"privacy\" type=\"checkbox\" />",
@@ -124,34 +122,51 @@ LGG.showSigninPrompt = function(jdom) {
        "</label></p>",
      "<input type=\"image\" src=\"/img/signup/create.png\" />",
      "</form>",
-     "</div>"].join('')).appendTo(tabs);
-  var form = $([
-    '<div id="tab2">',
+     "</div>"].join('');
+  const HTML_TAB_TWO = ['<div id="tab2">',
     '<table class="auths">',
       '<tr>',
         "<td><img src=\"/img/signup/connect_google.png\" /></td>",
         "<td><img src=\"http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>",
       '</tr>',
     '</table>',
-    '<form id="SigninForm" method="post" action="/users/login">',
+    '<form id="SigninForm" method="POST" action="/sessions">',
     '<table>',
       '<tr><th>Email</th>',
-      '<td><input type="text" name="data[User][email]" id="UserEmail" /></td>',
+      '<td><input type="text" name="username" /></td>',
       '</tr>',
       '<tr><th>Password</th>',
-      '<td><input type="password" name="data[User][password]" id="UserPassword" /></td>',
+      '<td><input type="password" name="password" /></td>',
       '</tr>',
       '<tr><th></th><td><input type="submit" value="Sign in"</td></tr>',
-      '</table></form></div>'].join('')).appendTo(tabs);
+      '</table></form></div>'].join('');
+  var dimmer = $(HTML_DIMMER).css(STYLE_DIMMER).appendTo('body');
+  var tabs = $(HTML_SIGNINUP).css(STYLE_SIGNINUP).appendTo(dimmer);
+  var close = $(HTML_TAB_CLOSE).css(STYLE_TAB_CLOSE).appendTo(tabs);
+  $(HTML_TAB_ONE).appendTo(tabs);
+  var form = $(HTML_TAB_TWO).appendTo(tabs)
+    .submit(function () {
+      $.ajax({type: 'POST', url: '/sessions', dataType: 'json',
+        data: $('#SigninForm').serialize(),
+        success: function (data) {
+          window.location = '/';
+        },
+        error: function () {
+          // invalid credentials
+          if ($('#SigninForm p.invalid').length == 0) {
+            $('#SigninForm').prepend($('<p class="invalid">Incorrect username or password.</p>'));
+          }
+          $('#SigninForm :submit').attr('disabled', '');
+        }
+      });
+      $('#SigninForm :submit').attr('disabled', 'disabled');
+      return false;
+    });
   $(".birthday", tabs).datepicker({maxDate: "-13y", changeMonth: true,
                                    changeYear: true});
-  if (jdom.hasClass('up')) {
-    tabs.tabs({selected: 0});
-  } else {
-    tabs.tabs({selected: 1});
-  }
+  tabs.tabs({selected: (jdom.hasClass('up') ? 0 : 1)});
   $('ul', tabs).removeClass('ui-corner-all').addClass('ui-corner-top');
-  $('#UserEmail', form).focus();
+  $('input:first', form).focus();
   function destroy() { dimmer.remove(); }
   tabs.click(function (e) { e.stopPropagation(); });
   close.click(destroy);

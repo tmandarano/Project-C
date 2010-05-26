@@ -7,14 +7,21 @@ function photos_get() {
     check_system_auth();
 
     $photos = PhotoDao::get_photos();
-    return html(json($photos));
+    return json($photos);
 }
 
 function photos_get_by_id() {
     check_system_auth();
 
     $photos = PhotoDao::get_photo_by_id(filter_var(params('id')));
-    return html(json($photos));
+    return json($photos);
+}
+
+function photos_recent() {
+    check_system_auth();
+
+    $limit = intval(filter_var(params('limit'), FILTER_VALIDATE_INT));
+    return json(PhotoDao::get_recent_photos($limit));
 }
 
 function photos_get_by_user_id() {
@@ -23,7 +30,7 @@ function photos_get_by_user_id() {
     $user_id = filter_var(params('id'));
     $photos = PhotoDao::get_photos_by_user_id($user_id);
 
-    return html(json($photos));
+    return json($photos);
 }
 
 function photos_get_by_user_id_recent() {
@@ -33,7 +40,7 @@ function photos_get_by_user_id_recent() {
     $days = filter_var(params('days'));
     $photos = PhotoDao::get_photos_by_user_id_recent($user_id, $days);
 
-    return html(json($photos));
+    return json($photos);
 }
 
 function photos_create() {
@@ -99,11 +106,6 @@ function save_photo($photo) {
 
     unlink($upload_path);
     PhotoDAO::update($photo);
-}
-
-function photos_recent() {
-    $limit = intval(filter_var(params('limit'), FILTER_VALIDATE_INT));
-    return json(PhotoDao::get_recent_photos($limit));
 }
 
 ?>

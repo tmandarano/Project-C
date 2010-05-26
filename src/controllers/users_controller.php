@@ -35,6 +35,7 @@ function users_create() {
     
     $user = new User();
     
+    // TODO check to make sure username not taken
     $user->set_username($data['username']);
     $user->set_email($data['email']);
     $user->set_password(md5($data['password']));
