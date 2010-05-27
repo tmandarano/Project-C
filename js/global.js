@@ -143,8 +143,17 @@ LGG.showSigninPrompt = function(jdom) {
   var dimmer = $(HTML_DIMMER).css(STYLE_DIMMER).appendTo('body');
   var tabs = $(HTML_SIGNINUP).css(STYLE_SIGNINUP).appendTo(dimmer);
   var close = $(HTML_TAB_CLOSE).css(STYLE_TAB_CLOSE).appendTo(tabs);
-  $(HTML_TAB_ONE).appendTo(tabs);
-  var form = $(HTML_TAB_TWO).appendTo(tabs)
+  $(HTML_TAB_ONE).appendTo(tabs)
+    .find('form').submit(function () {
+      $.ajax({type: 'POST', url: '/users', dataType: 'json',
+        data: $(this).serialize(),
+        success: function (data) {
+        },
+        error: function () {
+        });
+      return false;
+    });
+  $(HTML_TAB_TWO).appendTo(tabs)
     .submit(function () {
       $.ajax({type: 'POST', url: '/sessions', dataType: 'json',
         data: $('#SigninForm').serialize(),
@@ -161,12 +170,12 @@ LGG.showSigninPrompt = function(jdom) {
       });
       $('#SigninForm :submit').attr('disabled', 'disabled');
       return false;
-    });
+    })
+    .find('input:first').focus();
   $(".birthday", tabs).datepicker({maxDate: "-13y", changeMonth: true,
                                    changeYear: true});
   tabs.tabs({selected: (jdom.hasClass('up') ? 0 : 1)});
   $('ul', tabs).removeClass('ui-corner-all').addClass('ui-corner-top');
-  $('input:first', form).focus();
   function destroy() { dimmer.remove(); }
   tabs.click(function (e) { e.stopPropagation(); });
   close.click(destroy);
