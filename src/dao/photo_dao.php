@@ -58,8 +58,11 @@ class PhotoDAO {
     }
 
     public static function get_recent_photos($limit = 10) {
-        $sql = 'SELECT * FROM photo ORDER BY date_added DESC LIMIT :limit';
-        $photos = find_objects_by_sql($sql, array(':limit' => $limit), 'Photo');
+        //$sql = 'SELECT * FROM photo ORDER BY date_added DESC LIMIT :limit';
+        //$photos = find_objects_by_sql($sql, array(':limit' => $limit), 'Photo');
+        // TODO figure out why limit isn't working.
+        $sql = 'SELECT * FROM photo ORDER BY date_added DESC LIMIT 29';
+        $photos = find_objects_by_sql($sql, null, 'Photo');
 
         foreach($photos as $photo) {
             $comments = CommentDAO::get_comments_for_photo($photo->get_id());
