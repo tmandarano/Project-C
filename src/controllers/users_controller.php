@@ -17,9 +17,11 @@ function users_get_by_id() {
     check_system_auth();
 
     $user_id = filter_var(params('id'));
-    $users = UserDAO::get_user_by_id($user_id);
-    $users->set_password('');
-    return json($users);
+    $user = UserDAO::get_user_by_id($user_id);
+    if ($user) {
+      $user->set_password('');
+    }
+    return json($user);
 }
 
 function users_get_by_photo_id() {

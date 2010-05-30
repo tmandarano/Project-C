@@ -595,7 +595,7 @@ table.stream {
 
 ul.collage { margin: auto; width: 216px; }
 ul.collage li,
-.explore.stream li { display: inline-block; margin: 2px 0.5px; width: 40px; height: 40px; line-height: 40px; }
+.explore.stream li { display: inline-block; margin: 2px 1.5px; width: 40px; height: 40px; line-height: 40px; }
 ul.collage li a,
 .explore.stream li a { display: block; width: 40px; height: 40px; background-color: #000; }
 ul.collage li img,

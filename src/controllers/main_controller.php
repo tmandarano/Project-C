@@ -23,7 +23,7 @@ function home() {
     $template = new BaseController();
 
     if ($user) {
-        $streamPhotos = array(451, 452, 453);
+        $streamPhotos = implode(', ', array(101, 102, 103));
         $socialStream = array(
           array('user' => 1, 'action' => 'commented on', 'actionee' => 2,
                 'photo' => 1),
@@ -33,10 +33,8 @@ function home() {
                 'photo' => 451, 'descriptor' => 'cute')
         );
         $trending = array('party', 'baseball', 'seahawks', 'car', 'funny', 'lunch');
-        $suggestedPhotos = array(451, 451, 451, 451, 451,
-                                 452, 452, 452, 452, 452);
-        $suggestedPeople = array(1, 1, 1, 1, 1,
-                                 1, 1, 1, 1, 1);
+        $suggestedPhotos = implode(', ', array(451, 451, 451, 451, 451, 452, 452, 452, 452, 452));
+        $suggestedPeople = implode(', ', array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
         $template->assign(array('title' => '', 'class' => 'livestreams'));
         $template->assign(array(
             'user' => get_session_user_info($user), 
@@ -52,47 +50,47 @@ function home() {
     }
 }
 
-function getapp() {
-    $template = new BaseController();
-    $template->assign(array('title'=>'Download App', 'class'=>'getapp'));
-    $template->assign(array('user' => $user_info));
-    return html($template->fetch('getapp.tpl'));
-}
-
 /* About pages */
 function about_contact() {
+    $user = get_session_user();
+
     $template = new BaseController();
     $template->assign(array('title'=>'Contact | About', 'class'=>'about contact'));
+    $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('about_contact.tpl'));
 }
     
 function about_faq() {
+    $user = get_session_user();
     $template = new BaseController();
     $template->assign(array('title'=>'FAQ | About', 'class'=>'about faq'));
+    $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('about_faq.tpl'));
 }
 
 /* Explore pages */
 function explore_map() {
+    $user = get_session_user();
     $template = new BaseController();
     $template->assign(array('title'=>'Map | Explore', 'class'=>'explore map'));
+    $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('explore_map.tpl'));
 }
 
 function explore_photos() {
+    $user = get_session_user();
     $template = new BaseController();
     $popCities = array('San Diego', 'Seattle', 'New York', 'Los Angeles', 'Miami');
     $trending = array('party', 'baseball', 'seahawks', 'car', 'funny', 'happy');
-    $suggestedPhotos = array(451, 452, 453, 452, 453,
-                             452, 451, 452, 453, 452);
-    $suggestedPeople = array(99, 99, 99, 99, 99,
-                             99, 99, 99, 99, 99);
+    $suggestedPhotos = array(451, 452, 453, 452, 453, 452, 451, 452, 453, 452);
+    $suggestedPeople = array(99, 99, 99, 99, 99, 99, 99, 99, 99, 99);
     $template->assign(array(
         'popCities'=>$popCities,
         'trending'=>$trending,
         'suggestedPhotos'=>$suggestedPhotos,
         'suggestedPeople'=>$suggestedPeople));
     $template->assign(array('title'=>'Photos | Explore', 'class'=>'explore photos'));
+    $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('explore_photos.tpl'));
 }
 
@@ -106,27 +104,43 @@ function explore_photos() {
 /* Share pages */
 function share_upload() {
     check_system_auth();
+    $user = get_session_user();
 
     $template = new BaseController();
     $template->assign(array('title'=>'Upload | Share', 'class'=>'share upload'));
+    $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('share_upload.tpl'));
 }
 
 function share_mobile() {
+    $user = get_session_user();
     $template = new BaseController();
-    $template->assign(array('title'=>'Mobile | Share', 'class'=>'share mobile'));
-    return html($template->fetch('share_mobile.tpl'));
+    $template->assign(array('title'=>'Download App | Mobile | Share', 'class'=>'getapp'));
+    $template->assign(array('user' => get_session_user_info($user))); 
+    return html($template->fetch('getapp.tpl'));
 }
+function getapp() {
+    $user = get_session_user();
+    $template = new BaseController();
+    $template->assign(array('title'=>'Download App | Mobile | Share', 'class'=>'getapp'));
+    $template->assign(array('user' => get_session_user_info($user))); 
+    return html($template->fetch('getapp.tpl'));
+}
+
 
 function share_webcam() {
     check_system_auth();
+    $user = get_session_user();
 
     $template = new BaseController();
     $template->assign(array('title'=>'Webcam | Share', 'class'=>'share webcam'));
+    $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('share_webcam.tpl'));
 }
 
 function profile() {
+    $user = get_session_user();
+
     $template = new BaseController();
     $user_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
     $user = UserDAO::get_user_by_id($user_id);
@@ -141,56 +155,52 @@ function profile() {
     }
 
     $template->assign(array(
-      'user' => $user,
       'similarPeople' => $similarPeople,
       'tags' => $tags,
       'mostRecent' => $mostRecent,
       'recentPhotos' => $recentPhotos,
       'title' => $user->get_username(),
       'class' => 'profile'));
+    $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('users_profile.tpl'));
 }
 
 function settings() {
     check_system_auth();
+    $user = get_session_user();
 
     $template = new BaseController();
     $template->assign(array('title'=>'Settings', 'class'=>'users settings'));
+    $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('settings.tpl'));
 }
 
 /* Photos pages */
 
 function photos_view_by_id() {
+    $user = get_session_user();
     $template = new BaseController();
     $photo_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
-    $user = array('id' => 1, 'name' => 'jonnyApple', 'location' => 'San Diego, CA',
+    $profileuser = array('id' => 1, 'name' => 'jonnyApple', 'location' => 'San Diego, CA',
                   'datetime' => '33 minutes ago');
     $photo = array('id' => 453, 'location' => 'San Diego, CA',
       'datetime' => '33 minutes ago',
       'caption' => 'Chillin out and watching some TV',
       'tags' => array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6,
                       'concert' => 8, 'fishing' => 6));
-    $nearbyPhotos = array(
-      array('id'=>1), array('id'=>2), array('id'=>3),
-      array('id'=>1), array('id'=>2), array('id'=>3),
-      array('id'=>2), array('id'=>3), array('id'=>2), array('id'=>3)
-    );
-    $similarPhotos = array(
-      array('id'=>451), array('id'=>452), array('id'=>453),
-      array('id'=>452), array('id'=>453), array('id'=>451),
-      array('id'=>452), array('id'=>453), array('id'=>452), array('id'=>453)
-    );
+    $nearbyPhotos = array(1, 2, 3, 1, 2, 3, 1, 2, 3, 1);
+    $similarPhotos = array(451, 452, 453, 451, 452, 453, 451, 452, 453, 451);
     $prevPhotoId = 453;
     $nextPhotoId = 453;
     $template->assign(array(
-      'user' => $user,
+      'profileuser' => $profileuser,
       'photo' => $photo,
       'nearbyPhotos' => $nearbyPhotos,
       'similarPhotos' => $similarPhotos,
       'prevPhotoId' => $prevPhotoId,
       'nextPhotoId' => $nextPhotoId));
     $template->assign(array('title'=>'Photo', 'class'=>'photos view'));
+    $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('photos_view.tpl'));
 }
 ?>

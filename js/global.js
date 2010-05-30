@@ -20,6 +20,8 @@
   };
 })();
 
+function defaultTo(x, d) { return x ? x : d; }
+
 var LG = LG ? LG: {};
 LG.G = (function() {
 var LGG = {};
