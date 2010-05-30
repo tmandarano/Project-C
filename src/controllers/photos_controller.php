@@ -109,13 +109,39 @@ function save_photo($photo) {
 }
 
 function photo_by_size() {
-    header('Content-Type: image/png');
+    $target = 270;
     switch (params('size')) {
-    case 0: header('Location: /img/30x30.jpg'); exit;
-    case 1: header('Location: /img/50x50.jpg'); exit;
-    case 2: header('Location: /img/50x50.jpg'); exit;
-    case 3: header('Location: /img/270x270.jpg'); exit;
-    case 'o': header('Location: /img/270x270.jpg'); exit;
+    case 0: $target = 30; break;
+    case 1: $target = 50; break;
+    case 2: $target = 50; break;
+    case 3: $target = 270; break;
+    case 'o': $target = 270; break;
+    }
+    debug($target, params('size'));
+    $photos = PhotoDao::get_photo_by_id(intval(filter_var(params('id'), FILTER_VALIDATE_INT)));
+    $extension = 'jpg';
+    if ($photos[0]) {
+        $filename = option('IMAGES_DIR') . $photos[0]->get_id() . '.' . $extension;
+    } else {
+        $filename = '';
+    }
+    if (file_exists($filename)) {
+        $src = imagecreatefromjpeg($filename);
+        $width = ImageSx($src);
+        $height = ImageSy($src);
+        $x = $target;
+        $y = $height * $target / $width;
+        $scaled = ImageCreateTrueColor($x, $y);
+        ImageCopyResampled($scaled, $src, 0, 0, 0, 0, $x, $y, $width, $height);
+        header('Content-Type: image/jpeg');
+        imagejpeg($scaljd);
+    } else {
+        header('Content-Type: image/jpeg');
+        switch ($target) {
+        case 30: header('Location: /img/30x30.jpg'); exit;
+        case 50: header('Location: /img/50x50.jpg'); exit;
+        case 270: header('Location: /img/270x270.jpg'); exit;
+        }
     }
 }
 

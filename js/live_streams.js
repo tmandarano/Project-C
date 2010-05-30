@@ -13,7 +13,7 @@ const PHOTOSTUB_LIVESTREAM = [
 '</div>',
 '<div class="detail">',
   '<h1><%=user.name%></h1>',
-  '<p><span class="time"><%=datetime%> from</span> <span',
+  '<p><span class="time"><%=datetime%> from</span> <span ',
   'class="location"><%=location%></span></p>',
   '<p><span class="caption"><%=caption%></span></p>',
   '<div class="bottom">',
