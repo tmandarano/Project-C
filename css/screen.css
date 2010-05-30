@@ -137,6 +137,8 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
+.signinup form input[type=text]:focus,
+.signinup form input[type=password]:focus { background-color: #ffc; }
 .signinup .signin table { width: 100%; }
 .signinup .signin form th { font-size: medium; }
 .signinup .signin .header { text-align: left; font-weight: bold; font-size: large; }
@@ -204,21 +206,17 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
 }
 
 .getapp #content { text-align: center; }
-.getapp table {
-  margin: auto;
-}
-.getapp table a {
+.getapp #content table { margin: auto; }
+.getapp #content table a {
   display: block;
   color: black;
   font-size: large;
 }
-.getapp table .apps td {
+.getapp #content table .apps td {
   padding: 0 2em 0 2em;
   line-height: 224px;
 }
-.getapp #content img {
-  vertical-align: middle;
-}
+.getapp #content img { vertical-align: middle; }
 .getapp button {
   background-color: #45a136;
   padding: 0.5em 1em;
@@ -445,7 +443,7 @@ input[type="text"], input[type="password"] {
   -moz-border-radius: 2px;
 }
 input[type="text"]:focus, input[type="password"]:focus {
-  background-color: #efa;
+  background-color: #ffc;
   border: 1px solid #9cda60;
 }
 input[type="text"].default { color: #aaa; }
