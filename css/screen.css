@@ -10,6 +10,7 @@ a {
   text-decoration: none;
   color: #1584b2;
 }
+.clickable { cursor: pointer; }
 form th { text-align: right; }
 form td { padding: 1em 0 1em 1em; }
 
@@ -85,6 +86,67 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   cursor: pointer;
 }
 
+.signinup {
+  margin: auto;
+  background-color: white;
+  border: 0.7em solid #91cf55;
+  width: 580px;
+  position: relative;
+  top: 5em;
+  border-radius: 1.4em;
+  -webkit-border-radius: 1.4em;
+  -moz-border-radius: 1.4em;
+}
+.signinup.ui-tabs .ui-tabs-hide { display: none; }
+.signinup.ui-tabs li.ui-state-active {
+  border-bottom: 1px solid #fff !important;
+}
+.signinup.ui-tabs li.ui-state-active a { color: #555; }
+.signinup.ui-tabs li a {
+  padding: 0;
+  color: #aaa;
+}
+.signinup .ui-tabs-nav li {
+  padding: 0.5em 0.5em 0em 0.5em;
+  margin-left: 0.5em;
+  background: white;
+  border: 1px solid #91cf55;
+  top: 0;
+}
+.signinup ul.ui-tabs-nav {
+  background: white;
+  border: 0;
+  border-bottom: 1px solid #91cf55;
+  padding: 0.5em 0.5em 0 0;
+  height: 1.95em;
+}
+.signinup .ui-tabs-panel {
+  background-color: inherit;
+  padding: 1em;
+  border: none;
+}
+.signinup .ui-widget-content a { color: #1584b2; }
+.signinup form td { padding: 0.3em 0 0.3em 0.5em; }
+.signinup form input[type=text],
+.signinup form input[type=password] {
+  border: 1px solid #aaa;
+  background-color: #eee;
+  width: 10em;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+.signinup .signin table { width: 100%; }
+.signinup .signin form th { font-size: medium; }
+.signinup .signin .header { text-align: left; font-weight: bold; font-size: large; }
+.signinup .signin .invalid { text-align: left; color: red; }
+.signinup .signin td.or {
+  padding: 1em;
+  font-weight: bold;
+  font-size: x-large;
+}
+.signinup .signin .auths li { vertical-align: middle; text-align: right; }
+
 .home.out .nav .sign.in { margin-top: 1.5em; }
 .home.out #header .nav { height: 88px; }
 .home.out #header { height: 138px; }
@@ -98,100 +160,6 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   -moz-box-shadow: 4px 4px 4px #aaa;
   -webkit-box-shadow: 4px 4px 4px #aaa;
 }
-.signinup.ui-tabs .ui-tabs-hide { display: none; }
-.signinup.ui-tabs li {
-  padding: 0.5em 0.5em 0.2em 0.5em !important;
-  margin-left: 0.5em !important;
-  background: white;
-  border: 1px solid #91cf55 !important;
-  top: 0 !important;
-}
-.signinup.ui-tabs li.ui-state-active {
-  border-bottom: 1px solid white !important;
-}
-.signinup.ui-tabs li.ui-state-active a { color: #555; }
-.signinup.ui-tabs li a {
-  padding: 0 !important;
-  color: #aaa;
-}
-.signinup ul.ui-tabs-nav {
-  background: white;
-  border: 0;
-  border-bottom: 1px solid #91cf55;
-  padding: 0.5em 0.5em 0 0;
-  height: 2.1em;
-}
-.signinup .ui-tabs-panel {
-  background-color: inherit;
-  padding: 1em;
-  border: none;
-}
-.signinup .ui-widget-content a { color: #1584b2; }
-.signinup form input[type=text] {
-  border: 1px solid #aaa;
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-}
-.signinup #tab2 h1 {
-  color: #2686cf;
-  font-size: medium;
-  margin-bottom: 1em;
-}
-.signinup #tab2 h1 strong {
-  font-size: xx-large;
-  font-weight: bold;
-  color: #2686cf;
-}
-.signinup .auths {
-  width: 100%;
-  margin-bottom: 1em;
-  vertical-align: middle;
-  text-align: center;
-}
-.signinup .auths img {
-  cursor: pointer;
-}
-.signinup #tab2 form td {
-  padding: 0.2em 0 0.2em 0.5em;
-}
-.signinup #tab2 .info {
-  position: relative;
-}
-.signinup #tab2 .userphoto {
-  position: absolute;
-  right: 2em;
-}
-.signinup #tab2 .userphoto h1 {
-  text-align: center;
-  font-size: large;
-  color: #000;
-  margin-bottom: 0.4em;
-}
-.signinup #tab2 .userphoto img {
-  width: 100px;
-  height: 100px;
-}
-.signinup #tab2 .userphoto p {
-  font-size: small;
-  text-align: center;
-}
-.signinup #tab2 p {
-  font-size: small;
-  margin: 0.3em 0;
-}
-.signinup #tab2 p input {
-  vertical-align: middle;
-}
-.signinup #tab2 p label {
-  margin-left: 0.5em;
-  vertical-align: middle;
-}
-.signinup #tab2 input[type=image] {
-  display: block;
-  margin: 1em auto auto auto;
-}
-
 .home.out .pedestal .split { width: 100%; margin: auto; }
 .home.out .left.pane { width: 560px; }
 .home.out .left.pane .title { color: #444; font-size: xx-large; text-align: center; margin-top: 0.6em; margin-bottom: -0.6em; }
@@ -653,6 +621,8 @@ input.comment:focus {
 .dimmer {
   position: absolute;
   width: 100%;
+  height: 100%;
+  top: 0;
   z-index: 900;
   background: url('/img/shelf_bg.png');
 }

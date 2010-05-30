@@ -1,24 +1,48 @@
-LG.LiveStream = {};
-LG.LiveStream.photoMap = null;
-LG.LiveStream.bounds = null;
-function photo_stub_live_stream(jdom, photo_id) {
-  jdom.html('<img src="/img/loading.gif" />');
-  $.get('/shard/photo_stub_live_stream/'+photo_id, function(data) {
-    jdom.html(data);
-  });
-  $.get('/photos/show/'+photo_id, function(data) {
-      var lat = data.lat; // TODO
-      var lng = data.lng; // TODO
-      lat = 47.5619+(Math.random()-0.5);
-      lng = -122.2164+(Math.random()-0.5);
-      var coord = new google.maps.LatLng(lat, lng);
-      LG.LiveStream.bounds.extend(coord);
-      LG.LiveStream.photoMap.panToBounds(LG.LiveStream.bounds);
-      LG.LiveStream.photoMap.setCenter(LG.LiveStream.bounds.getCenter());
-      marker = new google.maps.Marker({position: coord, map: LG.LiveStream.photoMap});
-    }, 'json');
-}
+const LGLS = LG.LiveStream = {};
+LGLS.photoMap = null;
+LGLS.bounds = null;
+
+const HTML_LOADING = '<img src="/img/loading.gif" />';
+const PHOTOSTUB_LIVESTREAM = [
+'<div class="photo">',
+  '<a href="/photos/view/<%=photo.id%>"><img src="/photos/<%=photo.id%>/3" /></a>',
+  '<a class="like" href="#like">230</a>',
+'</div>',
+'<div class="detail">',
+  '<h1><%=photo.user.name%></h1>',
+  '<p><span class="time"><%=photo.datetime%> from</span> <span',
+  'class="location"><%=photo.location%></span></p>',
+  '<p><span class="caption"><%=photo.caption%></span></p>',
+  '<div class="bottom">',
+    '<p class="comments"><a href="#">7 people</a> have commented</p>',
+    '<form class="comments" name="comments" action="/photos/edit/<%=photo.id%>" method="post">',
+      '<input name="photo[comment]" type="text" class="default" value="add comment" />',
+      '<input type="submit" value="comment" />',
+    '</form>',
+    '<p>Tags <% for (var i = 0; i < photo.length; i += 1) {%><a href="#"><%=photo[i].tag%></a>, <%}%></p>',
+    '<form class="tags" name="tags" action="/photos/edit/<%=photo.id%>" method="post">',
+      '<input name="photo[tag]" type="text" class="default" value="add tag" />',
+      '<input type="submit" value="tag" />',
+    '</form>',
+  '</div>',
+'</div>'
+].join('');
+
 $(function() {
+  const GM = google.maps;
+  function photo_stub_live_stream(jdom, photo_id) {
+    jdom.html(HTML_LOADING);
+    $.get('/photos/'+photo_id, function (data) {
+      jdom.html(tmpl(PHOTOSTUB_LIVESTREAM, data));
+
+      var coord = new GM.LatLng(data.latitude, data.longitude);
+      var LS = LGLS;
+      var marker = new GM.Marker({position: coord, map: LS.photoMap});
+      LS.bounds.extend(coord);
+      LS.photoMap.panToBounds(LS.bounds);
+      LS.photoMap.setCenter(LS.bounds.getCenter());
+    });
+  }
   $('.photo.stub').each(function(index, elem) {
       var stubarr = $(elem).attr('stub').split('|');
       var call = stubarr[0];
@@ -58,14 +82,14 @@ $(function() {
 
   var mapOpts = {
     zoom: 7,
-    center: new google.maps.LatLng(0, 0),
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: new GM.LatLng(0, 0),
+    mapTypeId: GM.MapTypeId.ROADMAP,
     scrollwheel: true,
     draggable: true,
     disableDefaultUI: false,
     mapTypeControl: true,
     navigationControl: true
   };
-  LG.LiveStream.photoMap = new google.maps.Map($("#photo_map")[0], mapOpts);
-  LG.LiveStream.bounds = new google.maps.LatLngBounds();
+  LGLS.photoMap = new GM.Map($("#photo_map")[0], mapOpts);
+  LGLS.bounds = new GM.LatLngBounds();
 });

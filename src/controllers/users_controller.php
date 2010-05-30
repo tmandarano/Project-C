@@ -7,6 +7,9 @@ function users_get() {
     check_system_auth();
 
     $users = UserDAO::get_users();
+    foreach ($users as $user) {
+        $user->set_password('');
+    }
     return json($users);
 }
 
@@ -15,6 +18,7 @@ function users_get_by_id() {
 
     $user_id = filter_var(params('id'));
     $users = UserDAO::get_user_by_id($user_id);
+    $users->set_password('');
     return json($users);
 }
 
@@ -30,8 +34,6 @@ function users_create() {
     check_system_auth();
 
     $data = $_POST;
-
-    debug('Creating a user', $data);
     
     $user = new User();
     
@@ -48,4 +50,8 @@ function users_create() {
     return json($user);
 }
 
+function users_get_photo_by_id() {
+    header('Content-Type: image/png');
+    header('Location: /img/50x50.jpg'); exit;
+}
 ?>

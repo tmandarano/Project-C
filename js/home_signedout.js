@@ -29,7 +29,7 @@ HPP.show = function(json) {
     '<span class="location">'+(photo.location || 'Location unknown')+'</span>'+
     '<p class="caption">'+photo.caption+'</p></div>';
   this.captionPane.html(caption).fadeIn(600);
-  this.photoPane.html($('<a href="#"><img src="/photos/'+photo.id+'/3" /></a>')
+  this.photoPane.html($('<a href="#"><img src="/photo/'+photo.id+'/2" /></a>')
     .click(function() {viewpic(photo.id);})).fadeIn(600);
 };
 return HP;

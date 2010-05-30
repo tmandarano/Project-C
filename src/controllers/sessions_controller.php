@@ -18,8 +18,7 @@ function sessions_create() {
         $_SESSION['user'] = serialize($user);
 
         return json($user);
-    }
-    else {
+    } else {
         return halt(401, "", "");
     }
 }

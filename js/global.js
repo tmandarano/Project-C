@@ -53,7 +53,7 @@ HP.append = function(json) {
   p.lat = 32;
   p.lng = -117;
   p.user = {name: 'name'}; // TODO
-  $('<li><a href="/photos/view/'+p.id+'"><img src="/images/IMG'+p.id+'.jpg" title="'+p.user.name+': '+p.name+'"/></a></li>')
+  $('<li><a href="/photos/view/'+p.id+'"><img src="/photo/'+p.id+'/2" title="'+p.user.name+': '+p.name+'"/></a></li>')
     .data('json', json)
     .appendTo(this.jdom);
   if (this.ready) {
@@ -108,19 +108,12 @@ return D;
 
 LGG.showSigninPrompt = function(jdom) {
   const HTML_DIMMER = '<div class="dimmer"></div>';
-  const STYLE_DIMMER = {'top': 0, 'width': '100%', 'height': '100%'};
   const HTML_SIGNINUP = [
     "<div class=\"signinup\">",
     "<ul><li><a href='#tab1'><span>Sign up</span></a></li>",
     "<li><a href='#tab2'><span>Sign in</span></a></li>",
     "</ul>",
     "</div>"].join('');
-  const STYLE_SIGNINUP = {'margin': 'auto', 'background-color': 'white',
-      'border': '0.7em solid #91cf55', 'width': 580,
-      "position": "relative", "top": "5em",
-      'border-radius': '1.4em',
-      '-webkit-border-radius': '1.4em',
-      '-moz-border-radius': '1.4em'};
   const HTML_TAB_CLOSE = '<img src="/img/button_close.png" />';
   const STYLE_TAB_CLOSE = {"position": "absolute", "top": "-24px",
           "right": "-24px", "cursor": "pointer"};
@@ -156,25 +149,37 @@ LGG.showSigninPrompt = function(jdom) {
      "<input type=\"image\" src=\"/img/signup/create.png\" />",
      "</form>",
      "</div>"].join('');
-  const HTML_TAB_TWO = ['<div id="tab2">',
-    '<table class="auths">',
-      '<tr>',
-        "<td><img src=\"/img/signup/connect_google.png\" /></td>",
-        "<td><img src=\"http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>",
-      '</tr>',
-    '</table>',
-    '<form id="SigninForm" method="POST" action="/sessions">',
-    '<table>',
-      '<tr><th>Email</th>',
-      '<td><input type="text" name="username" /></td>',
-      '</tr>',
-      '<tr><th>Password</th>',
-      '<td><input type="password" name="password" /></td>',
-      '</tr>',
-      '<tr><th></th><td><input type="submit" value="Sign in"</td></tr>',
-      '</table></form></div>'].join('');
-  var dimmer = $(HTML_DIMMER).css(STYLE_DIMMER).appendTo('body');
-  var tabs = $(HTML_SIGNINUP).css(STYLE_SIGNINUP).appendTo(dimmer);
+  const HTML_TAB_TWO = [
+    '<div id="tab2" class="signin">',
+      '<table>',
+        '<tr>',
+          '<td>',
+            '<form method="POST" action="/sessions">',
+            '<table>',
+              '<tr><th class="header" colspan="2">Sign in with your LiveGather account</th></tr>',
+              '<tr><th class="invalid" colspan="2">Incorrect username or password.</th></tr>',
+              '<tr><th>Username</th>',
+              '<td><input type="text" name="username" /></td>',
+              '</tr>',
+              '<tr><th>Password</th>',
+              '<td><input type="password" name="password" /></td>',
+              '</tr>',
+              '<tr><th></th><td><input type="submit" value="Sign in"</td></tr>',
+            '</table>',
+            '</form>',
+          '</td>',
+          '<td class="or">or</td>',
+          '<td class="auths">',
+            '<ul>',
+              '<li><img class="clickable" src="http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif" /></li>',
+              '<li><img class="clickable" src="/img/signup/connect_google.png" /></li>',
+            '</ul>',
+          '</td>',
+        '</tr>',
+      '</table>',
+      '</div>'].join('');
+  var dimmer = $(HTML_DIMMER).appendTo('body');
+  var tabs = $(HTML_SIGNINUP).appendTo(dimmer);
   var close = $(HTML_TAB_CLOSE).css(STYLE_TAB_CLOSE).appendTo(tabs);
   $(HTML_TAB_ONE).appendTo(tabs)
     .find('form').submit(function () {
@@ -186,25 +191,24 @@ LGG.showSigninPrompt = function(jdom) {
         }});
       return false;
     });
-  $(HTML_TAB_TWO).appendTo(tabs)
-    .submit(function () {
-      $.ajax({type: 'POST', url: '/sessions', dataType: 'json',
-        data: $('#SigninForm').serialize(),
-        success: function (data) {
-          window.location = '/';
-        },
-        error: function () {
-          // invalid credentials
-          if ($('#SigninForm p.invalid').length == 0) {
-            $('#SigninForm').prepend($('<p class="invalid">Incorrect username or password.</p>'));
-          }
-          $('#SigninForm :submit').attr('disabled', '');
-        }
-      });
-      $('#SigninForm :submit').attr('disabled', 'disabled');
-      return false;
-    })
-    .find('input:first').focus();
+  var tabSignin = $(HTML_TAB_TWO).appendTo(tabs);
+  tabSignin.submit(function () {
+    $.ajax({type: 'POST', url: '/sessions', dataType: 'json',
+      data: $('form', tabSignin).serialize(),
+      success: function (data) {
+        window.location = '/';
+      },
+      error: function () {
+        // invalid credentials
+        $('.invalid', tabSignin).show();
+        $(':submit', tabSignin).attr('disabled', '');
+      }
+    });
+    $(':submit', tabSignin).attr('disabled', 'disabled');
+    return false;
+  })
+  $('input:first', tabSignin).focus();
+  $('.invalid', tabSignin).hide();
   $(".birthday", tabs).datepicker({maxDate: "-13y", changeMonth: true,
                                    changeYear: true});
   tabs.tabs({selected: (jdom.hasClass('up') ? 0 : 1)});
@@ -318,7 +322,7 @@ function viewpic(id) {
 '<span class="time">'+p.datetime+'</span>'+
 '<p class="caption">crazy wildfires in LA!</p>'+
 '</div>'+
-'<div class="the_image s3"><img src="/photos/'+id+'" /></div>'+
+'<div class="the_image s3"><img src="/photo/'+id+'" /></div>'+
 '<p class="more"><a href="/photos/view/'+p.id+'">View full photo</a>'+
 "</td>"+
 '<td class="right pane"><p><a href="#">Share to Facebook</a></p><p><a href="#">Share to Twitter</a>'+

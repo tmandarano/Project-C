@@ -108,4 +108,20 @@ function save_photo($photo) {
     PhotoDAO::update($photo);
 }
 
+function photo_by_size() {
+    header('Content-Type: image/png');
+    switch (params('size')) {
+    case 0: header('Location: /img/30x30.jpg'); exit;
+    case 1: header('Location: /img/50x50.jpg'); exit;
+    case 2: header('Location: /img/50x50.jpg'); exit;
+    case 3: header('Location: /img/270x270.jpg'); exit;
+    case 'o': header('Location: /img/270x270.jpg'); exit;
+    }
+}
+
+function photo() {
+    params('size', 'o');
+    return photo_by_size();
+}
+
 ?>

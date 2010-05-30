@@ -1,82 +1,81 @@
 <?php
-/* Viscous represents the semi-dynamic, semi-static nature of these pages. */
 require_once('base_controller.php');
 require_once('src/utils/helpers.php');
 
+// Get one master copy of the session user if it exists.
+function get_session_user() {
+    return (empty($_SESSION['user'])) ? null : unserialize($_SESSION['user']);
+}
+function get_session_user_info($user) {
+    if ($user) {
+        return array(
+            'id' => $user->get_id(),
+            'name' => $user->get_username()
+        );
+    }
+    return array();
+}
+
 function home() {
     check_system_auth();
+    $user = get_session_user();
 
     $template = new BaseController();
-    $user = (empty($_SESSION['user'])) ? null : unserialize($_SESSION['user']);
+
     if ($user) {
-      $streamPhotos = array(451, 452, 453);
-      $socialStream = array(
-        array('user' => array('name'=>'Tony Mandarano'),
-              'action' => 'commented on',
-              'actionee' => array('name' => 'John Last'),
-              'photo' => array('id' => 451)),
-        array('user' => array('name'=>'Tony Mandarano'),
-              'action' => 'commented on',
-              'actionee' => array('name' => 'John Last'),
-              'photo' => array('id' => 451),
-              'descriptor' => 'nice'),
-        array('user' => array('name'=>'John Tamaguchi'),
-              'action' => 'tagged',
-              'actionee' => array('name' => 'Jessica Parker'),
-              'photo' => array('id' => 451),
-              'descriptor' => 'cute')
-      );
-      $suggestedPhotos = array(
-        array('id'=>451), array('id'=>452), array('id'=>453),
-        array('id'=>452), array('id'=>453), array('id'=>451),
-        array('id'=>452), array('id'=>453), array('id'=>451), array('id'=>452)
-      );
-      $suggestedPeople = array(
-        array('id'=>1), array('id'=>2), array('id'=>3),
-        array('id'=>1), array('id'=>2), array('id'=>3),
-        array('id'=>2), array('id'=>3), array('id'=>1), array('id'=>2)
-      );
-      $template->assign(array('title' => '', 'class' => 'livestreams', 'user' =>
-                             array('id' => $user->get_id(), 'name' => $user->get_username())));
-      $template->assign(array('stream' => $streamPhotos,
-                              'social' => $socialStream,
-                              'suggestedPhotos' => $suggestedPhotos,
-                              'suggestedPeople' => $suggestedPeople));
-      return html($template->fetch('live_streams.tpl'));
+        $streamPhotos = array(451, 452, 453);
+        $socialStream = array(
+          array('user' => 1, 'action' => 'commented on', 'actionee' => 2,
+                'photo' => 1),
+          array('user' => 1, 'action' => 'commented on', 'actionee' => 3,
+                'photo' => 451, 'descriptor' => 'nice'),
+          array('user' => 1, 'action' => 'tagged', 'actionee' => 2,
+                'photo' => 451, 'descriptor' => 'cute')
+        );
+        $trending = array('party', 'baseball', 'seahawks', 'car', 'funny', 'lunch');
+        $suggestedPhotos = array(451, 451, 451, 451, 451,
+                                 452, 452, 452, 452, 452);
+        $suggestedPeople = array(1, 1, 1, 1, 1,
+                                 1, 1, 1, 1, 1);
+        $template->assign(array('title' => '', 'class' => 'livestreams'));
+        $template->assign(array(
+            'user' => get_session_user_info($user), 
+            'stream' => $streamPhotos,
+            'social' => $socialStream,
+            'trending' => $trending,
+            'suggestedPhotos' => $suggestedPhotos,
+            'suggestedPeople' => $suggestedPeople));
+        return html($template->fetch('live_streams.tpl'));
     } else {
-      $template->assign('title', '');
-      $template->assign('class', 'home out');
-      return html($template->fetch('home.tpl'));
+        $template->assign(array('title'=>'', 'class'=>'home out'));
+        return html($template->fetch('home.tpl'));
     }
 }
 
 function getapp() {
     $template = new BaseController();
-    $template->assign('title', 'Download App');
-    $template->assign('class', 'getapp');
+    $template->assign(array('title'=>'Download App', 'class'=>'getapp'));
+    $template->assign(array('user' => $user_info));
     return html($template->fetch('getapp.tpl'));
 }
 
 /* About pages */
 function about_contact() {
     $template = new BaseController();
-    $template->assign('title', 'Contact | About');
-    $template->assign('class', 'about contact');
+    $template->assign(array('title'=>'Contact | About', 'class'=>'about contact'));
     return html($template->fetch('about_contact.tpl'));
 }
     
 function about_faq() {
     $template = new BaseController();
-    $template->assign('title', 'FAQ | About');
-    $template->assign('class', 'about faq');
+    $template->assign(array('title'=>'FAQ | About', 'class'=>'about faq'));
     return html($template->fetch('about_faq.tpl'));
 }
 
 /* Explore pages */
 function explore_map() {
     $template = new BaseController();
-    $template->assign('title', 'Map | Explore');
-    $template->assign('class', 'explore map');
+    $template->assign(array('title'=>'Map | Explore', 'class'=>'explore map'));
     return html($template->fetch('explore_map.tpl'));
 }
 
@@ -84,22 +83,16 @@ function explore_photos() {
     $template = new BaseController();
     $popCities = array('San Diego', 'Seattle', 'New York', 'Los Angeles', 'Miami');
     $trending = array('party', 'baseball', 'seahawks', 'car', 'funny', 'happy');
-    $suggestedPhotos = array(
-      array('id'=>451), array('id'=>452), array('id'=>453),
-      array('id'=>452), array('id'=>453), array('id'=>451),
-      array('id'=>452), array('id'=>453), array('id'=>452), array('id'=>453)
-    );
-    $suggestedPeople = array(
-      array('id'=>1), array('id'=>2), array('id'=>3),
-      array('id'=>1), array('id'=>2), array('id'=>3),
-      array('id'=>2), array('id'=>3), array('id'=>2), array('id'=>3)
-    );
-    $template->assign('popCities', $popCities);
-    $template->assign('trending', $trending);
-    $template->assign('suggestedPhotos', $suggestedPhotos);
-    $template->assign('suggestedPeople', $suggestedPeople);
-    $template->assign('title', 'Photos | Explore');
-    $template->assign('class', 'explore photos');
+    $suggestedPhotos = array(451, 452, 453, 452, 453,
+                             452, 451, 452, 453, 452);
+    $suggestedPeople = array(99, 99, 99, 99, 99,
+                             99, 99, 99, 99, 99);
+    $template->assign(array(
+        'popCities'=>$popCities,
+        'trending'=>$trending,
+        'suggestedPhotos'=>$suggestedPhotos,
+        'suggestedPeople'=>$suggestedPeople));
+    $template->assign(array('title'=>'Photos | Explore', 'class'=>'explore photos'));
     return html($template->fetch('explore_photos.tpl'));
 }
 
@@ -112,23 +105,24 @@ function explore_photos() {
 
 /* Share pages */
 function share_upload() {
+    check_system_auth();
+
     $template = new BaseController();
-    $template->assign('title', 'Upload | Share');
-    $template->assign('class', 'share upload');
+    $template->assign(array('title'=>'Upload | Share', 'class'=>'share upload'));
     return html($template->fetch('share_upload.tpl'));
 }
 
 function share_mobile() {
     $template = new BaseController();
-    $template->assign('title', 'Mobile | Share');
-    $template->assign('class', 'share mobile');
+    $template->assign(array('title'=>'Mobile | Share', 'class'=>'share mobile'));
     return html($template->fetch('share_mobile.tpl'));
 }
 
 function share_webcam() {
+    check_system_auth();
+
     $template = new BaseController();
-    $template->assign('title', 'Webcam | Share');
-    $template->assign('class', 'share webcam');
+    $template->assign(array('title'=>'Webcam | Share', 'class'=>'share webcam'));
     return html($template->fetch('share_webcam.tpl'));
 }
 
@@ -136,16 +130,7 @@ function profile() {
     $template = new BaseController();
     $user_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
     $user = UserDAO::get_user_by_id($user_id);
-    $similarPeople = array(
-      array('id' => 1, 'name' => 'Other person 1'),
-      array('id' => 1, 'name' => 'Other person 2'),
-      array('id' => 1, 'name' => 'Other person 3'),
-      array('id' => 1, 'name' => 'Other person 4'),
-      array('id' => 1, 'name' => 'Other person 5'),
-      array('id' => 1, 'name' => 'Other person 6'),
-      array('id' => 1, 'name' => 'Other person 7'),
-      array('id' => 1, 'name' => 'Other person 8')
-    );
+    $similarPeople = array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     $tags = array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6,
       'concert' => 8, 'fishing' => 6);
     $recent_photos = PhotoDAO::get_recent_photos_by_user($user_id, 4);
@@ -161,32 +146,20 @@ function profile() {
       'tags' => $tags,
       'mostRecent' => $mostRecent,
       'recentPhotos' => $recentPhotos,
-      'title' => $user['name'],
+      'title' => $user->get_username(),
       'class' => 'profile'));
     return html($template->fetch('users_profile.tpl'));
 }
 
 function settings() {
+    check_system_auth();
+
     $template = new BaseController();
-    $template->assign('title', 'Settings');
-    $template->assign('class', 'users settings'); // TODO change to match route
+    $template->assign(array('title'=>'Settings', 'class'=>'users settings'));
     return html($template->fetch('settings.tpl'));
 }
 
 /* Photos pages */
-function photo_by_size() {
-    switch (params('size')) {
-    case 0: header('Location: /img/30x30.jpg'); exit;
-    case 1: header('Location: /img/50x50.jpg'); exit;
-    case 2: header('Location: /img/50x50.jpg'); exit;
-    case 3: header('Location: /img/270x270.jpg'); exit;
-    case 'o': header('Location: /img/270x270.jpg'); exit;
-    }
-}
-function photo() {
-    params('size', 'o');
-    return photo_by_size();
-}
 
 function photos_view_by_id() {
     $template = new BaseController();
@@ -217,9 +190,7 @@ function photos_view_by_id() {
       'similarPhotos' => $similarPhotos,
       'prevPhotoId' => $prevPhotoId,
       'nextPhotoId' => $nextPhotoId));
-    $template->assign('title', 'Photo');
-    $template->assign('class', 'photos view');
+    $template->assign(array('title'=>'Photo', 'class'=>'photos view'));
     return html($template->fetch('photos_view.tpl'));
 }
-
 ?>

@@ -24,10 +24,6 @@
   <div class="tags">
     <h1>Trending Tags.</h1>
     <ul>
-      {php}
-      $tags = array('party', 'baseball', 'seahawks', 'car', 'funny', 'lunch');
-      $this->assign('tags', $tags);
-      {/php}
       {foreach from=$tags item=tag}
         <li><a href="{$tag}">{$tag}</a></li>
       {/foreach}
