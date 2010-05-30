@@ -2,22 +2,12 @@
 // John Resig - http://ejohn.org/ - MIT Licensed
 (function() {
   var cache = {};
-
   this.tmpl = function tmpl(str, data) {
-    // Figure out if we're getting a template, or if we need to
-    // load the template - and be sure to cache the result.
     var fn = !/\W/.test(str) ?  cache[str] = cache[str] ||
       tmpl(document.getElementById(str).innerHTML) :
-
-    // Generate a reusable function that will serve as a template
-    // generator (and which will be cached).
     new Function("obj",
       "var p=[],print=function(){p.push.apply(p,arguments);};" +
-
-      // Introduce the data as local variables using with(){}
       "with(obj){p.push('" +
-
-      // Convert the template into pure JavaScript
       str.replace(/[\r\t\n]/g, " ")
         .replace(/'(?=[^%]*%>)/g,"\t")
         .split("'").join("\\'")
@@ -26,7 +16,6 @@
         .split("<%").join("');")
         .split("%>").join("p.push('")
       + "');}return p.join('');");
-    // Provide some basic currying to the user
     return data ? fn(data) : fn;
   };
 })();
@@ -34,6 +23,33 @@
 var LG = LG ? LG: {};
 LG.G = (function() {
 var LGG = {};
+LGG.setupExpandable = function () {
+  $('.expandable').each(function () {
+    var pane = this;
+    var header = $('h1', pane);
+    var content = $('.content', pane);
+    function show() {
+      header.animate({width: '100%'}, 'fast', function () {
+        content.slideDown();
+      });
+      header.attr('expanded', 'true');
+    }
+    function hide() {
+      content.slideUp(function () {
+        header.animate({width: '30%'});
+      });
+      header.attr('expanded', 'false');
+    }
+    hide();
+    header.click(function () {
+      if (header.attr('expanded') == 'true') {
+        hide();
+      } else {
+        show();
+      }
+    });
+  });
+};
 LGG.HeaderStream = (function() {
 var H = function(jdom) {
   this.jdom = jdom;
@@ -114,40 +130,42 @@ LGG.showSigninPrompt = function(jdom) {
     "<li><a href='#tab2'><span>Sign in</span></a></li>",
     "</ul>",
     "</div>"].join('');
-  const HTML_TAB_CLOSE = '<img src="/img/button_close.png" />';
-  const STYLE_TAB_CLOSE = {"position": "absolute", "top": "-24px",
-          "right": "-24px", "cursor": "pointer"};
+  const HTML_TAB_CLOSE = '<img class="tab_close" src="/img/button_close.png" />';
   const HTML_TAB_ONE = ["<div id=\"tab1\">",
-     "<h1><strong>Step 1.</strong> Create an account using your Google or Facebook Account.</h1>",
-     "<table class=\"auths\"><tr>",
-     "<td><img src=\"/img/signup/connect_google.png\" /></td>",
-     "<td><img src=\"http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>",
-     "<td><a href=\"\">Direct Sign Up</a></td>",
-     "</tr></table>",
-     "<h1><strong>Step 2.</strong> Fill in the missing information.</h1>",
-     "<form action=\"/users\" method=\"POST\">",
-     "<div class=\"info\">",
-     "<div class=\"userphoto\">",
-       "<h1>Profile Photo</h1>",
-       "<img src=\"/img/50x50.jpg\" /><br />",
-       "<p><a href=\"#\">Choose a photo</a></p>",
-     "</div>",
-     "<table>",
-     "<tr><th>Display name</th><td><input type=\"text\" name=\"username\" /></td>",
-     "<tr><th>       Email</th><td><input type=\"text\" name=\"email\" /></td>",
-     "<tr><th>    Birthday</th><td><input class=\"birthday\" type=\"text\" name=\"date_of_birth\" /></td>",
-     "<tr><th>    Location</th><td><input type=\"text\" name=\"location\" /></td>",
-     "</table>",
-     "</div>",
-     "<p><input name=\"privacy\" type=\"checkbox\" />",
-       "<label for=\"privacy\">I agree to the LiveGather's ",
-       "<a href=\"\">privacy policy</a> and ",
-       "<a href=\"\">terms and conditions</a></label></p>",
-     "<p><input name=\"email\" type=\"checkbox\" />",
-       "<label for=\"email\">I am ok with receiving emails from LiveGather",
-       "</label></p>",
-     "<input type=\"image\" src=\"/img/signup/create.png\" />",
-     "</form>",
+    '<div class="expandable step1">',
+      '<h1>Create your account</h1>',
+      '<div class="content">',
+         '<form action="/users" method="POST" class="info">',
+         '<div class="info">',
+         "<table>",
+         "<tr><th>Display name</th><td><input type=\"text\" name=\"username\" /></td>",
+         "<tr><th>       Email</th><td><input type=\"text\" name=\"email\" /></td>",
+         "<tr><th>    Birthday</th><td><input class=\"birthday\" type=\"text\" name=\"date_of_birth\" /></td>",
+         "<tr><th>    Location</th><td><input type=\"text\" name=\"location\" /></td>",
+         "</table>",
+         "</div>",
+         "<p><input name=\"privacy\" type=\"checkbox\" />",
+           "<label for=\"privacy\">I agree to the LiveGather's ",
+           "<a href=\"\">privacy policy</a> and ",
+           "<a href=\"\">terms and conditions</a></label></p>",
+         "<p><input name=\"email\" type=\"checkbox\" />",
+           "<label for=\"email\">I am ok with receiving emails from LiveGather",
+           "</label></p>",
+         "<input type=\"image\" src=\"/img/signup/create.png\" />",
+         "</form>",
+      '</div>',
+    '</div>',
+    '<div class="expandable step2">',
+      '<h1>Connect!</h1>',
+      '<div class="content">',
+         '<p>Connect to other social networking sites to have your photos automatically posted.</p>',
+         '<table class="auths"><tr>',
+         '<td><img src="/img/signup/connect_google.png" /></td>',
+         '<td><img src="http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>',
+         '<td><a href="">Direct Sign Up</a></td>',
+         '</tr></table>',
+      '</div>',
+    '</div>',
      "</div>"].join('');
   const HTML_TAB_TWO = [
     '<div id="tab2" class="signin">',
@@ -180,7 +198,7 @@ LGG.showSigninPrompt = function(jdom) {
       '</div>'].join('');
   var dimmer = $(HTML_DIMMER).appendTo('body');
   var tabs = $(HTML_SIGNINUP).appendTo(dimmer);
-  var close = $(HTML_TAB_CLOSE).css(STYLE_TAB_CLOSE).appendTo(tabs);
+  var close = $(HTML_TAB_CLOSE).appendTo(tabs);
   $(HTML_TAB_ONE).appendTo(tabs)
     .find('form').submit(function () {
       $.ajax({type: 'POST', url: '/users', dataType: 'json',
@@ -217,6 +235,7 @@ LGG.showSigninPrompt = function(jdom) {
   tabs.click(function (e) { e.stopPropagation(); });
   close.click(destroy);
   dimmer.click(destroy);
+  LGG.setupExpandable();
 };
 
 LGG.init = function() {
@@ -297,6 +316,8 @@ LGG.init = function() {
 return LGG;
 })();
 
+$(LG.G.init);
+
 function viewpic(id) {
   var dimmer = $('<div id="viewpic_dimmer" class="dimmer"></div>')
     .css('top', $('#header').height())
@@ -352,5 +373,3 @@ function viewpic(id) {
   viewer.click(function(e) {e.stopPropagation();});
   close.click(destroy);
 }
-
-$(LG.G.init);

@@ -86,6 +86,7 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   cursor: pointer;
 }
 
+.tab_close { position: absolute; top: -24px; right: -24px; cursor: pointer; }
 .signinup {
   margin: auto;
   background-color: white;
@@ -794,12 +795,12 @@ input.comment:focus {
 .settings h1 {
 }
 
-.settings .expandable {
+.expandable {
   margin: auto;
   width: 680px;
   margin-bottom: 1em;
 }
-.settings .expandable h1 {
+.expandable h1 {
   margin-left: -2%;
   background: url('/img/settings_bar.png') no-repeat;
   height: 39px;
@@ -811,7 +812,7 @@ input.comment:focus {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
-.settings .expandable .content {
+.expandable .content {
   background-color: #ededed;
   padding: 1em;
   width: 92%;
