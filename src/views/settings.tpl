@@ -1,3 +1,4 @@
+<div id="settings">
 <div class="expandable basic">
   <h1>Basic Information</h1>
   <div class="content">
@@ -43,6 +44,7 @@
     </table>
     <img src="/img/button_save_changes.png" />
   </div>
+</div>
 </div>
 
 {capture name=scripts}

@@ -291,18 +291,12 @@ img.s3, .s3 img { min-height: 50px; max-width: 400px; max-height: 450px; }
   width: 100%;
   padding: 0;
 }
-.explore.map #shelf {
-  background-color: black;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 3em;
-  z-index: 100;
+.explore.map .search.controls {
+  height: 2.5em;
+  line-height: 2.5em;
 }
-.explore.map #shelf table {
-  height: 100%;
-  width: 100%;
-  text-align: center;
+.explore.map .search.controls * {
+  vertical-align: middle;
 }
 .explore.map #shelf .zeitgeist { text-align: center; }
 
@@ -790,20 +784,18 @@ input.comment:focus {
 .detailed.stream li.map .detail.map,
 .detailed.stream li.meta .detail.meta { display: block; }
 
-.settings h1 {
-}
+.settings #settings { margin: auto; width: 680px; }
 
 .expandable {
   margin: auto;
-  width: 680px;
   margin-bottom: 1em;
 }
 .expandable h1 {
-  margin-left: -2%;
   background: url('/img/settings_bar.png') no-repeat;
   height: 39px;
   line-height: 39px;
-  padding-left: 10px;
+  padding-left: 2%;
+  width: 98%;
   color: white;
   font-weight: bold;
   border-radius: 4px;
@@ -813,7 +805,8 @@ input.comment:focus {
 .expandable .content {
   background-color: #ededed;
   padding: 1em;
-  width: 92%;
+  margin: 0 2%;
+  width: 90%;
   text-align: center;
 }
 .settings .basic .content h1 { background: none; color: black; }

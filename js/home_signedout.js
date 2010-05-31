@@ -42,6 +42,7 @@ H.init = function() {
     center: new google.maps.LatLng(32.77977,-117.137947),
     mapTypeId: google.maps.MapTypeId.TERRAIN,
     draggable: false,
+    scrollwheel: false,
     disableDoubleClickZoom: true,
     disableDefaultUI: true,
     mapTypeControl: false

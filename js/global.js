@@ -21,6 +21,7 @@
 })();
 
 function defaultTo(x, d) { return x ? x : d; }
+const GM = google.maps;
 
 var LG = LG ? LG: {};
 LG.G = (function() {
@@ -31,14 +32,14 @@ LGG.setupExpandable = function () {
     var header = $('h1', pane);
     var content = $('.content', pane);
     function show() {
-      header.animate({width: '100%'}, 'fast', function () {
+      header.animate({width: '98%'}, 'fast', function () {
         content.slideDown();
       });
       header.attr('expanded', 'true');
     }
     function hide() {
       content.slideUp(function () {
-        header.animate({width: '30%'});
+        header.animate({width: '200px'});
       });
       header.attr('expanded', 'false');
     }
@@ -135,25 +136,21 @@ LGG.showSigninPrompt = function(jdom) {
   const HTML_TAB_CLOSE = '<img class="tab_close" src="/img/button_close.png" />';
   const HTML_TAB_ONE = ["<div id=\"tab1\">",
     '<div class="expandable step1">',
-      '<h1>Create your account</h1>',
+      '<h1>Tell us about you</h1>',
       '<div class="content">',
          '<form action="/users" method="POST" class="info">',
          '<div class="info">',
          "<table>",
-         "<tr><th>Display name</th><td><input type=\"text\" name=\"username\" /></td>",
-         "<tr><th>       Email</th><td><input type=\"text\" name=\"email\" /></td>",
-         "<tr><th>    Birthday</th><td><input class=\"birthday\" type=\"text\" name=\"date_of_birth\" /></td>",
-         "<tr><th>    Location</th><td><input type=\"text\" name=\"location\" /></td>",
+         '<tr><th class="invalid" colspan="2">Sorry, there was a problem signing you up. Please try again later.</th></tr>',
+         '<tr><th>    Name</th><td><input type="text" name="username" /></td>',
+         '<tr><th>   Email</th><td><input type="text" name="email" /></td>',
+         '<tr><th>Password</th><td><input type="password" name="password" /></td>',
+         '<tr><th>Location</th><td><input type="text" name="location" class="default" value="city or zip code" /></td>',
+         '<tr><th>Birthday</th><td><input class="birthday" type="text" name="date_of_birth" /></td>',
          "</table>",
          "</div>",
-         "<p><input name=\"privacy\" type=\"checkbox\" />",
-           "<label for=\"privacy\">I agree to the LiveGather's ",
-           "<a href=\"\">privacy policy</a> and ",
-           "<a href=\"\">terms and conditions</a></label></p>",
-         "<p><input name=\"email\" type=\"checkbox\" />",
-           "<label for=\"email\">I am ok with receiving emails from LiveGather",
-           "</label></p>",
-         "<input type=\"image\" src=\"/img/signup/create.png\" />",
+         "<p>By clicking &ldquo;Next&rdquo; I agree to LiveGather&rsquo;s <a href=\"\">terms and conditions</a>.",
+         "<button>Next</button>",
          "</form>",
       '</div>',
     '</div>',
@@ -164,7 +161,6 @@ LGG.showSigninPrompt = function(jdom) {
          '<table class="auths"><tr>',
          '<td><img src="/img/signup/connect_google.png" /></td>',
          '<td><img src="http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif\" /></td>',
-         '<td><a href="">Direct Sign Up</a></td>',
          '</tr></table>',
       '</div>',
     '</div>',
@@ -201,16 +197,23 @@ LGG.showSigninPrompt = function(jdom) {
   var dimmer = $(HTML_DIMMER).appendTo('body');
   var tabs = $(HTML_SIGNINUP).appendTo(dimmer);
   var close = $(HTML_TAB_CLOSE).appendTo(tabs);
-  $(HTML_TAB_ONE).appendTo(tabs)
-    .find('form').submit(function () {
-      $.ajax({type: 'POST', url: '/users', dataType: 'json',
-        data: $(this).serialize(),
-        success: function (data) {
-        },
-        error: function () {
-        }});
-      return false;
-    });
+  var tabSignup = $(HTML_TAB_ONE).appendTo(tabs);
+  $('form', tabSignup).submit(function () {
+    $.ajax({type: 'POST', url: '/users', dataType: 'json',
+      data: $(this).serialize(),
+      success: function (data) {
+        $('.expandable.step1 h1', tabSignup).click();
+        $('.expandable.step2 h1', tabSignup).click();
+      },
+      error: function () {
+        $('.invalid', tabSignup).show();
+      }});
+    return false;
+  });
+  $('button', tabSignup).button().click(function () {
+    $('form', tabSignup).submit();
+  });
+  $('.invalid', tabSignup).hide();
   var tabSignin = $(HTML_TAB_TWO).appendTo(tabs);
   tabSignin.submit(function () {
     $.ajax({type: 'POST', url: '/sessions', dataType: 'json',
