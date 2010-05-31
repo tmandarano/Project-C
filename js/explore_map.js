@@ -1,53 +1,34 @@
-var LG = LG ? LG : {};
-LG.pics = [];
-LG.picMarker = function(pic) {
-  var markerOpts = {
-    title: pic.User.name+': '+pic.caption,
-    position: new google.maps.LatLng(pic.lat, pic.lng),
-    icon: new google.maps.MarkerImage('pictures/'+pic.id/*,
-      new google.maps.Size(pic.width, pic.height)*/
+LG.photoMarker = function(photo) {
+  return new GM.Marker({
+    title: photo.user.name+': '+photo.caption,
+    icon: new GM.MarkerImage('photo/'+photo.id/*,
+      new GM.Size(pic.width, pic.height)*/
     )
-  }
-  return new google.maps.Marker(markerOpts);
+  });
 };
-LG.mapAddPic = function(map, pic) {
-  var marker = LG.picMarker(pic);
+
+LG.ExploreMap = {
+  map: null,
+  photos: []
+};
+LG.ExploreMap.addPhoto = function (photo_id) {
+  var marker = LG.photoMarker(pic);
   marker.setMap(map);
-  google.maps.event.addListener(marker, 'click', function() {
-    viewpic(pic.id);
+  GM.event.addListener(marker, 'click', function () {
+    window.location = '/photos/view/' + photo_id;
   });
   LG.pics.push(marker);
 };
 
-var map;
-
 $(function () {
-  var latlng = new google.maps.LatLng(32.77977,-117.137947);
+  var latlng = new GM.LatLng(32.77977,-117.137947);
   var mapOpts = {
     zoom: 7,
     center: latlng,
-    mapTypeId: google.maps.MapTypeId.TERRAIN,
-    disableDefaultUI: true,
+    mapTypeId: GM.MapTypeId.TERRAIN,
     mapTypeControl: false
   };
-  
-  map = new google.maps.Map(document.getElementById("map_explore"), mapOpts);
+  LG.ExploreMap.map = new GM.Map(document.getElementById("map_explore"), mapOpts);
 
-  LG.mapAddPic(map, {
-    id:'2',
-    caption:'',
-    lat:'34',
-    lng:'-117',
-    User:{name:'testuser!123'}
-  });
-  LG.mapAddPic(map, {
-    id:'3',
-    caption:'',
-    lat:'39',
-    lng:'-114',
-    User:{name:'testuser!123'}
-  });
-
-  // Shelf needs to be transparent
-  $('#shelf').fadeTo(0, 0.9);
+  $('#time').buttonset();
 });

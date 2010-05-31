@@ -1,35 +1,30 @@
-<div id="shelf">
-<table>
-<tr>
-<td>
-<form action="/explore/search" method="get">
-<input type="text" size="9" />
-<input name="commit" type="submit" value="Search" />
-</form>
-</td>
-<td>
-  <ul class="stream_type">
-    <li class="type">Friends</li>
-    <li>Watching</li>
-    <li>Everyone</li>
-  </ul>
-</td>
-<td><a href="#">Most Interesting</a></td>
-<td><a href="#">Most Recent</a></td>
-<td><p>__Current_Location</p></td>
-<td class="zeitgeist">
-  <p>
-    <a href="#" onclick="viewpic('451');">football</a>
-    <a href="#" onclick="viewpic('451');">game</a>
-    <a href="#" onclick="viewpic('451');">car</a>
-    <a href="#" onclick="viewpic('451');">speech</a>
-    <a href="#" onclick="viewpic('451');">beach</a>
-  </p>
-</td>
-</tr>
-</table>
+<div class="search controls">
+  <form action="/explore/search" method="GET">
+    <input type="text" size="20" name="what" value="What" class="default" />
+    <input type="text" size="15" name="where" value="Where" class="default" />
+    <input type="submit" value="Search" />
+    <select name="network">
+      <option value="everyone">Everyone</option>
+      <option value="watching">Watching</option>
+      <option value="friends">Friends</option>
+    </select>
+  </form>
 </div>
-<div id="map_explore" style="height: 700px;"></div>
+<div id="map_explore" style="height: 500px;"></div>
+<div id="results" class="stream">
+  <div class="controls">
+    <select name="most">
+      <option value="recent">Most Recent</option>
+      <option value="commented">Most Commented</option>
+      <option value="liked">Most Liked</option>
+    </select>
+    <div id="time">
+      <input type="radio" name="radio" id="timeday" checked="checked"><label for="timeday">day</label>
+      <input type="radio" name="radio" id="timeweek"><label for="timeweek">week</label>
+      <input type="radio" name="radio" id="timemonth"><label for="timemonth">month</label>
+    </div>
+  </div>
+</div>
 {capture name="scripts"}
 <script type="text/javascript" src="/js/explore_map.js"></script>
 {/capture}
