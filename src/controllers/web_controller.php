@@ -1,11 +1,34 @@
 <?php
-require_once('base_controller.php');
+require_once('special/lib/smarty/libs/Smarty.class.php');
 require_once('src/utils/helpers.php');
+
+/* Template extends Smarty to get the Smarty templating with special 
+ * settings. */
+class Template extends Smarty {
+    function __construct() {
+        $this->Smarty();
+        $this->template_dir = 'src/views/';
+        $this->compile_dir = 'special/smarty_pants/compiled';
+        $this->config_dir = 'special/smarty_pants/config';
+        $this->cache_dir = 'special/smarty_pants/cache';
+        $this->plugins_dir[] = 'special/smarty_pants/plugins';
+    }
+
+    function fetch($template) {
+        $this->assign('content', $template);
+        return parent::fetch('base.tpl');
+    }
+
+    function untemplated_fetch($template) {
+        return parent::fetch($template);
+    }
+}
 
 // Get one master copy of the session user if it exists.
 function get_session_user() {
     return (empty($_SESSION['user'])) ? null : unserialize($_SESSION['user']);
 }
+
 function get_session_user_info($user) {
     if ($user) {
         return array(
@@ -14,6 +37,12 @@ function get_session_user_info($user) {
         );
     }
     return array();
+}
+
+function eye () {
+    $template = new Template();
+    $template->assign(array('title'=>'', 'class'=>'eye'));
+    return html($template->fetch('eye.tpl'));
 }
 
 function home() {
@@ -121,12 +150,11 @@ function share_mobile() {
 }
 function getapp() {
     $user = get_session_user();
-    $template = new BaseController();
+    $template = new Template();
     $template->assign(array('title'=>'Download App | Mobile | Share', 'class'=>'getapp'));
     $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('getapp.tpl'));
 }
-
 
 function share_webcam() {
     check_system_auth();
@@ -141,7 +169,7 @@ function share_webcam() {
 function profile() {
     $user = get_session_user();
 
-    $template = new BaseController();
+    $template = new Template();
     $user_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
     $user = UserDAO::get_user_by_id($user_id);
     $similarPeople = array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
@@ -179,7 +207,7 @@ function settings() {
 
 function photos_view_by_id() {
     $user = get_session_user();
-    $template = new BaseController();
+    $template = new Template();
     $photo_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
     $profileuser = array('id' => 1, 'name' => 'jonnyApple', 'location' => 'San Diego, CA',
                   'datetime' => '33 minutes ago');

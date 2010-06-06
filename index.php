@@ -1,5 +1,5 @@
 <?php /* Entry point for Project C */
-require_once('lib/limonade.php');
+require_once('special/lib/limonade.php');
 
 function configure() {
     $env = ($_SERVER['HTTP_HOST'] == 'dev.livegather.com') ? ENV_PRODUCTION : ENV_DEVELOPMENT;
@@ -30,7 +30,8 @@ function configure() {
     option('IMAGES_DIR', $_SERVER['DOCUMENT_ROOT'].'/images/');
 }
 
-dispatch        ('/',                     'home');
+dispatch        ('/',                     'eye');
+//dispatch        ('/',                     'home');
 dispatch        ('/getapp',               'getapp');
 dispatch        ('/download',             'getapp');
 
