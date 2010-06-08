@@ -35,8 +35,12 @@ function users_get_by_photo_id() {
 function users_create() {
     check_system_auth();
 
-    $data = $_POST;
-    
+    $data = get_json_input();
+
+    if($data == null) {
+        $data = $_POST;
+    }   
+ 
     $user = new User();
     
     // TODO check to make sure username not taken
@@ -48,7 +52,7 @@ function users_create() {
     
     $returned_id = UserDAO::save($user);
     $user->set_id($returned_id);
-    
+
     return json($user);
 }
 

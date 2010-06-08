@@ -72,7 +72,7 @@ HP.append = function(json) {
   p.lat = 32;
   p.lng = -117;
   p.user = {name: 'name'}; // TODO
-  $('<li><a href="/photos/view/'+p.id+'"><img src="/photo/'+p.id+'/2" title="'+p.user.name+': '+p.name+'"/></a></li>')
+  $('<li><a href="/api/photos/'+p.id+'"><img src="/photo/'+p.id+'/2" title="'+p.user.name+': '+p.name+'"/></a></li>')
     .data('json', json)
     .appendTo(this.jdom);
   if (this.ready) {
@@ -138,20 +138,7 @@ LGG.showSigninPrompt = function(jdom) {
     '<div class="expandable step1">',
       '<h1>Tell us about you</h1>',
       '<div class="content">',
-         '<form action="/users" method="POST" class="info">',
-         '<div class="info">',
-         "<table>",
-         '<tr><th class="invalid" colspan="2">Sorry, there was a problem signing you up. Please try again later.</th></tr>',
-         '<tr><th>    Name</th><td><input type="text" name="username" /></td>',
-         '<tr><th>   Email</th><td><input type="text" name="email" /></td>',
-         '<tr><th>Password</th><td><input type="password" name="password" /></td>',
-         '<tr><th>Location</th><td><input type="text" name="location" class="default" value="city or zip code" /></td>',
-         '<tr><th>Birthday</th><td><input class="birthday" type="text" name="date_of_birth" /></td>',
-         "</table>",
-         "</div>",
-         "<p>By clicking &ldquo;Next&rdquo; I agree to LiveGather&rsquo;s <a href=\"\">terms and conditions</a>.",
-         "<button>Next</button>",
-         "</form>",
+      '<a class="rpxnow" onclick="return false;" href="https://gather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2Flocalhost"> Sign In </a>',
       '</div>',
     '</div>',
     '<div class="expandable step2">',
@@ -349,7 +336,7 @@ function viewpic(id) {
 '<p class="caption">crazy wildfires in LA!</p>'+
 '</div>'+
 '<div class="the_image s3"><img src="/photo/'+id+'" /></div>'+
-'<p class="more"><a href="/photos/view/'+p.id+'">View full photo</a>'+
+'<p class="more"><a href="/api/photos/'+p.id+'">View full photo</a>'+
 "</td>"+
 '<td class="right pane"><p><a href="#">Share to Facebook</a></p><p><a href="#">Share to Twitter</a>'+
 '<div class="similar"><h1 class="bubble">Similar pictures nearby</h1>'+

@@ -15,7 +15,7 @@ LG.ExploreMap.addPhoto = function (photo_id) {
   var marker = LG.photoMarker(pic);
   marker.setMap(map);
   GM.event.addListener(marker, 'click', function () {
-    window.location = '/photos/view/' + photo_id;
+    window.location = '/api/photos/' + photo_id;
   });
   LG.pics.push(marker);
 };

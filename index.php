@@ -45,29 +45,8 @@ dispatch        ('/share/upload',         'share_upload');
 dispatch        ('/share/mobile',         'share_mobile');
 dispatch        ('/share/webcam',         'share_webcam');
 
-dispatch        ('/photos/view/:id',      'photos_view_by_id');
-
-dispatch        ('/photo/:id',            'photo');
-dispatch        ('/photo/:id/:size',      'photo_by_size');
-
 dispatch        ('/profile/:id',          'profile');
 dispatch        ('/settings',             'settings');
-
-/* REST routes */
-dispatch_get    ('/users/',                           'users_get');
-dispatch_get    ('/users/:id',                        'users_get_by_id');
-dispatch_get    ('/users/:id/photos/',                'photos_get_by_user_id');
-dispatch_get    ('/users/:id/photos/days/:days',      'photos_get_by_user_id_recent');
-dispatch_post   ('/users/',                           'users_create');
-dispatch_get    ('/users/photo/:id',                  'users_get_photo_by_id');
-dispatch_post   ('/sessions/',                        'sessions_create');
-dispatch_delete ('/sessions/',                        'sessions_delete');
-dispatch        ('/signout',                          'sessions_delete');
-dispatch_get    ('/photos/',                          'photos_get');
-dispatch_get    ('/photos/:id',                       'photos_get_by_id');
-dispatch_get    ('/photos/recent/:limit',             'photos_recent');
-dispatch_get    ('/photos/:id/user/',                 'users_get_by_photo_id');
-dispatch_post   ('/photos/',                          'photos_create');
 
 run();
 

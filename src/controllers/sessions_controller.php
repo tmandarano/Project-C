@@ -4,7 +4,12 @@ require_once('src/utils/logging.php');
 require_once('src/utils/helpers.php');
 
 function sessions_create() {
-    $data = $_POST;
+    $data = get_json_input();
+
+    if($data == null) {
+        $data = $_POST;
+    }   
+
     $password = $data['password'];
 
     if(! preg_match('/^[a-f0-9]{32}$/', $password)) {
