@@ -3,9 +3,8 @@ class User {
     public $id;
     public $username;
     public $email;
-    public $password;
-    public $date_of_birth;
-    public $location;
+    public $photo_url;
+    public $identifier;
     public $date_added;
     public $date_modified;
     
@@ -33,28 +32,20 @@ class User {
         return $this->email;
     }
 
-    public function get_password() {
-        return $this->password;
+    public function get_photo_url() {
+        return $this->photo_url;
     }
     
-    public function set_password($password) {
-        $this->password = $password;
+    public function set_photo_url($photo_url) {
+        $this->photo_url = $photo_url;
     }
 
-    public function get_date_of_birth() {
-        return $this->date_of_birth;
+    public function get_identifier() {
+        return $this->identifier;
     }
     
-    public function set_date_of_birth($date_of_birth) {
-        $this->date_of_birth = $date_of_birth;
-    }
-
-    public function get_location() {
-        return $this->location;
-    }
-    
-    public function set_location($location) {
-        $this->location = $location;
+    public function set_identifier($identifier) {
+        $this->identifier = $identifier;
     }
 
     public function get_date_added() {

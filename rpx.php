@@ -1,4 +1,9 @@
 <?php
+require_once('src/models/user.php');
+require_once('src/dao/user_dao.php');
+require_once('src/utils/config.php');
+
+Config::configure();
 
 $rpxApiKey = '6af1713bce4897a0067343c5da898e1dccb6862d';  
 
@@ -44,10 +49,27 @@ if(isset($_POST['token'])) {
       $email = $profile['email'];
     }
 
-    /* STEP 4: Use the identifier as the unique key to sign the user into your system.
-       This will depend on your website implementation, and you should add your own
-       code here.
-    */
+    $user = UserDAO::get_user_by_identifier($identifier);
+
+    if(!is_null($user)) {
+        $_SESSION['user'] = serialize($user);
+
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/index.php');
+    } else {
+        // This should happen in another step where we forward the user to a page where 
+        // they are asked to create an account on our system.
+        $user = new User();
+        $user->set_username($name);
+        $user->set_email($email);
+        $user->set_identifier($identifier);
+        $user->set_photo_url($photo_url);
+
+        $user_id = UserDao::save($user);
+        $user->set_id($user_id);
+
+        $_SESSION['user'] = serialize($user);
+
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/index.php');    }
 
 /* an error occurred */
 } else {

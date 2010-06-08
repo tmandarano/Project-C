@@ -32,11 +32,9 @@ class UserDAO {
         return $user;
     }
 
-    public static function get_user_by_standard_auth($username, $password) {
-        $sql = 'SELECT * FROM user WHERE username = :username AND ';
-        $sql .= 'password = :password';
-        $users = find_objects_by_sql($sql, array(':username'=>$username,
-                                                 ':password'=>$password),
+    public static function get_user_by_identifier($identifier) {
+        $sql = 'SELECT * FROM user WHERE identifier = :identifier ';
+        $users = find_objects_by_sql($sql, array(':identifier'=>$identifier),
                                      'User');
 
         if($users && count($users) > 0) {
@@ -52,21 +50,18 @@ class UserDAO {
         $user->set_date_modified($now);
         $user->set_date_added($now);
 
-        $birthday = date("Y-m-d H:i:s", strtotime($user->get_date_of_birth())); 
-        $user->set_date_of_birth($birthday);
-
         if($update) {
             $user_id = update_object($user, 'user', UserDao::user_columns());
         } else {
             $user_id = create_object($user, 'user', UserDao::user_columns());        
         }
-        debug($user_id);
+
         return $user_id;
     }
 
     private static function user_columns() {
-        return array('id', 'username', 'email', 'password', 'location',
-                     'date_of_birth', 'date_added', 'date_modified');
+        return array('id', 'username', 'email', 'photo_url', 'identifier',
+                     'date_added', 'date_modified');
     }
 }
 ?>

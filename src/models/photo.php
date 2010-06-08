@@ -6,9 +6,8 @@ class Photo {
 	public $name;
 	public $latitude;
 	public $longitude;
-	public $location;
     public $caption;
-	public $comments;
+    //	public $comments;
 	public $tags;
 	public $data_added;
 	public $date_modified;
@@ -61,14 +60,6 @@ class Photo {
         return $this->longitude;
     }
 
-    public function set_location($location) {
-		$this->location = $location;
-	}
-
-    public function get_location() {
-        return $this->location;
-    }
-
     public function set_caption($caption) {
         $this->caption = $caption;
     }
@@ -84,7 +75,7 @@ class Photo {
     public function set_tags($tags) {
         $this->tags = $tags;
     }
-
+    /*
     public function get_comments() {
         return $this->comments;
     }
@@ -92,7 +83,7 @@ class Photo {
     public function set_comments($comments) {
         $this->comments = $comments;
     }
-
+    */
     public function get_date_added() {
         return $this->date_added;
     }
