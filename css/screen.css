@@ -22,15 +22,19 @@ a { text-decoration: none; color: #1584b2; }
 
 /* classes */
 input[type="text"],
-input[type="password"] {
-  background-color: #ddd;
-  border: 1px solid #aaa;
-  color: #6e6e6e;
+input[type="password"],
+input[type="submit"]{
   font-size: 1.1em;
   vertical-align: middle;
   border-radius: 0.3em;
   -webkit-border-radius: 0.3em;
   -moz-border-radius: 0.3em;
+}
+input[type="text"],
+input[type="password"] {
+  background-color: #ddd;
+  border: 1px solid #aaa;
+  color: #6e6e6e;
 }
 input[type="text"].controls,
 input[type="password"].controls {
@@ -44,10 +48,20 @@ input[type="text"]:focus,
 input[type="password"]:focus { background-color: #ffc; border-color: #9cda60; }
 input[type="text"].default { color: #bbb; }
 
+input[type="submit"] {
+  background: #333;
+  color: #fff;
+  font-weight: bold;
+  height: 28px;
+  padding: 0 0.5em;
+  border: 1px solid #555;
+  letter-spacing: -1px;
+}
+
 h1 { font-size: larger; }
 h1 strong { font-weight: bold; }
 
-.softener { background: url('/img/grad_content.png') repeat-x; height: 30px; }
+.softener { background: url('/img/grad_content.png') repeat-x; height: 5px; }
 
 /* Setup table for split content */
 .split { width: 100%; }
@@ -74,8 +88,11 @@ h1 strong { font-weight: bold; }
 #logo img { vertical-align: middle; }
 #logo a { padding: 0 1em; height: 100%; }
 
-.nav .sign { float: right; }
 .nav .sign.in {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -18px;
   background-color: #bbff99;
   vertical-align: middle;
   height: 28px;
@@ -152,11 +169,6 @@ h1 strong { font-weight: bold; }
 }
 .signinup .signin .auths li { vertical-align: middle; text-align: right; }
 
-.eye #content { width: 100%; }
-
-#trendingtags { height: 2em; line-height: 2em; }
-#trendingtags ol li, 
-#trendingtags ol li h1 { display: inline; font-size: small; }
 .fade {
   position: absolute;
   top: 0;
@@ -166,6 +178,19 @@ h1 strong { font-weight: bold; }
   z-index: 20;
 }
 .fade.right { right: 0; background-position: -30px 0; }
+
+.eye #content { width: 100%; }
+
+#trendingtags { position: relative; height: 2em; line-height: 2em; }
+#trendingtags li, 
+#trendingtags h1 { display: inline; font-size: 0.9em; }
+#trendingtags h1 { font-weight: bold; }
+
+#livestream { position: relative; height: 100px; line-height: 100px; }
+#livestream ol { height: inherit; }
+#livestream li,
+#livestream p { display: inline; }
+#livestream img { width: 100px; max-height: 100px; }
 
 .search h1 {
   color: #3b0;

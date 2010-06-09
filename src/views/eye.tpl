@@ -9,11 +9,11 @@
 <div id="map"></div>
 <div class="softener"></div>
 <div id="livestream">
-  <div class="controls">
-    <h1><strong>Live</strong>Stream</h1>
-    <ol>
-    </ol>
-  </div>
+  <ol>
+    <li><a href=""><img src="/photo/101/3" /></a></li>
+  </ol>
+  <span class="fade left"></span>
+  <span class="fade right"></span>
 </div>
 {capture name="scripts"}
 <script type="text/html" id="templates">

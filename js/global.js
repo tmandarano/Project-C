@@ -21,6 +21,16 @@
 })();
 
 function defaultTo(x, d) { return x ? x : d; }
+function waitUntil(until, sleepInterval) {
+  if (until()) { return; }
+  setTimeout(arguments.caller, defaultTo(sleepInterval, 250));
+}
+function foldr(f, z, xs) {
+  if (xs.length == 0) { return z; }
+  return f(xs[0], foldr(f, z, xs.slice(1)));
+};
+function addPair(a, b) { return a + b; };
+function sum(xs) { return foldr(addPair, 0, xs); };
 const GM = google.maps;
 
 var LG = LG ? LG: {};
