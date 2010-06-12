@@ -135,16 +135,61 @@ var D = function(jdom) {
 return D;
 });
 
+LGG.dimmedDialog = function(jdom) {
+  const HTML_DIMMER = '<div class="dialog dimmer"></div>';
+  const HTML_TAB_CLOSE = '<img class="dialog close" src="/img/button_close.png" />';
+  const dimmer = $(HTML_DIMMER);
+  const close = $(HTML_TAB_CLOSE)
+    .mousedown(function () { $(this).fadeTo('fast', 0.8); });
+  const destroy = function () {
+    dimmer.hide('fast');
+    dimmer.detach();
+    close.detach();
+    jdom.detach();
+  }
+  jdom.addClass('dialog win');
+  jdom.click(function (e) { e.stopPropagation(); });
+  dimmer.appendTo('body').append(jdom).show();
+  close.appendTo(jdom).click(destroy);
+  //dimmer.click(destroy);
+};
+
+LGG.showWelcome = function () {
+  const HTML_WELCOME = [
+    '<div id="welcome">',
+      '<h1 class="logo"><img src="/img/logo/medplus_no_tag.png" /></h1>',
+      '<table>',
+        '<tr>',
+          '<td class="app">',
+            '<h1><div class="whitecircle">1</div></h1>',
+            '<h2>Download the App</h2>',
+            '<a href="#"><img src="/img/welcome/app.png" /></a>',
+            '<p>click the app to download</p>',
+          '</td>',
+          '<td class="connect">',
+            '<h1><div class="whitecircle">2</div></h1>',
+            '<h2>Sign in with any of these services</h2>',
+          '</td>',
+          '<td class="photos">',
+            '<h1><div class="whitecircle">3</div></h1>',
+            '<h2>Take photos!</h2>',
+            "<h3>Photos on LiveGather show what you're doing and where you are!</h3>",
+            '<h3><a href="#">Click here</a> to learn about fun ways to use LiveGather.</h3>',
+          '</td>',
+      '</table>',
+    '</div>'].join('');
+  const welcome = $(HTML_WELCOME);
+  LGG.dimmedDialog(welcome);
+};
+
 LGG.showSigninPrompt = function(jdom) {
-  const HTML_DIMMER = '<div class="dimmer"></div>';
   const HTML_SIGNINUP = [
-    "<div class=\"signinup\">",
-    "<ul><li><a href='#tab1'><span>Sign up</span></a></li>",
-    "<li><a href='#tab2'><span>Sign in</span></a></li>",
-    "</ul>",
-    "</div>"].join('');
-  const HTML_TAB_CLOSE = '<img class="tab_close" src="/img/button_close.png" />';
-  const HTML_TAB_ONE = ["<div id=\"tab1\">",
+    '<div class="signinup">',
+    '<ul><li><a href="#tab1"><span>Sign up</span></a></li>',
+    '<li><a href="#tab2"><span>Sign in</span></a></li>',
+    '</ul>',
+    '</div>'].join('');
+  const HTML_TAB_ONE = ['<div id="tab1">',
     '<div class="expandable step1">',
       '<h1>Tell us about you</h1>',
       '<div class="content">',
@@ -204,9 +249,8 @@ LGG.showSigninPrompt = function(jdom) {
         '</tr>',
       '</table>',
       '</div>'].join('');
-  var dimmer = $(HTML_DIMMER).appendTo('body');
-  var tabs = $(HTML_SIGNINUP).appendTo(dimmer);
-  var close = $(HTML_TAB_CLOSE).appendTo(tabs);
+  var tabs = $(HTML_SIGNINUP);
+  LGG.dimmedDialog(tabs);
   var tabSignup = $(HTML_TAB_ONE).appendTo(tabs);
   $('form', tabSignup).submit(function () {
     $.ajax({type: 'POST', url: '/users', dataType: 'json',
@@ -246,10 +290,7 @@ LGG.showSigninPrompt = function(jdom) {
                                    changeYear: true});
   tabs.tabs({selected: (jdom.hasClass('up') ? 0 : 1)});
   $('ul', tabs).removeClass('ui-corner-all').addClass('ui-corner-top');
-  function destroy() { dimmer.remove(); }
   tabs.click(function (e) { e.stopPropagation(); });
-  close.click(destroy);
-  dimmer.click(destroy);
   LGG.setupExpandable();
 };
 
@@ -327,6 +368,11 @@ LGG.init = function() {
     setTimeout(function() { state.children('.comments').mouseover(); }, 150);
     $(this).css('position', 'absolute');
   });
+
+  // If the url has a welcome anchor show the welcome dialog.
+  if (window.location.hash == '#welcome') {
+    LGG.showWelcome();
+  }
 };
 return LGG;
 })();
