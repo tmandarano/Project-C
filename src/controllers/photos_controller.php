@@ -44,7 +44,7 @@ function photos_get_by_user_id_recent() {
 }
 
 function photos_create() {
-    $user = check_auth();
+    $user = check_sytem_auth();
     
     $data = get_json_input();
 
