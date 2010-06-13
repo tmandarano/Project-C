@@ -4,8 +4,6 @@ require_once('src/dao/photo_dao.php');
 require_once('src/utils/helpers.php');
 
 function photos_get() {
-    check_system_auth();
-
     $photos = PhotoDao::get_photos();
     return json($photos);
 }
