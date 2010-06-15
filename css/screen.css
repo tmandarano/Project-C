@@ -93,7 +93,6 @@ h1 strong { font-weight: bold; }
   right: 0;
   top: 50%;
   margin-top: -18px;
-  background-color: #bbff99;
   vertical-align: middle;
   height: 28px;
   padding: 0.3em;
@@ -143,6 +142,17 @@ h1 strong { font-weight: bold; }
 #welcome .app { width: 33%; }
 #welcome .connect { width: 40%; }
 #welcome .photos { width: 25%; }
+
+#viewphoto.dialog.win { width: 800px; background: #fff; color: #000; padding: 1em; }
+#viewphoto .header {
+  background: #74a348 url('/img/hlgrad.png') repeat-x;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+  -moz-border-radius-topleft: 1em;
+  -moz-border-radius-topright: 1em;
+  -webkit-border-top-left-radius: 1em;
+  -webkit-border-top-right-radius: 1em;
+}
 
 .signinup {
   border: 0.7em solid #91cf55;
@@ -214,14 +224,14 @@ h1 strong { font-weight: bold; }
 
 #trendingtags { position: relative; height: 2em; line-height: 2em; }
 #trendingtags li, 
-#trendingtags h1 { display: inline; font-size: 0.9em; }
+#trendingtags h1 { display: inline; font-size: 0.9em; margin: 0 0.2em; }
 #trendingtags h1 { font-weight: bold; }
 
-#livestream { position: relative; height: 100px; line-height: 100px; }
+#livestream { position: relative; height: 100px; line-height: 100px; width: 100%; overflow: hidden; }
 #livestream ol { height: inherit; }
 #livestream li,
 #livestream p { display: inline; }
-#livestream img { width: 100px; max-height: 100px; }
+#livestream img { width: 100px; max-height: 100px; margin: 0 2px; }
 
 .search h1 {
   color: #3b0;

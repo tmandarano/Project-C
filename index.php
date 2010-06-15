@@ -16,7 +16,6 @@ dispatch        ('/about/faq',            'about_faq');
 
 dispatch        ('/explore/map',          'explore_map');
 dispatch        ('/explore/photos',       'explore_photos');
-//dispatch        ('/explore/people',       'explore_people');
 
 dispatch        ('/share/upload',         'share_upload');
 dispatch        ('/share/mobile',         'share_mobile');
@@ -24,6 +23,8 @@ dispatch        ('/share/webcam',         'share_webcam');
 
 dispatch        ('/profile/:id',          'profile');
 dispatch        ('/settings',             'settings');
+
+dispatch        ('/photos/view/:id',      'photos_view_by_id');
 
 run();
 

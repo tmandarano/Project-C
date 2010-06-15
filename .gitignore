@@ -1,9 +1,8 @@
 *.swp
 *.swo
 *~
-app/tmp/*
-app/webroot/img/db/*
 empty
-#*#
+\#*#
 images/*.jpg
 special/smarty_pants/compiled/*
+test.html

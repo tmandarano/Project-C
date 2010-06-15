@@ -131,6 +131,17 @@ var D = function(jdom) {
 return D;
 });
 
+LGG.fade = function (jdom) {
+  var left = $('<span class="fade left"></span>');
+  var right = $('<span class="fade right"></span>');
+//  var oldZ = left.css('z-index');
+//  function pushDown() { $(this).css('z-index', -1); }
+//  function pullUp() { $(this).css('z-index', oldZ); }
+//  left.hover(pushDown, pullUp);
+//  right.hover(pushDown, pullUp);
+  jdom.css('position', 'relative').append(left).append(right);
+};
+
 LGG.dimmedDialog = function(jdom) {
   const HTML_DIMMER = '<div class="dialog dimmer"></div>';
   const HTML_TAB_CLOSE = '<img class="dialog close" src="/img/button_close.png" />';
@@ -176,6 +187,70 @@ LGG.showWelcome = function () {
     '</div>'].join('');
   const welcome = $(HTML_WELCOME);
   LGG.dimmedDialog(welcome);
+};
+
+LGG.showPhoto = function(id) {
+  const viewer = $([
+    '<div id="viewphoto">',
+      '<h1></h1>',
+    '</div>'].join(''));
+  LGG.dimmedDialog(viewer);
+
+  viewer.empty();
+
+  $.getJSON('/api/photos/'+id, function(p) {
+    var display = [
+      '<div class="header">',
+      '<a href="#"><img src="/api/users/photo" /></a>',
+      '<h1>Name</h1>',
+      '<h2>Caption taking a few words!</h2>',
+      '<ul>',
+        '<li>tag1</li>',
+        '<li>tag2</li>',
+        '<li>tag3</li>',
+      '</ul>',
+      '<h3>2 hours ago</h3>',
+      '</div>',
+      '<table class="split">',
+        '<tr>',
+          '<td>',
+            '<img src="/api/photo/'+id+'" />',
+          '</td>',
+          '<td>',
+            '<table>',
+              '<tr>',
+                '<td>',
+                  '12 people recently gathered nearby',
+                '</td>',
+              '</tr>',
+              '<tr>',
+                '<td>',
+                  'collage',
+                '</td>',
+              '</tr>',
+              '<tr>',
+                '<td>',
+                  '<div id="viewmap"></div>',
+                '</td>',
+              '</tr>',
+            '</table>',
+          '</td>',
+        '</tr>',
+      '</table>'
+    ].join('');
+    var mapOpts = {
+      zoom: 7,
+      center: new GM.LatLng(p.latitude, p.longitude),
+      mapTypeId: GM.MapTypeId.TERRAIN,
+      scrollwheel: false,
+      draggable: false,
+      disableDefaultUI: true,
+      mapTypeControl: false,
+      navigationControl: false
+    };
+    var map = new GM.Map($("#viewmap")[0], mapOpts);
+    var marker = new GM.Marker({position: map.getCenter(), map: map});
+  });
 };
 
 LGG.showSigninPrompt = function(jdom) {
@@ -373,58 +448,3 @@ return LGG;
 
 $(LG.G.init);
 
-function viewpic(id) {
-  var dimmer = $('<div id="viewpic_dimmer" class="dimmer"></div>')
-    .css('top', $('#header').height())
-    .height($('body').height()-$('#header').height())
-    .prependTo('body');
-  var close = $('<a id="viewpic_close" href="#">Close</a>');
-  var viewer = $('<div id="viewpic"></div>')
-    .append(close)
-    .prependTo('#viewpic_dimmer');
-  var xhr = $.getJSON('/photos/show/'+id, function(json) {
-    var p = json;
-    p.location = "location";
-    p.lat = 32;
-    p.lng = -117;
-    p.user = {'id': 1, 'name': 'name'}; // TODO
-    var u = p.user;
-    var display = '<table class="split"><tr>'+
-'<td class="left pane">'+
-'<div class="users">'+
-'<a href="/profile/'+u.id+'"><img src="/users/photo/'+u.id+'" /></a>'+
-'<a href="/profile/'+u.id+'" class="username">'+u.name+'</a> '+
-'<span class="location">'+p.location+'</span> '+
-'<span class="time">'+p.datetime+'</span>'+
-'<p class="caption">crazy wildfires in LA!</p>'+
-'</div>'+
-'<div class="the_image s3"><img src="/photo/'+id+'" /></div>'+
-'<p class="more"><a href="/api/photos/'+p.id+'">View full photo</a>'+
-"</td>"+
-'<td class="right pane"><p><a href="#">Share to Facebook</a></p><p><a href="#">Share to Twitter</a>'+
-'<div class="similar"><h1 class="bubble">Similar pictures nearby</h1>'+
-'<img src="/photos/'+3+'" />'+'<img src="/photos/'+5+'" />'+'<img src="/photos/'+'fire_d'+'" />'+"<br />"+
-'<img src="/photos/'+'fire_e'+'" />'+'<img src="/photos/'+'fire_f'+'" />'+'<img src="/photos/'+'fire_g'+'" />'+"</div>"+
-'<div id="viewpic_map"></div></td></tr></table>';
-    viewer.prepend(display);
-    var mapOpts = {
-      zoom: 7,
-      center: new google.maps.LatLng(p.lat, p.lng),
-      mapTypeId: google.maps.MapTypeId.TERRAIN,
-      scrollwheel: false,
-      draggable: false,
-      disableDefaultUI: true,
-      mapTypeControl: false,
-      navigationControl: false
-    };
-    var map = new google.maps.Map($("#viewpic_map")[0], mapOpts);
-    var marker = new google.maps.Marker({position: map.getCenter(), map: map});
-  });
-  function destroy() {
-    xhr.abort();
-    dimmer.remove();
-  }
-  dimmer.click(destroy);
-  viewer.click(function(e) {e.stopPropagation();});
-  close.click(destroy);
-}

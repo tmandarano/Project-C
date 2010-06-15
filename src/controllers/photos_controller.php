@@ -110,7 +110,7 @@ function photo_by_size() {
     $target = 270;
     switch (params('size')) {
     case 0: $target = 30; break;
-    case 1: $target = 50; break;
+    case 1: $target = 40; break;
     case 2: $target = 50; break;
     case 3: $target = 270; break;
     case 'o': $target = 270; break;
@@ -137,6 +137,7 @@ function photo_by_size() {
         header('Content-Type: image/jpeg');
         switch ($target) {
         case 30: header('Location: /img/30x30.jpg'); exit;
+        case 40: header('Location: /img/40x40.jpg'); exit;
         case 50: header('Location: /img/50x50.jpg'); exit;
         case 270: header('Location: /img/270x270.jpg'); exit;
         }
