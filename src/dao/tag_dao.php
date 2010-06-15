@@ -25,7 +25,6 @@ class TagDAO {
 		return $tags;
 	}
 
-
 	public static function save($tag) {
         $sql = 'SELECT id FROM tag WHERE LOWER(tag) = LOWER(:tag)';
         $tags = find_objects_by_sql($sql, array(':tag'=>$tag->get_tag()), 'Tag');

@@ -4,8 +4,6 @@ require_once('src/dao/photo_dao.php');
 require_once('src/utils/helpers.php');
 
 function photos_get() {
-    check_system_auth();
-
     $photos = PhotoDao::get_photos();
     return json($photos);
 }
@@ -44,7 +42,7 @@ function photos_get_by_user_id_recent() {
 }
 
 function photos_create() {
-    $user = check_auth();
+    $user = check_sytem_auth();
     
     $data = get_json_input();
 
@@ -65,7 +63,8 @@ function photos_create() {
         $tags[] = $tag;
     }
     $photo->set_tags($tags);
-    
+
+    /*    
     $comment_str = $data['comments'];
     $comment_strs = explode(',', $comment_str);
     $comments = array();
@@ -75,17 +74,16 @@ function photos_create() {
         $comment->set_comment($comment_var);
         $comments[] = $comment;
     }
- 
+    */
+
     if(empty($data['userfile'])) {
-	halt(400, "", "");        
+        halt(400, "", "");        
     }
  
     $photo->set_caption($data['caption']);
-    $photo->set_comments($comments);
     $photo->set_name($data['userfile']);
     $photo->set_latitude($data['latitude']);
     $photo->set_longitude($data['longitude']);
-    $photo->set_location($data['location']);
     
     $returned_id = PhotoDAO::save($photo);
     $photo->set_id($returned_id);

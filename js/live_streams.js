@@ -8,7 +8,7 @@ LGLS.bounds = null;
 const HTML_LOADING = '<img src="/img/loading.gif" />';
 const PHOTOSTUB_LIVESTREAM = [
 '<div class="photo">',
-  '<a href="/photos/view/<%=id%>"><img src="/photo/<%=id%>/3" /></a>',
+  '<a href="/api/photos/<%=id%>"><img src="/photo/<%=id%>/3" /></a>',
   '<a class="like" href="#like">230</a>',
 '</div>',
 '<div class="detail">',
@@ -45,7 +45,7 @@ function htmlSuggestedPeople(jdom, people) {
 function htmlSuggestedPhotos(jdom, photos) {
   jdom.addClass('collage');
   for (var i in photos) {
-    $(['<li><a href="/photos/view/', photos[i], '"><img src="/photo/', 
+    $(['<li><a href="/api/photos/', photos[i], '"><img src="/photo/', 
       photos[i], '/1" /></a></li>'].join('')).appendTo(jdom);
   }
 }

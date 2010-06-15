@@ -51,7 +51,7 @@
         <a class="username" href="/profile/{$e.user.id}">{$e.user.name}</a>
         {$e.action}
         <a class="username" href="/profile/{$e.actionee.id}">{$e.actionee.name}</a>'s
-        <a href="/photos/view/{$e.photo.id}">photo</a>
+        <a href="/api/photos/{$e.photo.id}">photo</a>
         {if $e.descriptor}{$e.descriptor}{/if}
       </p>
       <img src="/photos/{$e.photo.id}/1" />

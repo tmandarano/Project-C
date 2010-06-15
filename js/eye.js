@@ -3,7 +3,8 @@ LG.map.defaultLoc = new GM.LatLng(32.7155, -117.1636); // San Diego 1st and Broa
 LG.map.markers = defaultTo(LG.map.markers, {});
 LG.map.markers.photo = function (photo) {
   var marker = null;
-  $.ajax({async: false, url: '/users/' + photo.user_id, dataType: 'json',
+  $.ajax({async: false, url: ['/api/photos/', photo.id, '/user'].join(''),
+    dataType: 'json',
     success: function (user) {
       marker = new GM.Marker({
         title: [user.username, ': ', photo.caption].join(''),
@@ -22,7 +23,7 @@ LG.eye = (function () {
     var marker = LG.map.markers.photo(photo);
     marker.setMap(_.map);
     GM.event.addListener(marker, 'click', function () {
-      window.location = '/photos/view/' + photo.id;
+      window.location = '/api/photos/view/' + photo.id;
     });
   };
 
@@ -47,7 +48,7 @@ LG.eye = (function () {
     };
     _.map = new GM.Map(div, mapOpts);
 
-    _.addPhoto({user_id:42,id:99,name:null,latitude:null,longitude:null,location:null,caption:"",tags:[{id:33,tag:"tag1"}]});
+    _.addPhoto({id:112,name:null,latitude:null,longitude:null,location:null,caption:"",tags:[{id:33,tag:"tag1"}]});
   };
   _.resizeMap = function () {
     // Resize map so the livestream is always at the bottom.

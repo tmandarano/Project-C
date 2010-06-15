@@ -7,9 +7,7 @@ function users_get() {
     check_system_auth();
 
     $users = UserDAO::get_users();
-    foreach ($users as $user) {
-        $user->set_password('');
-    }
+
     return json($users);
 }
 
@@ -18,9 +16,15 @@ function users_get_by_id() {
 
     $user_id = filter_var(params('id'));
     $user = UserDAO::get_user_by_id($user_id);
-    if ($user) {
-      $user->set_password('');
-    }
+    return json($user);
+}
+
+function users_get_by_identifier() {
+    check_system_auth();
+
+    $identifier = filter_var(params('identifier'));
+    $user = UserDAO::get_user_by_id($identifier);
+
     return json($user);
 }
 
@@ -35,20 +39,23 @@ function users_get_by_photo_id() {
 function users_create() {
     check_system_auth();
 
-    $data = $_POST;
-    
+    $data = get_json_input();
+
+    if($data == null) {
+        $data = $_POST;
+    }   
+ 
     $user = new User();
     
     // TODO check to make sure username not taken
     $user->set_username($data['username']);
     $user->set_email($data['email']);
-    $user->set_password(md5($data['password']));
-    $user->set_date_of_birth($data['date_of_birth']);
-    $user->set_location($data['location']);
+    $user->set_photo_url($data['photo_url']);
+    $user->set_identifier($data['identifier']);
     
     $returned_id = UserDAO::save($user);
     $user->set_id($returned_id);
-    
+
     return json($user);
 }
 

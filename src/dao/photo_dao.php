@@ -10,8 +10,10 @@ class PhotoDAO {
         $photos = find_objects_by_sql($sql, null, 'Photo');
 
         foreach($photos as $photo) {
+            /*
             $comments = CommentDAO::get_comments_for_photo($photo->get_id());
             $photo->set_comments($comments);
+            */
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
         }
@@ -24,8 +26,8 @@ class PhotoDAO {
         $photos = find_objects_by_sql($sql, array(':id'=>$id), 'Photo');
 
         foreach($photos as $photo) {
-            $comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            $photo->set_comments($comments);
+            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
+            //$photo->set_comments($comments);
 
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
@@ -65,8 +67,8 @@ class PhotoDAO {
         $photos = find_objects_by_sql($sql, null, 'Photo');
 
         foreach($photos as $photo) {
-            $comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            $photo->set_comments($comments);
+            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
+            //$photo->set_comments($comments);
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
         }
@@ -82,8 +84,8 @@ class PhotoDAO {
         $photos = find_objects_by_sql($sql, null, 'Photo');
 
         foreach($photos as $photo) {
-            $comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            $photo->set_comments($comments);
+            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
+            //$photo->set_comments($comments);
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
         }
@@ -98,6 +100,7 @@ class PhotoDAO {
         
         $photo_id = create_object($photo, 'photo', PhotoDao::photo_columns());
 
+        /*
         $comments = $photo->get_comments();
 
         foreach($comments as $comment) {
@@ -110,6 +113,7 @@ class PhotoDAO {
             create_object($photo_comment, 'photo_comments',
                           array('photo_id', 'comment_id'));
         }
+        */
 
         $tags = $photo->get_tags();
 
@@ -137,7 +141,7 @@ class PhotoDAO {
     }
 
     private static function photo_columns() {
-        return array('id', 'url', 'latitude', 'longitude', 'location',
+        return array('id', 'url', 'latitude', 'longitude', 
                      'caption', 'date_added', 'date_modified');
     }
 }

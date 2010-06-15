@@ -1,4 +1,5 @@
 <?php
+require_once('src/utils/db.php');
 require_once('src/models/user.php');
 require_once('src/utils/logging.php');
 
@@ -14,8 +15,8 @@ class UserDAO {
         $sql = 'SELECT * FROM user WHERE id = :id';
         $users = find_objects_by_sql($sql, array(':id'=>$id), 'User');
 
-	if($users && count($users) > 0) {
-	    $user = $users[0];
+        if($users && count($users) > 0) {
+            $user = $users[0];
             return $user;
         } else {
             return null;
@@ -31,37 +32,36 @@ class UserDAO {
         return $user;
     }
 
-    public static function get_user_by_standard_auth($username, $password) {
-        $sql = 'SELECT * FROM user WHERE username = :username AND ';
-        $sql .= 'password = :password';
-        $users = find_objects_by_sql($sql, array(':username'=>$username,
-                                                 ':password'=>$password),
+    public static function get_user_by_identifier($identifier) {
+        $sql = 'SELECT * FROM user WHERE identifier = :identifier ';
+        $users = find_objects_by_sql($sql, array(':identifier'=>$identifier),
                                      'User');
 
-	if($users && count($users) > 0) {
-	    $user = $users[0];
+        if($users && count($users) > 0) {
+            $user = $users[0];
             return $user;
         } else {
             return null;	
         }
     }
 
-    public function save($user) {
-        $sql = 'INSERT INTO user (username, email, password, date_of_birth, ';
-        $sql .= 'location, date_added, date_modified) ';
-        $sql .= 'VALUES (:username, :email, :password, :date_of_birth, :location, NOW(), NOW())';
+    public function save($user, $update = false) {
+        $now = time();
+        $user->set_date_modified($now);
+        $user->set_date_added($now);
 
-        $birthday = date("Y-m-d H:i:s", strtotime($user->get_date_of_birth())); 
+        if($update) {
+            $user_id = update_object($user, 'user', UserDao::user_columns());
+        } else {
+            $user_id = create_object($user, 'user', UserDao::user_columns());        
+        }
 
-        $params = array(':username'=>$user->get_username(),
-                        ':email'=>$user->get_email(),
-                        ':password'=>$user->get_password(),
-                        ':date_of_birth'=>$birthday,
-                        ':location'=>$user->get_location());
-
-        $users = find_objects_by_sql($sql, $params, 'User');
-        return $users;
+        return $user_id;
     }
 
+    private static function user_columns() {
+        return array('id', 'username', 'email', 'photo_url', 'identifier',
+                     'date_added', 'date_modified');
+    }
 }
 ?>

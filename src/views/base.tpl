@@ -27,8 +27,9 @@
       <li class="sign out"><a href="/signout">Sign out</a></li>
     {else}
       <li class="sign in">
-        <img class="up" src="/img/signup/signup.png" />
-        <img class="in" src="/img/signup/signin.png" />
+        <a class="rpxnow" onclick="return false;"
+           href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Frpx.php">
+        <img src="/img/signup/signin.png" /></a>
       </li>
     {/if}
   </ul> 
@@ -81,5 +82,17 @@ enjoyable experience.</p>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="/js/global.js"></script>
 {if $smarty.capture.scripts}{$smarty.capture.scripts}{/if}
+
+<script type="text/javascript">
+  var rpxJsHost = (("https:" == document.location.protocol) ? "https://" : "http://static.");
+  document.write(unescape("%3Cscript src='" + rpxJsHost +
+"rpxnow.com/js/lib/rpx.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+  RPXNOW.overlay = true;
+  RPXNOW.language_preference = 'en';
+</script>
+
+
 </body> 
 </html> 

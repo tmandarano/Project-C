@@ -5,7 +5,7 @@
     </div>
     <div class='time'>{$photo.datetime}</div>
   </div>
-  <a href="/photos/view/{$photo.id}">
+  <a href="/api/photos/{$photo.id}">
   <div class='image s2'>
     <img src='/photos/{$photo.id}/2' title='{$photo.caption}' />
     <div class="hover">

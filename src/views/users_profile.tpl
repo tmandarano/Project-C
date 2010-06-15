@@ -34,7 +34,7 @@
         <ol class="profile stream">
           <li>
             <div class="photo">
-              <a href="/photos/view/{$mostRecent.id}"><img
+              <a href="/api/photos/{$mostRecent.id}"><img
               src="/photos/{$mostRecent.id}/3" /></a>
               <a class="like" href="#like">Like</a>
             </div>

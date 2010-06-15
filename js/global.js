@@ -21,10 +21,6 @@
 })();
 
 function defaultTo(x, d) { return x ? x : d; }
-function waitUntil(until, sleepInterval) {
-  if (until()) { return; }
-  setTimeout(arguments.caller, defaultTo(sleepInterval, 250));
-}
 function foldr(f, z, xs) {
   if (xs.length == 0) { return z; }
   return f(xs[0], foldr(f, z, xs.slice(1)));
@@ -33,7 +29,7 @@ function addPair(a, b) { return a + b; };
 function sum(xs) { return foldr(addPair, 0, xs); };
 const GM = google.maps;
 
-var LG = LG ? LG: {};
+var LG = defaultTo(LG, {});
 LG.G = (function() {
 var LGG = {};
 LGG.setupExpandable = function () {
@@ -82,7 +78,7 @@ HP.append = function(json) {
   p.lat = 32;
   p.lng = -117;
   p.user = {name: 'name'}; // TODO
-  $('<li><a href="/photos/view/'+p.id+'"><img src="/photo/'+p.id+'/2" title="'+p.user.name+': '+p.name+'"/></a></li>')
+  $('<li><a href="/api/photos/'+p.id+'"><img src="/photo/'+p.id+'/2" title="'+p.user.name+': '+p.name+'"/></a></li>')
     .data('json', json)
     .appendTo(this.jdom);
   if (this.ready) {
@@ -193,20 +189,7 @@ LGG.showSigninPrompt = function(jdom) {
     '<div class="expandable step1">',
       '<h1>Tell us about you</h1>',
       '<div class="content">',
-         '<form action="/users" method="POST" class="info">',
-         '<div class="info">',
-         "<table>",
-         '<tr><th class="invalid" colspan="2">Sorry, there was a problem signing you up. Please try again later.</th></tr>',
-         '<tr><th>    Name</th><td><input type="text" name="username" /></td>',
-         '<tr><th>   Email</th><td><input type="text" name="email" /></td>',
-         '<tr><th>Password</th><td><input type="password" name="password" /></td>',
-         '<tr><th>Location</th><td><input type="text" name="location" class="default" value="city or zip code" /></td>',
-         '<tr><th>Birthday</th><td><input class="birthday" type="text" name="date_of_birth" /></td>',
-         "</table>",
-         "</div>",
-         "<p>By clicking &ldquo;Next&rdquo; I agree to LiveGather&rsquo;s <a href=\"\">terms and conditions</a>.",
-         "<button>Next</button>",
-         "</form>",
+      '<a class="rpxnow" onclick="return false;" href="https://gather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2Flocalhost"> Sign In </a>',
       '</div>',
     '</div>',
     '<div class="expandable step2">',
@@ -294,80 +277,91 @@ LGG.showSigninPrompt = function(jdom) {
   LGG.setupExpandable();
 };
 
-LGG.init = function() {
-  /* JSify sign in */
-  $('.sign.in img').click(function () {
-    LGG.showSigninPrompt($(this));
-    return false;
-  });
-  /* Default form clearing */
-  var def = 'default';
+LGG.setupDefaultingInputFields = function (def) {
+  /* Input fields with default values will automatically clear and restore the
+   * default value when no user input is supplied. */
   $(':text')
     .live('focus', function() {
-      if (!$(this).data(def)) { $(this).data(def, $(this).val());}
-      if ($(this).val() == $(this).data(def)) { $(this).val('').removeClass(def); }
-    })
-    .live('blur', function() {
-      if ($(this).val() == '') {
-        $(this).val($(this).data(def)).addClass(def);
+      var s = $(this);
+      if (!s.data(def)) {
+        s.data(def, s.val());
+      }
+      if (s.val() == s.data(def)) {
+        s.val('').removeClass(def);
       }
     })
+    .live('blur', function() {
+      var s = $(this);
+      if (s.val() == '') {
+        s.val(s.data(def)).addClass(def);
+      }
+    });
+};
+
+LGG.init = function() {
+  ///* JSify sign in */
+  //$('.sign.in img').click(function () {
+  //  LGG.showSigninPrompt($(this));
+  //  return false;
+  //});
+
+  LGG.setupDefaultingInputFields('default');
 
   /* Setup headerStream */
-  LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
-  $.getJSON('/photos/recent/'+Math.round(LGG.headerStream.getMaxPhotos()*1.5), function(photos) {
-    if (photos.length < 1) {return;}
-    var temp = [];
-    for (i in photos) {
-      temp.push(photos[i]);
-    }
-    photos = temp;
-    while (LGG.headerStream.add(photos[0])) { photos.push(photos.shift()); }
-    LGG.headerStream.ready = true;
-    (function() { /* Cycle through the photos */
-      LGG.headerStream.add(photos[0]);
-      photos.push(photos.shift());
-      setTimeout(arguments.callee, LGG.headerStream.timeBetween);
-    })();
-  });
-  /* Setup detailed streams */
-  var classToState = {
-    'comments': 'Comments',
-    'map': 'Location',
-    'meta': 'Tags'
-  };
-  $('.detailed.stream li .state').each(function() {
-    var state = $('<p></p>');
-    var jdom = $(this);
-    for (var className in classToState) {
-      (function(c) {
-      jdom.append($('<div class="'+c+'"></div>').mouseover(function() {
-        $(this).parent().parent().attr('class', c);
-        state.html(classToState[c]);
-      }));
-      })(className);
-    }
-    jdom.append(state);
-    state.html(classToState[$(this).parent().attr('class')]);
-  });
-  $('.detailed.stream li .detail.map .map').each(function() {
-    var state = $(this).parent().parent().children('.state');
-    state.children('.map').mouseover();
-    var mapOpts = {
-      zoom: 8,
-      center: new google.maps.LatLng(-34.397, 150.644),
-      mapTypeId: google.maps.MapTypeId.TERRAIN,
-      scrollwheel: false,
-      draggable: false,
-      disableDefaultUI: true,
-      mapTypeControl: false,
-      navigationControl: false
-    };
-    var map = new google.maps.Map($(this)[0], mapOpts);
-    var marker = new google.maps.Marker({position: map.getCenter(), map: map});
-    setTimeout(function() { state.children('.comments').mouseover(); }, 150);
-    $(this).css('position', 'absolute');
-  });
+  //LGG.headerStream = new LGG.HeaderStream($('#headerstream'));
+  //$.getJSON('/api/photos/recent/'+Math.round(LGG.headerStream.getMaxPhotos()*1.5), function(photos) {
+  //  if (photos.length < 1) {return;}
+  //  var temp = [];
+  //  for (i in photos) {
+  //    temp.push(photos[i]);
+  //  }
+  //  photos = temp;
+  //  while (LGG.headerStream.add(photos[0])) { photos.push(photos.shift()); }
+  //  LGG.headerStream.ready = true;
+  //  (function() { /* Cycle through the photos */
+  //    LGG.headerStream.add(photos[0]);
+  //    photos.push(photos.shift());
+  //    setTimeout(arguments.callee, LGG.headerStream.timeBetween);
+  //  })();
+  //});
+  ///* Setup detailed streams */
+  //var classToState = {
+  //  'comments': 'Comments',
+  //  'map': 'Location',
+  //  'meta': 'Tags'
+  //};
+  //$('.detailed.stream li .state').each(function() {
+  //  var state = $('<p></p>');
+  //  var jdom = $(this);
+  //  for (var className in classToState) {
+  //    (function(c) {
+  //    jdom.append($('<div class="'+c+'"></div>').mouseover(function() {
+  //      $(this).parent().parent().attr('class', c);
+  //      state.html(classToState[c]);
+  //    }));
+  //    })(className);
+  //  }
+  //  jdom.append(state);
+  //  state.html(classToState[$(this).parent().attr('class')]);
+  //});
+  //$('.detailed.stream li .detail.map .map').each(function() {
+  //  var state = $(this).parent().parent().children('.state');
+  //  state.children('.map').mouseover();
+  //  var mapOpts = {
+  //    zoom: 8,
+  //    center: new google.maps.LatLng(-34.397, 150.644),
+  //    mapTypeId: google.maps.MapTypeId.TERRAIN,
+  //    scrollwheel: false,
+  //    draggable: false,
+  //    disableDefaultUI: true,
+  //    mapTypeControl: false,
+  //    navigationControl: false
+  //  };
+  //  var map = new google.maps.Map($(this)[0], mapOpts);
+  //  var marker = new google.maps.Marker({position: map.getCenter(), map: map});
+  //  setTimeout(function() { state.children('.comments').mouseover(); }, 150);
+  //  $(this).css('position', 'absolute');
+  //});
 
   // If the url has a welcome anchor show the welcome dialog.
   if (window.location.hash == '#welcome') {
@@ -405,7 +399,7 @@ function viewpic(id) {
 '<p class="caption">crazy wildfires in LA!</p>'+
 '</div>'+
 '<div class="the_image s3"><img src="/photo/'+id+'" /></div>'+
-'<p class="more"><a href="/photos/view/'+p.id+'">View full photo</a>'+
+'<p class="more"><a href="/api/photos/'+p.id+'">View full photo</a>'+
 "</td>"+
 '<td class="right pane"><p><a href="#">Share to Facebook</a></p><p><a href="#">Share to Twitter</a>'+
 '<div class="similar"><h1 class="bubble">Similar pictures nearby</h1>'+

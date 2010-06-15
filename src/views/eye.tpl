@@ -10,7 +10,7 @@
 <div class="softener"></div>
 <div id="livestream">
   <ol>
-    <li><a href=""><img src="/photo/101/3" /></a></li>
+    <li><a href=""><img src="/api/photo/101/3" /></a></li>
   </ol>
   <span class="fade left"></span>
   <span class="fade right"></span>

@@ -47,7 +47,7 @@
   <h1 class="bichrome"><em>Photos</em> you might like.</h1>
   <ul class="collage">
     {foreach from=$suggestedPhotos item=photo}
-      <li><a href="/photos/view/{$photo.id}"><img src="/photos/{$photo.id}/1" /></a></li>
+      <li><a href="/api/photos/{$photo.id}"><img src="/photos/{$photo.id}/1" /></a></li>
     {/foreach}
   </ul>
 

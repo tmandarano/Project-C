@@ -32,7 +32,8 @@ LG.loc.get = function () {
       console.log(_MSG_FAILED);
       queryReady = true;
     });
-    waitUntil(function () { return queryReady; });
+    setTimeout(function () { queryReady = true; }, 5000);
+    while (!queryReady) {}
     return loc;
   } else {
     // Browser doesn't support Geolocation
