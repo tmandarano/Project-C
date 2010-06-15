@@ -15,8 +15,7 @@ class Config {
             $db = new PDO($dsn, $dbuser, $dbpass);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         } catch (PDOException $e) {
-            header('Status Code: 500 Internal Server Error');
-            exit();
+            halt(500);
         }
 
         option('env', $env);
@@ -30,5 +29,5 @@ class Config {
         option('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/special/uploads/');
         option('IMAGES_DIR', $_SERVER['DOCUMENT_ROOT'].'/photos/');
     }
-  }
+}
 ?>
