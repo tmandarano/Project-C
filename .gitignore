@@ -3,6 +3,6 @@
 *~
 empty
 \#*#
-images/*.jpg
+photos/*.jpg
 special/smarty_pants/compiled/*
 test.html
