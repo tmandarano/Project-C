@@ -15,7 +15,7 @@ dispatch_post   ('/api/users/',                           'users_create');
 dispatch_get    ('/api/users/photo/:id',                  'users_get_photo_by_id');
 dispatch_post   ('/api/sessions/',                        'sessions_create');
 dispatch_delete ('/api/sessions/',                        'sessions_delete');
-dispatch        ('/api/signout',                          'sessions_delete');
+dispatch        ('/api/signout/',                         'sessions_delete');
 dispatch_get    ('/api/photos/',                          'photos_get');
 dispatch_get    ('/api/photos/:id',                       'photos_get_by_id');
 dispatch_get    ('/api/photos/recent/:limit',             'photos_recent');

@@ -24,7 +24,7 @@ function sessions_create() {
 
         return json($user);
     } else {
-        return halt(401, "", "");
+        return halt(401);
     }
 }
 
@@ -42,7 +42,6 @@ function sessions_delete() {
     }
 
     session_destroy();
-    redirect_to('/');
+    redirect_to('http://'.$_SERVER['HTTP_HOST']);
 }
-
 ?>

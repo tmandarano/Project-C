@@ -1,14 +1,16 @@
 <?php
 function to_string($msg) {
-  if (is_array($msg)) {
-    $str = '[';
-    foreach ($msg as $key => $value) {
-      $str .= "'".$key."': ".to_string($value).', ';
+    if (is_array($msg)) {
+        $str = '[';
+        foreach ($msg as $key => $value) {
+            $str .= "'".$key."': ".to_string($value).', ';
+        }
+        return ($str.substr(0, -2)).']';
+    } else if (is_object($msg)) {
+        return serialize($msg);
+    } else {
+        return $msg;
     }
-    return ($str.substr(0, -2)).']';
-  } else {
-    return $msg;
-  }
 }
 
 function debug() {

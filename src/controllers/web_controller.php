@@ -40,8 +40,10 @@ function get_session_user_info($user) {
 }
 
 function eye () {
+    $user = get_session_user();
     $template = new Template();
     $template->assign(array('title'=>'', 'class'=>'eye'));
+    $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('eye.tpl'));
 }
 

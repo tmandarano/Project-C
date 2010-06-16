@@ -24,7 +24,7 @@
     </li>
     {if $user != null}
       <li><a href="/profile/{$user.id}">{$user.name}</a></li> 
-      <li class="sign out"><a href="/signout">Sign out</a></li>
+      <li class="sign out"><a href="/api/signout">Sign out</a></li>
     {else}
       <li class="sign in">
         <a class="rpxnow" onclick="return false;"
