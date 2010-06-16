@@ -7,7 +7,11 @@ function to_string($msg) {
         }
         return ($str.substr(0, -2)).']';
     } else if (is_object($msg)) {
-        return serialize($msg);
+        if (method_exists($msg, '__toString')) {
+            return (string)$msg;
+        } else {
+            return 'Object';
+        }
     } else {
         return $msg;
     }

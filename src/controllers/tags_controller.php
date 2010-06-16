@@ -12,11 +12,6 @@ function tags_get_by_id() {
     return json($tag);
 }
 
-function tags_recent() {
-    $limit = var_to_i(params('limit'));
-    return json(TagDAO::get_recent_tags($limit));
-}
-
 function tags_get_by_user_id() {
     check_system_auth();
 
@@ -32,5 +27,15 @@ function tags_get_by_user_id_recent() {
     $days = var_to_i(params('days'));
     $tags = TagDAO::get_tags_by_user_id_recent($user_id, $days);
     return json($tags);
+}
+
+function tags_recent() {
+    $limit = var_to_i(params('limit'));
+    return json(TagDAO::get_recent_tags($limit));
+}
+
+function tags_trending() {
+    $limit = var_to_i(params('limit'));
+    return json(TagDAO::get_trending_tags($limit));
 }
 ?>

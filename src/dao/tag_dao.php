@@ -22,6 +22,14 @@ class TagDAO {
         return $tags;
     }
 
+    public static function get_trending_tags($limit) {
+        // Done by the hour
+        $sql =  'SELECT * FROM tag WHERE date_added > NOW() - MAKETIME(1, 0, 0) ';
+        $sql .= 'ORDER BY date_added DESC LIMIT :limit';
+        $tags = find_objects_by_sql($sql, array(':limit'=>$limit), 'Tag');
+        return $tags;
+    }
+
     public static function get_tags_by_user_id($id) {
         $sql = 'SELECT * FROM tag, photo_tags, user_photos ORDER BY date_added DESC LIMIT :limit';
         $tags = find_objects_by_sql($sql, array(':limit'=>$limit), 'Tag');

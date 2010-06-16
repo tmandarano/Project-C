@@ -11,7 +11,14 @@ function find_objects_by_sql($sql = '', $params = array(), $classname) {
     $result = array();
     $stmt = $db->prepare($sql);
 
-    if ($stmt->execute($params)) {
+    $lim = ':limit';
+    if (isset($params[$lim])) {
+        $stmt->bindParam($lim, $params[$lim], PDO::PARAM_INT);
+        unset($params[$lim]);
+    }
+
+    if ((!empty($params) && $stmt->execute($params)) ||
+        (empty($params) && $stmt->execute())) {
         while ($obj = $stmt->fetchObject($classname)) {
             $result[] = $obj;
         }

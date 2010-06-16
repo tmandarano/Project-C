@@ -33,6 +33,7 @@ dispatch       ($PRE.'/photo/:id/:size',             'photo_by_size');
 dispatch_get   ($PRE.'/tags/',                       'tags_get');
 dispatch_get   ($PRE.'/tags/:id',                    'tags_get_by_id');
 dispatch_get   ($PRE.'/tags/recent/:limit',          'tags_recent');
+dispatch_get   ($PRE.'/tags/trending/:limit',        'tags_trending');
 
 run();
 
