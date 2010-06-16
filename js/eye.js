@@ -42,8 +42,8 @@ LG.eye = (function () {
     });
   };
   _.initTags = function () {
-    const alltags = $('#trendingtags ol');
-    const headertag = $('<li><h1>Trending tags</h1></li>');
+    var alltags = $('#trendingtags ol');
+    var headertag = $('<li><h1>Trending tags</h1></li>');
     LG.G.fade(alltags.parent());
 
     function showNowTrendingTags() {
@@ -78,14 +78,14 @@ LG.eye = (function () {
   };
   _.resizeMap = function () {
     // Resize map so the livestream is always at the bottom.
-    const outerHeight = function (e) { return $(e).outerHeight(); };
+    var outerHeight = function (e) { return $(e).outerHeight(); };
     $('#map').height(Math.max(0, $(window).height() - 
       sum($.map(['#header', '#trendingtags', '#livestream', '#softener'],
             outerHeight)) - 8));
     GM.event.trigger(_.map, 'resize');
   };
   _.initLivestream = function () {
-    const alllive = $('#livestream ol');
+    var alllive = $('#livestream ol');
     LG.G.fade(alllive.parent());
 
     function addPhoto(id) {

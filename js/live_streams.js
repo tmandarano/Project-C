@@ -1,12 +1,12 @@
-const GM = google.maps;
-const LGLS = LG.LiveStream = {};
+var GM = google.maps;
+var LGLS = LG.LiveStream = {};
 LGLS.photoMap = null;
 // Provide a single bounds for JUST the markers. Don't try to extend the
 // map's bounds.
 LGLS.bounds = null;
 
-const HTML_LOADING = '<img src="/img/loading.gif" />';
-const PHOTOSTUB_LIVESTREAM = [
+var HTML_LOADING = '<img src="/img/loading.gif" />';
+var PHOTOSTUB_LIVESTREAM = [
 '<div class="photo">',
   '<a href="/api/photos/<%=id%>"><img src="/photo/<%=id%>/3" /></a>',
   '<a class="like" href="#like">230</a>',
