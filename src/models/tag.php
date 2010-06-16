@@ -1,25 +1,25 @@
 <?php
 class Tag {
-	public $id;
-	public $tag;
+    public $id;
+    public $tag;
     public $data_added;
     public $date_modified;
-	
-	public function get_id() {
-		return $this->id;
-	}
-	
+    
+    public function get_id() {
+        return $this->id;
+    }
+    
     public function set_id($id) {
         $this->id = $id;
     }
-	
+    
     public function get_tag() {
         return $this->tag;
     }
     
     public function set_tag($tag) {
-	    $this->tag = $tag;
-	}
+        $this->tag = $tag;
+    }
 
     public function get_date_added() {
         return $this->date_added;

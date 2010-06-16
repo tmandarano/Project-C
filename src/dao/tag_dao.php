@@ -2,17 +2,29 @@
 require_once('src/utils/db.php');
 
 class TagDAO {
-	public static function get_tags() {
+    public static function get_tags() {
         $sql = 'SELECT * FROM tag';
         $tags = find_objects_by_sql($sql, null, 'Tag');
 
         return $tags;
     }
 
-	public static function get_tags_by_id($id) {
+    public static function get_tag_by_id($id) {
         $sql = 'SELECT * FROM tag WHERE id = :id';
         $tags = find_objects_by_sql($sql, array(':id'=>$id), 'Tag');
 
+        return $tags;
+    }
+
+    public static function get_recent_tags($limit) {
+        $sql = 'SELECT * FROM tag ORDER BY date_added DESC LIMIT :limit';
+        $tags = find_objects_by_sql($sql, array(':limit'=>$limit), 'Tag');
+        return $tags;
+    }
+
+    public static function get_tags_by_user_id($id) {
+        $sql = 'SELECT * FROM tag, photo_tags, user_photos ORDER BY date_added DESC LIMIT :limit';
+        $tags = find_objects_by_sql($sql, array(':limit'=>$limit), 'Tag');
         return $tags;
     }
 
@@ -22,21 +34,21 @@ class TagDAO {
 
         $tags = find_objects_by_sql($sql, array(':photo_id'=>$photo_id), 'Tag');
 
-		return $tags;
-	}
+        return $tags;
+    }
 
-	public static function save($tag) {
+    public static function save($tag) {
         $sql = 'SELECT id FROM tag WHERE LOWER(tag) = LOWER(:tag)';
         $tags = find_objects_by_sql($sql, array(':tag'=>$tag->get_tag()), 'Tag');
 
         if(count($tags) > 0) {
-        	return $tags[0]->get_id();
+            return $tags[0]->get_id();
         }
 
         $tag_id = create_object($tag, 'tag', TagDAO::tag_columns());
 
-		return $tag_id;
-	}
+        return $tag_id;
+    }
     
     public static function tag_columns() {
         return array('id', 'tag', 'date_added', 'date_modified');
