@@ -1,5 +1,5 @@
 <?php
-require_once('special/lib/smarty/libs/Smarty.class.php');
+require_once('lib/smarty/libs/Smarty.class.php');
 require_once('src/utils/helpers.php');
 
 /* Template extends Smarty to get the Smarty templating with special 

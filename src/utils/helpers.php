@@ -48,4 +48,8 @@ function check_system_auth() {
         }
     }
 }
+
+function var_to_i($v) {
+    return intval(filter_var($v, FILTER_VALIDATE_INT));
+}
 ?>

@@ -1,5 +1,5 @@
 <?php /* Entry point for Project C */
-require_once('special/lib/limonade.php');
+require_once('lib/limonade.php');
 require_once('src/utils/config.php');
 
 function configure() {

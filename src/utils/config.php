@@ -1,5 +1,5 @@
 <?php
-require_once('special/lib/limonade.php');
+require_once('lib/limonade.php');
 
 class Config {
     public static function configure() {
