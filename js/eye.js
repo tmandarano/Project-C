@@ -55,7 +55,7 @@ LG.eye = (function () {
         alltags.append($('<li></li>').append(
           $(['<a href="#">', tags[i], '</a>'].join(''))
             .click(function () {
-              //_.doSearch('tag:'tags[i]); TODO
+              _.doSearch('tag:'+tags[i]); TODO
               return false;
             })));
       }

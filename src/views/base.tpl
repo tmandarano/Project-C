@@ -29,7 +29,7 @@
       <li class="sign in">
         <a class="rpxnow" onclick="return false;"
            href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Frpx.php">
-        <img src="/img/signup/signin.png" /></a>
+        <input type="submit" value="Sign in/up" /></a>
       </li>
     {/if}
   </ul> 
