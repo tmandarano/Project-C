@@ -34,22 +34,6 @@ var PHOTOSTUB_LIVESTREAM = [
 // how many people have commented on a photo
 //
 
-function htmlSuggestedPeople(jdom, people) {
-  jdom.addClass('collage');
-  for (var i in people) {
-    $(['<li><a href="/profile/', people[i], '"><img src="/users/photo/', 
-      people[i], '" /></a></li>'].join('')).appendTo(jdom);
-  }
-}
-
-function htmlSuggestedPhotos(jdom, photos) {
-  jdom.addClass('collage');
-  for (var i in photos) {
-    $(['<li><a href="/api/photos/', photos[i], '"><img src="/photo/', 
-      photos[i], '/1" /></a></li>'].join('')).appendTo(jdom);
-  }
-}
-
 LGLS.tmplLivestream = tmpl(PHOTOSTUB_LIVESTREAM);
 
 function loadLivestreamPhoto(jdom, photo_id) {
@@ -124,6 +108,6 @@ $(function() {
   for (var i in LGLS._streamPhotos) {
     loadLivestreamPhoto($('<li></li>').appendTo('ol.live.stream'), LGLS._streamPhotos[i]);
   }
-  htmlSuggestedPhotos($('.suggested.photos'), LGLS._suggestedPhotos);
-  htmlSuggestedPeople($('.suggested.people'), LGLS._suggestedPeople);
+  LG.G.html.collage.photos($('.suggested.photos'), LGLS._suggestedPhotos);
+  LG.G.html.collage.people($('.suggested.people'), LGLS._suggestedPeople);
 });

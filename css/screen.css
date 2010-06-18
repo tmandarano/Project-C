@@ -145,9 +145,10 @@ h1 strong { font-weight: bold; }
 #welcome .connect { width: 40%; }
 #welcome .photos { width: 25%; }
 
-#viewphoto.dialog.win { width: 800px; background: #fff; color: #000; padding: 1em; }
+#viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
 #viewphoto .header {
-  background: #74a348 url('/img/hlgrad.png') repeat-x;
+  color: #fff; padding: 1em; padding-bottom: 2em;
+  background: #75a449 url('/img/grad_header.png') repeat-x;
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
   -moz-border-radius-topleft: 1em;
@@ -155,6 +156,22 @@ h1 strong { font-weight: bold; }
   -webkit-border-top-left-radius: 1em;
   -webkit-border-top-right-radius: 1em;
 }
+.sround { border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+#viewphoto .header img { width: 50px; height: 50px; float: left; margin-right: 1em; }
+#viewphoto .header h1 { color: #000; font-weight: bold; }
+#viewphoto h2, #viewphoto h3 { display: inline; }
+#viewphoto h3, #viewphoto .tags { font-size: smaller; }
+#viewphoto .tags { margin: 0 0.5em; }
+#viewphoto .tags,
+#viewphoto .tags li { display: inline; color: #fff890; margin: 0 0.3em; }
+#viewphoto .split { margin: 1em; width: 95%; }
+#viewphoto .photo,
+#viewphoto .photo img { width: 350px; }
+#viewphoto .photo { padding-right: 1em; }
+#viewphoto .photo img { border: 2px solid #666; margin-top: -2em;}
+#viewphoto .gathered { background-color: #ececec; text-align: center; font-size: x-large; padding: 1em 1em; }
+#viewphoto .split table { width: 100%; height: 100%; }
+#viewphoto #viewmap { width: 200px; height: 200px; margin: auto; border: 1px solid #000; }
 
 a.rpxnow { vertical-align: middle; height: 28px; line-height: 28px; }
 .rpxnow input { background-color: #299ecf; border-color: #299ecf; }
@@ -437,9 +454,9 @@ table.stream {
   font-size: small;
 }
 
-ul.collage { margin: auto; width: 216px; }
+ul.collage { margin: 0.5em auto; width: 220px; }
 ul.collage li,
-.explore.stream li { display: inline-block; margin: 2px 1.5px; width: 40px; height: 40px; line-height: 40px; }
+.explore.stream li { display: inline-block; margin: 2px; width: 40px; height: 40px; line-height: 40px; }
 ul.collage li a,
 .explore.stream li a { display: block; width: 40px; height: 40px; background-color: #000; }
 ul.collage li img,

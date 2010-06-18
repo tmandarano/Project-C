@@ -1,3 +1,4 @@
+#AuthUserFile /home/livegatherps/dev.livegather.com/.htpasswd
 #AuthGroupFile /null
 #AuthName "Log in"
 #AuthType Basic

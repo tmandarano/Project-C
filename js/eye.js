@@ -92,7 +92,7 @@ LG.eye = (function () {
       alllive.append(
         $('<li></li>').append(
           $(['<a href="#"><img src="/api/photo/', id, '/3" /></a>'].join(''))
-            .click(function () { console.log(id); return false; })));
+            .click(function () { LG.G.showPhoto(id); return false; })));
     }
 
     // TODO for real
@@ -123,6 +123,7 @@ LG.eye = (function () {
     _.initSearch();
     $(window).resize(_.resizeMap);
     _.resizeMap();
+    LG.G.showPhoto(112); // FIXME
   };
   return _;
 })();

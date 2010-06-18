@@ -1,5 +1,6 @@
 <?php
 require_once('lib/limonade.php');
+require_once('src/utils/logging.php');
 
 class Config {
     public static function configure() {

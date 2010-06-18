@@ -32,6 +32,22 @@ var GM = google.maps;
 var LG = defaultTo(LG, {});
 LG.G = (function() {
 var LGG = {};
+LGG.html = {};
+LGG.html.collage = {};
+LGG.html.collage.photos = function (jdom, photo_ids) {
+  jdom.addClass('collage');
+  for (var i in photo_ids) {
+    $(['<li><a href="/photos/view/', photo_ids[i], '"><img src="/api/photo/', 
+      photo_ids[i], '/1" /></a></li>'].join('')).appendTo(jdom);
+  }
+};
+LGG.html.collage.people = function (jdom, people_ids) {
+  jdom.addClass('collage');
+  for (var i in people_ids) {
+    $(['<li><a href="/profile/', people_ids[i], '"><img src="/api/users/photo/', 
+      people_ids[i], '" /></a></li>'].join('')).appendTo(jdom);
+  }
+};
 LGG.setupExpandable = function () {
   $('.expandable').each(function () {
     var pane = this;
@@ -221,21 +237,17 @@ LGG.showWelcome = function () {
 
 LGG.showPhoto = function(id) {
   var viewer = $([
-    '<div id="viewphoto">',
-      '<h1></h1>',
-    '</div>'].join(''));
+    '<div id="viewphoto"></div>'].join(''));
   LGG.dimmedDialog(viewer);
-
-  viewer.empty();
 
   $.getJSON('/api/photos/'+id, function(p) {
     var display = [
       '<div class="header">',
       '<a href="#"><img src="/api/users/photo" /></a>',
-      '<h1>Name</h1>',
-      '<h2>Caption taking a few words!</h2>',
-      '<ul>',
-        '<li>tag1</li>',
+      '<h1>Tony Mandarano</h1>',
+      '<h2>Caption taking more than a few words! It might even be really really long! How long? This long!</h2>',
+      '<ul class="tags">',
+        '<li>tag1 is four words</li>',
         '<li>tag2</li>',
         '<li>tag3</li>',
       '</ul>',
@@ -243,43 +255,36 @@ LGG.showPhoto = function(id) {
       '</div>',
       '<table class="split">',
         '<tr>',
-          '<td>',
-            '<img src="/api/photo/'+id+'" />',
+          '<td class="photo">',
+            '<img class="sround" src="/api/photo/'+id+'" />',
           '</td>',
           '<td>',
-            '<table>',
-              '<tr>',
-                '<td>',
-                  '12 people recently gathered nearby',
-                '</td>',
-              '</tr>',
-              '<tr>',
-                '<td>',
-                  'collage',
-                '</td>',
-              '</tr>',
-              '<tr>',
-                '<td>',
-                  '<div id="viewmap"></div>',
-                '</td>',
-              '</tr>',
-            '</table>',
+            '<div class="gathered sround">',
+              '12 people recently gathered nearby',
+            '</div>',
+            '<h1 class="bichrome"><em>Similar</em> photos nearby.</h1>',
+            '<ul class="collage similar photos"></ul>',
+            '<div id="viewmap"></div>',
           '</td>',
         '</tr>',
       '</table>'
     ].join('');
+    viewer.append($(display));
+
+    var similar_photos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    LG.G.html.collage.photos($('.similar.photos', viewer), similar_photos);
+
+    p.latitude = 32.7; p.longitude = -117.1;
     var mapOpts = {
-      zoom: 7,
-      center: new GM.LatLng(p.latitude, p.longitude),
-      mapTypeId: GM.MapTypeId.TERRAIN,
-      scrollwheel: false,
-      draggable: false,
+      zoom: 15,
+      center: new GM.LatLng(defaultTo(p.latitude, 0), defaultTo(p.longitude, 0)),
+      mapTypeId: GM.MapTypeId.ROADMAP,
       disableDefaultUI: true,
-      mapTypeControl: false,
-      navigationControl: false
     };
-    var map = new GM.Map($("#viewmap")[0], mapOpts);
-    var marker = new GM.Marker({position: map.getCenter(), map: map});
+    var map = new GM.Map($("#viewmap", viewer)[0], mapOpts);
+    if (p.latitude && p.longitude) {
+      new GM.Marker({position: map.getCenter(), map: map});
+    }
   });
 };
 
