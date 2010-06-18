@@ -123,7 +123,6 @@ LG.eye = (function () {
     _.initSearch();
     $(window).resize(_.resizeMap);
     _.resizeMap();
-    LG.G.showPhoto(112); // FIXME
   };
   return _;
 })();
