@@ -124,9 +124,9 @@ function photo_by_size() {
     case 3: $target = 270; break;
     case 'o': $target = 270; break;
     }
-    $photos = PhotoDao::get_photo_by_id(var_to_i(params('id')));
+    $photo = PhotoDao::get_photo_by_id(var_to_i(params('id')));
     $extension = 'jpg';
-    if ($photos[0]) {
+    if ($photos) {
         $filename = option('IMAGES_DIR') . $photos[0]->get_id() . '.' . $extension;
     } else {
         $filename = '';
@@ -142,6 +142,8 @@ function photo_by_size() {
         header('Content-Type: image/jpeg');
         imagejpeg($scaljd);
     } else {
+        header('Cache-Control: public');
+        header('Expires: '.date(DateTime::RFC1123, time() + 31556926));
         header('Content-Type: image/jpeg');
         switch ($target) {
         case 30: header('Location: /img/30x30.jpg'); exit;
