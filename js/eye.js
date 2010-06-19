@@ -47,18 +47,17 @@ LG.eye = (function () {
     LG.G.fade(alltags.parent());
 
     function showNowTrendingTags() {
-      var tags = []; // TODO waiting for API. Will fetch these.
-      for (var i = 0; i < 20; i += 1) {
-        tags.push('tag'+i);
-      }
-      for (var i in tags) {
-        alltags.append($('<li></li>').append(
-          $(['<a href="#">', tags[i], '</a>'].join(''))
-            .click(function () {
-              _.doSearch('tag:'+tags[i]); TODO
-              return false;
-            })));
-      }
+      $.get('/api/tags/trending/20', function (tags) {
+        var tags = $.map(tags, function (t) { return t.tag; });
+        for (var i in tags) {
+          alltags.append($('<li></li>').append(
+            $(['<a href="#">', tags[i], '</a>'].join(''))
+              .click(function () {
+                _.doSearch('tag:'+tags[i]); TODO
+                return false;
+              })));
+        }
+      }, 'json');
     }
 
     alltags.append(headertag).hide();
@@ -95,17 +94,11 @@ LG.eye = (function () {
             .click(function () { LG.G.showPhoto(id); return false; })));
     }
 
-    // TODO for real
-    addPhoto(112);
-    addPhoto(112);
-    addPhoto(112);
-    addPhoto(112);
-    addPhoto(112);
-    addPhoto(112);
-    addPhoto(112);
-    addPhoto(112);
-    addPhoto(112);
-    addPhoto(112);
+    $.get('/api/photos/recent/20', function (photos) {
+      for (var i in photos) {
+        addPhoto(photos[i].id);
+      }
+    }, 'json');
 
     alllive.hide();
     alllive.fadeIn('fast');
