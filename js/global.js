@@ -231,7 +231,7 @@ LGG.showWelcome = function () {
           '</td>',
           '<td class="connect">',
             '<h1><div class="numcircle">2</div></h1>',
-            '<h2>Sign in and sync with your social networks <em>(some others not shown)</em>.</h2>',
+            '<h2>Sign in and sync with your social networks.</h2>',
             '<img src="/img/welcome/janrain.png" />',
           '</td>',
           '<td class="photos">',
