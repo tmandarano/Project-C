@@ -30,7 +30,46 @@ function sum(xs) { return foldr(addPair, 0, xs); };
 var GM = google.maps;
 
 var LG = defaultTo(LG, {});
-LG.G = (function() {
+LG.dateToVernacular = function (str) {
+  function pluralize(one, order) {
+    if (order == 1) {
+      return one;
+    }
+    return one + 's';
+  }
+  var dat = new Date(str);
+  var now = new Date();
+
+  function doD(fn, eq, t) {
+    var n = fn.apply(now);
+    var d = fn.apply(dat);
+    var delt = n - d;
+    if (delt == 0) {
+      return eq();
+    } else {
+      if (delt > 0) {
+        return [delt, pluralize(t, delt), 'ago'].join(' ');
+      } else {
+        return 'Huh? ' + t;
+      }
+    }
+  }
+
+  return doD(Date.prototype.getFullYear, function () {
+    return doD(Date.prototype.getMonth, function () {
+      return doD(Date.prototype.getDay, function () {
+        return doD(Date.prototype.getHours, function () {
+          return doD(Date.prototype.getMinutes, function () {
+            return doD(Date.prototype.getSeconds, function () {
+              return 'now';
+            }, 'second');
+          }, 'minute');
+        }, 'hour');
+      }, 'day');
+    }, 'month');
+  }, 'year');
+};
+LG.G = (function () {
 var LGG = {};
 LGG.html = {};
 LGG.html.collage = {};
@@ -262,9 +301,9 @@ LGG.showPhoto = function(id) {
   $.getJSON('/api/photos/'+id, function(p) {
     var display = [
       '<div class="header">',
-      '<a href="#"><img src="/api/users/photo" /></a>',
+      '<a href="#"><img src="/api/users/', p.user_id, '/photo" /></a>',
       '<h1>Tony Mandarano</h1>',
-      '<h2>Caption taking more than a few words! It might even be really really long! How long? This long!</h2>',
+      '<h2>', p.caption, '</h2>',
       '<ul class="tags">',
         '<li>tag1 is four words</li>',
         '<li>tag2</li>',

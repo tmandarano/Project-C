@@ -15,21 +15,21 @@ class UserDAO {
         $sql = 'SELECT * FROM user WHERE id = :id';
         $users = find_objects_by_sql($sql, array(':id'=>$id), 'User');
 
-        if($users && count($users) > 0) {
-            $user = $users[0];
-            return $user;
-        } else {
-            return null;
+        if (!empty($users)) {
+            return $users[0];
         }
+        return null;
     }
 
     public static function get_user_by_photo_id($photo_id) {
-        $sql = 'SELECT * FROM user u join user_photos up on u.id = up.user_id ';
-        $sql .= 'WHERE photo_id = :photo_id';
+        $sql = 'SELECT * FROM user WHERE id IN (SELECT user_id FROM user_photos ';
+        $sql .= 'WHERE photo_id = :photo_id)';
         $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id), 'User');
 
-        $user = $users[0];
-        return $user;
+        if (!empty($users)) {
+            return $users[0];
+        }
+        return null;
     }
 
     public static function get_user_by_identifier($identifier) {

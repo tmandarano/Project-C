@@ -6,12 +6,16 @@ LG.map.markers.photo = function (photo) {
   $.ajax({async: false, url: ['/api/photos/', photo.id, '/user'].join(''),
     dataType: 'json',
     success: function (user) {
+      try {
       marker = new GM.Marker({
         position: new GM.LatLng(photo.latitude, photo.longitude),
         title: [user.username, ': ', photo.caption].join(''),
         icon: new GM.MarkerImage(['api/photo/', photo.id, '/1'].join(''), null, null, new GM.Point(20, 42)),
         shadow: new GM.MarkerImage('/img/mapmkrbdr.png')
       });
+      } catch (e) {
+        console.log(e);
+      }
     }
   });
   return marker;
@@ -26,20 +30,32 @@ LG.eye = (function () {
     // TODO waiting for API
     // TODO for real
     var jitter = function () { return Math.random() - 0.5; };
-    _.addPhoto({id:112,name:null,latitude:32 + jitter(),longitude:-117 + jitter(),caption:"a",tags:[{id:33,tag:"tag1"}]});
-    _.addPhoto({id:112,name:null,latitude:32 + jitter(),longitude:-118 + jitter(),caption:"b",tags:[{id:33,tag:"tag1"}]});
-    _.addPhoto({id:112,name:null,latitude:33 + jitter(),longitude:-118 + jitter(),caption:"c",tags:[{id:33,tag:"tag1"}]});
-    _.addPhoto({id:112,name:null,latitude:33 + jitter(),longitude:-117 + jitter(),caption:"d",tags:[{id:33,tag:"tag1"}]});
-    _.addPhoto({id:112,name:null,latitude:32.1 + jitter(),longitude:-117.1 + jitter(),caption:"e",tags:[{id:33,tag:"tag1"}]});
-
+    var photos = [
+    {id:112,user_id:122,latitude:32 + jitter(),longitude:-117 + jitter(),caption:"a",tags:[{id:33,tag:"tag1"}]},
+    {id:112,user_id:122,latitude:32 + jitter(),longitude:-118 + jitter(),caption:"b",tags:[{id:33,tag:"tag1"}]},
+    {id:112,user_id:122,latitude:33 + jitter(),longitude:-118 + jitter(),caption:"c",tags:[{id:33,tag:"tag1"}]},
+    {id:112,user_id:122,latitude:33 + jitter(),longitude:-117 + jitter(),caption:"d",tags:[{id:33,tag:"tag1"}]},
+    {id:112,user_id:122,latitude:32.1 + jitter(),longitude:-117.1 + jitter(),caption:"e",tags:[{id:33,tag:"tag1"}]}
+    ];
+    
+    try {
+      for (var i in photos) {
+        console.log('adding', photos[i]);
+        _.addPhoto(photos[i]);
+      }
+    } catch (e) {
+        console.log(e);
+    }
   };
   _.addPhoto = function (photo) {
     var marker = LG.map.markers.photo(photo);
-    marker.setMap(_.map);
-    GM.event.addListener(marker, 'click', function () {
-      LG.G.showPhoto(photo.id);
-      return false;
-    });
+    if (marker) {
+      marker.setMap(_.map);
+      GM.event.addListener(marker, 'click', function () {
+        LG.G.showPhoto(photo.id);
+        return false;
+      });
+    }
   };
   _.initTags = function () {
     var alltags = $('#trendingtags ol');
