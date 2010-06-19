@@ -68,7 +68,6 @@ if(isset($_POST['token'])) {
         session_name(option('session'));
         if (session_start()) {
             $_SESSION['user'] = serialize($user);
-            redirect_to('/');
         } else {
             debug('Session could not be started');
         }
@@ -80,4 +79,5 @@ if(isset($_POST['token'])) {
         halt(500);
     }
 }
+redirect_to('/');
 ?>
