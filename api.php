@@ -29,9 +29,13 @@ dispatch_get   ($PRE.'/photos/recent/:limit',        'photos_recent');
 dispatch_get   ($PRE.'/photos/:id/user/',            'users_get_by_photo_id');
 dispatch_post  ($PRE.'/photos/',                     'photos_create');
 dispatch       ($PRE.'/photo/:id/:size',             'photo_by_size');
+dispatch_get   ($PRE.'/photos/:id/tags',             'tags_get_by_photo_id');
+dispatch_post  ($PRE.'/photos/:id/tags/:tag',        'photos_add_tag');
+dispatch_delete($PRE.'/photos/:id/tags/:tag',        'photos_delete_tag');
 
 dispatch_get   ($PRE.'/tags/',                       'tags_get');
 dispatch_get   ($PRE.'/tags/:id',                    'tags_get_by_id');
+dispatch_get   ($PRE.'/tags/:id/photos',             'photos_get_by_tag_id');
 dispatch_get   ($PRE.'/tags/recent/:limit',          'tags_recent');
 dispatch_get   ($PRE.'/tags/trending/:limit',        'tags_trending');
 

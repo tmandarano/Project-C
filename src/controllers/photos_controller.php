@@ -41,6 +41,15 @@ function photos_get_by_user_id_recent() {
     return json($photos);
 }
 
+function photos_get_by_tag_id() {
+    check_system_auth();
+
+    $tag_id = var_to_i(params('id'));
+    $photos = PhotoDao::get_photos_by_tag_id($tag_id);
+
+    return json($photos);
+}
+
 function photos_create() {
     $user = check_sytem_auth();
     
@@ -146,6 +155,22 @@ function photo_by_size() {
 function photo() {
     params('size', 'o');
     return photo_by_size();
+}
+
+function photos_add_tag() {
+    check_system_auth();
+
+    $photo_id = var_to_i(params('id'));
+    $tag = params('tag');
+    return json(PhotoDAO::add_tag($photo_id, $tag));
+}
+
+function photos_delete_tag() {
+    check_system_auth();
+
+    $photo_id = var_to_i(params('id'));
+    $tag = params('tag');
+    return json(PhotoDAO::delete_tag($photo_id, $tag));
 }
 
 ?>

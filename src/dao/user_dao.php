@@ -33,9 +33,8 @@ class UserDAO {
     }
 
     public static function get_user_by_identifier($identifier) {
-        $sql = 'SELECT * FROM user WHERE identifier = :identifier ';
-        $users = find_objects_by_sql($sql, array(':identifier'=>$identifier),
-                                     'User');
+        $sql = 'SELECT * FROM user WHERE identifier = :id ';
+        $users = find_objects_by_sql($sql, array(':id'=>$identifier), 'User');
 
         if($users && count($users) > 0) {
             $user = $users[0];

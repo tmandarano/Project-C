@@ -12,6 +12,14 @@ function tags_get_by_id() {
     return json($tag);
 }
 
+function tags_get_by_photo_id() {
+    check_system_auth();
+
+    $photo_id = var_to_i(params('id'));
+    $tags = TagDAO::get_tags_by_photo_id($photo_id);
+    return json($tags);
+}
+
 function tags_get_by_user_id() {
     check_system_auth();
 

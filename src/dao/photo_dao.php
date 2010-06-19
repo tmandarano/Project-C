@@ -33,7 +33,11 @@ class PhotoDAO {
             $photo->set_tags($tags);
         }
 
-        return $photos;
+        if ($photos && count($photos) > 0) {
+            return $photos[0];
+        }
+
+        return null;
     }
 
     public static function get_photos_by_user_id($user_id) {
@@ -59,6 +63,15 @@ class PhotoDAO {
         return $photos;
     }
 
+    public static function get_photos_by_tag_id($tag_id) {
+        $sql = 'SELECT * FROM photo WHERE id IN (SELECT photo_id FROM ';
+        $sql .= 'photo_tags WHERE tag_id = :tag)';
+
+        $photos = find_objects_by_sql($sql, array(':tag' => $tag_id), 'Photo');
+
+        return $photos;
+    }
+
     public static function get_recent_photos($limit = 10) {
         $sql = 'SELECT * FROM photo ORDER BY date_added DESC LIMIT :limit';
         $photos = find_objects_by_sql($sql, array(':limit' => $limit), 'Photo');
@@ -71,6 +84,29 @@ class PhotoDAO {
         }
 
         return $photos;
+    }
+
+    public static function add_tag($photo_id, $tag) {
+        $tagobj = new Tag();
+        $tagobj->set_tag($tag);
+        $tag_id = TagDAO::save($tagobj);
+        $sql = 'INSERT IGNORE INTO photo_tags (photo_id, tag_id) VALUES (:photo_id, :tag_id)';
+        $db = option('db_conn');
+        $stmt = $db->prepare($sql);
+        $stmt->execute(array(':photo_id' => $photo_id, ':tag_id' => $tag_id));
+        return $db->lastInsertId();
+    }
+
+    public static function delete_tag($photo_id, $tag) {
+        $tag = TagDAO::get_tag_by_tag($tag);
+        if (!$tag) {
+            return 404;
+        }
+        $sql = 'DELETE FROM photo_tags WHERE photo_id = :photo_id AND tag_id = :tag_id';
+        $db = option('db_conn');
+        $stmt = $db->prepare($sql);
+        $stmt->execute(array(':photo_id' => $photo_id, ':tag_id' => $tag->get_id()));
+        return 200;
     }
 
     public static function save($photo) {

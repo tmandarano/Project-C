@@ -12,8 +12,19 @@ class TagDAO {
     public static function get_tag_by_id($id) {
         $sql = 'SELECT * FROM tag WHERE id = :id';
         $tags = find_objects_by_sql($sql, array(':id'=>$id), 'Tag');
+        if (!empty($tags)) {
+            return $tags[0];
+        }
+        return null;
+    }
 
-        return $tags;
+    public static function get_tag_by_tag($tag) {
+        $sql = 'SELECT * FROM tag WHERE tag = LOWER(:tag)';
+        $tags = find_objects_by_sql($sql, array(':tag' => $tag), 'Tag');
+        if (!empty($tags)) {
+            return $tags[0];
+        }
+        return null;
     }
 
     public static function get_recent_tags($limit) {
@@ -31,17 +42,22 @@ class TagDAO {
     }
 
     public static function get_tags_by_user_id($id) {
-        $sql = 'SELECT * FROM tag, photo_tags, user_photos ORDER BY date_added DESC LIMIT :limit';
-        $tags = find_objects_by_sql($sql, array(':limit'=>$limit), 'Tag');
+        $sql = 'SELECT * FROM tag WHERE id IN (SELECT tag_id FROM ';
+        $sql .= 'photo_tags pt, user_photos up WHERE ';
+        $sql .= 'up.photo_id = pt.photo_id AND user_id = :id) ';
+        $sql .= 'ORDER BY date_added DESC';
+        $tags = find_objects_by_sql($sql, array(':id' => $id), 'Tag');
         return $tags;
     }
 
-    public static function get_tags_for_photo($photo_id) {
-        $sql = "SELECT t.id, t.tag as tag, t.date_added as date_added, t.date_modified as date_modified ";
-        $sql .= "FROM photo_tags pt join tag t on pt.tag_id = t.id WHERE pt.photo_id = :photo_id";
+    public static function get_tags_by_photo_id($id) {
+        return TagDAO::get_tags_for_photo($id);
+    }
 
-        $tags = find_objects_by_sql($sql, array(':photo_id'=>$photo_id), 'Tag');
-
+    public static function get_tags_for_photo($id) {
+        $sql = 'SELECT * FROM tag WHERE id IN (SELECT tag_id FROM photo_tags ';
+        $sql .= 'WHERE photo_id = :id) ORDER BY date_added DESC';
+        $tags = find_objects_by_sql($sql, array(':id' => $id), 'Tag');
         return $tags;
     }
 

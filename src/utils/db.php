@@ -11,13 +11,15 @@ function find_objects_by_sql($sql = '', $params = array(), $classname) {
     $result = array();
     $stmt = $db->prepare($sql);
 
-    // Can't just pick out :limit if there are more parameters to be bound
-    // because execute(array(...)) will delete previous bindings.
-    foreach ($params as $param => $val) {
-        if (is_numeric($val)) {
-            $stmt->bindParam($param, $val, PDO::PARAM_INT);
-        } else {
-            $stmt->bindParam($param, $val, PDO::PARAM_STR);
+    if ($params) {
+        // Can't just pick out :limit if there are more parameters to be bound
+        // because execute(array(...)) will delete previous bindings.
+        foreach ($params as $param => $val) {
+            if (is_numeric($val)) {
+                $stmt->bindParam($param, $val, PDO::PARAM_INT);
+            } else {
+                $stmt->bindParam($param, $val, PDO::PARAM_STR);
+            }
         }
     }
 
