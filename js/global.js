@@ -210,29 +210,48 @@ LGG.dimmedDialog = function(jdom) {
 LGG.showWelcome = function () {
   var HTML_WELCOME = [
     '<div id="welcome">',
-      '<h1 class="logo"><img src="/img/logo/medplus_no_tag.png" /></h1>',
-      '<table>',
+      '<div class="header">',
+        '<img src="/img/logo/medium_no_tagline.png" />',
+        "<h1><em>See</em> and <em>show</em> what's happening near you.</h1>",
+      '</div>',
+      '<div class="how">',
+        "<p>It's easy. <em>Download the app.</em></p>",
+        "<p>Sign in and sync with your social networks.</p>",
+        "<p>See and show what's happening near you.",
+      '</div>',
+      '<table class="steps">',
         '<tr>',
           '<td class="app">',
-            '<h1><div class="whitecircle">1</div></h1>',
-            '<h2>Download the App</h2>',
-            '<a href="#"><img src="/img/welcome/app.png" /></a>',
-            '<p>click the app to download</p>',
+            '<h1><div class="numcircle">1</div></h1>',
+            '<h2>Download the app.</h2>',
+            '<table>',
+              '<tr><td><img src="/img/welcome/logo_apple.png" /></td><td><img src="/img/welcome/logo_android.png" /></td></tr>',
+              '<tr><td><img src="/img/welcome/app_iphone.png" /></td><td><img src="/img/welcome/app_android.png" /></td></tr>',
+            '</table>',
           '</td>',
           '<td class="connect">',
-            '<h1><div class="whitecircle">2</div></h1>',
-            '<h2>Sign in with any of these services</h2>',
+            '<h1><div class="numcircle">2</div></h1>',
+            '<h2>Sign in and sync with your social networks <em>(some others not shown)</em>.</h2>',
+            '<img src="/img/welcome/janrain.png" />',
           '</td>',
           '<td class="photos">',
-            '<h1><div class="whitecircle">3</div></h1>',
-            '<h2>Take photos!</h2>',
-            "<h3>Photos on LiveGather show what you're doing and where you are!</h3>",
-            '<h3><a href="#">Click here</a> to learn about fun ways to use LiveGather.</h3>',
+            '<h1><div class="numcircle">3</div></h1>',
+            "<h2>See and show what's happening hear you!</h2>",
+            '<img src="/img/welcome/taking_photo.png" />',
           '</td>',
       '</table>',
+      '<div class="bigapp"><img src="/img/welcome/app_big_iphone.png" /></div>',
     '</div>'].join('');
   var welcome = $(HTML_WELCOME);
   LGG.dimmedDialog(welcome);
+  $('.connect img', welcome).click(function () {
+     if ($('.sign.in')) {
+       $('.sign.in a').click();
+     } else {
+       window.open("https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F" + window.location.host + "%2Frpx.php");
+     }
+     return false;
+  });
 };
 
 LGG.showPhoto = function(id) {

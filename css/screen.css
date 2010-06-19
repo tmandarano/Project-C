@@ -119,35 +119,8 @@ h1 strong { font-weight: bold; }
   -webkit-border-radius: 1em;
 }
 
-#welcome.dialog.win { width: 800px; background: #45a136; color: #fff; text-align: center; }
-.whitecircle { background: url('/img/welcome/whitecircle.png') no-repeat;
-  color: #45a136; font-size: 1.8em;
-  width: 50px; height: 44px;
-  line-height: 44px; text-align: center;
-}
-#welcome h1.logo {
-  background: #74a348 url('/img/hlgrad.png') repeat-x;
-  border-top-left-radius: 1em;
-  border-top-right-radius: 1em;
-  -moz-border-radius-topleft: 1em;
-  -moz-border-radius-topright: 1em;
-  -webkit-border-top-left-radius: 1em;
-  -webkit-border-top-right-radius: 1em;
-}
-#welcome table { width: 96%; margin: 0 2%; }
-#welcome .whitecircle { font-size: 1.2em; margin: auto; margin-top: 0.5em; }
-#welcome td { height: 20em; vertical-align: top; font-size: 1.5em;}
-#welcome h2 { margin: 0.5em auto; font-size: 1.3em; }
-#welcome h3 { font-size: 0.7em; margin-bottom: 1em; }
-#welcome p { font-size: 0.5em; }
-#welcome a { color: #fe7; }
-#welcome .app { width: 33%; }
-#welcome .connect { width: 40%; }
-#welcome .photos { width: 25%; }
-
-#viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
-#viewphoto .header {
-  color: #fff; padding: 1em; padding-bottom: 2em;
+.header {
+  color: #fff; padding: 1em;
   background: #75a449 url('/img/grad_header.png') repeat-x;
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
@@ -156,6 +129,27 @@ h1 strong { font-weight: bold; }
   -webkit-border-top-left-radius: 1em;
   -webkit-border-top-right-radius: 1em;
 }
+
+#welcome.dialog.win { width: 815px; position: relative; padding-bottom: 1em; }
+.numcircle { background: url('/img/welcome/numcircle.png') no-repeat; color: #fff; font-size: 1.5em; width: 40px; height: 35px; line-height: 35px; text-align: center; margin: auto; }
+#welcome .bigapp { position: absolute; right: -40px; top: 80px; }
+#welcome .header { padding: 1em 2em; }
+#welcome .header h1 { position: absolute; font-size: x-large; left: 400px; top: 1.5em; }
+#welcome .header h1 em { font-style: italic; }
+#welcome table { width: 96%; margin: 0 2%; }
+#welcome td { vertical-align: top; }
+#welcome h2 { margin: 0.5em auto; }
+#welcome h3 { font-size: 0.7em; margin-bottom: 1em; }
+#welcome a { color: #fe7; }
+#welcome .how { background-color: #ececec; font-size: xx-large; margin: 0.5em; padding: 0.5em; -webkit-border-radius: 0.5em; }
+#welcome .how em { color: #1176d5;}
+#welcome .steps { text-align: center; width: 580px; }
+#welcome .app { width: 33%; }
+#welcome .connect { width: 33%; }
+#welcome .photos { width: 33%; }
+
+#viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
+#viewphoto .header { padding-bottom: 2em; }
 .sround { border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
 #viewphoto .header img { width: 50px; height: 50px; float: left; margin-right: 1em; }
 #viewphoto .header h1 { color: #000; font-weight: bold; }
