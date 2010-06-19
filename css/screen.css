@@ -133,15 +133,15 @@ h1 strong { font-weight: bold; }
 #welcome.dialog.win { width: 815px; position: relative; padding-bottom: 1em; }
 .numcircle { background: url('/img/welcome/numcircle.png') no-repeat; color: #fff; font-size: 1.5em; width: 40px; height: 35px; line-height: 35px; text-align: center; margin: auto; }
 #welcome .bigapp { position: absolute; right: -40px; top: 80px; }
-#welcome .header { padding: 1em 2em; }
-#welcome .header h1 { position: absolute; font-size: x-large; left: 400px; top: 1.5em; }
+#welcome .header h1 { position: absolute; font-size: 1.5em; left: 380px; top: 1.5em; }
 #welcome .header h1 em { font-style: italic; }
 #welcome table { width: 96%; margin: 0 2%; }
 #welcome td { vertical-align: top; }
 #welcome h2 { margin: 0.5em auto; }
 #welcome h3 { font-size: 0.7em; margin-bottom: 1em; }
 #welcome a { color: #fe7; }
-#welcome .how { background-color: #ececec; font-size: xx-large; margin: 0.5em; padding: 0.5em; -webkit-border-radius: 0.5em; }
+#welcome .how { background-color: #ececec; font-size: 2em; margin: 0.5em; padding: 0.5em;
+  border-radius: 0.5em; -moz-border-radius: 0.5em; -webkit-border-radius: 0.5em; }
 #welcome .how em { color: #1176d5;}
 #welcome .steps { text-align: center; width: 580px; }
 #welcome .app { width: 33%; }
@@ -163,7 +163,7 @@ h1 strong { font-weight: bold; }
 #viewphoto .photo img { width: 350px; }
 #viewphoto .photo { padding-right: 1em; }
 #viewphoto .photo img { border: 2px solid #666; margin-top: -2em;}
-#viewphoto .gathered { background-color: #ececec; text-align: center; font-size: x-large; padding: 1em 1em; }
+#viewphoto .gathered { background-color: #ececec; text-align: center; font-size: 1.5em; padding: 1em 1em; }
 #viewphoto .split table { width: 100%; height: 100%; }
 #viewphoto #viewmap { width: 200px; height: 200px; margin: auto; border: 1px solid #000; }
 
@@ -224,7 +224,7 @@ a.rpxnow { vertical-align: middle; height: 28px; line-height: 28px; }
 .signinup .signin td.or {
   padding: 1em;
   font-weight: bold;
-  font-size: x-large;
+  font-size: 1.5em;
 }
 .signinup .signin .auths li { vertical-align: middle; text-align: right; }
 
@@ -419,7 +419,7 @@ p.loadmore { text-align: center; font-size: larger; }
 p.loadmore a { display: block; padding: 0.5em; }
 p.loadmore:hover { background-color: #cff; text-shadow: 1px 1px 1px #fff; }
 
-.share.upload h1 { font-size: x-large; color: #3b0; }
+.share.upload h1 { font-size: 1.5em; color: #3b0; }
 
 .userpic {
   float: left;
@@ -695,11 +695,11 @@ input.comment:focus {
 }
 .home.out .pedestal .split { width: 100%; margin: auto; }
 .home.out .left.pane { width: 560px; }
-.home.out .left.pane .title { color: #444; font-size: xx-large; text-align: center; margin-top: 0.6em; margin-bottom: -0.6em; }
+.home.out .left.pane .title { color: #444; font-size: 2em; text-align: center; margin-top: 0.6em; margin-bottom: -0.6em; }
 .home.out .title em { font-style: italic; }
 .home.out #content strong { font-weight: bold; color: #7a5; }
 .home.out .why { margin: 4em 0 1em 4em; font-size: larger;}
-.home.out .tags h1 { text-align: center; font-size: x-large; margin-top: 3.5em;}
+.home.out .tags h1 { text-align: center; font-size: 1.5em; margin-top: 3.5em;}
 .home.out .tags ul { text-align: center; }
 .home.out .tags li { display: inline; }
 .home.out .tags li a { color: skyblue; font-size: larger; }
