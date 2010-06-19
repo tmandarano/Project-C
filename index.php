@@ -21,7 +21,7 @@ dispatch        ('/',                     'eye');
 //dispatch        ('/share/mobile',         'share_mobile');
 //dispatch        ('/share/webcam',         'share_webcam');
 //
-//dispatch        ('/profile/:id',          'profile');
+dispatch        ('/profile/:id',          'profile');
 //dispatch        ('/settings',             'settings');
 
 //dispatch        ('/photos/view/:id',      'photos_view_by_id');

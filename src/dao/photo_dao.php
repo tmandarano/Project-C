@@ -73,22 +73,6 @@ class PhotoDAO {
         return $photos;
     }
 
-    public static function get_recent_photos_by_user($user_id, $number) {
-        $sql = 'SELECT * FROM photo WHERE id IN '.
-               '(SELECT photo_id FROM user_photos WHERE user_id = :user_id)'.
-               'ORDER BY date_added DESC LIMIT :limit';
-        $photos = find_objects_by_sql($sql, array(':limit' => $limit), 'Photo');
-
-        foreach($photos as $photo) {
-            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            //$photo->set_comments($comments);
-            $tags = TagDAO::get_tags_for_photo($photo->get_id());            
-            $photo->set_tags($tags);
-        }
-
-        return $photos;
-    }
-    
     public static function save($photo) {
         $now = time();
         $photo->set_date_modified($now);

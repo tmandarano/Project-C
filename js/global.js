@@ -232,7 +232,7 @@ LGG.showWelcome = function () {
           '<td class="connect">',
             '<h1><div class="numcircle">2</div></h1>',
             '<h2>Sign in and sync with your social networks.</h2>',
-            '<img src="/img/welcome/janrain.png" />',
+            '<img class="clickable" src="/img/welcome/janrain.png" />',
           '</td>',
           '<td class="photos">',
             '<h1><div class="numcircle">3</div></h1>',

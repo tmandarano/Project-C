@@ -171,25 +171,25 @@ function share_webcam() {
 function profile() {
     $user = get_session_user();
 
-    $template = new Template();
-    $user_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
+    $user_id = var_to_i(params('id'));
     $user = UserDAO::get_user_by_id($user_id);
     $similarPeople = array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     $tags = array('party' => 10, 'cars' => 7, 'college' => 13, 'wedding' => 6,
-      'concert' => 8, 'fishing' => 6);
-    $recent_photos = PhotoDAO::get_recent_photos_by_user($user_id, 4);
+        'concert' => 8, 'fishing' => 6);
+    $recent_photos = PhotoDAO::get_photos_by_user_id_recent($user_id, 4);
     $mostRecent = array_shift($recent_photos);
     $recentPhotos = array();
     foreach ($recent_photos as $photo) {
         $recentPhotos[] = $recent_photos['id'];
     }
 
+    $template = new Template();
     $template->assign(array(
       'similarPeople' => $similarPeople,
       'tags' => $tags,
       'mostRecent' => $mostRecent,
       'recentPhotos' => $recentPhotos,
-      'title' => $user->get_username(),
+      'title' => $user ? $user->get_username() : '',
       'class' => 'profile'));
     $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('users_profile.tpl'));
@@ -210,7 +210,7 @@ function settings() {
 function photos_view_by_id() {
     $user = get_session_user();
     $template = new Template();
-    $photo_id = intval(filter_var(params('id'), FILTER_VALIDATE_INT));
+    $photo_id = var_to_i(params('id'));
     $profileuser = array('id' => 1, 'name' => 'jonnyApple', 'location' => 'San Diego, CA',
                   'datetime' => '33 minutes ago');
     $photo = array('id' => 453, 'location' => 'San Diego, CA',
