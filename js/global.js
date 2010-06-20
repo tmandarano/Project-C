@@ -295,7 +295,7 @@ LGG.showWelcome = function () {
 
 LGG.showPhoto = function(id) {
   var viewer = $([
-    '<div id="viewphoto"></div>'].join(''));
+    '<div class="viewphoto"></div>'].join(''));
   LGG.dimmedDialog(viewer);
 
   $.getJSON('/api/photos/'+id, function(p) {
@@ -309,7 +309,7 @@ LGG.showPhoto = function(id) {
         '<li>tag2</li>',
         '<li>tag3</li>',
       '</ul>',
-      '<h3>2 hours ago</h3>',
+      '<h3>', LG.dateToVernacular(p.date_added), '</h3>',
       '</div>',
       '<table class="split">',
         '<tr>',
@@ -322,7 +322,7 @@ LGG.showPhoto = function(id) {
             '</div>',
             '<h1 class="bichrome"><em>Similar</em> photos nearby.</h1>',
             '<ul class="collage similar photos"></ul>',
-            '<div id="viewmap"></div>',
+            '<div class="viewmap"></div>',
           '</td>',
         '</tr>',
       '</table>'
@@ -339,7 +339,7 @@ LGG.showPhoto = function(id) {
       mapTypeId: GM.MapTypeId.ROADMAP,
       disableDefaultUI: true,
     };
-    var map = new GM.Map($("#viewmap", viewer)[0], mapOpts);
+    var map = new GM.Map($(".viewmap", viewer)[0], mapOpts);
     if (p.latitude && p.longitude) {
       new GM.Marker({position: map.getCenter(), map: map});
     }

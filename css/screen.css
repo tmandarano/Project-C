@@ -103,6 +103,8 @@ h1 strong { font-weight: bold; }
   -webkit-border-radius: 0.3em;
 }
 .nav .sign.in img { cursor: pointer; }
+.nav .profile,
+.nav .sign.out { float: right; }
 
 /* dimmed dialogs */
 .dialog.dimmer { position: absolute; width: 100%; height: 100%; top: 0; z-index: 900;
@@ -148,24 +150,24 @@ h1 strong { font-weight: bold; }
 #welcome .connect { width: 33%; }
 #welcome .photos { width: 33%; }
 
-#viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
-#viewphoto .header { padding-bottom: 2em; }
+.viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
+.viewphoto .header { padding-bottom: 2em; }
 .sround { border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
-#viewphoto .header img { width: 50px; height: 50px; float: left; margin-right: 1em; }
-#viewphoto .header h1 { color: #000; font-weight: bold; }
-#viewphoto h2, #viewphoto h3 { display: inline; }
-#viewphoto h3, #viewphoto .tags { font-size: smaller; }
-#viewphoto .tags { margin: 0 0.5em; }
-#viewphoto .tags,
-#viewphoto .tags li { display: inline; color: #fff890; margin: 0 0.3em; }
-#viewphoto .split { margin: 1em; width: 95%; }
-#viewphoto .photo,
-#viewphoto .photo img { width: 350px; }
-#viewphoto .photo { padding-right: 1em; }
-#viewphoto .photo img { border: 2px solid #666; margin-top: -2em;}
-#viewphoto .gathered { background-color: #ececec; text-align: center; font-size: 1.5em; padding: 1em 1em; }
-#viewphoto .split table { width: 100%; height: 100%; }
-#viewphoto #viewmap { width: 200px; height: 200px; margin: auto; border: 1px solid #000; }
+.viewphoto .header img { width: 50px; height: 50px; float: left; margin-right: 1em; }
+.viewphoto .header h1 { color: #000; font-weight: bold; }
+.viewphoto h2, #viewphoto h3 { display: inline; }
+.viewphoto h3, #viewphoto .tags { font-size: smaller; }
+.viewphoto .tags { margin: 0 0.5em; }
+.viewphoto .tags,
+.viewphoto .tags li { display: inline; color: #fff890; margin: 0 0.3em; }
+.viewphoto .split { margin: 1em; width: 95%; }
+.viewphoto .photo,
+.viewphoto .photo img { width: 350px; }
+.viewphoto .photo { padding-right: 1em; }
+.viewphoto .photo img { border: 2px solid #666; margin-top: -2em;}
+.viewphoto .gathered { background-color: #ececec; text-align: center; font-size: 1.5em; padding: 1em 1em; }
+.viewphoto .split table { width: 100%; height: 100%; }
+.viewphoto .viewmap { width: 200px; height: 200px; margin: auto; border: 1px solid #000; }
 
 a.rpxnow { vertical-align: middle; height: 28px; line-height: 28px; }
 .rpxnow input { background-color: #299ecf; border-color: #299ecf; }

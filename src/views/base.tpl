@@ -4,9 +4,8 @@
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' /> 
 <link rel='icon' type='image/png' href='/img/favicon.png' />
 <link rel='shortcut icon' href='/favicon.ico' />
-{*TODO Uncomment later to hopefully take advantage of people having cached yui*}
-{*<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css" /> *}
-<link rel="stylesheet" type="text/css" href="/css/yui-reset-2.8.1.min.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css" />
+{*<link rel="stylesheet" type="text/css" href="/css/yui-reset-2.8.1.min.css" />*}
 <link rel='stylesheet' type='text/css' href='/css/custom-theme/jquery-ui-1.8.2.custom.css' />
 <link rel='stylesheet' type='text/css' href='/css/screen.css' />
 <title>{if $title}{$title} | {/if}LiveGather</title> 
@@ -18,18 +17,19 @@
     <li id='logo'><a href="/"><img src="/img/logo/small_no_tagline.png" /></a></li>
     <li id='search' class='controls search'>
       <form action="/explore/search" method="GET">
-        <input type="text" name="search" value="Search" class="default controls search" />
-        <input type="submit" value="Search" />
+        <input type="text" name="search" class="default controls search"
+               value="Search" />
+        <input type="submit" value="Show" />
       </form>
     </li>
     {if $user != null}
-      <li><a href="/profile/{$user.id}">{$user.name}</a></li> 
-      <li class="sign out"><a href="/api/signout">Sign out</a></li>
+      <li class='sign out'><a href="/api/signout">Sign out</a></li>
+      <li class='profile'><a href="/profile/{$user.id}">{$user.name}</a></li> 
     {else}
-      <li class="sign in">
-        <a class="rpxnow" onclick="return false;"
+      <li class='sign in'>
+        <a class='rpxnow' onclick='return false;'
            href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Frpx.php">
-        <input type="submit" value="Sign in/up" /></a>
+        <input type='submit' value='Sign in/up' /></a>
       </li>
     {/if}
   </ul> 
@@ -85,14 +85,13 @@ enjoyable experience.</p>
 
 <script type="text/javascript">
   var rpxJsHost = (("https:" == document.location.protocol) ? "https://" : "http://static.");
-  document.write(unescape("%3Cscript src='" + rpxJsHost +
-"rpxnow.com/js/lib/rpx.js' type='text/javascript'%3E%3C/script%3E"));
+  document.write(unescape(["%3Cscript src='", rpxJsHost,
+    "rpxnow.com/js/lib/rpx.js' ",
+    "type='text/javascript'%3E%3C/script%3E"].join('')));
 </script>
 <script type="text/javascript">
   RPXNOW.overlay = true;
   RPXNOW.language_preference = 'en';
 </script>
-
-
 </body> 
 </html> 

@@ -23,7 +23,12 @@ LG.map.markers.photo = function (photo) {
 
 LG.eye = (function () {
   var _ = {
-    map: null
+    map: null,
+    lastPhotos: [],
+    search: null
+  };
+  _.setSearch = function (q) {
+    _.search = q;
   };
   _.doSearch = function (q) {
     console.log('searching for', q);
@@ -31,17 +36,20 @@ LG.eye = (function () {
     // TODO for real
     var jitter = function () { return Math.random() - 0.5; };
     var photos = [
-    {id:112,user_id:122,latitude:32 + jitter(),longitude:-117 + jitter(),caption:"a",tags:[{id:33,tag:"tag1"}]},
-    {id:112,user_id:122,latitude:32 + jitter(),longitude:-118 + jitter(),caption:"b",tags:[{id:33,tag:"tag1"}]},
-    {id:112,user_id:122,latitude:33 + jitter(),longitude:-118 + jitter(),caption:"c",tags:[{id:33,tag:"tag1"}]},
-    {id:112,user_id:122,latitude:33 + jitter(),longitude:-117 + jitter(),caption:"d",tags:[{id:33,tag:"tag1"}]},
-    {id:112,user_id:122,latitude:32.1 + jitter(),longitude:-117.1 + jitter(),caption:"e",tags:[{id:33,tag:"tag1"}]}
+    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude:_.map.getCenter().lng() + jitter(),caption:"a",tags:[{id:33,tag:"tag1"}]},
+    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude:_.map.getCenter().lng() + jitter(),caption:"b",tags:[{id:33,tag:"tag1"}]},
+    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude:_.map.getCenter().lng() + jitter(),caption:"c",tags:[{id:33,tag:"tag1"}]},
+    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude:_.map.getCenter().lng() + jitter(),caption:"d",tags:[{id:33,tag:"tag1"}]},
+    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude: _.map.getCenter().lng() + jitter(),caption:"e",tags:[{id:33,tag:"tag1"}]}
     ];
+
+    for (var i in _.lastPhotos) {
+      _.lastPhotos[i].setMap(null);
+    }
     
     try {
       for (var i in photos) {
-        console.log('adding', photos[i]);
-        _.addPhoto(photos[i]);
+        _.lastPhotos.push(_.addPhoto(photos[i]));
       }
     } catch (e) {
         console.log(e);
@@ -56,6 +64,7 @@ LG.eye = (function () {
         return false;
       });
     }
+    return marker;
   };
   _.initTags = function () {
     var alltags = $('#trendingtags ol');
@@ -99,25 +108,24 @@ LG.eye = (function () {
             outerHeight)) - 8));
     GM.event.trigger(_.map, 'resize');
   };
+  _.addPhotoLivestream = function (photo) {
+    var id = photo.id;
+    _.alllive.append(
+      $('<li></li>').append(
+        $(['<a href="#"><img src="/api/photo/', id, '/3" /></a>'].join(''))
+          .click(function () { LG.G.showPhoto(id); return false; })));
+  };
   _.initLivestream = function () {
-    var alllive = $('#livestream ol');
-    LG.G.fade(alllive.parent());
-
-    function addPhoto(id) {
-      alllive.append(
-        $('<li></li>').append(
-          $(['<a href="#"><img src="/api/photo/', id, '/3" /></a>'].join(''))
-            .click(function () { LG.G.showPhoto(id); return false; })));
-    }
+    _.alllive = $('#livestream ol');
+    LG.G.fade(_.alllive.parent());
 
     $.get('/api/photos/recent/20', function (photos) {
       for (var i in photos) {
-        addPhoto(photos[i].id);
+        _.addPhotoLivestream(photos[i]);
       }
     }, 'json');
 
-    alllive.hide();
-    alllive.fadeIn('fast');
+    _.alllive.hide().fadeIn('fast');
   };
   _.initSearch = function () {
     $('#search form').submit(function () {
@@ -125,13 +133,30 @@ LG.eye = (function () {
       return false;
     });
   };
+  _.update = function () {
+    console.log('updating');
+    if (_.pause) {
+      console.log('paused');
+    } else {
+      _.doSearch(_.search);
+    }
+    setTimeout(arguments.callee, 8000);
+  };
   _.init = function () {
     _.initMap($('#map').width('100%')[0]);
     _.initTags();
     _.initLivestream();
     _.initSearch();
+    _.update();
     $(window).resize(_.resizeMap);
     _.resizeMap();
+
+    //var button = $('<button>Click me</button>');
+    //button.click(function () {
+    //  $('<div hello="1">Hello</div>').dialog().parent().parent().addClass('lg-dialog');
+    //  return false;
+    //});
+    //$('#content').prepend(button);
   };
   return _;
 })();
