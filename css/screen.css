@@ -391,19 +391,16 @@ h1.bichrome em { color: #a3e267; }
 h1.monochrome { color: #444; font-size: 2.5em; }
 h1.monochrome em { font-weight: bold; }
 
-.profile .left.pane { width: 180px; }
+.profile #content { width: 1024px; }
+.profile .left.pane { width: 220px; }
 .profile .left.pane .actions { text-align: center; }
 .profile .left.pane .actions a { color: #bb2727; }
-.profile .left.pane ul.collage { width: 180px; }
+.profile .left.pane ul.collage { width: 220px; }
 .profile .left.pane h1.username { text-align: center; }
 .profile .left.pane .username { font-size: large; font-weight: bold; color: #a3d277; }
-.profile .left.pane .userphoto { width: 180px; height: 180px; text-align: center; }
+.profile .left.pane .userphoto { width: 220px; height: 220px; text-align: center; }
 .profile dl.user.info dt:after { content: ":"; }
-.profile dl.user.info dt {
-  float: left;
-  clear: left;
-  margin-right: 0.5em;
-}
+.profile dl.user.info dt { float: left; clear: left; margin-right: 0.5em; }
 .profile .right.pane { padding-left: 3em; }
 .profile .most_recent p { font-size: larger; max-width: 60ex; margin-bottom: 1em; }
 .profile .most_recent .map { height: 50%; width: 100%; border: 1px solid #aaa; }
@@ -414,7 +411,7 @@ h1.monochrome em { font-weight: bold; }
 .profile.stream li { position: relative; height: 270px; margin-bottom: 10px; }
 .profile.stream li .photo { position: absolute; clear: left; z-index: 1;}
 .profile.stream li .photo a.like { position: absolute; top: 0.5em; right: 0.5em; display: none; }
-.profile.stream li .detail { padding-left: 280px; position: relative; height: inherit; } 
+.profile.stream li .detail { padding-left: 280px; position: relative; height: inherit; width: 400px; } 
 .profile.stream li .detail .bottom { position: absolute; bottom: 0;} 
 
 p.loadmore { text-align: center; font-size: larger; }

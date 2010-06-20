@@ -44,6 +44,11 @@ class UserDAO {
         }
     }
 
+    public static function get_users_similar($user_id, $num) {
+        // TODO
+        return array();
+    }
+
     public function save($user, $update = false) {
         $now = time();
         $user->set_date_modified($now);
