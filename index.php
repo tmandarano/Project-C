@@ -17,7 +17,7 @@ dispatch        ('/',                     'eye');
 //dispatch        ('/explore/map',          'explore_map');
 //dispatch        ('/explore/photos',       'explore_photos');
 //
-//dispatch        ('/share/upload',         'share_upload');
+dispatch        ('/share/upload',         'share_upload');
 //dispatch        ('/share/mobile',         'share_mobile');
 //dispatch        ('/share/webcam',         'share_webcam');
 //

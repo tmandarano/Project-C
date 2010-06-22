@@ -26,11 +26,6 @@ class Template extends Smarty {
     }
 }
 
-// Get one master copy of the session user if it exists.
-function get_session_user() {
-    return (empty($_SESSION['user'])) ? null : unserialize($_SESSION['user']);
-}
-
 function get_session_user_info($user) {
     if ($user) {
         return array(
@@ -42,10 +37,9 @@ function get_session_user_info($user) {
 }
 
 function eye () {
-    $user = get_session_user();
     $template = new Template();
     $template->assign(array('title'=>'', 'class'=>'eye'));
-    $template->assign(array('user' => get_session_user_info($user)));
+    $template->assign(array('user' => get_session_user_info(get_session_user())));
     return html($template->fetch('eye.tpl'));
 }
 
@@ -53,7 +47,7 @@ function home() {
     check_system_auth();
     $user = get_session_user();
 
-    $template = new BaseController();
+    $template = new Template();
 
     if ($user) {
         $streamPhotos = implode(', ', array(101, 102, 103));
@@ -87,7 +81,7 @@ function home() {
 function about_contact() {
     $user = get_session_user();
 
-    $template = new BaseController();
+    $template = new Template();
     $template->assign(array('title'=>'Contact | About', 'class'=>'about contact'));
     $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('about_contact.tpl'));
@@ -95,7 +89,7 @@ function about_contact() {
     
 function about_faq() {
     $user = get_session_user();
-    $template = new BaseController();
+    $template = new Template();
     $template->assign(array('title'=>'FAQ | About', 'class'=>'about faq'));
     $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('about_faq.tpl'));
@@ -104,7 +98,7 @@ function about_faq() {
 /* Explore pages */
 function explore_map() {
     $user = get_session_user();
-    $template = new BaseController();
+    $template = new Template();
     $template->assign(array('title'=>'Map | Explore', 'class'=>'explore map'));
     $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('explore_map.tpl'));
@@ -112,7 +106,7 @@ function explore_map() {
 
 function explore_photos() {
     $user = get_session_user();
-    $template = new BaseController();
+    $template = new Template();
     $popCities = array('San Diego', 'Seattle', 'New York', 'Los Angeles', 'Miami');
     $trending = array('party', 'baseball', 'seahawks', 'car', 'funny', 'happy');
     $suggestedPhotos = array(451, 452, 453, 452, 453, 452, 451, 452, 453, 452);
@@ -128,7 +122,7 @@ function explore_photos() {
 }
 
 //function explore_people() {
-//    $template = new BaseController();
+//    $template = new Template();
 //    $template->assign('title', 'People | Explore');
 //    $template->assign('class', 'explore people');
 //    return html($template->fetch('explore_people.tpl'));
@@ -137,17 +131,15 @@ function explore_photos() {
 /* Share pages */
 function share_upload() {
     check_system_auth();
-    $user = get_session_user();
-
-    $template = new BaseController();
+    $template = new Template();
     $template->assign(array('title'=>'Upload | Share', 'class'=>'share upload'));
-    $template->assign(array('user' => get_session_user_info($user)));
+    $template->assign(array('user' => get_session_user_info(get_session_user())));
     return html($template->fetch('share_upload.tpl'));
 }
 
 function share_mobile() {
     $user = get_session_user();
-    $template = new BaseController();
+    $template = new Template();
     $template->assign(array('title'=>'Download App | Mobile | Share', 'class'=>'getapp'));
     $template->assign(array('user' => get_session_user_info($user))); 
     return html($template->fetch('getapp.tpl'));
@@ -164,7 +156,7 @@ function share_webcam() {
     check_system_auth();
     $user = get_session_user();
 
-    $template = new BaseController();
+    $template = new Template();
     $template->assign(array('title'=>'Webcam | Share', 'class'=>'share webcam'));
     $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('share_webcam.tpl'));
@@ -192,7 +184,7 @@ function settings() {
     check_system_auth();
     $user = get_session_user();
 
-    $template = new BaseController();
+    $template = new Template();
     $template->assign(array('title'=>'Settings', 'class'=>'users settings'));
     $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('settings.tpl'));

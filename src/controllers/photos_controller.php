@@ -51,13 +51,26 @@ function photos_get_by_tag_id() {
 }
 
 function photos_create() {
-    $user = check_sytem_auth();
+    check_system_auth();
+    $user = get_session_user();
     
     $data = get_json_input();
 
     if(! $user) {
-	return array();	
+	return halt(403);
     }    
+
+    // Fill data with POST parameters if there is no incoming JSON
+    if (!$data) {
+        $p = env('POST');
+        $p = $p['REQUEST'];
+        if ($p) {
+            $vars = array('caption', 'userfile', 'tags', 'lat', 'lng');
+            foreach ($vars as $var) {
+                $data[$var] = $p[$var];
+            }
+        }
+    }
 
     $photo = new Photo();
     $photo->set_user_id($user->get_id());
@@ -138,6 +151,7 @@ function photo_by_size() {
         $x = $target;
         $y = $height * $target / $width;
         $scaled = ImageCreateTrueColor($x, $y);
+        $scaled = ImageCreateTrueColor($x, $y);
         ImageCopyResampled($scaled, $src, 0, 0, 0, 0, $x, $y, $width, $height);
         header('Content-Type: image/jpeg');
         imagejpeg($scaljd);
@@ -175,4 +189,3 @@ function photos_delete_tag() {
     return json(PhotoDAO::delete_tag($photo_id, $tag));
 }
 
-?>

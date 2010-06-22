@@ -1,45 +1,68 @@
-var LG = LG ? LG : {};
-LG.PICTURES = LG.PICTURES ? LG.PICTURES : {};
-LG.PICTURES.ADD = {};
-LG.PICTURES.ADD.init = function() {
+LG.share = defaultTo(LG.share, {});
+LG.share.upload = (function () {
   var mapOpts = {
     zoom: 7,
-    center: new google.maps.LatLng(32.77977,-117.137947),
-    mapTypeId: google.maps.MapTypeId.TERRAIN,
-    disableDefaultUI: true,
-    mapTypeControl: false,
-    navigationControl: true,
-    navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL}
+    center: new GM.LatLng(32.77977,-117.137947),
+    mapTypeId: GM.MapTypeId.TERRAIN,
   };
-  var map = LG.PICTURES.ADD.map = new google.maps.Map($("#map")[0], mapOpts);
-  LG.PICTURES.ADD.marker = new google.maps.Marker({
-    position: map.getCenter(),
-    draggable: true,
-    map: map
+
+  var _ = {};
+  _.init = function () {
+    var map = _.map = new GM.Map($("#map")[0], mapOpts);
+    _.marker = new GM.Marker({
+      draggable: true,
+      position: _.map.getCenter(),
+      map: _.map
+    });
+    _.marker.bindTo('position', _.map, 'center');
+
+    _.follower = (function () {
+      var x = function () {};
+      var xp = x.prototype = new GM.MVCObject();
+      xp.position_changed = function () {
+        var latlng = this.get('position');
+        $('#lng').val(latlng.lng());
+        $('#lat').val(latlng.lat());
+      };
+      var y = new x();
+      y.bindTo('position', _.marker);
+      return y;
+    })();
+
+    GM.event.addListener(map, 'click', function(e) {
+      _.marker.setPosition(e.latLng);
+    });
+  };
+  return _;
+})();
+$(function () {
+  LG.share.upload.init();
+  $('#photo_caption').val('caption yay');
+  $('#photo_tags').val('tag is more, than two words long');
+  var uploader = new AjaxUpload('#photo_photo', {
+    action: '/upload.php',
+    name: 'userfile',
+    autoSubmit: false,
+    onComplete: function (file) {
+      var data = $('form').serialize() + '&userfile=' + file;
+      $.ajax({
+        type: 'POST',
+        url: '/api/photos',
+        data: data,
+        dateType: 'json',
+        success: function (result) {
+          alert('yay');
+        },
+        error: function () {
+          alert('unable to save');
+        }
+      });
+    }
   });
-  function setLocation(latlng) {
-    $('#lng').val(latlng.lng());
-    $('#lat').val(latlng.lat());
-  }
-  google.maps.event.addListener(LG.PICTURES.ADD.marker, 'click', function(e) {
-    setLocation(LG.PICTURES.ADD.marker.position);
-  });
-  google.maps.event.addListener(map, 'click', function(e) {
-    LG.PICTURES.ADD.marker.setPosition(e.latLng);
-    setLocation(LG.PICTURES.ADD.marker.position);
-  });
-  google.maps.event.addListener(map, 'bounds_changed', function() {
-    LG.PICTURES.ADD.marker.setPosition(this.getCenter());
-    setLocation(LG.PICTURES.ADD.marker.position);
-  });
-};
-$(document).ready(LG.PICTURES.ADD.init);
-$(function() {
-  $('#photo_submit_share').click(function() {
-    $('#photo_photo').val();
-    $('#photo_tags').val();
-    // TODO lat lng
-    $.post('/photos/create/', data, function(xhr) {
-    }, 'json');
+  $('#photo_submit_share').click(function () {
+      console.log('clicked');
+    uploader.submit();
+      console.log('done');
+    return false;
   });
 });

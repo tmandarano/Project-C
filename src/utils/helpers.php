@@ -49,6 +49,12 @@ function check_system_auth() {
     }
 }
 
+// Get one master copy of the session user if it exists.
+function get_session_user() {
+    return (empty($_SESSION['user'])) ? null : unserialize($_SESSION['user']);
+}
+
+
 function var_to_i($v) {
     return intval(filter_var($v, FILTER_VALIDATE_INT));
 }

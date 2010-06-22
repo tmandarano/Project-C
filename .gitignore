@@ -5,4 +5,7 @@ empty
 \#*#
 photos/*.jpg
 special/smarty_pants/compiled/*
+special/uploads/*.jpg
+special/uploads/*.png
+special/uploads/*.gif
 test.html
