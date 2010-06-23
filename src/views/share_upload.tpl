@@ -1,5 +1,6 @@
 <h1>Share by Uploading</h1>
 
+{if $user}
 <form action="/api/photos" method="POST" enctype="multipart/form-data">
 <table>
   <tr>
@@ -17,9 +18,9 @@
   <tr>
     <th>Location</th>
     <td>
-      <input id="lng" name="lng" type="hidden" />
-      <input id="lat" name="lat" type="hidden" />
-      <div id="map" style="height: 400px; width: 400px;"></div>
+      <input id="lng" name="longitude" type="hidden" />
+      <input id="lat" name="latitude" type="hidden" />
+      <div id="map" style="height: 200px; width: 400px;"></div>
     </td>
     <td>Please click on the map where the photo was taken</td>
   </tr>
@@ -34,3 +35,6 @@
 <script type="text/javascript" src="/js/share_upload.js"></script>
 <script type="text/javascript" src="/js/ajaxupload.js"></script>
 {/capture}
+{else}
+Please sign in first.
+{/if}

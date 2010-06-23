@@ -40,18 +40,24 @@ $(function () {
   $('#photo_caption').val('caption yay');
   $('#photo_tags').val('tag is more, than two words long');
   var uploader = new AjaxUpload('#photo_photo', {
-    action: '/upload.php',
+    action: '/api/photos/upload',
     name: 'userfile',
     autoSubmit: false,
     onComplete: function (file) {
-      var data = $('form').serialize() + '&userfile=' + file;
       $.ajax({
         type: 'POST',
         url: '/api/photos',
-        data: data,
+        data: {
+          userfile: file, 
+          tags: $('#photo_tags').val(),
+          caption: $('#photo_caption').val(),
+          latitude: $('#lat').val(),
+          longitude: $('#lng').val()
+        },
         dateType: 'json',
         success: function (result) {
-          alert('yay');
+          console.log(result);
+          alert('SAVED!');
         },
         error: function () {
           alert('unable to save');
@@ -60,9 +66,7 @@ $(function () {
     }
   });
   $('#photo_submit_share').click(function () {
-      console.log('clicked');
     uploader.submit();
-      console.log('done');
     return false;
   });
 });

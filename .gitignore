@@ -3,9 +3,8 @@
 *~
 empty
 \#*#
-photos/*.jpg
+photos/IMG*
 special/smarty_pants/compiled/*
-special/uploads/*.jpg
-special/uploads/*.png
-special/uploads/*.gif
+!special/uploads/README*
+special/uploads/*
 test.html

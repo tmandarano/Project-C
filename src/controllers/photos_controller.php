@@ -56,8 +56,8 @@ function photos_create() {
     
     $data = get_json_input();
 
-    if(! $user) {
-	return halt(403);
+    if(!$user) {
+	return halt(401);
     }    
 
     // Fill data with POST parameters if there is no incoming JSON
@@ -65,13 +65,17 @@ function photos_create() {
         $p = env('POST');
         $p = $p['REQUEST'];
         if ($p) {
-            $vars = array('caption', 'userfile', 'tags', 'lat', 'lng');
+            $vars = array('caption', 'userfile', 'tags', 'latitude', 'longitude');
             foreach ($vars as $var) {
                 $data[$var] = $p[$var];
             }
         }
     }
 
+    if (empty($data['userfile'])) {
+        return halt(400);
+    }
+ 
     $photo = new Photo();
     $photo->set_user_id($user->get_id());
     
@@ -98,10 +102,6 @@ function photos_create() {
     }
     */
 
-    if(empty($data['userfile'])) {
-        halt(400, "", "");        
-    }
- 
     $photo->set_caption($data['caption']);
     $photo->set_name($data['userfile']);
     $photo->set_latitude($data['latitude']);
@@ -189,3 +189,19 @@ function photos_delete_tag() {
     return json(PhotoDAO::delete_tag($photo_id, $tag));
 }
 
+function photos_upload() {
+    $uploadfile = option('UPLOAD_DIR') . basename($_FILES['userfile']['name']);
+    $thefile = $_FILES['userfile']['tmp_name'];
+    
+    if (move_uploaded_file($thefile, $uploadfile)) {
+        debug("Successfully moved the file " . $thefile . " to " . $uploadfile);
+        return json($thefile);
+    } else {
+        debug("ERROR: File upload failed for " . $thefile);
+        // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+        // Otherwise onSubmit event will not be fired
+        halt(500);
+    }
+}
+
+?>
