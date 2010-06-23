@@ -218,4 +218,20 @@ function photos_view_by_id() {
     $template->assign(array('user' => get_session_user_info($user)));
     return html($template->fetch('photos_view.tpl'));
 }
+
+function privacy() {
+    $template = new Template();
+    $template->assign(array('title'=>'Privacy', 'class'=>'privacy'));
+    $template->assign(array('user' => get_session_user_info($user)));
+    return html($template->fetch('privacy.tpl'));
+}
+
+function tos() {
+
+    $template = new Template();
+    $template->assign(array('title'=>'Terms of Service', 'class'=>'tos'));
+    $template->assign(array('user' => get_session_user_info($user)));
+    return html($template->fetch('tos.tpl'));
+}
+
 ?>

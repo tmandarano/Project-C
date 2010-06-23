@@ -23,6 +23,8 @@ dispatch        ('/share/upload',         'share_upload');
 //
 dispatch        ('/profile/:id',          'profile');
 //dispatch        ('/settings',             'settings');
+dispatch        ('/privacy',              'privacy');
+dispatch        ('/tos',                  'tos');
 
 //dispatch        ('/photos/view/:id',      'photos_view_by_id');
 

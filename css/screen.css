@@ -153,6 +153,7 @@ h1 strong { font-weight: bold; }
 .viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
 .viewphoto .header { padding-bottom: 2em; }
 .sround { border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+.lround { border-radius: 1em; -moz-border-radius: 1em; -webkit-border-radius: 1em; }
 .viewphoto .header img { width: 50px; height: 50px; float: left; margin-right: 1em; }
 .viewphoto .header h1 { color: #000; font-weight: bold; }
 .viewphoto h2, #viewphoto h3 { display: inline; }
@@ -660,6 +661,12 @@ input.comment:focus {
   text-align: center;
 }
 
+.privacy .policy { background-color: #eee; padding: 1em 2em; color: #444;
+  width: 700px; margin: 2em auto; }
+.privacy h1 { font-weight: bold; margin: auto; text-align: center; }
+.privacy h2 { font-weight: bold; margin: 0.5em 0; }
+.privacy p { margin: 0.5em 0; }
+
 /*
 #headerstream {
   position: relative;
@@ -903,6 +910,8 @@ input.comment:focus {
   margin-top: 1em;
 }
 */
+
+
 /*
 .settings #settings { margin: auto; width: 680px; }
 .settings .basic .content h1 { background: none; color: black; }
