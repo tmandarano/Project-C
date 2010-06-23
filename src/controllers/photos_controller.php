@@ -115,6 +115,7 @@ function photos_create() {
 }
 
 function save_photo($photo) {
+    debug($photo->get_name());
     $extension = substr($photo->get_name(), strrpos($photo->get_name(), '.') + 1); 
     $new_file_name = "IMG" . $photo->get_id() . "." . $extension;
     $target_path = option('PHOTOS_DIR') . $new_file_name;
@@ -139,8 +140,8 @@ function photo_by_size() {
     }
     $photo = PhotoDao::get_photo_by_id(var_to_i(params('id')));
     $extension = 'jpg';
-    if ($photos) {
-        $filename = option('PHOTOS_DIR') . $photos[0]->get_id() . '.' . $extension;
+    if ($photo) {
+        $filename = option('PHOTOS_DIR') . $photo[0]->get_id() . '.' . $extension;
     } else {
         $filename = '';
     }
