@@ -7,7 +7,7 @@ class Config {
         $env = ($_SERVER['HTTP_HOST'] == 'dev.livegather.com') ? ENV_PRODUCTION : ENV_DEVELOPMENT;
         $is_production = $env == ENV_PRODUCTION;
         $dsn = $is_production ?
-            'mysql:dbname=livegather;host=db.livegather.com' :
+            'mysql:dbname=livegather_dev;host=mysql.livegather.com' :
             'mysql:dbname=projectc;host=localhost';
         $dbuser = $is_production ? 'livegather' : 'projectc';
         $dbpass = $is_production ? 'liv3g@th3r' : 'projectc';
