@@ -2,7 +2,7 @@
 class Tag {
     public $id;
     public $tag;
-    public $data_added;
+    public $date_added;
     public $date_modified;
     
     public function get_id() {
