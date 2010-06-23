@@ -29,7 +29,7 @@ class Config {
         option('system_password', 'pr0j(');
         option('session', 'LiveGather');
         option('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/special/uploads/');
-        option('IMAGES_DIR', $_SERVER['DOCUMENT_ROOT'].'/photos/');
+        option('PHOTOS_DIR', $_SERVER['DOCUMENT_ROOT'].'/photos/');
     }
 }
 ?>
