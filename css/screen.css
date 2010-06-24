@@ -77,8 +77,9 @@ h1 strong { font-weight: bold; }
 #content, .nav {
   position: relative;
   margin: auto;
-  width: 100%;
 }
+
+#content { width: 800px; }
 
 .nav { height: inherit; }
 .nav li { float: left; height: inherit; }
@@ -911,8 +912,7 @@ input.comment:focus {
 }
 */
 
-
-/*
+.settings #content { margin-top: 2em; }
 .settings #settings { margin: auto; width: 680px; }
 .settings .basic .content h1 { background: none; color: black; }
 .settings .basic .content .userphoto { float: right; margin-right: 2em; }
@@ -921,6 +921,7 @@ input.comment:focus {
 .settings .privacy .content table { margin: auto; font-weight: bold; }
 .settings .privacy .content table tr { line-height: 2em; }
 .settings .privacy .content table th { text-align: right; padding-right: 1em; }
+/*
 
 h1.bubble {
   margin-top: 0.5em;

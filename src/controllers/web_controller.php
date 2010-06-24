@@ -184,6 +184,10 @@ function settings() {
     check_system_auth();
     $user = get_session_user();
 
+    if (!$user) {
+        halt(401);
+    }
+
     $template = new Template();
     $template->assign(array('title'=>'Settings', 'class'=>'users settings'));
     $template->assign(array('user' => get_session_user_info($user)));

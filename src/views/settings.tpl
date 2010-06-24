@@ -1,5 +1,5 @@
 <div id="settings">
-<div class="expandable basic">
+{*<div class="expandable basic">
   <h1>Basic Information</h1>
   <div class="content">
     <form action="/">
@@ -20,21 +20,22 @@
     </form>
   </div>
 </div>
+*}
 
 <div class="expandable auths">
-  <h1>External Connections</h1>
+  <h1>Connections</h1>
   <div class="content">
-    <table class="auths">
-     <tr>
-       <td><img src="/img/signup/connect_google.png" /></td>
-       <td><img src="http://wiki.developers.facebook.com/images/f/f5/Connect_white_large_long.gif" /></td>
-     </tr>
-    </table>
-    <img src="/img/button_save_changes.png" />
+    <p>Signed in but you can't see your photos? Your account has never been
+    signed into using this service. Please reauthenticate with a service that
+    you have used to sign in before and we will link your photos.</p>
+    <iframe
+    src="http://livegather.rpxnow.com/openid/embed?token_url=http%3A%2F%2Fdev.livegather.com%2Frpx.php&flags=hide_sign_in_with"
+      scrolling="no" frameBorder="no" allowtransparency="true"
+      style="width:400px;height:240px"></iframe>
   </div>
 </div>
 
-<div class="expandable privacy">
+{*<div class="expandable privacy">
   <h1>Privacy Settings</h1>
   <div class="content">
     <table>
@@ -45,8 +46,12 @@
     <img src="/img/button_save_changes.png" />
   </div>
 </div>
+*}
 </div>
 
 {capture name=scripts}
 <script type="text/javascript" src="/js/settings.js"></script>
+<script type="text/javascript">
+  RPXNOW.flags = "show_provider_list";
+</script>
 {/capture}

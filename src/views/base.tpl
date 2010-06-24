@@ -81,8 +81,6 @@ enjoyable experience.</p>
 <script type="text/javascript" src="/js/jquery-ui-1.8.2.custom.min.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="/js/global.js"></script>
-{if $smarty.capture.scripts}{$smarty.capture.scripts}{/if}
-
 <script type="text/javascript">
   var rpxJsHost = (("https:" == document.location.protocol) ? "https://" : "http://static.");
   document.write(unescape(["%3Cscript src='", rpxJsHost,
@@ -93,5 +91,6 @@ enjoyable experience.</p>
   RPXNOW.overlay = true;
   RPXNOW.language_preference = 'en';
 </script>
+{if $smarty.capture.scripts}{$smarty.capture.scripts}{/if}
 </body> 
 </html> 
