@@ -23,7 +23,8 @@ a { text-decoration: none; color: #1584b2; }
 /* classes */
 input[type="text"],
 input[type="password"],
-input[type="submit"]{
+input[type="submit"],
+button {
   font-size: 1.1em;
   vertical-align: middle;
   border-radius: 0.3em;
@@ -48,7 +49,8 @@ input[type="text"]:focus,
 input[type="password"]:focus { background-color: #ffc; border-color: #9cda60; }
 input[type="text"].default { color: #bbb; }
 
-input[type="submit"] {
+input[type="submit"],
+button {
   background: #333;
   color: #fff;
   font-weight: bold;
@@ -79,7 +81,7 @@ h1 strong { font-weight: bold; }
   margin: auto;
 }
 
-#content { width: 800px; }
+#content { width: 800px; min-height: 30em; }
 
 .nav { height: inherit; }
 .nav li { float: left; height: inherit; }
@@ -681,12 +683,17 @@ input.comment:focus {
   overflow: hidden;
   float: left;
 }
-#footer { background: #000 url('/img/grad_footer.png') repeat-x; padding-bottom: 3em; }
-#footer a { color: #fff; font-size: small; }
-#footer h1,
-#footer h1 a {color: #fff; font-size: large; font-weight: bold; }
-#footer td { padding: 0.5em 2em 0.5em 0; vertical-align: top; }
+*/
 
+#footer { height: 3em; line-height: 3em; background: #74a348 url('/img/hlgrad.png') repeat-x; font-size: 0.9em; }
+#footer a { color: #fff; }
+#footer ul { text-align: center; color: #fff; height: inherit; }
+#footer li { display: inline; padding: 0 0.5em; }
+#footer button { vertical-align: middle; }
+
+#download { background-color: #dd0; border: #dd0; color: #000; }
+
+/*
 .home.out .nav .sign.in { margin-top: 1.5em; }
 .home.out #header .nav { height: 88px; }
 .home.out #header { height: 138px; }

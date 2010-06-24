@@ -24,7 +24,7 @@
     </li>
     {if $user != null}
       <li class='sign out'><a href="/api/signout">Sign out</a></li>
-      <li class='profile'><a href="/profile/{$user.id}">{$user.name}</a></li> 
+      <li class="account"><span>Account</span></li> 
     {else}
       <li class='sign in'>
         <a class='rpxnow' onclick='return false;'
@@ -44,39 +44,17 @@ enjoyable experience.</p>
 {php}flush(){/php}
 {include file=$content}
 </div>
-{*
 <div id="footer">
-<div>
-<table><tr>
-<td>
-  <h1>Explore</h1>
   <ul>
-  <li><a href="/explore/map">Map</a></li>
-  <li><a href="/explore/photos">Photos</a></li>
+    <li><a href="#">FAQ</a></li>
+    <li><a href="/privacy">Privacy Policy</a></li>
+    <li><a href="/tos">Terms of Service</a></li>
+    <li><a href="#">Contact Us</a></li>
+    <li><a href="#">The LiveGather Team</a></li>
+    <li><button id="download">Download</button></li>
+    <li>LiveGather Copyright &copy; 2010</li>
   </ul>
-</td>
-<td>
-  <h1>Share</h1>
-  <ul>
-  <li><a href="/share/mobile">Mobile</a></li>
-  <li><a href="/share/upload">Upload</a></li>
-  <li><a href="/share/webcam">Webcam</a></li>
-  </ul>
-</td>
-<td>
-  <h1><a href="/settings">Settings</a></h1>
-</td>
-<td>
-  <h1>About</h1>
-  <ul>
-  <li><a href="/about/contact">Contact</a></li>
-  <li><a href="/about/faq">FAQ</a></li>
-  </ul>
-</td>
-</tr></table>
 </div>
-</div>
-*}
 <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/js/jquery-ui-1.8.2.custom.min.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
