@@ -13,8 +13,7 @@ class UserDAO {
 
     public static function get_user_by_id($id) {
         $sql = 'SELECT * FROM user WHERE id = :id';
-        debug($id);
-        debug($sql);
+
         $users = find_objects_by_sql($sql, array(':id'=>$id), 'User');
 
         if (!empty($users)) {
