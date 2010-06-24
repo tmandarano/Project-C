@@ -1,6 +1,7 @@
 <?php
 require_once('src/models/photo.php');
 require_once('src/dao/photo_dao.php');
+require_once('src/dao/user_dao.php');
 require_once('src/utils/helpers.php');
 
 function photos_get() {
@@ -52,24 +53,25 @@ function photos_get_by_tag_id() {
 
 function photos_create() {
     check_system_auth();
-    $user = get_session_user();
-    
-    $data = get_json_input();
 
-    if(!$user) {
-	return halt(401);
-    }    
+    $data = get_json_input();
 
     // Fill data with POST parameters if there is no incoming JSON
     if (!$data) {
         $p = env('POST');
         $p = $p['REQUEST'];
         if ($p) {
-            $vars = array('caption', 'userfile', 'tags', 'latitude', 'longitude');
+            $vars = array('caption', 'userfile', 'tags', 'latitude', 
+                          'longitude', 'identifier');
             foreach ($vars as $var) {
                 $data[$var] = $p[$var];
             }
         }
+    }
+
+    $user = get_user_by_session_or_id($id);
+    if(!$user) {
+        return halt(401);
     }
 
     if (empty($data['userfile'])) {
@@ -90,7 +92,7 @@ function photos_create() {
     }
     $photo->set_tags($tags);
 
-    /*    
+    /* ADD These back in if we decide to add comments    
     $comment_str = $data['comments'];
     $comment_strs = explode(',', $comment_str);
     $comments = array();
@@ -116,7 +118,8 @@ function photos_create() {
 
 function save_photo($photo) {
     debug($photo->get_name());
-    $extension = substr($photo->get_name(), strrpos($photo->get_name(), '.') + 1); 
+    $extension = substr($photo->get_name(), 
+                        strrpos($photo->get_name(), '.') + 1); 
     $new_file_name = "IMG" . $photo->get_id() . "." . $extension;
     $target_path = option('PHOTOS_DIR') . $new_file_name;
     
@@ -141,7 +144,7 @@ function photo_by_size() {
     $photo = PhotoDao::get_photo_by_id(var_to_i(params('id')));
     $extension = 'jpg';
     if ($photo) {
-        $filename = option('PHOTOS_DIR') . $photo[0]->get_id() . '.' . $extension;
+        $filename = option('PHOTOS_DIR') . $photo->get_id() . '.' . $extension;
     } else {
         $filename = '';
     }

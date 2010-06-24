@@ -13,6 +13,8 @@ class UserDAO {
 
     public static function get_user_by_id($id) {
         $sql = 'SELECT * FROM user WHERE id = :id';
+        debug($id);
+        debug($sql);
         $users = find_objects_by_sql($sql, array(':id'=>$id), 'User');
 
         if (!empty($users)) {
@@ -30,18 +32,6 @@ class UserDAO {
             return $users[0];
         }
         return null;
-    }
-
-    public static function get_user_by_identifier($identifier) {
-        $sql = 'SELECT * FROM user WHERE identifier = :id ';
-        $users = find_objects_by_sql($sql, array(':id'=>$identifier), 'User');
-
-        if($users && count($users) > 0) {
-            $user = $users[0];
-            return $user;
-        } else {
-            return null;	
-        }
     }
 
     public static function get_users_similar($user_id, $num) {
@@ -64,7 +54,7 @@ class UserDAO {
     }
 
     private static function user_columns() {
-        return array('id', 'username', 'email', 'photo_url', 'identifier',
+        return array('id', 'username', 'email', 'photo_url',
                      'date_added', 'date_modified');
     }
 }

@@ -13,11 +13,11 @@ function ask_basic_auth() {
 }
 
 function check_auth() {
-    $username = $_SERVER['PHP_AUTH_USER'];
-    if (empty($username)) {
+    $id = $_SERVER['PHP_AUTH_USER'];
+    if (empty($id)) {
         ask_basic_auth();
     } else {
-        $user = UserDAO::get_user_by_identifier($username);
+        $user = UserDAO::get_user_by_id($id);
         if (empty($user)) {
             ask_basic_auth();
         } else {
@@ -32,19 +32,11 @@ function check_system_auth() {
     if (empty($username) || empty($password)) {
         ask_basic_auth();
     } else {
-        $user = UserDAO::get_user_by_identifier($username);
-        if (empty($user)) {
-            if (($username == option('system_username') &&
-                 $password == option('system_password')) ||
-                (md5($username) == md5(option('system_username')) &&
-                 md5($password) == md5(option('system_password')))
-               ) {
+        if (($username == option('system_username') &&
+             $password == option('system_password'))) {
                 return 1;
-            } else {
-                ask_basic_auth();
-            }
         } else {
-            return $user;
+            ask_basic_auth();
         }
     }
 }
@@ -54,6 +46,21 @@ function get_session_user() {
     return (empty($_SESSION['user'])) ? null : unserialize($_SESSION['user']);
 }
 
+function get_user_by_session_or_id($id) { 
+    $user = get_session_user();
+    
+    if(!$user) {
+        $user = UserDao::get_user_by_id($id);
+
+        if(!$user) {
+            $user = null;
+        } else {
+            $_SESSION['user'] = serialize($user);
+        }
+    }    
+
+    return $user;
+}
 
 function var_to_i($v) {
     return intval(filter_var($v, FILTER_VALIDATE_INT));

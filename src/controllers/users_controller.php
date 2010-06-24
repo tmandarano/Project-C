@@ -39,6 +39,8 @@ function users_get_by_photo_id() {
 function users_create() {
     check_system_auth();
 
+    // TODO Handle if they already have an account, kick it out so they login
+
     $data = get_json_input();
 
     if($data == null) {
@@ -48,6 +50,7 @@ function users_create() {
     $user = new User();
     
     // TODO check to make sure username not taken
+    // TODO let them change from Facebook to Google, etc?
     $user->set_username($data['username']);
     $user->set_email($data['email']);
     $user->set_photo_url($data['photo_url']);
