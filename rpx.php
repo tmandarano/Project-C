@@ -50,7 +50,7 @@ if(isset($_POST['token'])) {
             $email = $profile['email'];
         }
     
-        $user = UserDAO::get_user_by_identifier($identifier);
+        $user = UserDAO::get_user_by_id($identifier);
     
         if (is_null($user)) {
             // This should happen in another step where we forward the user to a 
