@@ -23,8 +23,13 @@
       </form>
     </li>
     {if $user != null}
-      <li class='sign out'><a href="/api/signout">Sign out</a></li>
-      <li class="account"><span>Account</span></li> 
+      <li class="account clickable"><span>Account</span>
+        <ol>
+          <li><a href="/settings">Settings</a></li>
+          <li class='sign out'><a href="/api/signout">Sign out</a></li>
+        </ol>
+      </li> 
+      <li class="profile"><a href="/profile/{$user.id}">{$user.name}</a></li>
     {else}
       <li class='sign in'>
         <a class='rpxnow' onclick='return false;'

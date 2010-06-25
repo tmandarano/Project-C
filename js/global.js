@@ -445,6 +445,17 @@ LGG.showSigninPrompt = function(jdom) {
   LGG.setupExpandable();
 };
 
+LGG.setupAccount = function () {
+  var ol = $('.nav .account ol').hide();
+  $('.nav .account').click(function () {
+    if (ol.is(':visible')) {
+      ol.hide();
+    } else {
+      ol.show();
+    }
+  });
+};
+
 LGG.setupDefaultingInputFields = function (def) {
   /* Input fields with default values will automatically clear and restore the
    * default value when no user input is supplied. */
@@ -468,6 +479,7 @@ LGG.setupDefaultingInputFields = function (def) {
 
 LGG.init = function () {
   LGG.setupDefaultingInputFields('default');
+  LGG.setupAccount();
 
   ///* JSify sign in */
   //$('.sign.in img').click(function () {
