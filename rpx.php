@@ -7,6 +7,7 @@ require_once('src/utils/helpers.php');
 Config::configure();
 
 $rpxApiKey = '6af1713bce4897a0067343c5da898e1dccb6862d';  
+$newUser = false;
 
 if(isset($_POST['token'])) { 
 
@@ -63,6 +64,7 @@ if(isset($_POST['token'])) {
     
             $user_id = UserDao::save($user);
             $user->set_id($user_id);
+            $newUser = true;
         }
 
         session_name(option('session'));
@@ -79,5 +81,9 @@ if(isset($_POST['token'])) {
         halt(500);
     }
 }
-redirect_to('/');
+if ($newUser) {
+    redirect_to('/#welcome');
+} else {
+    redirect_to('/');
+}
 ?>
