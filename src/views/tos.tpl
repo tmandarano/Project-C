@@ -37,18 +37,19 @@ requirements of connecting networks or devices.</p>
 <h2>3. YOUR REGISTRATION OBLIGATIONS</h2>
 
 <p>In consideration of your use of the LiveGather Services, you represent that
-you are of legal age to form a binding contract and are not a person barred
-from receiving the LiveGather Services under the laws of the United States or
-other applicable jurisdiction. You also agree to: (a) provide true, accurate,
-current and complete information about yourself as prompted by the LiveGather
-Service’s registration form (the &ldquo;Registration Data&rdquo;) and (b)
-maintain and promptly update the Registration Data to keep it true, accurate,
-current and complete. If you provide any information that is untrue,
-inaccurate, not current or incomplete, or LiveGather has reasonable grounds to
-suspect that such information is untrue, inaccurate, not current or
-incomplete, LiveGather has the right to suspend or terminate your account and
-refuse any and all current or future use of the LiveGather Services (or any
-portion thereof).</p>
+you are (a) of legal age to form a binding contract, or (b) if you are not of
+legal age to form a binding contract, then your parent or guardian has read
+and agreed to this TOS document on your behalf.</p>
+
+<p>You also agree to: (a) provide true, accurate, current and complete
+information about yourself as prompted by the LiveGather Service’s
+registration form (the &ldquo;Registration Data&rdquo;) and (b) maintain and
+promptly update the Registration Data to keep it true, accurate, current and
+complete. If you provide any information that is untrue, inaccurate, not
+current or incomplete, or LiveGather has reasonable grounds to suspect that
+such information is untrue, inaccurate, not current or incomplete, LiveGather
+has the right to suspend or terminate your account and refuse any and all
+current or future use of the LiveGather Services (or any portion thereof).</p>
 
 <p>LiveGather is concerned about the safety and privacy of all its users,
 particularly children. For this reason, children under the age of 13 must have
