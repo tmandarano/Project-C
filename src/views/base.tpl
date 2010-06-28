@@ -57,7 +57,7 @@ enjoyable experience.</p>
     <li><a href="#">Contact Us</a></li>
     <li><a href="#">The LiveGather Team</a></li>
     <li><button id="download">Download</button></li>
-    <li>LiveGather Copyright &copy; 2010</li>
+    <li class="copyright">Copyright &copy; 2010 LiveGather. All rights reserved.</li>
   </ul>
 </div>
 <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>

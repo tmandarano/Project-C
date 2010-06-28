@@ -208,7 +208,7 @@ LGG.setupDetailedStreams = function () {
     var mapOpts = {
       zoom: 8,
       center: new google.maps.LatLng(-34.397, 150.644),
-      mapTypeId: google.maps.MapTypeId.TERRAIN,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
       scrollwheel: false,
       draggable: false,
       disableDefaultUI: true,

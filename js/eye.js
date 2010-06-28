@@ -96,28 +96,42 @@ LG.eye = (function () {
     var mapOpts = {
       zoom: 7,
       center: latlng,
-      mapTypeId: GM.MapTypeId.TERRAIN,
+      mapTypeId: GM.MapTypeId.ROADMAP,
     };
     _.map = new GM.Map(div, mapOpts);
   };
-  _.resizeMap = function () {
+  _.resize = function () {
     // Resize map so the livestream is always at the bottom.
     var outerHeight = function (e) { return $(e).outerHeight(); };
-    $('#map').height(Math.max(0, $(window).height() - 
-      sum($.map(['#header', '#trendingtags', '#livestream', '#softener'],
-            outerHeight)) - 8));
+    var contentHeight = Math.max(0, $(window).height() - 
+      sum($.map(['#header', '#trendingtags', '#footer'], outerHeight)));
+    $('#map').height(contentHeight).width($('#content').width() - 200);
+    $('#livestream').height(contentHeight).width(200);
     GM.event.trigger(_.map, 'resize');
   };
   _.addPhotoLivestream = function (photo) {
     var id = photo.id;
-    _.alllive.append(
-      $('<li></li>').append(
-        $(['<a href="#"><img src="/api/photo/', id, '/3" /></a>'].join(''))
-          .click(function () { LG.G.showPhoto(id); return false; })));
+    var tags = '';
+    for (var i in photo.tags) {
+      tags += '<li>' + photo.tags[i].tag + '</li>';
+    }
+    $.get('/api/users/' + photo.user_id, function (user) {
+      var photoInfo = $(['<li><img class="clickable" src="/api/photo/', id, '/3" />',
+         '<div>',
+         '<p class="time">', LG.dateToVernacular(photo.date_added), '</p>',
+         '<p class="user">', user ? user.username : 'Unknown user', '</p>',
+         '<p class="location">', photo.location, '</p>',
+         '<ul class="tags">', tags, '</ul>',
+         '</div></li>'
+        ].join(''));
+      photoInfo.find('img').click(function () { LG.G.showPhoto(id); });
+      photoInfo.find('li').click(function () { alert('will search for ' + $(this).html()); });
+
+      _.alllive.append(photoInfo);
+    }, 'json');
   };
   _.initLivestream = function () {
     _.alllive = $('#livestream ol');
-    LG.G.fade(_.alllive.parent());
 
     $.get('/api/photos/recent/20', function (photos) {
       for (var i in photos) {
@@ -148,8 +162,8 @@ LG.eye = (function () {
     _.initLivestream();
     _.initSearch();
     _.update();
-    $(window).resize(_.resizeMap);
-    _.resizeMap();
+    $(window).resize(_.resize);
+    _.resize();
 
     //var button = $('<button>Click me</button>');
     //button.click(function () {
