@@ -105,8 +105,9 @@ LG.eye = (function () {
     var outerHeight = function (e) { return $(e).outerHeight(); };
     var contentHeight = Math.max(0, $(window).height() - 
       sum($.map(['#header', '#trendingtags', '#footer'], outerHeight)));
-    $('#map').height(contentHeight).width($('#content').width() - 200);
-    $('#livestream').height(contentHeight).width(200);
+    var sidebarWidth = 300;
+    $('#map').height(contentHeight).width($('#content').width() - sidebarWidth);
+    $('#livestream').height(contentHeight).width(sidebarWidth);
     GM.event.trigger(_.map, 'resize');
   };
   _.addPhotoLivestream = function (photo) {
