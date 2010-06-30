@@ -5,41 +5,30 @@
 var GM = google.maps;
 LG.loc = {
   msg: {
-    FAILED: 'LG.loc: Geolocation service failed',
-    UNSUPPORTED: "LG.loc: Browser doesn't support geolocation."
-  }
+    FAILED: 'LG.loc: Unable to geolocate browser.',
+  },
+  waitLimit: 100000
 };
-LG.loc.get = function () {
-  /* Gives the browser's current location.
+LG.loc.get = function (callback) {
+  /* Calls the callback with the browser's current location as a google.maps.
+     LatLng.
      The location is based on W3C Geolocation, falls back to Google Gears, then 
-     gives up. If the location is not determined, returns null.
-     Return: browser's current location (GM.LatLng)
+     gives up.
   */
   if (navigator.geolocation) {
     // Try W3C Geolocation (Preferred)
-    navigator.geolocation.getCurrentPosition(function(position) {
-      return new GM.LatLng(position.coords.latitude, position.coords.longitude);
+    navigator.geolocation.getCurrentPosition(function (position) {
+      callback(new GM.LatLng(position.coords.latitude, position.coords.longitude));
     }, function () {
-      console.log(LG.loc.msg.FAILED);
+      if (google.gears) {
+        // Try Google Gears Geolocation
+        var geo = google.gears.factory.create('beta.geolocation');
+        geo.getCurrentPosition(function(position) {
+          callback(new GM.LatLng(position.latitude,position.longitude));
+        }, function () {
+          callback(null);
+        });
+      }
     });
-  } else if (google.gears) {
-    // Try Google Gears Geolocation
-    var geo = google.gears.factory.create('beta.geolocation');
-    var queryReady = false;
-    var loc = null;
-    geo.getCurrentPosition(function(position) {
-      loc = new GM.LatLng(position.latitude,position.longitude);
-      queryReady = true;
-    }, function () {
-      console.log(LG.loc.msg.FAILED);
-      queryReady = true;
-    });
-    setTimeout(function () { queryReady = true; }, 5000);
-    while (!queryReady) {}
-    return loc;
-  } else {
-    // Browser doesn't support Geolocation
-    console.log(LG.loc.msg.UNSUPPORTED);
   }
-  return null;
 };

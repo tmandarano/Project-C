@@ -1,5 +1,6 @@
 LG.map = defaultTo(LG.map, {});
 LG.map.defaultLoc = new GM.LatLng(32.7155, -117.1636); // San Diego 1st and Broadway
+LG.map.defaultLoc = new GM.LatLng(0, 0); // San Diego 1st and Broadway
 LG.map.markers = defaultTo(LG.map.markers, {});
 LG.map.markers.photo = function (photo) {
   var marker = null;
@@ -91,14 +92,18 @@ LG.eye = (function () {
     //setTimeout(showNowTrendingTags, 60000);
     alltags.fadeIn('fast');
   };
-  _.initMap = function (div) {
-    var latlng = defaultTo(LG.loc.get(), LG.map.defaultLoc);
-    var mapOpts = {
-      zoom: 7,
-      center: latlng,
-      mapTypeId: GM.MapTypeId.ROADMAP,
-    };
-    _.map = new GM.Map(div, mapOpts);
+  _.initMap = function (div, initAfterMap) {
+    LG.loc.get(function (latlng) {
+      latlng = defaultTo(latlng, LG.map.defaultLoc);
+      console.log(latlng);
+      var mapOpts = {
+        zoom: 13,
+        center: latlng,
+        mapTypeId: GM.MapTypeId.ROADMAP,
+      };
+      _.map = new GM.Map(div, mapOpts);
+      initAfterMap();
+    });
   };
   _.resize = function () {
     // Resize map so the livestream is always at the bottom.
@@ -158,13 +163,15 @@ LG.eye = (function () {
     setTimeout(arguments.callee, 8000);
   };
   _.init = function () {
-    _.initMap($('#map').width('100%')[0]);
+    function initAfterMap() {
+      _.initLivestream();
+      _.initSearch();
+      _.update();
+      $(window).resize(_.resize);
+      _.resize();
+    }
+    _.initMap($('#map').width('100%')[0], initAfterMap);
     _.initTags();
-    _.initLivestream();
-    _.initSearch();
-    _.update();
-    $(window).resize(_.resize);
-    _.resize();
 
     //var button = $('<button>Click me</button>');
     //button.click(function () {
