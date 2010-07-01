@@ -9,26 +9,46 @@ LG.loc = {
   },
   waitLimit: 100000
 };
+LG.loc._navigator = function (callback, elsecallback) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (geo) {
+      callback(new GM.LatLng(geo.coords.latitude, geo.coords.longitude));
+    }, elsecallback);
+  } else {
+    elsecallback();
+  }
+};
+LG.loc._gears = function (callback, elsecallback) {
+  if (google.gears) {
+    var geo = google.gears.factory.create('beta.geolocation');
+    geo.getCurrentPosition(function(position) {
+      callback(new GM.LatLng(position.latitude,position.longitude));
+    }, elsecallback);
+  } else {
+    elsecallback();
+  }
+};
+LG.loc._clientloc = function (callback, elsecallback) {
+  if (google.loader && google.loader.ClientLocation) {
+    var coord = google.loader.ClientLocation;
+    if (coord) {
+      callback(new GM.LatLng(coord.latitude, coord.longitude));
+    } else {
+      elsecallback();
+    }
+  } else {
+    elsecallback();
+  }
+};
 LG.loc.get = function (callback) {
   /* Calls the callback with the browser's current location as a google.maps.
      LatLng.
      The location is based on W3C Geolocation, falls back to Google Gears, then 
-     gives up.
+     tries google client location, and then gives up.
   */
-  if (navigator.geolocation) {
-    // Try W3C Geolocation (Preferred)
-    navigator.geolocation.getCurrentPosition(function (position) {
-      callback(new GM.LatLng(position.coords.latitude, position.coords.longitude));
-    }, function () {
-      if (google.gears) {
-        // Try Google Gears Geolocation
-        var geo = google.gears.factory.create('beta.geolocation');
-        geo.getCurrentPosition(function(position) {
-          callback(new GM.LatLng(position.latitude,position.longitude));
-        }, function () {
-          callback(null);
-        });
-      }
+  LG.loc._navigator(callback, function () {
+    LG.loc._gears(callback, function () {
+      callback(null);
     });
-  }
+  });
 };

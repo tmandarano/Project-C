@@ -63,6 +63,8 @@ enjoyable experience.</p>
 <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/js/jquery-ui-1.8.2.custom.min.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript"
+src="http://www.google.com/jsapi?key=ABQIAAAATXJifusyeTqIXK5-oRfMqRSslEfASqMaD8v-0vRzO2Czj85WYhQPZi5KFZ5icheikRhGGD0OteWQRQA"></script>{*dev.livegather.com*}
 <script type="text/javascript" src="/js/global.js"></script>
 <script type="text/javascript">
   var rpxJsHost = (("https:" == document.location.protocol) ? "https://" : "http://static.");
