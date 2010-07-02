@@ -29,6 +29,10 @@ function addPair(a, b) { return a + b; };
 function sum(xs) { return foldr(addPair, 0, xs); };
 var GM = google.maps;
 
+var console = defaultTo(window.console, {
+  log: function () {}
+});
+
 var LG = defaultTo(LG, {});
 LG.dateToVernacular = function (str) {
   function pluralize(one, order) {
