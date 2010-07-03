@@ -29,6 +29,10 @@ function addPair(a, b) { return a + b; };
 function sum(xs) { return foldr(addPair, 0, xs); };
 var GM = google.maps;
 
+var console = defaultTo(window.console, {
+  log: function () {}
+});
+
 var LG = defaultTo(LG, {});
 LG.dateToVernacular = function (str) {
   function pluralize(one, order) {
@@ -208,7 +212,7 @@ LGG.setupDetailedStreams = function () {
     var mapOpts = {
       zoom: 8,
       center: new google.maps.LatLng(-34.397, 150.644),
-      mapTypeId: google.maps.MapTypeId.TERRAIN,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
       scrollwheel: false,
       draggable: false,
       disableDefaultUI: true,
@@ -445,6 +449,17 @@ LGG.showSigninPrompt = function(jdom) {
   LGG.setupExpandable();
 };
 
+LGG.setupAccount = function () {
+  var ol = $('.nav .account ol').hide();
+  $('.nav .account').click(function () {
+    if (ol.is(':visible')) {
+      ol.hide();
+    } else {
+      ol.show();
+    }
+  });
+};
+
 LGG.setupDefaultingInputFields = function (def) {
   /* Input fields with default values will automatically clear and restore the
    * default value when no user input is supplied. */
@@ -468,6 +483,7 @@ LGG.setupDefaultingInputFields = function (def) {
 
 LGG.init = function () {
   LGG.setupDefaultingInputFields('default');
+  LGG.setupAccount();
 
   ///* JSify sign in */
   //$('.sign.in img').click(function () {

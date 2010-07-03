@@ -1,6 +1,4 @@
 /* REMEMBER: Rule precedence increases downwards
-COLOR TABLE
-header 74a348
 boldgreen 45a136
 */
 /* Hard include of http://fonts.googleapis.com/css?family=Droid+Sans
@@ -23,7 +21,8 @@ a { text-decoration: none; color: #1584b2; }
 /* classes */
 input[type="text"],
 input[type="password"],
-input[type="submit"]{
+input[type="submit"],
+button {
   font-size: 1.1em;
   vertical-align: middle;
   border-radius: 0.3em;
@@ -48,7 +47,8 @@ input[type="text"]:focus,
 input[type="password"]:focus { background-color: #ffc; border-color: #9cda60; }
 input[type="text"].default { color: #bbb; }
 
-input[type="submit"] {
+input[type="submit"],
+button {
   background: #333;
   color: #fff;
   font-weight: bold;
@@ -72,16 +72,22 @@ h1 strong { font-weight: bold; }
 .right.pane { padding-left: 1em; }
 
 /* Setup large page elements */
-#header, #footer { position: relative; width: 100%; }
-#header { height: 3em; line-height: 3em; background: #74a348 url('/img/hlgrad.png') repeat-x;}
-#content, .nav {
-  position: relative;
-  margin: auto;
-  width: 100%;
-}
+#header,
+#footer { position: relative; width: 100%; height: 3em; line-height: 3em; background: #45a136 url('/img/hlgrad.png') repeat-x; color: #fff; }
+#header a,
+#footer a { color: #fff; }
 
-.nav { height: inherit; }
-.nav li { float: left; height: inherit; }
+#content, .nav { position: relative; margin: auto; }
+#content { width: 800px; }
+
+#footer { font-size: 0.9em; position: fixed; bottom: 0; text-align: center; }
+#footer li { display: inline; padding: 0 0.5em; }
+#footer button { margin-bottom: 3px; }
+
+#download { background-color: #dd0; border: #dd0; color: #000; }
+.copyright { font-size: 0.8em; }
+
+.nav li { float: left; }
 .nav li a { display: block; padding: 0 1em; color: #fff; }
 .nav li a strong { font-weight: bold; }
 .nav li:hover a,
@@ -90,21 +96,28 @@ h1 strong { font-weight: bold; }
 #logo img { vertical-align: middle; }
 #logo a { padding: 0 1em; height: 100%; }
 
-.nav .sign.in {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  margin-top: -18px;
-  vertical-align: middle;
-  height: 28px;
-  padding: 0.3em;
-  border-radius: 0.3em;
-  -moz-border-radius: 0.3em;
-  -webkit-border-radius: 0.3em;
+.nav .account, .nav .profile { float: right; color: #fff; }
+.nav .account { text-align: center; position: relative; padding: 0 1em; font-size: 0.8em;
+  background: url('/img/account_down.png') no-repeat; background-position: 100% 50%; padding-right: 1.5em; 
 }
-.nav .sign.in img { cursor: pointer; }
-.nav .profile,
-.nav .sign.out { float: right; }
+.nav .account span { padding-top: 0.2em; vertical-align: baseline; }
+.nav .account ol { background-color: #000; display: block; z-index: 90; position: absolute; right: 0; top: 100%;
+  border-bottom-left-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
+  -moz-border-radius-bottomleft: 0.4em;
+  -moz-border-radius-bottomright: 0.4em;
+  -webkit-border-bottom-left-radius: 0.4em;
+  -webkit-border-bottom-right-radius: 0.4em;
+}
+.nav .account ol li { float: none; display: block; height: 1.6em; z-index: 90; }
+.nav .account li:hover { background-color: #555; }
+.nav .account a { display: inline; position: relative; top: -70%; }
+
+.nav .sign.in { float: right; }
+.rpxnow { vertical-align: middle; line-height: 3em; }
+.rpxnow input { background-color: #299ecf; border-color: #299ecf; }
+.rpxnow input:hover { background-color: #39aedf; }
+.rpxnow input:active { background-color: #39aedf; border-color: #3aafe1; }
 
 /* dimmed dialogs */
 .dialog.dimmer { position: absolute; width: 100%; height: 100%; top: 0; z-index: 900;
@@ -121,9 +134,9 @@ h1 strong { font-weight: bold; }
   -webkit-border-radius: 1em;
 }
 
-.header {
+.dialog .header {
   color: #fff; padding: 1em;
-  background: #75a449 url('/img/grad_header.png') repeat-x;
+  background: #45a136 url('/img/grad_header.png') repeat-x;
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
   -moz-border-radius-topleft: 1em;
@@ -153,6 +166,7 @@ h1 strong { font-weight: bold; }
 .viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
 .viewphoto .header { padding-bottom: 2em; }
 .sround { border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
+.lround { border-radius: 1em; -moz-border-radius: 1em; -webkit-border-radius: 1em; }
 .viewphoto .header img { width: 50px; height: 50px; float: left; margin-right: 1em; }
 .viewphoto .header h1 { color: #000; font-weight: bold; }
 .viewphoto h2, #viewphoto h3 { display: inline; }
@@ -168,11 +182,6 @@ h1 strong { font-weight: bold; }
 .viewphoto .gathered { background-color: #ececec; text-align: center; font-size: 1.5em; padding: 1em 1em; }
 .viewphoto .split table { width: 100%; height: 100%; }
 .viewphoto .viewmap { width: 200px; height: 200px; margin: auto; border: 1px solid #000; }
-
-a.rpxnow { vertical-align: middle; height: 28px; line-height: 28px; }
-.rpxnow input { background-color: #299ecf; border-color: #299ecf; }
-.rpxnow input:hover { background-color: #39aedf; }
-.rpxnow input:active { background-color: #39aedf; border-color: #3aafe1; }
 
 .signinup {
   border: 0.7em solid #91cf55;
@@ -247,11 +256,12 @@ a.rpxnow { vertical-align: middle; height: 28px; line-height: 28px; }
 #trendingtags h1 { display: inline; font-size: 0.9em; margin: 0 0.2em; }
 #trendingtags h1 { font-weight: bold; }
 
-#livestream { position: relative; height: 100px; line-height: 100px; width: 100%; overflow: hidden; }
-#livestream ol { height: inherit; }
-#livestream li,
-#livestream p { display: inline; }
-#livestream img { width: 100px; max-height: 100px; margin: 0 2px; }
+#livestream { position: absolute; top: 2em; right: 0; overflow: hidden; }
+#livestream li { position: relative; display: block; margin-left: 0.5em; margin-bottom: 0.5em; height: 100px; }
+#livestream img { width: 100px; max-height: 100px; margin: 0 2px; float: left; }
+#livestream div { margin-left: 0.5em; padding-left: 100px; font-size: 0.8em; }
+#livestream div li { display: inline; margin: 0; padding-right: 0.5em; }
+#livestream .user { font-weight: bold; }
 
 .search h1 {
   color: #3b0;
@@ -660,6 +670,13 @@ input.comment:focus {
   text-align: center;
 }
 
+.policy { background-color: #eee; padding: 1em 2em; color: #444; width: 700px; margin: 2em auto; }
+.policy h1 { font-weight: bold; text-align: center; }
+.policy h2 { font-weight: bold; margin: 0.5em 0; }
+.policy p { margin: 0.5em 0; }
+.policy em { font-style: italic; }
+.policy li { list-style: lower-alpha outside; margin-left: 2em; }
+
 /*
 #headerstream {
   position: relative;
@@ -673,12 +690,9 @@ input.comment:focus {
   overflow: hidden;
   float: left;
 }
-#footer { background: #000 url('/img/grad_footer.png') repeat-x; padding-bottom: 3em; }
-#footer a { color: #fff; font-size: small; }
-#footer h1,
-#footer h1 a {color: #fff; font-size: large; font-weight: bold; }
-#footer td { padding: 0.5em 2em 0.5em 0; vertical-align: top; }
+*/
 
+/*
 .home.out .nav .sign.in { margin-top: 1.5em; }
 .home.out #header .nav { height: 88px; }
 .home.out #header { height: 138px; }
@@ -903,7 +917,8 @@ input.comment:focus {
   margin-top: 1em;
 }
 */
-/*
+
+.settings #content { margin-top: 2em; }
 .settings #settings { margin: auto; width: 680px; }
 .settings .basic .content h1 { background: none; color: black; }
 .settings .basic .content .userphoto { float: right; margin-right: 2em; }
@@ -912,6 +927,7 @@ input.comment:focus {
 .settings .privacy .content table { margin: auto; font-weight: bold; }
 .settings .privacy .content table tr { line-height: 2em; }
 .settings .privacy .content table th { text-align: right; padding-right: 1em; }
+/*
 
 h1.bubble {
   margin-top: 0.5em;

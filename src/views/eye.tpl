@@ -2,7 +2,6 @@
   <ol></ol>
 </div>
 <div id="map"></div>
-<div class="softener"></div>
 <div id="livestream">
   <ol></ol>
 </div>
