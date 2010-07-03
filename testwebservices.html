@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/libraries/ajax-upload/ajaxupload.js"></script>
+        
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $('a#upload-toggle').click(function() {
+                $('#uploadImageContainer').toggle(200);
+                return false;
+            });
+                    
+            $('a#retrieve-toggle').click(function() {
+                $('#retrieveImageContainer').toggle(200);
+                return false;
+            });
+
+            $('a#edit-toggle').click(function() {
+                $('#editImageContainer').toggle(200);
+                return false;
+            });
+
+            var btnUpload = $('#userfile');
+            new AjaxUpload(btnUpload, {
+                action: '/libraries/ajax-upload/server-side/upload-handler.php',
+                name: 'userfile',
+                onSubmit: function(result) {
+                    $('#uploadedFile').val(result);
+                    $('#uploadImageDisplay').html(result + '<br /><br />');
+                }
+            });
+        });
+        
+        $(function() {   
+            $("#submitUpload").click(function() {
+                var data = new Object();
+                data.userfile = $("#uploadedFile").val();   
+                data.tags = $("#tags").val();   
+                data.comments = $("#comments").val();   
+                $.post("/photos/create/", data,   
+                function(result) {
+                    $("#uploadImageDisplay").html("<img src=\"" + result.url + "\" /><br /><br />");
+                	AjaxSucceeded(result);
+                }, "json");
+            });   
+        });   
+
+        $(function() {   
+            $("#getPhotoButton").click(function() {
+                var data = new Object();
+                data.id = $("#retrieveId").val();   
+             	$.get("/photos/show/"+data.id, null,   
+                function(result) {
+                    $("#retrieveCommentsDisplay").html("");
+                    $("#retrieveTagsDisplay").html("");
+                    for(var r in result)
+                    {
+                        $("#retrieveImageDisplay").html("<img src=\"" + result[r].url + "\" /><br /><br />");
+
+                        var comments = result[r].comments;
+                        for(var c in comments)
+                        {
+                            $("#retrieveCommentsDisplay").append(comments[c].comment);
+                        }
+                        $("#retrieveCommentsDisplayContainer").show(1);
+
+                        var tags = result[r].tags;
+                        for(var t in tags)
+                        {
+                            $("#retrieveTagsDisplay").append(tags[t].tag + ",");
+                        }
+                        $("#retrieveTagsDisplayContainer").show(1);
+                    }
+                        
+                    AjaxSucceeded(result);
+              	}, "json");
+            });   
+        });   
+
+        $(function() {   
+            $("#editPhotoButton").click(function() {
+                var data = new Object();
+                data.id = $("#editId").val();   
+                $.get("/photos/show/"+data.id, null,   
+                function(result) {
+                    AjaxSucceeded(result);
+                }, "json");
+            });   
+        });   
+
+        function AjaxSucceeded(result) {
+            // use Firebug and console.log
+            console.log(result);
+        }   
+        function AjaxFailed(result) {   
+            $("#result").html(result.statusText);   
+        }            	        
+        </script>
+        
+        <link rel="stylesheet" type="text/css" href="/css/default.css">
+        <title>Insert title here</title>
+    </head>
+<body>
+    Raw JSON result<br />
+    <div id="result" class="yellow"></div>
+    <br /><hr /><br />
+
+    <h1>Examples</h1>
+    <br />
+    <h2><a href="#" id="upload-toggle">Upload an Image</a></h2>
+    <br />
+    <div id="uploadImageContainer" style="display:none">
+        <form id="UploadPhotoForm" method="post" enctype="multipart/form-data">
+            <fieldset>
+                <input type="hidden" id="uploadedFile" />
+                <label for="userfile">Image:</label><br />
+                <input type="button" id="userfile" value="Select File" /><br /><br />
+                <span id="uploadImageDisplay"></span>
+                <label for="tags">Tags (separate with commas):</label><br />
+                <textarea rows="5" cols="20" id="tags"></textarea><br /><br />
+                <label for="comments">Comments:</label><br />
+                <textarea rows="5" cols="20" id="comments"></textarea><br /><br />
+                <input type="submit" id="submitUpload" value="Upload Image" onClick="return false;"/>
+            </fieldset>
+        </form>
+    </div>
+
+    <h2><a href="#" id="retrieve-toggle">Retrieve an Image</a></h2>
+    <br />
+    <div id="retrieveImageContainer" style="display:none">
+        <form id="GetPhotoForm" method="post">
+            <fieldset>
+                <input type="text" id="retrieveId" />
+                <input type="button" id="getPhotoButton" value="Get Photo" />
+            </fieldset>
+        </form>
+        <span id="retrieveImageDisplay"></span>
+        <div id="retrieveCommentsDisplayContainer" style="display:none"><b>Comments: </b><span id="retrieveCommentsDisplay"></span><br /></div>
+        <div id="retrieveTagsDisplayContainer" style="display:none"><b>Tags: </b><span id="retrieveTagsDisplay"></span><br /></div>
+    </div>
+
+    <h2><a href="#" id="edit-toggle">Edit an Image</a></h2>
+    <br />
+    <div id="editImageContainer" style="display:none">
+        <form id="EditPhotoForm" method="post">
+            <fieldset>
+                <input type="text" id="editId" />
+                <input type="button" id="editPhotoButton" value="Edit Photo" />
+            </fieldset>
+        </form>
+        <span id="editImageDisplay"></span>
+        <span id="editCommentsDisplay"></span>
+        <span id="editTagsDisplay"></span>
+    </div>
+</body>
+</html>

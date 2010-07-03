@@ -279,7 +279,7 @@ LGG.showWelcome = function () {
           '</td>',
           '<td class="photos">',
             '<h1><div class="numcircle">3</div></h1>',
-            "<h2>See and show what's happening hear you!</h2>",
+            "<h2>See and show what's happening near you!</h2>",
             '<img src="/img/welcome/taking_photo.png" />',
           '</td>',
       '</table>',
