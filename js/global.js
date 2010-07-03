@@ -80,7 +80,7 @@ LGG.html.collage = {};
 LGG.html.collage.photos = function (jdom, photo_ids) {
   jdom.addClass('collage');
   for (var i in photo_ids) {
-    $(['<li><a href="/photos/view/', photo_ids[i], '"><img src="/api/photo/', 
+    $(['<li><a href="/photos/view/', photo_ids[i], '"><img src="/api/photos/', 
       photo_ids[i], '/1" /></a></li>'].join('')).appendTo(jdom);
   }
 };
@@ -251,7 +251,7 @@ LGG.dimmedDialog = function(jdom) {
 };
 
 LGG.dimmedDialogue = function(jdom) {
-  var HTML_DIMMER = '<div class="dialog dimmer"></div>';
+  var HTML_DIMMER = '<div class="dialogue dialog dimmer"></div>';
   var HTML_BORDER = '<div class="border"></div>';
   var HTML_CLOSE = '<img class="dialog close" src="/img/button_close.png" />';
   var dimmer = $(HTML_DIMMER);
@@ -365,6 +365,30 @@ LGG.showSignup = function () {
   LGG.dimmedDialogue(signup);
 };
 
+LGG.showDone = function () {
+  var HTML_DONE = [
+    '<div id="done">',
+      '<div class="header">',
+        "<h1>That's it, you're done!</h1>",
+        '<img src="/img/logo/small_no_tagline.png" />',
+      '</div>',
+      '<div class="content">',
+        "<h2>Now it's time to start gathering!</h2>",
+        '<div>',
+          '<h3><a href="/download"><em>Download</em> the app</a></h3>',
+          '<h3><a href="/settings"><em>Sync</em> with your Twitter and Facebook</a></h3>',
+        '</div>',
+        '<h1 class="bichrome"><em>Popular</em> people to check out.</h1>',
+        '<ul><% for (var i = 0; i < photos.length; i += 1) { %>',
+          '<li><img src="/api/photos/<%= photos[i].id %>/1" /></li>',
+          '<% } %>',
+        '</ul>',
+      '</div>',
+    '</div>'].join('');
+  var done = $(tmpl(HTML_DONE, {photos: [{id: 123}, {id: 123}]}));
+  LGG.dimmedDialogue(done);
+};
+
 LGG.showPhoto = function(id) {
   var viewer = $([
     '<div class="viewphoto"></div>'].join(''));
@@ -386,7 +410,7 @@ LGG.showPhoto = function(id) {
       '<table class="split">',
         '<tr>',
           '<td class="photo">',
-            '<img class="sround" src="/api/photo/'+id+'" />',
+            '<img class="sround" src="/api/photos/'+id+'" />',
           '</td>',
           '<td>',
             '<div class="gathered sround">',
@@ -550,12 +574,13 @@ LGG.setupDefaultingInputFields = function (def) {
 };
 
 LGG.init = function () {
+  // If the url has an anchor show the appropriate dialog.
   if (window.location.hash == '#welcome') {
-    // If the url has the welcome anchor show the welcome dialog.
     LGG.showWelcome();
   } else if (window.location.hash == '#signup') {
-    // If the url has the signup anchor show the signup dialog.
     LGG.showSignup();
+  } else if (window.location.hash == '#done') {
+    LGG.showDone();
   }
 
   LGG.setupDefaultingInputFields('default');

@@ -170,10 +170,10 @@ h1 strong { font-weight: bold; }
   -moz-border-radius: 1.5em;
   -webkit-border-radius: 1.5em;
 }
-#signup.dialog.win { width: 550px; top: 0.1em; padding-bottom: 0.1em; }
-#signup .header { position: relative; height: 0.7em; line-height: 0.7em; vertical-align: middle; background-image: none; }
-#signup .header h1 { position: absolute; left: 2em; }
-#signup .header img { position: absolute; top: 50%; margin-top: -14.5px; right: 2em; }
+.dialogue .dialog.win { width: 550px; top: 0.1em; padding-bottom: 0.1em; }
+.dialogue .header { position: relative; height: 0.7em; line-height: 0.7em; vertical-align: middle; background-image: none; }
+.dialogue .header h1 { position: absolute; left: 2em; }
+.dialogue .header img { position: absolute; top: 50%; margin-top: -14.5px; right: 2em; }
 #signup table { width: 90%; font-size: 1.5em; margin: 1em auto; }
 #signup th { text-align: right; padding-right: 0.5em; color: #45a136; }
 #signup td { padding: 0.2em 0; }
@@ -183,6 +183,14 @@ h1 strong { font-weight: bold; }
 #signup .error { padding: 0; font-size: 0.6em; text-align: left; }
 #signup .error { color: #f00; font-size: 0.6em; text-align: left; }
 #signup .ok span { color: #45a136; }
+
+#done .content { text-align: center; }
+#done .content h2 { font-size: 1.8em; color: #45a136; background-color: #fff; padding: 1em 0; }
+#done em { font-weight: bold; }
+#done h3 { padding: 0.5em 0; font-size: 1.2em; }
+#done h1.bichrome { background-color: transparent; }
+#done ul { padding-top: 0.2em; }
+#done li { display: inline; padding: 0.1em; }
 
 .viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
 .viewphoto .header { padding-bottom: 2em; }

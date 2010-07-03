@@ -31,7 +31,7 @@ $(function () {
       '<ol class="profile stream">',
         '<li>',
           '<div class="photo">',
-            '<a href="/api/photos/<%=x.id%>"><img src="/api/photo/<%=x.id%>/3" /></a>',
+            '<a href="/api/photos/<%=x.id%>"><img src="/api/photos/<%=x.id%>/3" /></a>',
             //'<a class="like" href="#like">Like</a>',
           '</div>',
           '<div class="detail">',
@@ -76,7 +76,7 @@ $(function () {
 
   var HTML_PROFILE_STUB = ['<li class="photo">',
     '<div class="photo">',
-      '<a href="/api/photos/<%=x.id%>"><img src="/api/photo/<%=x.id%>/3" /></a>',
+      '<a href="/api/photos/<%=x.id%>"><img src="/api/photos/<%=x.id%>/3" /></a>',
       //'<a class="like" href="#like">Like</a>',
     '</div>',
     '<div class="detail">',

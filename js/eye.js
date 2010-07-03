@@ -11,7 +11,7 @@ LG.map.markers.photo = function (photo) {
       marker = new GM.Marker({
         position: new GM.LatLng(photo.latitude, photo.longitude),
         title: [user.username, ': ', photo.caption].join(''),
-        icon: new GM.MarkerImage(['api/photo/', photo.id, '/1'].join(''), null, null, new GM.Point(20, 42)),
+        icon: new GM.MarkerImage(['api/photos/', photo.id, '/1'].join(''), null, null, new GM.Point(20, 42)),
         shadow: new GM.MarkerImage('/img/mapmkrbdr.png')
       });
       } catch (e) {
@@ -122,7 +122,7 @@ LG.eye = (function () {
       tags += '<li>' + photo.tags[i].tag + '</li>';
     }
     $.get('/api/users/' + photo.user_id, function (user) {
-      var photoInfo = $(['<li><img class="clickable" src="/api/photo/', id, '/3" />',
+      var photoInfo = $(['<li><img class="clickable" src="/api/photos/', id, '/3" />',
          '<div>',
          '<p class="time">', LG.dateToVernacular(photo.date_added), '</p>',
          '<p class="user">', user ? user.username : 'Unknown user', '</p>',
