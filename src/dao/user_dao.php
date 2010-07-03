@@ -34,7 +34,8 @@ class UserDAO {
     }
 
     public static function get_user_by_identifier($identifier) {
-        $sql = 'SELECT * FROM user u JOIN identifier i ON u.id = i.user_id';
+        $sql = 'SELECT u.id, u.username, u.photo_url, u.email, u.date_added, u.date_modified ';
+        $sql .= 'FROM user u JOIN identifier i ON u.id = i.user_id';
         $sql .= ' WHERE identifier = :identifier';
         $users = find_objects_by_sql($sql, array(':identifier'=>$identifier), 'User');
 
