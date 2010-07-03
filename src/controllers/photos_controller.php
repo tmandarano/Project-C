@@ -120,6 +120,7 @@ function save_photo($photo) {
     debug($photo->get_name());
     $extension = substr($photo->get_name(), 
                         strrpos($photo->get_name(), '.') + 1); 
+    $extension = strtolower($extension);
     $new_file_name = "IMG" . $photo->get_id() . "." . $extension;
     $target_path = option('PHOTOS_DIR') . $new_file_name;
     
@@ -144,13 +145,13 @@ function photo_by_size() {
     $photo = PhotoDao::get_photo_by_id(var_to_i(params('id')));
     $extension = 'jpg';
     if ($photo) {
-        $filename = option('PHOTOS_DIR') . $photo->get_id() . '.' . $extension;
+        $filename = option('PHOTOS_DIR') . 'IMG' . $photo->get_id() . '.' . $extension;
     } else {
         $filename = '';
     }
     if (file_exists($filename)) {
         $src = imagecreatefromjpeg($filename);
-        $width = ImageSx($src);
+        $width = imagesx($src);
         $height = ImageSy($src);
         $x = $target;
         $y = $height * $target / $width;
@@ -158,7 +159,7 @@ function photo_by_size() {
         $scaled = ImageCreateTrueColor($x, $y);
         ImageCopyResampled($scaled, $src, 0, 0, 0, 0, $x, $y, $width, $height);
         header('Content-Type: image/jpeg');
-        imagejpeg($scaljd);
+        imagejpeg($scaled);
     } else {
         header('Cache-Control: public');
         header('Expires: '.date(DateTime::RFC1123, time() + 31556926));
@@ -170,6 +171,8 @@ function photo_by_size() {
         case 270: header('Location: /img/270x270.jpg'); exit;
         }
     }
+
+    return;
 }
 
 function photo() {
