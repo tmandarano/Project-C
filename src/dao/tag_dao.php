@@ -62,6 +62,14 @@ class TagDAO {
     }
 
     public static function save($tag) {
+        $now = time();
+        $date = date("Y-m-d H:i:s", $now);
+
+        if(!$update) {
+            $tag->set_date_added($date);
+        }
+        $tag->set_date_modified($date);
+
         $sql = 'SELECT id FROM tag WHERE LOWER(tag) = LOWER(:tag)';
         $tags = find_objects_by_sql($sql, array(':tag'=>$tag->get_tag()), 'Tag');
 

@@ -24,8 +24,19 @@ class UserDAO {
 
     public static function get_user_by_photo_id($photo_id) {
         $sql = 'SELECT * FROM user WHERE id IN (SELECT user_id FROM user_photos ';
-        $sql .= 'WHERE photo_id = :photo_id)';
+        $sql .= ' WHERE photo_id = :photo_id)';
         $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id), 'User');
+      
+        if (!empty($users)) {
+            return $users[0];
+        }
+        return null;
+    }
+
+    public static function get_user_by_identifier($identifier) {
+        $sql = 'SELECT * FROM user u JOIN identifier i ON u.id = i.user_id';
+        $sql .= ' WHERE identifier = :identifier';
+        $users = find_objects_by_sql($sql, array(':identifier'=>$identifier), 'User');
 
         if (!empty($users)) {
             return $users[0];
@@ -40,19 +51,23 @@ class UserDAO {
 
     public function save($user, $update = false) {
         $now = time();
-        $user->set_date_modified($now);
-        $user->set_date_added($now);
+        $date = date("Y-m-d H:i:s", $now);
+
+        if(!$update) {
+            $user->set_date_added($date);
+        }
+        $user->set_date_modified($date);
 
         if($update) {
-            $user_id = update_object($user, 'user', UserDao::user_columns());
+            $user_id = update_object($user, 'user', UserDao::get_columns());
         } else {
-            $user_id = create_object($user, 'user', UserDao::user_columns());        
+            $user_id = create_object($user, 'user', UserDao::get_columns());        
         }
 
         return $user_id;
     }
 
-    private static function user_columns() {
+    private static function get_columns() {
         return array('id', 'username', 'email', 'photo_url',
                      'date_added', 'date_modified');
     }

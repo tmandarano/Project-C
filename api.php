@@ -18,8 +18,9 @@ dispatch_get   ($PRE.'/users/:id/tags/',             'tags_get_by_user_id');
 dispatch_get   ($PRE.'/users/:id/tags/days/:days',   'tags_get_by_user_id_recent');
 dispatch_post  ($PRE.'/users/',                      'users_create');
 dispatch_get   ($PRE.'/users/photo/:id',             'users_get_photo_by_id');
+dispatch_post  ($PRE.'/users/:id/identifiers',       'users_add_identifier');
 
-dispatch_post  ($PRE.'/sessions/',                   'sessions_create');
+dispatch_post  ($PRE.'/sessions/janrain',            'sessions_janrain_create');
 dispatch_delete($PRE.'/sessions/',                   'sessions_delete');
 dispatch       ($PRE.'/signout/',                    'sessions_delete');
 

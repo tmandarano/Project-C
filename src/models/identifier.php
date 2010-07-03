@@ -1,9 +1,9 @@
 <?php
-class User {
+class Identifier {
     public $id;
-    public $username;
-    public $email;
-    public $photo_url;
+    public $user_id;
+    public $identifier;
+    public $name;
     public $date_added;
     public $date_modified;
     
@@ -15,28 +15,28 @@ class User {
         $this->id = $id;
     }
 
-    public function get_username() {
-        return $this->username;        
+    public function get_user_id() {
+        return $this->user_id;        
     }
     
-    public function set_username($username) {
-        $this->username = $username;
+    public function set_user_id($user_id) {
+        $this->user_id = $user_id;
     }
     
-    public function set_email($email) {
-        $this->email = $email;
+    public function set_identifier($identifier) {
+        $this->identifier = $identifier;
     }
 
-    public function get_email() {
-        return $this->email;
+    public function get_identifier() {
+        return $this->identifier;
     }
 
-    public function get_photo_url() {
-        return $this->photo_url;
+    public function set_name($name) {
+        $this->name = $name;
     }
-    
-    public function set_photo_url($photo_url) {
-        $this->photo_url = $photo_url;
+
+    public function get_name() {
+        return $this->name;
     }
 
     public function get_date_added() {
