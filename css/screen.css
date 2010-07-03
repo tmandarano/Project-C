@@ -25,9 +25,9 @@ input[type="submit"],
 button {
   font-size: 1.1em;
   vertical-align: middle;
-  border-radius: 0.3em;
-  -webkit-border-radius: 0.3em;
-  -moz-border-radius: 0.3em;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
 }
 input[type="text"],
 input[type="password"] {
@@ -36,12 +36,14 @@ input[type="password"] {
   color: #6e6e6e;
 }
 input[type="text"].controls,
-input[type="password"].controls {
+input[type="password"].controls,
+input[type="text"].input,
+input[type="password"].input {
   background: #fff url('/img/textgrad.png') repeat-x;
   border: 1px solid #bdbdbd;
   font-size: 1.1em;
   height: 28px;
-  padding: 0 0.5em;
+  padding: 0 0.3em;
 }
 input[type="text"]:focus,
 input[type="password"]:focus { background-color: #ffc; border-color: #9cda60; }
@@ -162,6 +164,25 @@ h1 strong { font-weight: bold; }
 #welcome .app { width: 33%; }
 #welcome .connect { width: 33%; }
 #welcome .photos { width: 33%; }
+
+.dialog .border { top: 5em;  background-color: #333; width: 570px; margin: auto; position: relative; padding: 0.7em 0; 
+  border-radius: 1.5em;
+  -moz-border-radius: 1.5em;
+  -webkit-border-radius: 1.5em;
+}
+#signup.dialog.win { width: 550px; top: 0.1em; padding-bottom: 0.1em; }
+#signup .header { position: relative; height: 0.7em; line-height: 0.7em; vertical-align: middle; background-image: none; }
+#signup .header h1 { position: absolute; left: 2em; }
+#signup .header img { position: absolute; top: 50%; margin-top: -14.5px; right: 2em; }
+#signup table { width: 90%; font-size: 1.5em; margin: 1em auto; }
+#signup th { text-align: right; padding-right: 0.5em; color: #45a136; }
+#signup td { padding: 0.2em 0; }
+#signup p { text-align: center; font-size: 0.45em; padding: 1em 0; }
+#signup .finished { text-align: center; font-size: 0.66em; }
+#signup .username_sample p,
+#signup .error { padding: 0; font-size: 0.6em; text-align: left; }
+#signup .error { color: #f00; font-size: 0.6em; text-align: left; }
+#signup .ok span { color: #45a136; }
 
 .viewphoto.dialog.win { width: 625px; background: #fff; color: #000; padding-bottom: 0.1em; }
 .viewphoto .header { padding-bottom: 2em; }

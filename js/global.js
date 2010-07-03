@@ -250,6 +250,27 @@ LGG.dimmedDialog = function(jdom) {
   close.appendTo(jdom).click(destroy);
 };
 
+LGG.dimmedDialogue = function(jdom) {
+  var HTML_DIMMER = '<div class="dialog dimmer"></div>';
+  var HTML_BORDER = '<div class="border"></div>';
+  var HTML_CLOSE = '<img class="dialog close" src="/img/button_close.png" />';
+  var dimmer = $(HTML_DIMMER);
+  var border = $(HTML_BORDER).appendTo(dimmer);
+  var close = $(HTML_CLOSE)
+    .mousedown(function () { $(this).fadeTo('fast', 0.8); });
+  var destroy = function () {
+    dimmer.hide('fast');
+    dimmer.detach();
+    close.detach();
+    jdom.detach();
+  }
+  jdom.addClass('dialog win')
+      .click(function (e) { e.stopPropagation(); })
+      .appendTo(border);
+  dimmer.appendTo('body').show();
+  close.appendTo(jdom).click(destroy);
+};
+
 LGG.showWelcome = function () {
   var HTML_WELCOME = [
     '<div id="welcome">',
@@ -295,6 +316,53 @@ LGG.showWelcome = function () {
      }
      return false;
   });
+};
+
+LGG.showSignup = function () {
+  var HTML_SIGNUP = [
+    '<div id="signup">',
+      '<div class="header">',
+        "<h1>You're almost done...</h1>",
+        '<img src="/img/logo/small_no_tagline.png" />',
+      '</div>',
+      '<div>',
+        '<form>',
+          '<table>',
+            '<tr><th>Email</th><td><input type="text" name="email" class="input" /></td></tr>',
+            '<tr><th>Username</th><td><input type="text" name="username" class="input" /></td></tr>',
+            '<tr><th></th><td class="username_sample"></td>',
+            '<tr><th>Display Name</th><td><input type="text" name="display" class="input" /></td></tr>',
+            '<tr><td colspan="2">',
+            '<p>By clicking &ldquo;Finished&rdquo; you agree to our <a href="/privacy">Privacy Policy</a> and <a href="/tos">Terms of Service</a>.</p></td></tr>',
+            '<tr><td colspan="2" class="finished">',
+              '<input type="submit" value="Finished" />',
+            '</td></tr>',
+          '</table>',
+        '</form>',
+      '</div>',
+    '</div>'].join('');
+  var signup = $(HTML_SIGNUP);
+  var username = $('input[name=username]', signup);
+  var sample = $('.username_sample', signup);
+  function updateSample() {
+    // TODO Check username
+    if (true) {
+      sample.html('<p class="ok">Your profile will be livegather.com/<span>' + username.val() + '</span></p>');
+    } else {
+      sample.html('<p class="error">This username has been taken. Please try another.</p>');
+    }
+  }
+  updateSample();
+  username.keyup(updateSample);
+  var submit = $('input[type=submit]', signup);
+  submit.click(function () {
+    if (valid) {
+      // Do submit
+    } else {
+    }
+    return false;
+  });
+  LGG.dimmedDialogue(signup);
 };
 
 LGG.showPhoto = function(id) {
@@ -449,7 +517,7 @@ LGG.showSigninPrompt = function(jdom) {
   LGG.setupExpandable();
 };
 
-LGG.setupAccount = function () {
+LGG.setupAccountMenu = function () {
   var ol = $('.nav .account ol').hide();
   $('.nav .account').click(function () {
     if (ol.is(':visible')) {
@@ -463,7 +531,7 @@ LGG.setupAccount = function () {
 LGG.setupDefaultingInputFields = function (def) {
   /* Input fields with default values will automatically clear and restore the
    * default value when no user input is supplied. */
-  $(':text')
+  $('.default:text')
     .live('focus', function() {
       var s = $(this);
       if (!s.data(def)) {
@@ -482,8 +550,16 @@ LGG.setupDefaultingInputFields = function (def) {
 };
 
 LGG.init = function () {
+  if (window.location.hash == '#welcome') {
+    // If the url has the welcome anchor show the welcome dialog.
+    LGG.showWelcome();
+  } else if (window.location.hash == '#signup') {
+    // If the url has the signup anchor show the signup dialog.
+    LGG.showSignup();
+  }
+
   LGG.setupDefaultingInputFields('default');
-  LGG.setupAccount();
+  LGG.setupAccountMenu();
 
   ///* JSify sign in */
   //$('.sign.in img').click(function () {
@@ -494,11 +570,6 @@ LGG.init = function () {
 
   //new LGG.HeaderStream($('#headerstream'));
   //LGG.setupDetailedStreams();
-
-  // If the url has the welcome anchor show the welcome dialog.
-  if (window.location.hash == '#welcome') {
-    LGG.showWelcome();
-  }
 };
 return LGG;
 })();
