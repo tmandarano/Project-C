@@ -699,12 +699,22 @@ input.comment:focus {
   text-align: center;
 }
 
-.policy { background-color: #eee; padding: 1em 2em; color: #444; width: 700px; margin: 2em auto; }
+.policy { background-color: #eee; padding: 1em 2em; color: #444; width: 700px; margin: 2em auto 4em auto; }
 .policy h1 { font-weight: bold; text-align: center; }
 .policy h2 { font-weight: bold; margin: 0.5em 0; }
 .policy p { margin: 0.5em 0; }
 .policy em { font-style: italic; }
 .policy li { list-style: lower-alpha outside; margin-left: 2em; }
+
+.team div.team {
+  background-color: #eee;
+  margin: 1em;
+  padding: 1em;
+  height: 200px;
+}
+.team p { padding: 1em 0; }
+.team .team img { width: 200px; height: 200px; float: left; margin-right: 1em; }
+.team { padding-bottom: 3em; }
 
 /*
 #headerstream {

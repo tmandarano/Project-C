@@ -231,11 +231,17 @@ function privacy() {
 }
 
 function tos() {
-
     $template = new Template();
     $template->assign(array('title'=>'Terms of Service', 'class'=>'tos'));
     $template->assign(array('user' => get_session_user_info(get_session_user())));
     return html($template->fetch('tos.tpl'));
+}
+
+function team() {
+    $template = new Template();
+    $template->assign(array('title'=>'LiveGather Team', 'class'=>'team'));
+    $template->assign(array('user' => get_session_user_info(get_session_user())));
+    return html($template->fetch('team.tpl'));
 }
 
 ?>

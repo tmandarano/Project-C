@@ -45,7 +45,9 @@ LG.eye = (function () {
     ];
 
     for (var i in _.lastPhotos) {
-      _.lastPhotos[i].setMap(null);
+      if (_.lastPhotos[i]) {
+        _.lastPhotos[i].setMap(null);
+      }
     }
     
     try {
