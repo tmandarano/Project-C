@@ -223,6 +223,13 @@ function photos_view_by_id() {
     return html($template->fetch('photos_view.tpl'));
 }
 
+function faq() {
+    $template = new Template();
+    $template->assign(array('title'=>'FAQ', 'class'=>'faq'));
+    $template->assign(array('user' => get_session_user_info(get_session_user())));
+    return html($template->fetch('faq.tpl'));
+}
+
 function privacy() {
     $template = new Template();
     $template->assign(array('title'=>'Privacy', 'class'=>'privacy'));
@@ -235,6 +242,13 @@ function tos() {
     $template->assign(array('title'=>'Terms of Service', 'class'=>'tos'));
     $template->assign(array('user' => get_session_user_info(get_session_user())));
     return html($template->fetch('tos.tpl'));
+}
+
+function contact() {
+    $template = new Template();
+    $template->assign(array('title'=>'Contact Us', 'class'=>'contact'));
+    $template->assign(array('user' => get_session_user_info(get_session_user())));
+    return html($template->fetch('contact.tpl'));
 }
 
 function team() {

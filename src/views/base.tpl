@@ -4,9 +4,8 @@
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' /> 
 <link rel='icon' type='image/png' href='/img/favicon.png' />
 <link rel='shortcut icon' href='/favicon.ico' />
-{*<link rel="stylesheet" type="text/css"
-href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css" />*}
-<link rel="stylesheet" type="text/css" href="/css/yui-reset-2.8.1.min.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css" />
+{*<link rel="stylesheet" type="text/css" href="/css/yui-reset-2.8.1.min.css" />*}
 <link rel='stylesheet' type='text/css' href='/css/custom-theme/jquery-ui-1.8.2.custom.css' />
 <link rel='stylesheet' type='text/css' href='/css/screen.css' />
 <title>{if $title}{$title} | {/if}LiveGather</title> 
@@ -52,10 +51,10 @@ enjoyable experience.</p>
 </div>
 <div id="footer">
   <ul>
-    <li><a href="#">FAQ</a></li>
+    <li><a href="/faq">FAQ</a></li>
     <li><a href="/privacy">Privacy Policy</a></li>
     <li><a href="/tos">Terms of Service</a></li>
-    <li><a href="#">Contact Us</a></li>
+    <li><a href="/contact">Contact Us</a></li>
     <li><a href="/team">The LiveGather Team</a></li>
     <li><button id="download">Download</button></li>
     <li class="copyright">Copyright &copy; 2010 LiveGather. All rights reserved.</li>
