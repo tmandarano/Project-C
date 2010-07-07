@@ -50,24 +50,25 @@ class UserDAO {
         return array();
     }
 
-    public function save($user, $update = false) {
+    public function save($user) {
         $now = time();
         $date = date("Y-m-d H:i:s", $now);
-
-        if(!$update) {
-            $user->set_date_added($date);
-        }
+        $user->set_date_added($date);
         $user->set_date_modified($date);
 
-        if($update) {
-            $user_id = update_object($user, 'user', UserDao::get_columns());
-        } else {
-            $user_id = create_object($user, 'user', UserDao::get_columns());        
-        }
+        $user_id = create_object($user, 'user', UserDao::get_columns());        
 
         return $user_id;
     }
 
+    public static function update($user) {
+        $now = time();
+        $date = date("Y-m-d H:i:s", $now);
+        $user_id->set_date_modified($date);
+
+        $user_id = update_object($user, 'user', UserDao::get_columns());
+    }
+    
     private static function get_columns() {
         return array('id', 'username', 'email', 'photo_url',
                      'date_added', 'date_modified');

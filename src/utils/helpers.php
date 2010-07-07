@@ -46,7 +46,7 @@ function get_session_user() {
     return (empty($_SESSION['user'])) ? null : unserialize($_SESSION['user']);
 }
 
-function get_user_by_session_or_id($id) { 
+function get_user_by_session_or_id($id=null) { 
     $user = get_session_user();
     
     if(!$user) {
