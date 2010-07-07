@@ -412,7 +412,7 @@ LGG.showPhoto = function(id) {
       '<table class="split">',
         '<tr>',
           '<td class="photo">',
-            '<img class="sround" src="/api/photos/'+id+'" />',
+            '<img class="sround" src="/api/photos/'+id+'/3" />',
           '</td>',
           '<td>',
             '<div class="gathered sround">',
