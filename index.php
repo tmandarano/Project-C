@@ -1,6 +1,7 @@
 <?php /* Entry point for Project C */
 require_once('lib/limonade.php');
 require_once('src/utils/config.php');
+require_once('src/utils/template.php');
 
 function configure() {
     Config::configure();
@@ -30,6 +31,12 @@ dispatch        ('/contact',              'contact');
 dispatch        ('/team',                 'team');
 
 //dispatch        ('/photos/view/:id',      'photos_view_by_id');
+
+function not_found($errno, $errstr, $errfile=null, $errline=null) {
+    $template = new Template();
+    $template->assign(array('title'=>'404', 'class'=>'http404'));
+    return html($template->fetch('http404.tpl'));
+}
 
 run();
 

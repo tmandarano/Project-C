@@ -966,8 +966,19 @@ input.comment:focus {
 .settings .privacy .content table { margin: auto; font-weight: bold; }
 .settings .privacy .content table tr { line-height: 2em; }
 .settings .privacy .content table th { text-align: right; padding-right: 1em; }
-/*
 
+.http404 { text-align: center; }
+.oops {
+  background-color: #ddd;
+  padding: 1em;
+  margin: 2em auto;
+  width: 400px;
+  border-radius: 1em;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+}
+
+/*
 h1.bubble {
   margin-top: 0.5em;
   background-color: #45a136;
