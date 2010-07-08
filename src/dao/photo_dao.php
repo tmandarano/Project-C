@@ -120,11 +120,8 @@ class PhotoDAO {
     public static function save($photo) {
         $now = time();
         $date = date("Y-m-d H:i:s", $now);
-
-        if(!$update) {
-            $photo->set_date_added($date);
-        }
         $photo->set_date_modified($date);
+        $photo->set_date_added($date);
         
         $photo_id = create_object($photo, 'photo', PhotoDao::photo_columns());
 
@@ -165,6 +162,10 @@ class PhotoDAO {
     }
 	
     public static function update($photo) {
+        $now = time();
+        $date = date("Y-m-d H:i:s", $now);
+        $photo->set_date_modified($date);
+
         update_object($photo, 'photo', PhotoDao::photo_columns());
     }
 

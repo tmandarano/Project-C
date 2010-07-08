@@ -2,11 +2,43 @@
 require_once('lib/limonade.php');
 require_once('src/utils/config.php');
 require_once('src/utils/template.php');
+require_once('src/dao/user_dao.php');
+require_once('src/utils/helpers.php');
 
 function configure() {
     Config::configure();
 }
 
+// Error handlers first
+function not_found($errno, $errstr, $errfile=null, $errline=null) {
+    error_log('test');
+    check_username();
+
+    set('errno', $errno);
+    set('errstr', $errstr);
+    set('errfile', $errfile);
+    set('errline', $errline);
+
+    return html("show_not_found_errors.html.php");
+}
+
+function check_username() {
+    $possible_username = $_SERVER['REQUEST_URI'];
+    $possible_username = substr($possible_username, 1);
+
+    $user = UserDao::get_user_by_username($possible_username);
+   
+    if($user) {
+        // TODO Change 'http' hardcode into a server
+        $url = get_protocol_string().'://'.$_SERVER['HTTP_HOST'].'/profile/'.$user->get_id();
+        header("Location:".$url);
+    } else {
+        return;
+    }
+}
+
+
+// Now dispatch paths
 dispatch        ('/',                     'eye');
 //dispatch        ('/',                     'home');
 //dispatch        ('/getapp',               'getapp');

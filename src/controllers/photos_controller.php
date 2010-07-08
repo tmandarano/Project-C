@@ -62,14 +62,14 @@ function photos_create() {
         $p = $p['REQUEST'];
         if ($p) {
             $vars = array('caption', 'userfile', 'tags', 'latitude', 
-                          'longitude', 'identifier');
+                          'longitude');
             foreach ($vars as $var) {
                 $data[$var] = $p[$var];
             }
         }
     }
 
-    $user = get_user_by_session_or_id($id);
+    $user = get_user_by_session_or_id();
     if(!$user) {
         return halt(401);
     }
