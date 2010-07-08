@@ -22,6 +22,17 @@ class UserDAO {
         return null;
     }
 
+    public static function get_user_by_username($username) {
+        $sql = 'SELECT * FROM user WHERE LOWER(username) = LOWER(:username)';
+
+        $users = find_objects_by_sql($sql, array(':username'=>$username), 'User');
+
+        if (!empty($users)) {
+            return $users[0];
+        }
+        return null;
+    }
+
     public static function get_user_by_photo_id($photo_id) {
         $sql = 'SELECT * FROM user WHERE id IN (SELECT user_id FROM user_photos ';
         $sql .= ' WHERE photo_id = :photo_id)';
