@@ -19,7 +19,9 @@ function not_found($errno, $errstr, $errfile=null, $errline=null) {
     set('errfile', $errfile);
     set('errline', $errline);
 
-    return html("show_not_found_errors.html.php");
+    $template = new Template();
+    $template->assign(array('title'=>'404', 'class'=>'http404'));
+    return html($template->fetch('http404.tpl'));
 }
 
 function check_username() {
@@ -63,12 +65,6 @@ dispatch        ('/contact',              'contact');
 dispatch        ('/team',                 'team');
 
 //dispatch        ('/photos/view/:id',      'photos_view_by_id');
-
-function not_found($errno, $errstr, $errfile=null, $errline=null) {
-    $template = new Template();
-    $template->assign(array('title'=>'404', 'class'=>'http404'));
-    return html($template->fetch('http404.tpl'));
-}
 
 run();
 
