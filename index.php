@@ -1,6 +1,7 @@
 <?php /* Entry point for Project C */
 require_once('lib/limonade.php');
 require_once('src/utils/config.php');
+require_once('src/utils/template.php');
 require_once('src/dao/user_dao.php');
 require_once('src/utils/helpers.php');
 
@@ -18,7 +19,9 @@ function not_found($errno, $errstr, $errfile=null, $errline=null) {
     set('errfile', $errfile);
     set('errline', $errline);
 
-    return html("show_not_found_errors.html.php");
+    $template = new Template();
+    $template->assign(array('title'=>'404', 'class'=>'http404'));
+    return html($template->fetch('http404.tpl'));
 }
 
 function check_username() {

@@ -11,7 +11,8 @@ LG.map.markers.photo = function (photo) {
       marker = new GM.Marker({
         position: new GM.LatLng(photo.latitude, photo.longitude),
         title: [user.username, ': ', photo.caption].join(''),
-        icon: new GM.MarkerImage(['api/photos/', photo.id, '/1'].join(''), null, null, new GM.Point(20, 42)),
+        icon: new GM.MarkerImage(['api/photos/', photo.id, '/1'].join(''),
+          null, null, new GM.Point(20, 42)),
         shadow: new GM.MarkerImage('/img/mapmkrbdr.png')
       });
       } catch (e) {
