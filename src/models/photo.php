@@ -6,6 +6,7 @@ class Photo {
 	public $name;
 	public $latitude;
 	public $longitude;
+    public $geolocation;
     public $caption;
     //	public $comments;
 	public $tags;
@@ -58,6 +59,14 @@ class Photo {
 
     public function get_longitude() {
         return $this->longitude;
+    }
+
+    public function set_geolocation($geolocation) {
+		$this->geolocation = $geolocation;
+	}
+
+    public function get_geolocation() {
+        return $this->geolocation;
     }
 
     public function set_caption($caption) {

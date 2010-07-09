@@ -23,6 +23,16 @@ function photos_recent() {
     return json(PhotoDao::get_recent_photos($limit));
 }
 
+function photos_recent_by_area() {
+    check_system_auth();
+
+    $limit = var_to_i(params('limit'));
+
+    // TODO Hard-coded here: Decide how we will pull this from query
+    $points = array(array(25, -120), array(25, -80), array(40, -120), array(40, -80), array(25, -120));
+    return json(PhotoDao::get_recent_photos_by_area($points, $limit));
+}
+
 function photos_get_by_user_id() {
     check_system_auth();
 
