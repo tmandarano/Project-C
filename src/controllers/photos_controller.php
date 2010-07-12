@@ -207,6 +207,15 @@ function photos_delete_tag() {
 }
 
 function photos_upload() {
+    $image_types = array('image/jpeg', 'image/gif', 'image/png');
+    $type = $_FILES['userfile']['type'];
+
+    if(! in_array($type, $image_types)) {
+        debug("ERROR: File upload failed for " . $_FILES['userfile']['name'] . 
+              ". Not a valid image type. Type is " . $type . ".");
+        halt(403);
+    }
+
     $uploadfile = option('UPLOAD_DIR') . basename($_FILES['userfile']['name']);
     $thefile = $_FILES['userfile']['tmp_name'];
     

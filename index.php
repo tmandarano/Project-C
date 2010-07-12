@@ -11,7 +11,6 @@ function configure() {
 
 // Error handlers first
 function not_found($errno, $errstr, $errfile=null, $errline=null) {
-    error_log('test');
     check_username();
 
     set('errno', $errno);
