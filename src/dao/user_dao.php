@@ -4,17 +4,18 @@ require_once('src/models/user.php');
 require_once('src/utils/logging.php');
 
 class UserDAO {
-    public static function get_users() {
-        $sql = 'SELECT * FROM user';
-        $users = find_objects_by_sql($sql, null, 'User');
+    public static function get_users($status="ACTIVE") {
+        $sql = 'SELECT * FROM user WHERE status = :status';
+
+        $users = find_objects_by_sql($sql, array(':status'=>$status), 'User');
         
         return $users;
     }
 
-    public static function get_user_by_id($id) {
-        $sql = 'SELECT * FROM user WHERE id = :id';
+    public static function get_user_by_id($id, $status='ACTIVE') {
+        $sql = 'SELECT * FROM user WHERE id = :id AND status = :status';
 
-        $users = find_objects_by_sql($sql, array(':id'=>$id), 'User');
+        $users = find_objects_by_sql($sql, array(':id'=>$id, ':status'=>$status), 'User');
 
         if (!empty($users)) {
             return $users[0];
@@ -23,7 +24,7 @@ class UserDAO {
     }
 
     public static function get_user_by_username($username) {
-        $sql = 'SELECT * FROM user WHERE LOWER(username) = LOWER(:username)';
+        $sql = 'SELECT * FROM user WHERE LOWER(username) = LOWER(:username) AND status = :status';
 
         $users = find_objects_by_sql($sql, array(':username'=>$username), 'User');
 
@@ -36,7 +37,7 @@ class UserDAO {
     public static function get_user_by_photo_id($photo_id) {
         $sql = 'SELECT * FROM user WHERE id IN (SELECT user_id FROM user_photos ';
         $sql .= ' WHERE photo_id = :photo_id)';
-        $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id), 'User');
+        $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id, ':status' => 'ACTIVE'), 'User');
       
         if (!empty($users)) {
             return $users[0];
@@ -45,9 +46,9 @@ class UserDAO {
     }
 
     public static function get_user_by_identifier($identifier) {
-        $sql = 'SELECT u.id, u.username, u.photo_url, u.email, u.date_added, u.date_modified ';
+        $sql = 'SELECT u.id, u.username, u.photo_url, u.email, u.status, u.date_added, u.date_modified ';
         $sql .= 'FROM user u JOIN identifier i ON u.id = i.user_id';
-        $sql .= ' WHERE identifier = :identifier';
+        $sql .= ' WHERE i.identifier = :identifier';
         $users = find_objects_by_sql($sql, array(':identifier'=>$identifier), 'User');
 
         if (!empty($users)) {
@@ -67,6 +68,11 @@ class UserDAO {
         $user->set_date_added($date);
         $user->set_date_modified($date);
 
+        $status = $user->get_status();
+        if(empty($status)) {
+            $user->set_status('ACTIVE');
+        }
+
         $user_id = create_object($user, 'user', UserDao::get_columns());        
 
         return $user_id;
@@ -81,7 +87,7 @@ class UserDAO {
     }
     
     private static function get_columns() {
-        return array('id', 'username', 'email', 'photo_url',
+        return array('id', 'username', 'email', 'photo_url', 'status',
                      'date_added', 'date_modified');
     }
 }

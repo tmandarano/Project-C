@@ -5,14 +5,19 @@ require_once('src/dao/user_dao.php');
 require_once('src/utils/helpers.php');
 
 function photos_get() {
-    $photos = PhotoDao::get_photos();
+    $status = check_status_param();
+
+    $photos = PhotoDao::get_photos($status);
+    
     return json($photos);
 }
 
 function photos_get_by_id() {
     check_system_auth();
 
-    $photos = PhotoDao::get_photo_by_id(var_to_i(params('id')));
+    $status = check_status_param();
+
+    $photos = PhotoDao::get_photo_by_id(var_to_i(params('id')), $status);
     return json($photos);
 }
 

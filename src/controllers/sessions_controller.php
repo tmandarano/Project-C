@@ -18,6 +18,11 @@ function sessions_janrain_create() {
         $user = UserDao::get_user_by_identifier($profile['identifier']);
 
         if ($user) {
+            if(! ($user->get_status() == 'ACTIVE')) {
+                debug("This user with this identifier is inactive. Identifier: " . $profile['identifier']);
+                halt(400);
+            }
+
             session_start();
             $_SESSION['user'] = serialize($user);
         } else {

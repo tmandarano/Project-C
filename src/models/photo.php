@@ -8,7 +8,7 @@ class Photo {
 	public $longitude;
     public $geolocation;
     public $caption;
-    //	public $comments;
+    public $status;
 	public $tags;
 	public $data_added;
 	public $date_modified;
@@ -77,6 +77,14 @@ class Photo {
       return $this->caption;
     }
 
+    public function set_status($status) {
+        $this->status = $status;
+    }
+
+    public function get_status() {
+      return $this->status;
+    }
+
     public function get_tags() {
         return $this->tags;
     }
@@ -84,15 +92,7 @@ class Photo {
     public function set_tags($tags) {
         $this->tags = $tags;
     }
-    /*
-    public function get_comments() {
-        return $this->comments;
-    }
-    
-    public function set_comments($comments) {
-        $this->comments = $comments;
-    }
-    */
+
     public function get_date_added() {
         return $this->date_added;
     }
