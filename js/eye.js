@@ -1,6 +1,6 @@
 LG.map = defaultTo(LG.map, {});
 LG.map.defaultLoc = new GM.LatLng(32.7155, -117.1636); // San Diego 1st and Broadway
-LG.map.defaultLoc = new GM.LatLng(0, 0); // San Diego 1st and Broadway
+LG.map.defaultLoc = new GM.LatLng(0, 0); // XXX Nowhere in particular so it's obvious
 LG.map.markers = defaultTo(LG.map.markers, {});
 LG.map.markers.photo = function (photo) {
   var marker = null;
@@ -10,7 +10,8 @@ LG.map.markers.photo = function (photo) {
       try {
       marker = new GM.Marker({
         position: new GM.LatLng(photo.latitude, photo.longitude),
-        title: [user.username, ': ', photo.caption].join(''),
+        title: [(user ? user.username : 'Unknown'), ': ',
+                photo.caption].join(''),
         icon: new GM.MarkerImage(['api/photos/', photo.id, '/1'].join(''),
           null, null, new GM.Point(20, 42)),
         shadow: new GM.MarkerImage('/img/mapmkrbdr.png')
@@ -23,53 +24,134 @@ LG.map.markers.photo = function (photo) {
   return marker;
 };
 
+// Update the map and livestream with photos every n seconds with either the
+// most recent photos if there is no search, or the photos that match the 
+// search query.
 LG.eye = (function () {
   var _ = {
     map: null,
     lastPhotos: [],
-    search: null
+    updateTimer: null,
+    idleDraw: null,
+    search: null,
+    refreshDelay: 8000
   };
-  _.setSearch = function (q) {
-    _.search = q;
-  };
-  _.doSearch = function (q) {
-    console.log('searching for', q);
-    // TODO waiting for API
-    // TODO for real
-    var jitter = function () { return Math.random() - 0.5; };
-    var photos = [
-    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude:_.map.getCenter().lng() + jitter(),caption:"a",tags:[{id:33,tag:"tag1"}]},
-    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude:_.map.getCenter().lng() + jitter(),caption:"b",tags:[{id:33,tag:"tag1"}]},
-    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude:_.map.getCenter().lng() + jitter(),caption:"c",tags:[{id:33,tag:"tag1"}]},
-    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude:_.map.getCenter().lng() + jitter(),caption:"d",tags:[{id:33,tag:"tag1"}]},
-    {id:112,user_id:122,latitude:_.map.getCenter().lat() + jitter(),longitude: _.map.getCenter().lng() + jitter(),caption:"e",tags:[{id:33,tag:"tag1"}]}
-    ];
+  _.PhotosOverlay = (function () {
+    var lastPhotos = [];
+    function P() {}
+    var Pp = P.prototype = new GM.OverlayView();
+    Pp.onAdd = function () {
+      var draw = (function (self) { return function () { self.draw(); }; })(this);
+      GM.event.addListener(this.get('map'), 'dragend', draw);
+    };
+    function getDefaultSearcher(self) {
+      return function () { self.doSearch(); };
+    }
+    Pp.draw = function () {
+      if (_.idleDraw) {
+        GM.event.removeListener(_.idleDraw);
+      }
+      _.idleDraw = GM.event.addListenerOnce(this.get('map'), 'idle',
+        getDefaultSearcher(this));
+    };
+    Pp.onRemove = function () {
+      while (lastPhotos.length > 0) {
+        var photo = lastPhotos.pop();
+        photo.setMap(null);
+        delete photo;
+      }
+    };
+    Pp.addPhoto = function (photo) {
+      var marker = LG.map.markers.photo(photo);
+      if (marker) {
+        marker.setMap(_.map);
+        GM.event.addListener(marker, 'click', function () {
+          LG.G.showPhoto(photo.id);
+          return false;
+        });
+      }
+      return marker;
+    };
+    Pp.setSearch = function (q) {
+      _.search = q;
+      setTimeout(getDefaultSearcher(this), 0);
+    };
+    Pp.doSearch = function () {
+      if (!this.get('map') || !this.get('projection')) {
+        return;
+      }
+      if (_.updateTimer) {
+        clearTimeout(_.updateTimer);
+      }
+      this.onRemove();
+      // TODO get most recent photo in viewport matching q
+      console.log('searching for', _.search);
 
-    for (var i in _.lastPhotos) {
-      if (_.lastPhotos[i]) {
-        _.lastPhotos[i].setMap(null);
+      var size = 40;
+      size *= 3;
+
+      var div = $(this.get('map').getDiv());
+      var width = div.outerWidth(),
+          height = div.outerHeight();
+
+      var coord = (function (overlayview) {
+        var ptcache = {};
+        function key(x, y) {
+          return x + ',' + y;
+        }
+        function _(x, y) {
+          var k = key(x, y);
+          var val = ptcache[k];
+          if (val) {
+            return val;
+          }
+          var latlng = ptcache[k] = overlayview.getProjection()
+            .fromContainerPixelToLatLng(new GM.Point(x, y));
+          return latlng;
+        }
+        return _;
+      })(this);
+
+      var cells = [];
+      for (var x = 0; x < width; x += size) {
+        for (var y = 0; y < height; y += size) {
+          // nw, ne, se, sw
+          var rect = [coord(x, y), coord(x + size, y),
+                      coord(x + size, y + size), coord(x, y + size)];
+          cells.push(rect);
+        }
       }
-    }
-    
-    try {
-      for (var i in photos) {
-        _.lastPhotos.push(_.addPhoto(photos[i]));
+      
+      // TODO don't use fake data
+      var tags = [{id:33,tag:"tag1"}];
+      var photos = [];
+      for (var i in cells) {
+        var cell = cells[i];
+        var bounds = new GM.LatLngBounds(cell[3], cell[1]);
+        var center = bounds.getCenter();
+        photos.push({
+          id: 111 + i,
+          user_id: 122 + i,
+          latitude: center.lat(),
+          longitude: center.lng(),
+          caption: "a" + i,
+          tags: tags
+        });
       }
-    } catch (e) {
+      
+      // Add found photos
+      try {
+        for (var i in photos) {
+          lastPhotos.push(Pp.addPhoto(photos[i]));
+        }
+      } catch (e) {
         console.log(e);
-    }
-  };
-  _.addPhoto = function (photo) {
-    var marker = LG.map.markers.photo(photo);
-    if (marker) {
-      marker.setMap(_.map);
-      GM.event.addListener(marker, 'click', function () {
-        LG.G.showPhoto(photo.id);
-        return false;
-      });
-    }
-    return marker;
-  };
+      }
+
+      _.updateTimer = setTimeout(getDefaultSearcher(this), _.refreshDelay);
+    };
+    return new P();
+  })();
   _.initTags = function () {
     var alltags = $('#trendingtags ol');
     var headertag = $('<li><h1>Trending tags</h1></li>');
@@ -82,7 +164,7 @@ LG.eye = (function () {
           alltags.append($('<li></li>').append(
             $(['<a href="#">', tags[i], '</a>'].join(''))
               .click(function () {
-                _.doSearch('tag:'+tags[i]); TODO
+                _.PhotosOverlay.setSearch('tag:'+tags[i]); TODO
                 return false;
               })));
         }
@@ -98,13 +180,14 @@ LG.eye = (function () {
   _.initMap = function (div, initAfterMap) {
     LG.loc.get(function (latlng) {
       latlng = defaultTo(latlng, LG.map.defaultLoc);
-      console.log(latlng);
+      console.log('Map initialized to', latlng);
       var mapOpts = {
         zoom: 13,
         center: latlng,
         mapTypeId: GM.MapTypeId.ROADMAP,
       };
       _.map = new GM.Map(div, mapOpts);
+      _.PhotosOverlay.setMap(_.map);
       initAfterMap();
     });
   };
@@ -117,6 +200,7 @@ LG.eye = (function () {
     $('#map').height(contentHeight).width($('#content').width() - sidebarWidth);
     $('#livestream').height(contentHeight).width(sidebarWidth);
     GM.event.trigger(_.map, 'resize');
+    setTimeout(function () { _.PhotosOverlay.doSearch(); }, 0);
   };
   _.addPhotoLivestream = function (photo) {
     var id = photo.id;
@@ -151,37 +235,30 @@ LG.eye = (function () {
     _.alllive.hide().fadeIn('fast');
   };
   _.initSearch = function () {
+    var geo = new GM.Geocoder();
     $('#search form').submit(function () {
-      _.doSearch($('input', this).val());
+      _.PhotosOverlay.setSearch($('input[name=what]').val());
+      geo.geocode({address: $('input[name=where]').val()},
+        function (results, gcstatus) {
+          if (gcstatus == GM.GeocoderStatus.OK) {
+            var viewport = results[0].geometry.viewport;
+            _.map.fitBounds(viewport);
+          } else {
+            // Some kind of error occurred during geocoding request
+          }
+        });
       return false;
     });
-  };
-  _.update = function () {
-    console.log('updating');
-    if (_.pause) {
-      console.log('paused');
-    } else {
-      _.doSearch(_.search);
-    }
-    setTimeout(arguments.callee, 8000);
   };
   _.init = function () {
     function initAfterMap() {
       _.initLivestream();
       _.initSearch();
-      _.update();
       $(window).resize(_.resize);
       _.resize();
     }
     _.initMap($('#map').width('100%')[0], initAfterMap);
     _.initTags();
-
-    //var button = $('<button>Click me</button>');
-    //button.click(function () {
-    //  $('<div hello="1">Hello</div>').dialog().parent().parent().addClass('lg-dialog');
-    //  return false;
-    //});
-    //$('#content').prepend(button);
   };
   return _;
 })();

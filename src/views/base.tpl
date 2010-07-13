@@ -15,13 +15,17 @@
 <div id='header'>
   <ul class='nav'>
     <li id='logo'><a href="/"><img src="/img/logo/small_no_tagline.png" /></a></li>
+    {if $class == 'eye'}
     <li id='search' class='controls search'>
-      <form action="/explore/search" method="GET">
-        <input type="text" name="search" class="default controls search"
-               value="Search" />
+      <form action="" method="GET">
+        <input type="text" name="what" class="default controls what"
+               value="What" />
+        <input type="text" name="where" class="default controls where"
+               value="Where" />
         <input type="submit" value="Show" />
       </form>
     </li>
+    {/if}
     {if $user != null}
       <li class="account clickable"><span>Account</span>
         <ol>

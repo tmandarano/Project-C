@@ -29,7 +29,7 @@ function addPair(a, b) { return a + b; };
 function sum(xs) { return foldr(addPair, 0, xs); };
 var GM = google.maps;
 
-if (!console) {
+if (!window.console || !console.log) {
   window.console = {
     log: function () {}
   };
