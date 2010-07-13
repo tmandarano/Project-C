@@ -65,4 +65,18 @@ function get_user_by_session_or_id($id=null) {
 function var_to_i($v) {
     return intval(filter_var($v, FILTER_VALIDATE_INT));
 }
+
+function is_request_https() {
+    if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+        return true;
+    }
+}
+
+function get_protocol_string() {
+    if(is_request_https()) {
+        return 'https';
+    } else {
+        return 'http';
+    }
+}
 ?>

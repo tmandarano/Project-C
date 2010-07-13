@@ -23,6 +23,16 @@ function photos_recent() {
     return json(PhotoDao::get_recent_photos($limit));
 }
 
+function photos_recent_by_area() {
+    check_system_auth();
+
+    $limit = var_to_i(params('limit'));
+
+    // TODO Hard-coded here: Decide how we will pull this from query
+    $points = array(array(25, -120), array(25, -80), array(40, -120), array(40, -80), array(25, -120));
+    return json(PhotoDao::get_recent_photos_by_area($points, $limit));
+}
+
 function photos_get_by_user_id() {
     check_system_auth();
 
@@ -197,6 +207,15 @@ function photos_delete_tag() {
 }
 
 function photos_upload() {
+    $image_types = array('image/jpeg', 'image/gif', 'image/png');
+    $type = $_FILES['userfile']['type'];
+
+    if(! in_array($type, $image_types)) {
+        debug("ERROR: File upload failed for " . $_FILES['userfile']['name'] . 
+              ". Not a valid image type. Type is " . $type . ".");
+        halt(403);
+    }
+
     $uploadfile = option('UPLOAD_DIR') . basename($_FILES['userfile']['name']);
     $thefile = $_FILES['userfile']['tmp_name'];
     

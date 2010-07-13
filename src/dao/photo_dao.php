@@ -4,6 +4,8 @@ require_once('comment_dao.php');
 require_once('tag_dao.php');
 require_once('src/models/photo.php');
 
+function pair_points($points) { return $points[0].' '.$points[1]; };
+
 class PhotoDAO {
     public static function get_photos() {
         $sql = 'SELECT * FROM photo';
@@ -94,6 +96,24 @@ class PhotoDAO {
         return $photos;
     }
 
+    public static function get_recent_photos_by_area($points, $limit = 10) {
+        $polygon_str = implode(', ', array_map('pair_points', $points));
+
+        $sql = "SELECT * FROM photo WHERE MBRContains(GeomFromText('Polygon((".$polygon_str."))'), geolocation)";
+        $sql .= " ORDER BY date_added DESC LIMIT :limit";
+        debug($sql);
+        $photos = find_objects_by_sql($sql, array(':limit' => $limit), 'Photo');
+
+        foreach($photos as $photo) {
+            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
+            //$photo->set_comments($comments);
+            $tags = TagDAO::get_tags_for_photo($photo->get_id());            
+            $photo->set_tags($tags);
+        }
+
+        return $photos;
+    }
+
     public static function add_tag($photo_id, $tag) {
         $tagobj = new Tag();
         $tagobj->set_tag($tag);
@@ -122,8 +142,12 @@ class PhotoDAO {
         $date = date("Y-m-d H:i:s", $now);
         $photo->set_date_modified($date);
         $photo->set_date_added($date);
+
+        $geolocation = "POINT(".$photo->get_latitude()." ".$photo->get_longitude().")";
+
+        $photo->set_geolocation($geolocation);
         
-        $photo_id = create_object($photo, 'photo', PhotoDao::photo_columns());
+        $photo_id = create_object($photo, 'photo', PhotoDao::photo_columns(), array('','','geomfromtext'));
 
         /*
         $comments = $photo->get_comments();
@@ -170,7 +194,7 @@ class PhotoDAO {
     }
 
     private static function photo_columns() {
-        return array('id', 'url', 'latitude', 'longitude', 
+        return array('id', 'url', 'geolocation', 'latitude', 'longitude', 
                      'caption', 'date_added', 'date_modified');
     }
 }

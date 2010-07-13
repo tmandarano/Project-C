@@ -59,9 +59,11 @@ function delete_object_by_id($obj_id, $table) {
     $stmt->execute(array($obj_id));
 }
 
+function add_colon_wrap_funcs($x, $y) { return (!empty($y)) ? ($y.'('.add_colon($x).')') : add_colon($x); };
+
 function add_colon($x) { return ':' . $x; };
 
-function create_object($object, $table, $obj_columns = array()) {
+function create_object($object, $table, $obj_columns = array(), $obj_columns_funcs = array()) {
     $db = option('db_conn');
 
     if (!count($obj_columns)) {
@@ -73,7 +75,7 @@ function create_object($object, $table, $obj_columns = array()) {
         "INSERT INTO `$table` (" .
         implode(', ', $obj_columns) .
         ') VALUES (' .
-        implode(', ', array_map('add_colon', $obj_columns)) . ')';
+        implode(', ', array_map('add_colon_wrap_funcs', $obj_columns, $obj_columns_funcs)) . ')';
 
     $stmt = $db->prepare($sql);
     foreach ($obj_columns as $column) {
@@ -81,6 +83,7 @@ function create_object($object, $table, $obj_columns = array()) {
     }
 
     $stmt->execute();
+
     return $db->lastInsertId();
 }
 
