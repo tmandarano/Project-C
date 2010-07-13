@@ -3,6 +3,7 @@ require_once('src/utils/helpers.php');
 require_once('src/utils/template.php');
 require_once('src/dao/photo_dao.php');
 require_once('src/dao/user_dao.php');
+require_once('src/controllers/sessions_controller.php');
 
 function get_session_user_info($user) {
     if ($user) {
@@ -14,7 +15,12 @@ function get_session_user_info($user) {
     return array();
 }
 
-function eye () {
+function signout() {
+    sessions_delete();
+    return eye();
+}
+
+function eye() {
     $template = new Template();
     $template->assign(array('title'=>'', 'class'=>'eye'));
     $template->assign(array('user' => get_session_user_info(get_session_user())));

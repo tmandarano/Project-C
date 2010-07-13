@@ -29,20 +29,23 @@ function sessions_janrain_create() {
         }
         
 
-        // Since we don't have the intermediate popup yet, let's pretend this got sent back to the user and that 
-        // they agreed and then call the /users/create REST API. In this case we fake it by creating a temporary
-        // call to an identical method in the same class
+        // Since we don't have the intermediate popup yet, let's pretend this 
+        // got sent back to the user and that they agreed and then call the 
+        // /users/create REST API. In this case we fake it by creating a 
+        // temporary call to an identical method in the same class
         if(!$user) {
             $user = users_create_temp($profile);
             $_SESSION['user'] = serialize($user);
         }
 
-        // Redirect for now. In reality we don't redirect in a REST api. We send back a json response and depending
-        // on the status that response is used to redirect.
+        // Redirect for now. In reality we don't redirect in a REST api. We 
+        // send back a json response and depending on the status that response 
+        // is used to redirect.
         redirect_to('http://'.$_SERVER['HTTP_HOST']);
         
-        // Send this back so then the user can be prompted if they'd like to create the user
-        // if the primaryKey is empty. The client will use $response to create a post for the /users/create call
+        // Send this back so then the user can be prompted if they'd like to 
+        // create the user if the primaryKey is empty. The client will use 
+        // $response to create a post for the /users/create call
         //return json($response);
     }
 }
@@ -62,8 +65,5 @@ function sessions_delete() {
     }
 
     session_destroy();
-    // TODO: We should either move this call to a web controller or 
-    // we should be doing this redirection elsewhere
-    redirect_to('http://'.$_SERVER['HTTP_HOST']);
 }
 ?>

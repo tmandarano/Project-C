@@ -41,6 +41,7 @@ function check_username() {
 
 // Now dispatch paths
 dispatch        ('/',                     'eye');
+dispatch        ('/signout',              'signout');
 //dispatch        ('/',                     'home');
 //dispatch        ('/getapp',               'getapp');
 //dispatch        ('/download',             'getapp');
