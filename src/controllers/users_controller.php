@@ -57,6 +57,8 @@ function users_create($profile) {
         $user->set_photo_url($profile['photo']);
     }
 
+    // TODO store display name
+
     $returned_id = UserDAO::save($user);
     $user->set_id($returned_id);
 

@@ -29,7 +29,21 @@ function photos_recent_by_area() {
     $limit = var_to_i(params('limit'));
 
     // TODO Hard-coded here: Decide how we will pull this from query
-    $points = array(array(25, -120), array(25, -80), array(40, -120), array(40, -80), array(25, -120));
+    $points = array(array(25, -120), array(25, -80), array(40, -120), array(40, -80));
+
+
+    // Make sure it's a quadrilateral
+    if (count($points) != 4) {
+        halt(400);
+    }
+
+    // Make it a polygon
+    $first = $points[0];
+    $last = $points[count($points) - 1];
+    if ($first[0] != $last[0] || $first[1] != $last[1]) {
+        halt(400);
+    }
+    $points[] = $points[0];
     return json(PhotoDao::get_recent_photos_by_area($points, $limit));
 }
 
