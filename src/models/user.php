@@ -4,6 +4,7 @@ class User {
     public $username;
     public $email;
     public $photo_url;
+    public $status;
     public $date_added;
     public $date_modified;
     
@@ -37,6 +38,14 @@ class User {
     
     public function set_photo_url($photo_url) {
         $this->photo_url = $photo_url;
+    }
+
+    public function get_status() {
+        return $this->status;
+    }
+    
+    public function set_status($status) {
+        $this->status = $status;
     }
 
     public function get_date_added() {

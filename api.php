@@ -11,6 +11,7 @@ function configure() {
 $PRE = '/api';
 
 dispatch_get   ($PRE.'/users/',                      'users_get');
+dispatch_get   ($PRE.'/users/status/:status',        'users_get');
 dispatch_get   ($PRE.'/users/:id',                   'users_get_by_id');
 dispatch_get   ($PRE.'/users/:id/photos/',           'photos_get_by_user_id');
 dispatch_get   ($PRE.'/users/:id/photos/days/:days', 'photos_get_by_user_id_recent');
@@ -25,7 +26,9 @@ dispatch_delete($PRE.'/sessions/',                   'sessions_delete');
 dispatch       ($PRE.'/signout/',                    'sessions_delete');
 
 dispatch_get   ($PRE.'/photos/',                     'photos_get');
+dispatch_get   ($PRE.'/photos/status/:status',       'photos_get');
 dispatch_get   ($PRE.'/photos/:id',                  'photos_get_by_id');
+dispatch_get   ($PRE.'/photos/:id/status/:status',   'photos_get_by_id');
 dispatch_get   ($PRE.'/photos/recent/:limit',        'photos_recent');
 
 // TODO Possibly rename this URL and add variables for coordinates
