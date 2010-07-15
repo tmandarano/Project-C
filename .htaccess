@@ -4,16 +4,14 @@
 #AuthType Basic
 #require valid-user
 
-# Leave out guard so server will fail if mod_rewrite is not present.
-#<IfModule mod_rewrite.c>
-  RewriteEngine on
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d 
-  RewriteCond %{REQUEST_URI} !^/api
-  RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
-# The question mark is to get PATH_INFO to work. This is because PHP is running
-# as CGI on Dreamhost
+# Omit IfModule guard so server will fail if mod_rewrite is not present.
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/api
+RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+# The question mark is to get PATH_INFO to work.
+# This is because PHP is running as CGI on Dreamhost
 
 ServerSignature Off
 Options -Indexes
-

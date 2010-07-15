@@ -24,12 +24,22 @@ function photos_recent() {
 }
 
 function photos_recent_by_area() {
+    // nw, ne, se, sw
     check_system_auth();
 
     $limit = var_to_i(params('limit'));
 
-    // TODO Hard-coded here: Decide how we will pull this from query
-    $points = array(array(25, -120), array(25, -80), array(40, -120), array(40, -80), array(25, -120));
+    $coords = explode(';', params('coords'));
+    $points = array();
+
+    for ($i = 0; $i < count($coords); $i += 1) {
+        $coord = explode(',', $coords[$i]);
+        $points[] = array($coord[0], $coord[1]);
+    }
+
+    // Round out the polygon
+    $points[] = $points[0];
+
     return json(PhotoDao::get_recent_photos_by_area($points, $limit));
 }
 
