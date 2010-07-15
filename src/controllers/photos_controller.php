@@ -5,14 +5,19 @@ require_once('src/dao/user_dao.php');
 require_once('src/utils/helpers.php');
 
 function photos_get() {
-    $photos = PhotoDao::get_photos();
+    $status = check_status_param();
+
+    $photos = PhotoDao::get_photos($status);
+    
     return json($photos);
 }
 
 function photos_get_by_id() {
     check_system_auth();
 
-    $photos = PhotoDao::get_photo_by_id(var_to_i(params('id')));
+    $status = check_status_param();
+
+    $photos = PhotoDao::get_photo_by_id(var_to_i(params('id')), $status);
     return json($photos);
 }
 
@@ -37,9 +42,18 @@ function photos_recent_by_area() {
         $points[] = array($coord[0], $coord[1]);
     }
 
-    // Round out the polygon
-    $points[] = $points[0];
+    // Make sure it's a quadrilateral
+    if (count($points) != 4) {
+        halt(400);
+    }
 
+    // Make it a polygon
+    $first = $points[0];
+    $last = $points[count($points) - 1];
+    if ($first[0] != $last[0] || $first[1] != $last[1]) {
+        halt(400);
+    }
+    $points[] = $points[0];
     return json(PhotoDao::get_recent_photos_by_area($points, $limit));
 }
 

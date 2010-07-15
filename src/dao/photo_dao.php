@@ -7,15 +7,11 @@ require_once('src/models/photo.php');
 function pair_points($points) { return $points[0].' '.$points[1]; };
 
 class PhotoDAO {
-    public static function get_photos() {
-        $sql = 'SELECT * FROM photo';
-        $photos = find_objects_by_sql($sql, null, 'Photo');
+    public static function get_photos($status='ACTIVE') {
+        $sql = 'SELECT * FROM photo WHERE status = :status';
+        $photos = find_objects_by_sql($sql, array(':status'=>$status), 'Photo');
 
         foreach($photos as $photo) {
-            /*
-            $comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            $photo->set_comments($comments);
-            */
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
         }
@@ -23,14 +19,11 @@ class PhotoDAO {
         return $photos;
     }
 
-    public static function get_photo_by_id($id) {
-        $sql = 'SELECT * FROM photo WHERE id = :id';
-        $photos = find_objects_by_sql($sql, array(':id'=>$id), 'Photo');
+    public static function get_photo_by_id($id, $status='ACTIVE') {
+        $sql = 'SELECT * FROM photo WHERE id = :id AND status = :status';
+        $photos = find_objects_by_sql($sql, array(':id'=>$id, ':status'=>$status), 'Photo');
 
         foreach($photos as $photo) {
-            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            //$photo->set_comments($comments);
-
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
         }
@@ -44,16 +37,13 @@ class PhotoDAO {
 
     public static function get_photos_by_user_id($user_id) {
         $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
-        $sql .= 'WHERE up.user_id = :user_id';
+        $sql .= 'WHERE up.user_id = :user_id AND status = :status';
 
-        $params = array('user_id'=>$user_id);
+        $params = array('user_id'=>$user_id, 'status'=>'ACTIVE');
 
         $photos = find_objects_by_sql($sql, $params, 'Photo');
 
         foreach($photos as $photo) {
-            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            //$photo->set_comments($comments);
-
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
         }
@@ -64,9 +54,9 @@ class PhotoDAO {
     public static function get_photos_by_user_id_recent($user_id, $days) {
         $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
         $sql .= 'WHERE up.user_id = :user_id ';
-        $sql .= 'AND p.date_added > DATE_SUB(NOW(), INTERVAL :days DAY)';
+        $sql .= 'AND p.date_added > DATE_SUB(NOW(), INTERVAL :days DAY) AND p.status = :status';
 
-        $params = array('user_id'=>$user_id, 'days'=>$days);
+        $params = array('user_id'=>$user_id, 'days'=>$days, 'status'=>'ACTIVE');
 
         $photos = find_objects_by_sql($sql, $params, 'Photo');
 
@@ -75,20 +65,18 @@ class PhotoDAO {
 
     public static function get_photos_by_tag_id($tag_id) {
         $sql = 'SELECT * FROM photo WHERE id IN (SELECT photo_id FROM ';
-        $sql .= 'photo_tags WHERE tag_id = :tag)';
+        $sql .= 'photo_tags WHERE tag_id = :tag) AND status = :status';
 
-        $photos = find_objects_by_sql($sql, array(':tag' => $tag_id), 'Photo');
+        $photos = find_objects_by_sql($sql, array(':tag' => $tag_id, ':status'=>'ACTIVE'), 'Photo');
 
         return $photos;
     }
 
     public static function get_recent_photos($limit = 10) {
-        $sql = 'SELECT * FROM photo ORDER BY date_added DESC LIMIT :limit';
-        $photos = find_objects_by_sql($sql, array(':limit' => $limit), 'Photo');
+        $sql = 'SELECT * FROM photo WHERE status = :status ORDER BY date_added DESC LIMIT :limit';
+        $photos = find_objects_by_sql($sql, array(':status'=>'ACTIVE', ':limit' => $limit), 'Photo');
 
         foreach($photos as $photo) {
-            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            //$photo->set_comments($comments);
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
         }
@@ -99,14 +87,12 @@ class PhotoDAO {
     public static function get_recent_photos_by_area($points, $limit = 10) {
         $polygon_str = implode(', ', array_map('pair_points', $points));
 
-        $sql = "SELECT * FROM photo WHERE MBRContains(GeomFromText('Polygon((".$polygon_str."))'), geolocation)";
-        $sql .= " ORDER BY date_added DESC LIMIT :limit";
-        debug($sql);
-        $photos = find_objects_by_sql($sql, array(':limit' => $limit), 'Photo');
+        $sql = "SELECT * FROM photo WHERE status = :status AND MBRContains(GeomFromText('Polygon((".$polygon_str."))'), geolocation)";
+        $sql .= " ORDER BY date_added DESC LIMIT :offset";
+
+        $photos = find_objects_by_sql($sql, array(':status'=>'ACTIVE', ':offset' => $limit), 'Photo');
 
         foreach($photos as $photo) {
-            //$comments = CommentDAO::get_comments_for_photo($photo->get_id());
-            //$photo->set_comments($comments);
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
         }
@@ -146,23 +132,13 @@ class PhotoDAO {
         $geolocation = "POINT(".$photo->get_latitude()." ".$photo->get_longitude().")";
 
         $photo->set_geolocation($geolocation);
+
+        $status = $photo->get_status();
+        if(empty($status)) {
+            $photo->set_status('ACTIVE');
+        }
         
         $photo_id = create_object($photo, 'photo', PhotoDao::photo_columns(), array('','','geomfromtext'));
-
-        /*
-        $comments = $photo->get_comments();
-
-        foreach($comments as $comment) {
-            $comment_id = CommentDAO::save($comment); 
-
-            $photo_comment = new stdClass();
-            $photo_comment->photo_id = $photo_id;
-            $photo_comment->comment_id = $comment_id;
-
-            create_object($photo_comment, 'photo_comments',
-                          array('photo_id', 'comment_id'));
-        }
-        */
 
         $tags = $photo->get_tags();
 
@@ -195,7 +171,7 @@ class PhotoDAO {
 
     private static function photo_columns() {
         return array('id', 'url', 'geolocation', 'latitude', 'longitude', 
-                     'caption', 'date_added', 'date_modified');
+                     'caption', 'status', 'date_added', 'date_modified');
     }
 }
 ?>

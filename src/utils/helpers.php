@@ -79,4 +79,12 @@ function get_protocol_string() {
         return 'http';
     }
 }
+
+function check_status_param() {
+    $status = filter_var(params('status'));
+    if(empty($status)) {
+        $status = 'ACTIVE';
+    }
+    return $status;
+}
 ?>

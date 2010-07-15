@@ -10,7 +10,9 @@ require_once('src/utils/janrain.php');
 function users_get() {
     check_system_auth();
 
-    $users = UserDAO::get_users();
+    $status = check_status_param();
+
+    $users = UserDAO::get_users($status);
 
     return json($users);
 }
@@ -18,8 +20,10 @@ function users_get() {
 function users_get_by_id() {
     check_system_auth();
 
+    $status = check_status_param();
+
     $user_id = filter_var(params('id'));
-    $user = UserDAO::get_user_by_id($user_id);
+    $user = UserDAO::get_user_by_id($user_id, $status);
     return json($user);
 }
 
@@ -27,7 +31,7 @@ function users_get_by_identifier() {
     check_system_auth();
 
     $identifier = filter_var(params('identifier'));
-    $user = UserDAO::get_user_by_id($identifier);
+    $user = UserDAO::get_user_by_identifier($identifier);
 
     return json($user);
 }
@@ -56,6 +60,8 @@ function users_create($profile) {
     if(isset($profile['photo'])) {
         $user->set_photo_url($profile['photo']);
     }
+
+    // TODO store display name
 
     $returned_id = UserDAO::save($user);
     $user->set_id($returned_id);

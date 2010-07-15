@@ -6,47 +6,47 @@ require_once('src/controllers/users_controller.php');
 
 
 function sessions_janrain_create() {
-    if(isset($_POST['token'])) { 
+    // This function runs as a result of an incoming call from Janrain.
+
+    if (isset($_POST['token'])) { 
         $token = $_POST['token'];
         $post_data = array('token' => $_POST['token'], 'apiKey' => option('rpxApiKey'),
                            'format' => 'json');     
 
         $profile = janrain_post($post_data, 'auth_info');
         
-        $user = null;
         $user = UserDao::get_user_by_identifier($profile['identifier']);
 
-        if($user) {
+        if ($user) {
+            if(! ($user->get_status() == 'ACTIVE')) {
+                debug("This user with this identifier is inactive. Identifier: " . $profile['identifier']);
+                halt(400);
+            }
+
             session_start();
             $_SESSION['user'] = serialize($user);
         } else {
-            // Here we would normally spit back a message saying that session 
-            // creation failed. Then we can use this on the client to try something else.
-            // Send the "Bad Request" 400 response to let the client know that something was
-            // was wrong with the user
+            // We have no user with the given Janrain token. 
+            // Unfortunately we can't be RESTful here (see redirect below).
             debug("Can't find user with identifier: ".$profile['identifier']);
-            //return halt(400);
-        }
-        
 
-        // Since we don't have the intermediate popup yet, let's pretend this 
-        // got sent back to the user and that they agreed and then call the 
-        // /users/create REST API. In this case we fake it by creating a 
-        // temporary call to an identical method in the same class
-        if(!$user) {
-            $user = users_create_temp($profile);
-            $_SESSION['user'] = serialize($user);
+            // We want to have a dialog that asks the user to create an 
+            // account. This needs email, username, and display name.
+            // We have most of these from Janrain.
+            // Put them in SESSION so that the redirected page can setup 
+            // the signup dialog properly.
+
+            $_SESSION['signup'] = array(
+                'email' => $profile['verifiedEmail'] || '',
+                'username' => $profile['preferredUsername'] || '',
+                'display' => $profile['displayName'] || '',
+            );
         }
 
-        // Redirect for now. In reality we don't redirect in a REST api. We 
-        // send back a json response and depending on the status that response 
-        // is used to redirect.
-        redirect_to('http://'.$_SERVER['HTTP_HOST']);
-        
-        // Send this back so then the user can be prompted if they'd like to 
-        // create the user if the primaryKey is empty. The client will use 
-        // $response to create a post for the /users/create call
-        //return json($response);
+        // Redirect. This is not RESTful but we have relinquished control of 
+        // the datastream to Janrain and their API doesn't go beyond calling 
+        // us back once. We need to handle it from here.
+        redirect_to('http://'.$_SERVER['HTTP_HOST'].'/#signup');
     }
 }
 
