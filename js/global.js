@@ -676,6 +676,8 @@ LGG.init = function () {
   LGG.setupDefaultingInputFields('default');
   LGG.setupAccountMenu();
 
+  $('#download').click(function () { window.location = '/getapp'; });
+
   ///* JSify sign in */
   //$('.sign.in img').click(function () {
   //  LGG.showSigninPrompt($(this));

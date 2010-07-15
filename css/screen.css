@@ -55,6 +55,7 @@ button {
   color: #fff;
   font-weight: bold;
   height: 28px;
+  line-height: 12px;
   padding: 0 0.5em;
   border: 1px solid #555;
   letter-spacing: -1px;
@@ -716,6 +717,61 @@ input.comment:focus {
 .team .team img { width: 200px; height: 200px; float: left; margin-right: 1em; }
 .team { padding-bottom: 3em; }
 
+.getapp #content { text-align: center; }
+.getapp #content table { margin: auto; }
+.getapp #content table a {
+  display: block;
+  color: black;
+  font-size: large;
+}
+.getapp #content table .apps td {
+  padding: 0 2em 0 2em;
+  line-height: 224px;
+}
+.getapp #content img { vertical-align: middle; }
+.getapp button {
+  background-color: #45a136;
+  padding: 0.5em 1em;
+  font-size: larger;
+  font-weight: bold;
+  color: white;
+  border: 1px solid #359126;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+
+.faq #content {
+  color: #444;
+  padding: 1em; 
+}
+
+.contact #content {
+  color: #444;
+  padding: 1em; 
+}
+
+.settings #content { margin-top: 2em; }
+.settings #settings { margin: auto; width: 680px; }
+.settings .basic .content h1 { background: none; color: black; }
+.settings .basic .content .userphoto { float: right; margin-right: 2em; }
+.settings .basic td { padding: 0.5em 0 0.5em 1em; }
+.settings .auths .content .auths { margin: auto; }
+.settings .privacy .content table { margin: auto; font-weight: bold; }
+.settings .privacy .content table tr { line-height: 2em; }
+.settings .privacy .content table th { text-align: right; padding-right: 1em; }
+
+.http404 { text-align: center; }
+.oops {
+  background-color: #ddd;
+  padding: 1em;
+  margin: 2em auto;
+  width: 400px;
+  border-radius: 1em;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+}
+
 /*
 #headerstream {
   position: relative;
@@ -785,30 +841,6 @@ input.comment:focus {
 }
 .home.out #map_photo img {
   width: 180px; max-height: 180px;
-}
-
-.getapp #content { text-align: center; }
-.getapp #content table { margin: auto; }
-.getapp #content table a {
-  display: block;
-  color: black;
-  font-size: large;
-}
-.getapp #content table .apps td {
-  padding: 0 2em 0 2em;
-  line-height: 224px;
-}
-.getapp #content img { vertical-align: middle; }
-.getapp button {
-  background-color: #45a136;
-  padding: 0.5em 1em;
-  font-size: larger;
-  font-weight: bold;
-  color: white;
-  border: 1px solid #359126;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
 }
 
 .livestreams .left.pane .controls {
@@ -956,28 +988,6 @@ input.comment:focus {
   margin-top: 1em;
 }
 */
-
-.settings #content { margin-top: 2em; }
-.settings #settings { margin: auto; width: 680px; }
-.settings .basic .content h1 { background: none; color: black; }
-.settings .basic .content .userphoto { float: right; margin-right: 2em; }
-.settings .basic td { padding: 0.5em 0 0.5em 1em; }
-.settings .auths .content .auths { margin: auto; }
-.settings .privacy .content table { margin: auto; font-weight: bold; }
-.settings .privacy .content table tr { line-height: 2em; }
-.settings .privacy .content table th { text-align: right; padding-right: 1em; }
-
-.http404 { text-align: center; }
-.oops {
-  background-color: #ddd;
-  padding: 1em;
-  margin: 2em auto;
-  width: 400px;
-  border-radius: 1em;
-  -moz-border-radius: 1em;
-  -webkit-border-radius: 1em;
-}
-
 /*
 h1.bubble {
   margin-top: 0.5em;
