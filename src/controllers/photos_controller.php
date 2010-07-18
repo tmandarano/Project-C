@@ -29,31 +29,28 @@ function photos_recent() {
 }
 
 function photos_recent_by_area() {
-    // nw, ne, se, sw
+    // sw, ne
     check_system_auth();
 
     $limit = var_to_i(params('limit'));
 
     $coords = explode(';', params('coords'));
-    $points = array();
+
+    if (count($coords) != 2) {
+        halt(400);
+    }
 
     for ($i = 0; $i < count($coords); $i += 1) {
-        $coord = explode(',', $coords[$i]);
-        $points[] = array($coord[0], $coord[1]);
+        $pts = explode(',', $coords[$i]);
+        $coords[$i] = array($pts[0], $pts[1]);
     }
 
-    // Make sure it's a quadrilateral
-    if (count($points) != 4) {
-        halt(400);
-    }
+    $points = array($coords[0]);
+    $points[] = array($coords[0][0], $coords[1][1]);
+    $points[] = array($coords[1][0], $coords[1][1]);
+    $points[] = array($coords[1][0], $coords[0][1]);
+    $points[] = $coords[0];
 
-    // Make it a polygon
-    $first = $points[0];
-    $last = $points[count($points) - 1];
-    if ($first[0] != $last[0] || $first[1] != $last[1]) {
-        halt(400);
-    }
-    $points[] = $points[0];
     return json(PhotoDao::get_recent_photos_by_area($points, $limit));
 }
 

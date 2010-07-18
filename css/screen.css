@@ -287,6 +287,7 @@ h1 strong { font-weight: bold; }
 #trendingtags h1 { font-weight: bold; }
 
 #livestream { position: absolute; top: 2em; right: 0; overflow: hidden; }
+#livestream ol { height: inherit; overflow-y: scroll; }
 #livestream li { position: relative; display: block; margin-left: 0.5em; margin-bottom: 0.5em; height: 100px; }
 #livestream img { width: 100px; max-height: 100px; margin: 0 2px; float: left; }
 #livestream div { margin-left: 0.5em; padding-left: 100px; font-size: 0.8em; }

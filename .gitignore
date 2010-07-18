@@ -8,3 +8,4 @@ special/smarty_pants/compiled/*
 !special/uploads/README*
 special/uploads/*
 test.html
+*.bak

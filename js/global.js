@@ -430,23 +430,25 @@ LGG.showSignup = function () {
   guardSubmit();
 
   submit.click(function () {
-    console.log('submit clicked');
     if (checkSubmitable()) {
-      console.log('submitting');
-      // Do submit (call /users/create)
       $.ajax({
-        url: '/api/users/create',
+        url: '/api/users',
+        type: 'POST',
         data: {
           email: email.val(),
           preferredUsername: username.val(),
           displayName: display.val()
         },
         success: function (data) {
-          $('.close', signup).click();
-          LG.G.showDone();
+          if (data) {
+            $('.close', signup).click();
+            LG.G.showDone();
+          } else {
+            alert('Sorry, an error occurred.');
+          }
         },
         error: function (data) {
-          alert('Sorry an error occurred.');
+          alert('Sorry, an error occurred.');
         }
       });
     }
