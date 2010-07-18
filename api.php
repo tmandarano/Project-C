@@ -35,6 +35,7 @@ dispatch_get   ($PRE.'/photos/recent/:limit',        'photos_recent');
 dispatch_get   ($PRE.'/photos/recentarea/:limit',    'photos_recent_by_area');
 dispatch_get   ($PRE.'/photos/:id/user/',            'users_get_by_photo_id');
 dispatch_post  ($PRE.'/photos/',                     'photos_create');
+dispatch_put   ($PRE.'/photos/',                     'photos_update');
 dispatch_get   ($PRE.'/photos/:id/tags',             'tags_get_by_photo_id');
 dispatch_post  ($PRE.'/photos/:id/tags/:tag',        'photos_add_tag');
 dispatch_delete($PRE.'/photos/:id/tags/:tag',        'photos_delete_tag');
