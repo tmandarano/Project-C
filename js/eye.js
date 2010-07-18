@@ -219,7 +219,8 @@ LG.eye = (function () {
     // Resize map so the livestream is always at the bottom.
     var outerHeight = function (e) { return $(e).outerHeight(); };
     var contentHeight = Math.max(0, $(window).height() - 
-      sum($.map(['#header', '#trendingtags', '#footer'], outerHeight)));
+      sum($.map(['#header', '#headerstream', '#trendingtags', '#footer'],
+                outerHeight)));
     var sidebarWidth = 300;
     $('#map').height(contentHeight).width($('#content').width() - sidebarWidth);
     $('#livestream').height(contentHeight).width(sidebarWidth);

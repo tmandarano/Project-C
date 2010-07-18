@@ -773,7 +773,6 @@ input.comment:focus {
   -webkit-border-radius: 1em;
 }
 
-/*
 #headerstream {
   position: relative;
   height: 50px;
@@ -786,7 +785,6 @@ input.comment:focus {
   overflow: hidden;
   float: left;
 }
-*/
 
 /*
 .home.out .nav .sign.in { margin-top: 1.5em; }

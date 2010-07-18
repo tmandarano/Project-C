@@ -140,10 +140,11 @@ _p.append = function (json) {
   p.lat = 32;
   p.lng = -117;
   p.user = {name: 'name'}; // TODO
-  $(['<li><a href="/api/photos/', p.id, '"><img src="/photo/', p.id,
+  $(['<li><a href="#"><img src="/api/photos/', p.id,
      '/2" title="', p.user.name, ': ', p.name, '"/></a></li>'].join(''))
     .data('json', json)
-    .appendTo(this.jdom);
+    .appendTo(this.jdom)
+    .find('a').click(function () { LGG.showPhoto(p.id); });
   if (this.ready) {
     this.jdom.trigger('change');
   }
@@ -687,7 +688,7 @@ LGG.init = function () {
   //});
   
 
-  //new LGG.HeaderStream($('#headerstream'));
+  new LGG.HeaderStream($('#headerstream'));
   //LGG.setupDetailedStreams();
 };
 return LGG;

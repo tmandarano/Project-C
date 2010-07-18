@@ -43,6 +43,7 @@
     {/if}
   </ul> 
 </div> 
+<div id="headerstream"></div>
 <noscript>
 <p>Although we respect your choice to browse the web without Javascript enabled
 or present, we believe that the emphasis of this site, real-time photo sharing,
