@@ -166,7 +166,36 @@ class PhotoDAO {
         $date = date("Y-m-d H:i:s", $now);
         $photo->set_date_modified($date);
 
-        update_object($photo, 'photo', PhotoDao::photo_columns());
+        $geolocation = "POINT(".$photo->get_latitude()." ".$photo->get_longitude().")";
+
+        $photo->set_geolocation($geolocation);
+
+        $status = $photo->get_status();
+        if(empty($status)) {
+            $photo->set_status('ACTIVE');
+        }
+        
+        $photo_id = update_object($photo, 'photo', PhotoDao::photo_columns(), array('','','geomfromtext'));
+
+        $tags = $photo->get_tags();
+
+        foreach($tags as $tag) {
+            $tag_id = TagDAO::save($tag);
+            
+            $photo_tag = new stdClass();
+            $photo_tag->photo_id = $photo_id;
+            $photo_tag->tag_id = $tag_id;
+            
+            create_object($photo_tag, 'photo_tags', array('photo_id', 'tag_id'));
+        }
+
+        $user_photo = new stdClass();
+        $user_photo->user_id = $photo->get_user_id();
+        $user_photo->photo_id = $photo_id;
+    
+        create_object($user_photo, 'user_photos', array('user_id', 'photo_id'));
+
+        return $photo_id;
     }
 
     private static function photo_columns() {
