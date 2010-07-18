@@ -36,8 +36,9 @@ class UserDAO {
 
     public static function get_user_by_photo_id($photo_id) {
         $sql = 'SELECT * FROM user WHERE id IN (SELECT user_id FROM user_photos ';
-        $sql .= ' WHERE photo_id = :photo_id)';
-        $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id, ':status' => 'ACTIVE'), 'User');
+        $sql .= ' WHERE photo_id = :photo_id) AND status = :status';
+        $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id,
+                                                 ':status' => 'ACTIVE'), 'User');
       
         if (!empty($users)) {
             return $users[0];

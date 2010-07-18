@@ -331,11 +331,15 @@ LGG.showSignup = function () {
         '<form>',
           '<table>',
             '<tr><th>Email</th><td><input type="text" name="email" class="input" /></td></tr>',
-            '<tr><th>Username</th><td><input type="text" name="username" class="input" /></td></tr>',
+            '<tr><th>Username</th><td>',
+              '<input type="text" name="username" class="input" /></td></tr>',
             '<tr><th></th><td class="username_sample"></td>',
-            '<tr><th>Display Name</th><td><input type="text" name="display" class="input" /></td></tr>',
+            '<tr><th>Display Name</th><td><input type="text" name="display" class="input" />',
+              '</td></tr>',
             '<tr><td colspan="2">',
-            '<p>By clicking &ldquo;Finished&rdquo; you agree to our <a href="/privacy">Privacy Policy</a> and <a href="/tos">Terms of Service</a>.</p></td></tr>',
+            '<p>By clicking &ldquo;Finished&rdquo; you agree to our ',
+              '<a href="/privacy">Privacy Policy</a> and ',
+              '<a href="/tos">Terms of Service</a>.</p></td></tr>',
             '<tr><td colspan="2" class="finished">',
               '<input type="submit" value="Finished" />',
             '</td></tr>',
@@ -344,23 +348,109 @@ LGG.showSignup = function () {
       '</div>',
     '</div>'].join('');
   var signup = $(HTML_SIGNUP);
+  var email = $('input[name=email]', signup);
   var username = $('input[name=username]', signup);
+  var display = $('input[name=display]', signup);
+  var submit = $('input[type=submit]', signup);
+
+  var errorbg = {'background-color': '#fdd'};
+  var okbg = {'background-color': '#ffc'};
+
+  if (LG.G.signupInfo) {
+    email.val(LG.G.signupInfo.email);
+    username.val(LG.G.signupInfo.username);
+    display.val(LG.G.signupInfo.display);
+  }
+
   var sample = $('.username_sample', signup);
   function updateSample() {
-    // TODO Check username
-    if (true) {
-      sample.html('<p class="ok">Your profile will be livegather.com/<span>' + username.val() + '</span></p>');
-    } else {
-      sample.html('<p class="error">This username has been taken. Please try another.</p>');
+    var usernameOk = true;
+    function updateUIOK(ok) {
+      if (ok) {
+        username.css(okbg);
+        sample.html([
+          '<p class="ok">Your profile will be livegather.com/<span>',
+          username.val(),
+          '</span></p>'].join(''));
+      } else {
+        username.css(errorbg);
+        sample.html([
+          '<p class="error">This username has been taken. ',
+          'Please try another.</p>'].join(''));
+      }
     }
+    $.ajax({url: '/' + username.val(),
+      success: function () { updateUIOK(false); },
+      error: function (xhr) {
+        if (xhr.status == 404) {
+          updateUIOK(true);
+        } else {
+          updateUIOK(false);
+        }
+      }
+    });
   }
   updateSample();
   username.keyup(updateSample);
-  var submit = $('input[type=submit]', signup);
-  submit.click(function () {
-    if (valid) {
-      // Do submit
+
+  function checkSubmitable() {
+    var submittable = true;
+
+    // Check email is valid.
+    var emailre = new RegExp('.*@\\w+(\\.\\w+){1,2}', '');
+    if (!emailre.test(email.val())) {
+      email.css(errorbg);
+      submittable = false;
     } else {
+      email.css(okbg);
+    }
+    if ($('p', sample).hasClass('error')) {
+      submittable = false;
+    }
+    if (display.val().length < 1) {
+      display.css(errorbg);
+      submittable = false;
+    } else {
+      display.css(okbg);
+    }
+    return submittable;
+  }
+
+  function guardSubmit() {
+    if (checkSubmitable()) {
+      submit.removeAttr('disabled');
+    } else {
+      submit.attr('disabled', 'disabled');
+    }
+  }
+
+  email.keyup(guardSubmit);
+  username.keyup(guardSubmit);
+  display.keyup(guardSubmit);
+  guardSubmit();
+
+  submit.click(function () {
+    if (checkSubmitable()) {
+      $.ajax({
+        url: '/api/users',
+        type: 'POST',
+        data: {
+          email: email.val(),
+          preferredUsername: username.val(),
+          displayName: display.val()
+        },
+        success: function (data) {
+          if (data) {
+            $('.close', signup).click();
+            LG.G.showDone();
+          } else {
+            alert('Sorry, an error occurred.');
+          }
+        },
+        error: function (data) {
+          alert('Sorry, an error occurred.');
+        }
+      });
     }
     return false;
   });
@@ -587,6 +677,8 @@ LGG.init = function () {
 
   LGG.setupDefaultingInputFields('default');
   LGG.setupAccountMenu();
+
+  $('#download').click(function () { window.location = '/getapp'; });
 
   ///* JSify sign in */
   //$('.sign.in img').click(function () {

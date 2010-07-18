@@ -29,12 +29,28 @@ function photos_recent() {
 }
 
 function photos_recent_by_area() {
+    // sw, ne
     check_system_auth();
 
     $limit = var_to_i(params('limit'));
 
-    // TODO Hard-coded here: Decide how we will pull this from query
-    $points = array(array(25, -120), array(25, -80), array(40, -120), array(40, -80), array(25, -120));
+    $coords = explode(';', params('coords'));
+
+    if (count($coords) != 2) {
+        halt(400);
+    }
+
+    for ($i = 0; $i < count($coords); $i += 1) {
+        $pts = explode(',', $coords[$i]);
+        $coords[$i] = array($pts[0], $pts[1]);
+    }
+
+    $points = array($coords[0]);
+    $points[] = array($coords[0][0], $coords[1][1]);
+    $points[] = array($coords[1][0], $coords[1][1]);
+    $points[] = array($coords[1][0], $coords[0][1]);
+    $points[] = $coords[0];
+
     return json(PhotoDao::get_recent_photos_by_area($points, $limit));
 }
 

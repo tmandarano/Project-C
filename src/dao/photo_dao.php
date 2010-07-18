@@ -3,10 +3,20 @@ require_once('src/utils/db.php');
 require_once('comment_dao.php');
 require_once('tag_dao.php');
 require_once('src/models/photo.php');
+require_once('src/models/user.php');
 
 function pair_points($points) { return $points[0].' '.$points[1]; };
 
 class PhotoDAO {
+    private static function get_user_id($photo_id) {
+        $sql = 'SELECT user_id FROM user_photos WHERE photo_id = :id';
+        $stmt = option('db_conn')->prepare($sql);
+        $stmt->bindParam(':id', $photo_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return $row[0];
+    }
+
     public static function get_photos($status='ACTIVE') {
         $sql = 'SELECT * FROM photo WHERE status = :status';
         $photos = find_objects_by_sql($sql, array(':status'=>$status), 'Photo');
@@ -14,6 +24,7 @@ class PhotoDAO {
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
         }
 
         return $photos;
@@ -26,6 +37,7 @@ class PhotoDAO {
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
         }
 
         if ($photos && count($photos) > 0) {

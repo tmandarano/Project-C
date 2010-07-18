@@ -1,4 +1,4 @@
-<h1>Almost finished, just download the app!</h1>
+<!--<h1>Almost finished, just download the app!</h1>-->
 
 <table>
 <tr class="apps">
@@ -21,4 +21,4 @@
 </tr>
 </table>
 
-<button type="button">Finish</button>
+<!--<button type="button">Finish</button>-->
