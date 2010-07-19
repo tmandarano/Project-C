@@ -174,21 +174,17 @@ LG.eye = (function () {
       $.get('/api/tags/trending/20', function (tags) {
         $.map(tags, function (t) {
           var tag = t.tag;
-          alltags.append($('<li></li>').append(
-            $(['<a href="#">', tag, '</a>'].join(''))
+          alltags.append($(['<a href="#">', tag, '</a> '].join(''))
               .click(function () {
                 setSearch(tag);
                 return false;
-              })));
+              }))
         });
       }, 'json');
     }
 
     T.init = function () {
-      alltags = $('#trendingtags ol');
-      headertag = $('<li><h1>Trending tags</h1></li>');
-      LG.G.fade(alltags.parent());
-      alltags.append(headertag).hide();
+      alltags = $('#trendingtags').hide();
 
       showNowTrendingTags();
       alltags.fadeIn('fast');
@@ -219,11 +215,13 @@ LG.eye = (function () {
     // Resize map so the livestream is always at the bottom.
     var outerHeight = function (e) { return $(e).outerHeight(); };
     var contentHeight = Math.max(0, $(window).height() - 
-      sum($.map(['#header', '#headerstream', '#trendingtags', '#footer'],
+      sum($.map(['#header', '#headerstream', '#footer'],
                 outerHeight)));
     var sidebarWidth = 300;
     $('#map').height(contentHeight).width($('#content').width() - sidebarWidth);
-    $('#livestream').height(contentHeight).width(sidebarWidth);
+    $('#trendingtags').width(sidebarWidth);
+    $('#livestream').height(contentHeight - $('#trendingtags').outerHeight())
+                    .width(sidebarWidth);
     GM.event.trigger(map, 'resize');
 
     clearTimeout(latentResizeRefresh);

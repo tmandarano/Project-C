@@ -281,12 +281,8 @@ h1 strong { font-weight: bold; }
 
 .eye #content { width: 100%; }
 
-#trendingtags { position: relative; height: 2em; line-height: 2em; }
-#trendingtags li, 
-#trendingtags h1 { display: inline; font-size: 0.9em; margin: 0 0.2em; }
-#trendingtags h1 { font-weight: bold; }
-
-#livestream { position: absolute; top: 2em; right: 0; overflow: hidden; }
+#current { position: absolute; top: 0; right: 0; overflow: hidden; }
+#trendingtags { text-align: center; }
 #livestream ol { height: inherit; overflow-y: scroll; }
 #livestream li { position: relative; display: block; margin-left: 0.5em; margin-bottom: 0.5em; height: 100px; }
 #livestream img { width: 100px; max-height: 100px; margin: 0 2px; float: left; }
