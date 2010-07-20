@@ -53,9 +53,9 @@ function create_local_user($profile) {
 }
 
 
-function janrain_map($profile, $primaryKey, $rpxApiKey) {
+function janrain_map($identifier, $primaryKey, $rpxApiKey) {
     $post_data = array('apiKey' => $rpxApiKey, 
-                       'identifier' => $profile['identifier'],
+                       'identifier' => $identifier,
                        'primaryKey' => $primaryKey,
                        'overwrite'  => true,
                        'format' => 'json'); 

@@ -44,65 +44,35 @@ function users_get_by_photo_id() {
     return json($user);
 }
 	
-function users_create($profile) {
+function users_create() {
     check_system_auth();
+
+    // TODO Make this handle JSON as well
+    $data = $_POST;
 
     // TODO Handle if they already have an account, kick it out so they login
     $user = new User();
     
     // TODO check to make sure username not taken
-    $user->set_username($profile['preferredUsername']);
-
-    if(isset($profile['email'])) {
-        $user->set_email($profile['email']);
-    }
-    
-    if(isset($profile['photo'])) {
-        $user->set_photo_url($profile['photo']);
-    }
-
-    // TODO store display name
+    $user->set_username($data['preferredUsername']);
+    $user->set_email($data['email']);
 
     $returned_id = UserDAO::save($user);
     $user->set_id($returned_id);
 
-    janrain_map($profile, $user->get_id(), option('rpxApiKey'));        
+    $identifier_string = $data['identifier'];
+    $provider_name = $data['providerName'];
+
+    janrain_map($identifier_string, $user->get_id(), option('rpxApiKey'));        
     $identifier = new Identifier();
     $identifier->set_user_id($user->get_id());
-    $identifier->set_name($profile['providerName']);
-    $identifier->set_identifier($profile['identifier']);
+    $identifier->set_name($provider_name);
+    $identifier->set_identifier($identifier_string);
     IdentifierDao::save($identifier);
-    debug(serialize($user));
+
     return json($user);
 }
 
-// Remove this once we no longer need it
-function users_create_temp($profile) {
-    $user = new User();
-    
-    // TODO check to make sure username not taken
-    $user->set_username($profile['preferredUsername']);
-
-    if(isset($profile['email'])) {
-        $user->set_email($profile['email']);
-    }
-
-    if(isset($profile['photo'])) {
-        $user->set_photo_url($profile['photo']);
-    }
-
-    $returned_id = UserDAO::save($user);
-    $user->set_id($returned_id);
-
-    janrain_map($profile, $user->get_id(), option('rpxApiKey'));        
-    $identifier = new Identifier();
-    $identifier->set_user_id($user->get_id());
-    $identifier->set_name($profile['providerName']);
-    $identifier->set_identifier($profile['identifier']);
-    IdentifierDao::save($identifier);
-    
-    return $user;
-}
 
 function users_get_photo_by_id() {
     header('Content-Type: image/png');

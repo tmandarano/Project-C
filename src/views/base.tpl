@@ -30,7 +30,7 @@
       <li class="account clickable"><span>Account</span>
         <ol>
           <li><a href="/settings">Settings</a></li>
-          <li class='sign out'><a href="/api/signout">Sign out</a></li>
+          <li class='sign out'><a href="/signout">Sign out</a></li>
         </ol>
       </li> 
       <li class="profile"><a href="/profile/{$user.id}">{$user.name}</a></li>
@@ -81,9 +81,11 @@ src="http://www.google.com/jsapi?key=ABQIAAAATXJifusyeTqIXK5-oRfMqRSslEfASqMaD8v
   RPXNOW.language_preference = 'en';
   {if $smarty.session && is_array($smarty.session.signup)}
     LG.G.signupInfo = {literal}{{/literal}
-      email: {$smarty.session.signup.email},
-      username: {$smarty.session.signup.username},
-      display: {$smarty.session.signup.display}
+      email: {literal}"{/literal}{$smarty.session.signup.email}{literal}"{/literal},
+      username: {literal}"{/literal}{$smarty.session.signup.username}{literal}"{/literal},
+      display: {literal}"{/literal}{$smarty.session.signup.display}{literal}"{/literal},
+      identifier: {literal}"{/literal}{$smarty.session.signup.identifier}{literal}"{/literal},
+      providerName: {literal}"{/literal}{$smarty.session.signup.providerName}{literal}"{/literal}
     {literal}};{/literal}
   {/if}
 </script>
