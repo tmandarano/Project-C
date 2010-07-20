@@ -23,7 +23,6 @@ dispatch_post  ($PRE.'/users/:id/identifiers',       'users_add_identifier');
 
 dispatch_post  ($PRE.'/sessions/janrain',            'sessions_janrain_create');
 dispatch_delete($PRE.'/sessions/',                   'sessions_delete');
-dispatch       ($PRE.'/signout/',                    'sessions_delete');
 
 dispatch_get   ($PRE.'/photos/',                     'photos_get');
 dispatch_get   ($PRE.'/photos/status/:status',       'photos_get');
