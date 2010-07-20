@@ -178,16 +178,7 @@ class PhotoDAO {
         $date = date("Y-m-d H:i:s", $now);
         $photo->set_date_modified($date);
 
-        $geolocation = "POINT(".$photo->get_latitude()." ".$photo->get_longitude().")";
-
-        $photo->set_geolocation($geolocation);
-
-        $status = $photo->get_status();
-        if(empty($status)) {
-            $photo->set_status('ACTIVE');
-        }
-        
-        $photo_id = update_object($photo, 'photo', PhotoDao::photo_columns(), array('','','geomfromtext'));
+        $photo_id = update_object($photo, 'photo', PhotoDao::photo_update_columns());
 
         $tags = $photo->get_tags();
 
@@ -213,6 +204,11 @@ class PhotoDAO {
     private static function photo_columns() {
         return array('id', 'url', 'geolocation', 'latitude', 'longitude', 
                      'caption', 'status', 'date_added', 'date_modified');
+    }
+
+    private static function photo_update_columns() {
+        return array('id', 'url', 'latitude', 'longitude', 
+                     'caption', 'status', 'date_modified');
     }
 }
 ?>

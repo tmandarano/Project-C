@@ -86,7 +86,7 @@ function photos_create() {
     check_system_auth();
 
     $data = get_json_input();
-    debug(serialize($data));
+
     // Fill data with POST parameters if there is no incoming JSON
     if (!$data) {
         $p = env('POST');
@@ -143,7 +143,7 @@ function save_photo($photo) {
     $target_path = option('PHOTOS_DIR') . $new_file_name;
     
     $photo->set_url("/photos/" . $new_file_name);
-    
+
     $upload_path = option('UPLOAD_DIR') . $photo->get_name();
     copy($upload_path, $target_path);
 
