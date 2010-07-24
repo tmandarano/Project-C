@@ -4,6 +4,10 @@ require_once('src/utils/logging.php');
 require_once('src/utils/helpers.php');
 require_once('src/controllers/users_controller.php');
 
+function __sessions_create($user) {
+    session_start();
+    $_SESSION['user'] = serialize($user);
+}
 
 function sessions_janrain_create() {
     // This function runs as a result of an incoming call from Janrain.
@@ -23,8 +27,7 @@ function sessions_janrain_create() {
                 halt(400);
             }
 
-            session_start();
-            $_SESSION['user'] = serialize($user);
+            __sessions_create($user);
         } else {
             // We have no user with the given Janrain token. 
             // Unfortunately we can't be RESTful here (see redirect below).

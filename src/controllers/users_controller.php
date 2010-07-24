@@ -70,6 +70,9 @@ function users_create() {
     $identifier->set_identifier($identifier_string);
     IdentifierDao::save($identifier);
 
+    // Sign the new user in.
+    __sessions_create($user);
+
     return json($user);
 }
 
