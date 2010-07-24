@@ -330,6 +330,8 @@ LGG.showSignup = function () {
       '</div>',
       '<div>',
         '<form>',
+          '<input type="hidden" name="identifier" />',
+          '<input type="hidden" name="providerName" />',
           '<table>',
             '<tr><th>Email</th><td><input type="text" name="email" class="input" /></td></tr>',
             '<tr><th>Username</th><td>',
@@ -352,6 +354,8 @@ LGG.showSignup = function () {
   var email = $('input[name=email]', signup);
   var username = $('input[name=username]', signup);
   var display = $('input[name=display]', signup);
+  var identifier = $('input[name=identifier]', signup);
+  var providerName = $('input[name=providerName]', signup);
   var submit = $('input[type=submit]', signup);
 
   var errorbg = {'background-color': '#fdd'};
@@ -361,6 +365,8 @@ LGG.showSignup = function () {
     email.val(LG.G.signupInfo.email);
     username.val(LG.G.signupInfo.username);
     display.val(LG.G.signupInfo.display);
+    identifier.val(LG.G.signupInfo.identifier);
+    providerName.val(LG.G.signupInfo.providerName);
   }
 
   var sample = $('.username_sample', signup);
@@ -438,7 +444,9 @@ LGG.showSignup = function () {
         data: {
           email: email.val(),
           preferredUsername: username.val(),
-          displayName: display.val()
+          displayName: display.val(),
+          identifier: identifier.val(),
+          providerName: providerName.val()
         },
         success: function (data) {
           if (data) {

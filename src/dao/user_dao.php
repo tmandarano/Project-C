@@ -26,7 +26,7 @@ class UserDAO {
     public static function get_user_by_username($username) {
         $sql = 'SELECT * FROM user WHERE LOWER(username) = LOWER(:username) AND status = :status';
 
-        $users = find_objects_by_sql($sql, array(':username'=>$username), 'User');
+        $users = find_objects_by_sql($sql, array(':username'=>$username, ':status'=>'ACTIVE'), 'User');
 
         if (!empty($users)) {
             return $users[0];

@@ -123,18 +123,6 @@ function photos_create() {
     }
     $photo->set_tags($tags);
 
-    /* ADD These back in if we decide to add comments    
-    $comment_str = $data['comments'];
-    $comment_strs = explode(',', $comment_str);
-    $comments = array();
-    
-    foreach($comment_strs as $comment_var) {
-        $comment = new Comment();
-        $comment->set_comment($comment_var);
-        $comments[] = $comment;
-    }
-    */
-
     $photo->set_caption($data['caption']);
     $photo->set_name($data['userfile']);
     $photo->set_latitude($data['latitude']);
@@ -148,7 +136,6 @@ function photos_create() {
 }
 
 function save_photo($photo) {
-    debug($photo->get_name());
     $extension = substr($photo->get_name(), 
                         strrpos($photo->get_name(), '.') + 1); 
     $extension = strtolower($extension);
@@ -156,7 +143,7 @@ function save_photo($photo) {
     $target_path = option('PHOTOS_DIR') . $new_file_name;
     
     $photo->set_url("/photos/" . $new_file_name);
-    
+
     $upload_path = option('UPLOAD_DIR') . $photo->get_name();
     copy($upload_path, $target_path);
 
@@ -249,6 +236,79 @@ function photos_upload() {
         // Otherwise onSubmit event will not be fired
         halt(500);
     }
+}
+
+function photos_update() {
+    //    check_system_auth();
+
+var_dump($_SERVER['REQUEST_METHOD']);
+var_dump($_SERVER['REQUEST_URI']);
+
+// if (($stream = fopen('php://input', "r")) !== FALSE) {
+    debug('zzzzzzzzzzz');
+    //    var_dump(file_get_contents($stream));
+    //    halt();
+    // }
+
+    $data = get_json_input();
+    debug(serialize($data));
+    halt();
+    // Fill data with POST parameters if there is no incoming JSON
+    if (!$data) {
+        $p = env('PUT');
+        $p = $p['REQUEST'];
+        if ($p) {
+            $vars = array('caption', 'userfile', 'tags', 'latitude', 
+                          'longitude');
+            foreach ($vars as $var) {
+                $data[$var] = $p[$var];
+            }
+        }
+    }
+
+    $photo = PhotoDao::get_photo_by_id($data['id']);
+    
+    $user = get_user_by_session_or_id();
+    if(!$user) {
+        return halt(401);
+    }
+
+    $tag_str = $data['tags'];
+    $tag_strs = explode(',', $tag_str);
+    $tags = array();
+
+    foreach($tag_strs as $tag_var) {
+        $tag = new Tag();
+        $tag->set_tag($tag_var);
+        $tags[] = $tag;
+    }
+    $old_tags = $photo->get_tags();
+    $current_tags = array_merge($tags, $old_tags);
+    $photo->set_tags($current_tags);
+
+    if(isset($data['caption']) && ! empty($data['caption'])) {
+        $photo->set_caption($data['caption']);
+    }
+
+    if(isset($data['userfile']) && ! empty($data['userfile'])) {
+        $photo->set_name($data['userfile']);
+    }
+
+    if(isset($data['latitude']) && ! empty($data['latitude'])) {
+        $photo->set_latitude($data['latitude']);
+    }
+
+    if(isset($data['longitude']) && ! empty($data['longitude'])) {
+        $photo->set_longitude($data['longitude']);
+    }
+    
+    $returned_id = PhotoDAO::update($photo);
+
+    if(isset($data['userfile'])) {
+        save_photo($photo);
+    }
+
+    return json($photo);
 }
 
 ?>

@@ -35,11 +35,17 @@ function sessions_janrain_create() {
             // We have most of these from Janrain.
             // Put them in SESSION so that the redirected page can setup 
             // the signup dialog properly.
-
             $_SESSION['signup'] = array(
-                'email' => $profile['verifiedEmail'] || '',
-                'username' => $profile['preferredUsername'] || '',
-                'display' => $profile['displayName'] || '',
+                                        'email' => isset($profile['verifiedEmail']) ? 
+                                        $profile['verifiedEmail'] : '',
+                                        'username' => isset($profile['preferredUsername']) ? 
+                                        $profile['preferredUsername'] : '',
+                                        'display' => isset($profile['displayName']) ? 
+                                        $profile['displayName'] : '',
+                                        'identifier' => isset($profile['identifier']) ?
+                                        $profile['identifier'] : '',
+                                        'providerName' => isset($profile['providerName']) ?
+                                        $profile['providerName'] : ''
             );
         }
 
