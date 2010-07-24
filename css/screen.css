@@ -67,6 +67,20 @@ h1 { font-size: larger; }
 h1 strong { font-weight: bold; }
 
 .softener { background: url('/img/grad_content.png') repeat-x; height: 5px; }
+.caption { color: #000; font-weight: bold; }
+.location {
+  font-size: small !important;
+  color: #1584b2 !important;
+}
+.time {
+  color: #555 !important;
+  font-size: small !important;
+}
+.comment {
+  color: #000;
+  font-size: small;
+}
+
 
 /* Setup table for split content */
 .split { width: 100%; }
@@ -281,14 +295,27 @@ h1 strong { font-weight: bold; }
 
 .eye #content { width: 100%; }
 
-#current { position: absolute; top: 0; right: 0; overflow: hidden; }
+#current { position: absolute; top: 0; right: -1em; }
 #trendingtags { text-align: center; }
-#livestream ol { height: inherit; overflow-y: scroll; }
-#livestream li { position: relative; display: block; margin-left: 0.5em; margin-bottom: 0.5em; height: 100px; }
-#livestream img { width: 100px; max-height: 100px; margin: 0 2px; float: left; }
-#livestream div { margin-left: 0.5em; padding-left: 100px; font-size: 0.8em; }
-#livestream div li { display: inline; margin: 0; padding-right: 0.5em; }
-#livestream .user { font-weight: bold; }
+#livestream { overflow-y: scroll; }
+#livestream li,
+#livestream img,
+#livestream div { width: 126px; height: 126px;}
+#livestream li { float: left; margin: 1px; }
+#livestream img { margin: 0 2px; float: left; }
+#livestream div { font-size: 0.8em; margin-left: 2px; margin-top: 2px; position: relative; }
+#livestream p { position: absolute; text-align: center; width: 100%; }
+#livestream .time { top: 1em; text-align: center; }
+#livestream .user { display: none; }
+#livestream .location { bottom: 1em; z-index: 10; color: white !important; }
+#livestream p span {
+  padding: 0.3em;
+  height: 1em; 
+  background-color: #555;
+  border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+}
 
 .search h1 {
   color: #3b0;
@@ -463,25 +490,10 @@ p.loadmore:hover { background-color: #cff; text-shadow: 1px 1px 1px #fff; }
   margin-right: 0.5em;
 }
 .username { color: #bb2727; }
-.caption { color: #000; font-weight: bold; }
-.location {
-  font-size: small !important;
-  color: #1584b2 !important;
-}
-.time {
-  color: #555 !important;
-  font-size: small !important;
-}
-
 table.stream {
   width:100%;
   text-align:center;
   vertical-align:top;
-}
-
-.comment {
-  color: #000;
-  font-size: small;
 }
 
 ul.collage { margin: 0.5em auto; width: 220px; }

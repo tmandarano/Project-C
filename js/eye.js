@@ -32,7 +32,7 @@ LG.eye = (function () {
       search = null,
       latentResizeRefresh = null;
   var updateTimer = null,
-      refreshDelay = 8000,
+      refreshDelay = 1234800,//8000
       UPDATING = false,
       floodTime = 200; // long enough for timeout to cancel when resizing
 
@@ -50,24 +50,29 @@ LG.eye = (function () {
     };
     L.addPhoto = function (photo) {
       var id = photo.id;
-      var tags = '';
-      for (var i in photo.tags) {
-        tags += '<li>' + photo.tags[i].tag + '</li>';
-      }
       $.get('/api/photos/' + id + '/user', function (user) {
         var photoInfo = $(['<li><img class="clickable" src="/api/photos/', id, '/3" />',
            '<div>',
            '<p class="time">', LG.dateToVernacular(photo.date_added), '</p>',
            '<p class="user">', user ? user.username : 'Unknown user', '</p>',
-           '<p class="location">', photo.location, '</p>',
-           '<ul class="tags">', tags, '</ul>',
+           '<p class="location">', photo.location || 'Unknown place', '</p>',
            '</div></li>'
           ].join(''));
-        photoInfo.find('img').click(function () { LG.G.showPhoto(id); });
-        photoInfo.find('li').click(function () {
-          setSearch($(this).html());
+        photoInfo.find('div')
+          .click(function () { LG.G.showPhoto(id); })
+          .hover(
+             function () {
+               $(this).find('span').fadeTo('fast', 1);
+             },
+             function () {
+               $(this).find('span').fadeTo('fast', 0.5);
+             }
+           );
+        photoInfo.find('p').each(function () {
+          var html = $(this).html();
+          $(this).empty().append(
+            $('<span></span>').html(html).fadeTo('slow', 0.5));
         });
-
         alllive.append(photoInfo);
       }, 'json');
     }
@@ -217,7 +222,7 @@ LG.eye = (function () {
     var contentHeight = Math.max(0, $(window).height() - 
       sum($.map(['#header', '#headerstream', '#footer'],
                 outerHeight)));
-    var sidebarWidth = 300;
+    var sidebarWidth = 400;
     $('#map').height(contentHeight).width($('#content').width() - sidebarWidth);
     $('#trendingtags').width(sidebarWidth);
     $('#livestream').height(contentHeight - $('#trendingtags').outerHeight())
