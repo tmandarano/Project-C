@@ -363,6 +363,8 @@ function run($env = null)
     }
   }
 
+  call_if_exists('initialize');
+
   # 6. Check request
   if($rm = request_method())
   {

@@ -9,10 +9,12 @@ function configure() {
     Config::configure();
 }
 
+function initialize() {
+    check_username();
+}
+
 // Error handlers first
 function not_found($errno, $errstr, $errfile=null, $errline=null) {
-    check_username();
-
     set('errno', $errno);
     set('errstr', $errstr);
     set('errfile', $errfile);
@@ -28,13 +30,16 @@ function check_username() {
     $possible_username = substr($possible_username, 1);
 
     $user = UserDao::get_user_by_username($possible_username);
-   
-    if($user) {
+
+    if ($user) {
         //// TODO Change 'http' hardcode into a server
         //$url = get_protocol_string().'://'.$_SERVER['HTTP_HOST'].'/profile/'.$user->get_id();
         //header("Location:".$url);
-    } else {
-        return;
+
+        // Change the request into a GET for the appropriate profile/user_id
+        // so that the run() will dispatch it correctly.
+        $_GET = array('uri' => '/profile/'.$user->get_id());
+        env(null);
     }
 }
 
@@ -65,7 +70,7 @@ dispatch        ('/contact',              'contact');
 dispatch        ('/team',                 'team');
 
 //dispatch        ('/photos/view/:id',      'photos_view_by_id');
-
+   
 run();
 
 ?>
