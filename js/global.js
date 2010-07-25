@@ -486,8 +486,9 @@ LGG.showDone = function () {
         '</ul>',
       '</div>',
     '</div>'].join('');
-  var done = $(tmpl(HTML_DONE, {photos: [{id: 123}, {id: 123}]}));
+  var done = $(tmpl(HTML_DONE, {photos: [{id: 123}, {id: 123}]})); // TODO
   LGG.dimmedDialogue(done);
+  done.find('.close').click(function () { window.location = '/'; });
 };
 
 LGG.showPhoto = function(id) {

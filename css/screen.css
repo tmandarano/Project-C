@@ -117,8 +117,10 @@ h1 strong { font-weight: bold; }
 .nav .account { text-align: center; position: relative; padding: 0 1em; font-size: 0.8em;
   background: url('/img/account_down.png') no-repeat; background-position: 100% 50%; padding-right: 1.5em; 
 }
-.nav .account span { padding-top: 0.2em; vertical-align: baseline; }
-.nav .account ol { background-color: #000; display: block; z-index: 90; position: absolute; right: 0; top: 100%;
+.nav .account span { vertical-align: middle; }
+.nav .account ol { background-color: #000; display: block; z-index: 90; position: absolute; right: 0; top: 100%; }
+.nav .account ol,
+.nav .account ol li.sign.out {
   border-bottom-left-radius: 0.4em;
   border-bottom-right-radius: 0.4em;
   -moz-border-radius-bottomleft: 0.4em;
@@ -295,7 +297,7 @@ h1 strong { font-weight: bold; }
 
 .eye #content { width: 100%; }
 
-#current { position: absolute; top: 0; right: -1em; }
+#current { position: absolute; top: 0; right: 0; }
 #trendingtags { text-align: center; }
 #livestream { overflow-y: scroll; }
 #livestream li,

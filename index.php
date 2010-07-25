@@ -46,10 +46,11 @@ function check_username() {
 
 // Now dispatch paths
 dispatch        ('/',                     'eye');
-dispatch        ('/signout',              'signout');
 //dispatch        ('/',                     'home');
+dispatch_post   ('/signin_janrain',               'signin_janrain');
+dispatch        ('/signout',              'signout');
 dispatch        ('/getapp',               'getapp');
-//dispatch        ('/download',             'getapp');
+dispatch        ('/download',             'getapp');
 
 //dispatch        ('/about/contact',        'about_contact');
 //dispatch        ('/about/faq',            'about_faq');

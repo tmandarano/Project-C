@@ -48,8 +48,8 @@ class UserDAO {
 
     public static function get_user_by_identifier($identifier) {
         $sql = 'SELECT u.id, u.username, u.photo_url, u.email, u.status, u.date_added, u.date_modified ';
-        $sql .= 'FROM user u JOIN identifier i ON u.id = i.user_id';
-        $sql .= ' WHERE i.identifier = :identifier';
+        $sql .= 'FROM user u, identifier i WHERE ';
+        $sql .= 'i.identifier = :identifier AND u.id = i.user_id';
         $users = find_objects_by_sql($sql, array(':identifier'=>$identifier), 'User');
 
         if (!empty($users)) {

@@ -15,9 +15,61 @@ function get_session_user_info($user) {
     return array();
 }
 
+function signin_janrain() {
+    // This function runs as a result of an incoming call from Janrain.
+    debug('signin callback');
+
+    if (isset($_POST['token'])) { 
+        $token = $_POST['token'];
+        $post_data = array('token' => $_POST['token'],
+                           'apiKey' => option('rpxApiKey'),
+                           'format' => 'json');     
+
+        $profile = janrain_post($post_data, 'auth_info');
+
+        $user = UserDao::get_user_by_identifier($profile['identifier']);
+
+        if ($user) {
+            if (! ($user->get_status() == 'ACTIVE')) {
+                debug("This user with this identifier is inactive. Identifier: ".
+                      $profile['identifier']);
+                halt(400);
+            }
+
+            __sessions_create($user);
+            debug('user found and session started. redirecting');
+            redirect_to('http://'.$_SERVER['HTTP_HOST'].'/');
+        } else {
+            // We have no user with the given Janrain token. 
+            debug("Can't find user with identifier: ".$profile['identifier']);
+
+            // We want to have a dialog that asks the user to create an 
+            // account. This needs email, username, and display name.
+            // We have most of these from Janrain.
+            // Put them in SESSION so that the redirected page can setup 
+            // the signup dialog properly.
+            $_SESSION['signup'] = array(
+                'email' => isset($profile['verifiedEmail']) ? 
+                $profile['verifiedEmail'] : '',
+                'username' => isset($profile['preferredUsername']) ? 
+                $profile['preferredUsername'] : '',
+                'display' => isset($profile['displayName']) ? 
+                $profile['displayName'] : '',
+                'identifier' => isset($profile['identifier']) ?
+                $profile['identifier'] : '',
+                'providerName' => isset($profile['providerName']) ?
+                $profile['providerName'] : ''
+            );
+
+            // Redirect.
+            redirect_to('http://'.$_SERVER['HTTP_HOST'].'/#signup');
+        }
+    }
+}
+
 function signout() {
     sessions_delete();
-    return eye();
+    redirect_to('http://'.$_SERVER['HTTP_HOST']);
 }
 
 function eye() {

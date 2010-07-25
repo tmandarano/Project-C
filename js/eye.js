@@ -223,6 +223,7 @@ LG.eye = (function () {
       sum($.map(['#header', '#headerstream', '#footer'],
                 outerHeight)));
     var sidebarWidth = 400;
+    $('#current').width(sidebarWidth);
     $('#map').height(contentHeight).width($('#content').width() - sidebarWidth);
     $('#trendingtags').width(sidebarWidth);
     $('#livestream').height(contentHeight - $('#trendingtags').outerHeight())

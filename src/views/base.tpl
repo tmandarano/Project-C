@@ -2,7 +2,7 @@
 <html> 
 <head> 
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' /> 
-<link rel='icon' type='image/png' href='/img/favicon.png' />
+<link rel='icon' type='image/png' href='/favicon.png' />
 <link rel='shortcut icon' href='/favicon.ico' />
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css" />
 {*<link rel="stylesheet" type="text/css" href="/css/yui-reset-2.8.1.min.css" />*}
@@ -37,7 +37,7 @@
     {else}
       <li class='sign in'>
         <a class='rpxnow' onclick='return false;'
-           href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Fapi%2Fsessions%2Fjanrain">
+           href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Fsignin_janrain">
         <input type='submit' value='Sign in/up' /></a>
       </li>
     {/if}
