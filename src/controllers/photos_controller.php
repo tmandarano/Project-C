@@ -217,7 +217,7 @@ function photos_delete_tag() {
 function photos_upload() {
     $image_types = array('image/jpeg', 'image/gif', 'image/png');
     $type = $_FILES['userfile']['type'];
-
+    // TODO Create temporary filename so we don't rely on the client filename
     if(! in_array($type, $image_types)) {
         debug("ERROR: File upload failed for " . $_FILES['userfile']['name'] . 
               ". Not a valid image type. Type is " . $type . ".");

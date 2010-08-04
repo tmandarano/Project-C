@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @internal
+ * @property integer $id The id of the comment.
+ * @property string $comment The comment string itself.
+ * @property time $date_added The date the object was added to the system.
+ * @property time $date_modified The date the object was last modified in the system.
+ */
 class Comment {
     public $id;
     public $comment;

@@ -1,11 +1,19 @@
 <?php
-require_once('src/models/user.php');
-require_once('src/dao/user_dao.php');
 require_once('src/utils/config.php');
 require_once('src/utils/helpers.php');
 
 Config::configure();
 
+/**
+ * @internal
+ * @param array $post_data This is an associative array that contains the fields to be posted to the Janrain service.
+ * @param string $method This is the Janrain method to call. 
+ *
+ * @return array
+ *
+ * This function takes the data to be posted along with the method and submits a request to Janrain using curl. 
+ * This is a generic method meant to handle any post as we currently use the API.
+ */
 function janrain_post($post_data, $method) {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -31,28 +39,20 @@ function janrain_post($post_data, $method) {
     }            
 }          
 
-
-
-
-function create_local_user($profile) {
-    $user = new User();
-    if (isset($profile['displayName'])) { 
-        $user->set_username($profile['displayName']);
-    }
-    if (isset($profile['email'])) { 
-        $user->set_email($profile['email']);
-    }
-    if (isset($profile['photo'])) {     
-        $user->set_photo_url($profile['photo']);
-    }
-
-    $user_id = UserDao::save($user);
-    $user->set_id($user_id);
-
-    return $user;
-}
-
-
+/**
+ * @internal
+ * @param string $identifier This is a string which represents the unique social identifier for the individual to be mapped in Janrain's system against a LiveGather user.
+ * @param string $primaryKey This is a string which represents the ID of the user we are mapping as defined in the LiveGather system.
+ * @param string $rpxApiKey The key given to LiveGather for interacting with Janrain. 
+ *
+ * @return boolean
+ *
+ * This function takes the an identifier and an ID for a user in the system and maps them in Janrain's system. 
+ * The purpose of this is to identify that a user in the system with an existing account also has mappings to other 
+ * social networks as identified by the identifier. When this is complete Janrain will be able to recognize a user 
+ * in the LiveGather system as having multiple identifiers, thus allowing a user to use any mapped identifier to login to 
+ * LiveGather. 
+ */
 function janrain_map($identifier, $primaryKey, $rpxApiKey) {
     $post_data = array('apiKey' => $rpxApiKey, 
                        'identifier' => $identifier,
@@ -83,7 +83,16 @@ function janrain_map($identifier, $primaryKey, $rpxApiKey) {
     }
 }
 
-
+/**
+ * @internal
+ * @param string $identifier This is a string which represents the unique social identifier for the individual to be unmapped in Janrain's system using a LiveGather user.
+ * @param string $primaryKey This is a string which represents the ID of the user we are unmapping as defined in the LiveGather system.
+ * @param string $rpxApiKey The key given to LiveGather for interacting with Janrain. 
+ *
+ * @return boolean
+ *
+ * This function takes the an identifier and an ID for a user in the system and unmaps them in Janrain's system. 
+ */
 function janrain_unmap($profile, $primaryKey, $rpxApiKey) {
     $post_data = array('apiKey' => $rpxApiKey, 
                        'identifier' => $profile['identifier'],

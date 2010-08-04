@@ -4,7 +4,7 @@ require_once('src/models/user.php');
 require_once('src/utils/logging.php');
 
 class UserDAO {
-    public static function get_users($status="ACTIVE") {
+    public static function get_users($status=User::STATUS_ACTIVE) {
         $sql = 'SELECT * FROM user WHERE status = :status';
 
         $users = find_objects_by_sql($sql, array(':status'=>$status), 'User');
@@ -12,7 +12,7 @@ class UserDAO {
         return $users;
     }
 
-    public static function get_user_by_id($id, $status='ACTIVE') {
+    public static function get_user_by_id($id, $status=User::STATUS_ACTIVE) {
         $sql = 'SELECT * FROM user WHERE id = :id AND status = :status';
 
         $users = find_objects_by_sql($sql, array(':id'=>$id, ':status'=>$status), 'User');
@@ -26,7 +26,7 @@ class UserDAO {
     public static function get_user_by_username($username) {
         $sql = 'SELECT * FROM user WHERE LOWER(username) = LOWER(:username) AND status = :status';
 
-        $users = find_objects_by_sql($sql, array(':username'=>$username, ':status'=>'ACTIVE'), 'User');
+        $users = find_objects_by_sql($sql, array(':username'=>$username, ':status'=>User::STATUS_ACTIVE), 'User');
 
         if (!empty($users)) {
             return $users[0];
@@ -38,7 +38,7 @@ class UserDAO {
         $sql = 'SELECT * FROM user WHERE id IN (SELECT user_id FROM user_photos ';
         $sql .= ' WHERE photo_id = :photo_id) AND status = :status';
         $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id,
-                                                 ':status' => 'ACTIVE'), 'User');
+                                                 ':status' => User::STATUS_ACTIVE), 'User');
       
         if (!empty($users)) {
             return $users[0];
@@ -71,7 +71,7 @@ class UserDAO {
 
         $status = $user->get_status();
         if(empty($status)) {
-            $user->set_status('ACTIVE');
+            $user->set_status(User::STATUS_ACTIVE);
         }
 
         $user_id = create_object($user, 'user', UserDao::get_columns());        

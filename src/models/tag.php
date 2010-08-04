@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @internal
+ * @property integer $id The id of the tag
+ * @property string $tag The tag text itself.
+ * @property time $date_added The date the objected was added to the system.
+ * @property time $date_modified The date the object was last modified in the system.
+ */
 class Tag {
     public $id;
     public $tag;

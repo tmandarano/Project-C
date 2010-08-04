@@ -5,6 +5,15 @@ require_once('src/utils/template.php');
 require_once('src/dao/user_dao.php');
 require_once('src/utils/helpers.php');
 
+/**
+ * @internal
+ *
+ * This function is required because limonade, on entry into 
+ * a PHP script it uses as a gateway to routing requires that
+ * some basic limonade-specific parameters are setup. So 
+ * we call configure here to do that as well as setup our 
+ * own global parameters. 
+ */
 function configure() {
     Config::configure();
 }
@@ -43,6 +52,14 @@ function check_username() {
     }
 }
 
+/**
+ * @internal
+ *
+ * These are web URL dispatch paths. Limonade asks that you setup 
+ * all routes with how they will be requested (see the 
+ * dispatch type), what the URL will be and what the 
+ * function to call will be.
+ */
 
 // Now dispatch paths
 dispatch        ('/',                     'eye');

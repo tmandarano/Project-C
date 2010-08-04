@@ -1,4 +1,10 @@
 <?php
+/**
+ * @internal
+ * @param string $msg This is a string that represents the message to be converted from an object or associative array to a string.
+ *
+ * @return string
+ */
 function to_string($msg) {
     if (is_array($msg)) {
         $str = '[';
@@ -17,6 +23,13 @@ function to_string($msg) {
     }
 }
 
+/**
+ * @internal
+ *
+ * This function takes the debug backtrace and the line of code and creates a formatted debug message that allows 
+ * the developer using the method to print a debug statement to the error log with thorough data on what the 
+ * value of the object is.
+ */
 function debug() {
     $call_info = array_shift( debug_backtrace() );
     $code_line = $call_info['line'];

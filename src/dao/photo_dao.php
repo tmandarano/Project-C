@@ -17,7 +17,7 @@ class PhotoDAO {
         return $row[0];
     }
 
-    public static function get_photos($status='ACTIVE') {
+    public static function get_photos($status=Photo::STATUS_ACTIVE) {
         $sql = 'SELECT * FROM photo WHERE status = :status';
         $photos = find_objects_by_sql($sql, array(':status'=>$status), 'Photo');
 
@@ -30,7 +30,7 @@ class PhotoDAO {
         return $photos;
     }
 
-    public static function get_photo_by_id($id, $status='ACTIVE') {
+    public static function get_photo_by_id($id, $status=Photo::STATUS_ACTIVE) {
         $sql = 'SELECT * FROM photo WHERE id = :id AND status = :status';
         $photos = find_objects_by_sql($sql, array(':id'=>$id, ':status'=>$status), 'Photo');
 
@@ -51,7 +51,7 @@ class PhotoDAO {
         $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
         $sql .= 'WHERE up.user_id = :user_id AND status = :status';
 
-        $params = array('user_id'=>$user_id, 'status'=>'ACTIVE');
+        $params = array('user_id'=>$user_id, 'status'=>Photo::STATUS_ACTIVE);
 
         $photos = find_objects_by_sql($sql, $params, 'Photo');
 
@@ -68,7 +68,7 @@ class PhotoDAO {
         $sql .= 'WHERE up.user_id = :user_id ';
         $sql .= 'AND p.date_added > DATE_SUB(NOW(), INTERVAL :days DAY) AND p.status = :status';
 
-        $params = array('user_id'=>$user_id, 'days'=>$days, 'status'=>'ACTIVE');
+        $params = array('user_id'=>$user_id, 'days'=>$days, 'status'=>Photo::STATUS_ACTIVE);
 
         $photos = find_objects_by_sql($sql, $params, 'Photo');
 
@@ -79,14 +79,14 @@ class PhotoDAO {
         $sql = 'SELECT * FROM photo WHERE id IN (SELECT photo_id FROM ';
         $sql .= 'photo_tags WHERE tag_id = :tag) AND status = :status';
 
-        $photos = find_objects_by_sql($sql, array(':tag' => $tag_id, ':status'=>'ACTIVE'), 'Photo');
+        $photos = find_objects_by_sql($sql, array(':tag' => $tag_id, ':status'=>Photo::STATUS_ACTIVE), 'Photo');
 
         return $photos;
     }
 
     public static function get_recent_photos($limit = 10) {
         $sql = 'SELECT * FROM photo WHERE status = :status ORDER BY date_added DESC LIMIT :limit';
-        $photos = find_objects_by_sql($sql, array(':status'=>'ACTIVE', ':limit' => $limit), 'Photo');
+        $photos = find_objects_by_sql($sql, array(':status'=>Photo::STATUS_ACTIVE, ':limit' => $limit), 'Photo');
 
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
@@ -102,7 +102,7 @@ class PhotoDAO {
         $sql = "SELECT * FROM photo WHERE status = :status AND MBRContains(GeomFromText('Polygon((".$polygon_str."))'), geolocation)";
         $sql .= " ORDER BY date_added DESC LIMIT :offset";
 
-        $photos = find_objects_by_sql($sql, array(':status'=>'ACTIVE', ':offset' => $limit), 'Photo');
+        $photos = find_objects_by_sql($sql, array(':status'=>Photo::STATUS_ACTIVE, ':offset' => $limit), 'Photo');
 
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
@@ -147,7 +147,7 @@ class PhotoDAO {
 
         $status = $photo->get_status();
         if(empty($status)) {
-            $photo->set_status('ACTIVE');
+            $photo->set_status(Photo::STATUS_ACTIVE);
         }
         
         $photo_id = create_object($photo, 'photo', PhotoDao::photo_columns(), array('','','geomfromtext'));

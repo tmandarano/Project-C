@@ -1,5 +1,19 @@
 <?php
+
+/**
+ * @internal
+ * @property integer $id The id of the user
+ * @property string $username The username of the user.
+ * @property string $email The email address of the user.
+ * @property string $photo_url The url of the photo of the user (The photo to display as their "profile" picture).
+ * @property string $status The current status of the user. (Valid values are "ACTIVE" and "INACTIVE")
+ * @property time $date_added The date the objected was added to the system.
+ * @property time $date_modified The date the object was last modified in the system.
+ */
 class User {
+    const STATUS_ACTIVE = 'ACTIVE';
+    const STATUS_INACTIVE = 'INACTIVE';
+
     public $id;
     public $username;
     public $email;

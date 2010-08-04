@@ -2,6 +2,19 @@
 require_once('lib/limonade.php');
 require_once('src/utils/logging.php');
 
+/**
+ * @internal
+ * 
+ * The purpose of this function is to 
+ * So /users/:id/photos tells us that the url will look 
+ * something like http://livegather.com/api/users/34/photos.
+ * This will route the web client to photos_get_by_user_id
+ * where we will handle the call, using 34 as a parameter.
+ *
+ * Parameters all being denoted by the :someVar syntax as defined in the api script.
+ * This function uses the SERVER variable HTTP_HOST to determine what environment we are running 
+ * and thus which database, username, password, etc. to use. 
+ */
 class Config {
     public static function configure() {
         $env = ($_SERVER['HTTP_HOST'] == 'dev.livegather.com') ? ENV_PRODUCTION : ENV_DEVELOPMENT;
@@ -20,6 +33,7 @@ class Config {
             halt(500);
         }
 
+        // Setup the various options limonade will keep in memory through the lifecycle of the application.
         option('env', $env);
         option('dsn', $dsn);
         option('db_conn', $db);

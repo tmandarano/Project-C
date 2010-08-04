@@ -2,11 +2,34 @@
 require_once('lib/limonade.php');
 require_once('src/utils/config.php');
 
+/**
+ * @internal
+ *
+ * This function is required because limonade, on entry into 
+ * a PHP script it uses as a gateway to routing requires that
+ * some basic limonade-specific parameters are setup. So 
+ * we call configure here to do that as well as setup our 
+ * own global parameters. 
+ */
 function configure() {
     Config::configure();
 }
 
-/* REST routes */
+/**
+ * @internal
+ *
+ * These are REST routes. Limonade asks that you setup 
+ * all routes with how they will be requested (see the 
+ * dispatch type), what the URL will be and what the 
+ * function to call will be.
+ *
+ * So /users/:id/photos tells us that the url will look 
+ * something like http://livegather.com/api/users/34/photos.
+ * This will route the web client to photos_get_by_user_id
+ * where we will handle the call, using 34 as a parameter.
+ *
+ * Parameters all being denoted by the :someVar syntax
+ */
 
 $PRE = '/api';
 
@@ -20,6 +43,8 @@ dispatch_get   ($PRE.'/users/:id/tags/days/:days',   'tags_get_by_user_id_recent
 dispatch_post  ($PRE.'/users/',                      'users_create');
 dispatch_get   ($PRE.'/users/photo/:id',             'users_get_photo_by_id');
 dispatch_post  ($PRE.'/users/:id/identifiers',       'users_add_identifier');
+// TODO CREATE API CALL FOR
+// users_get_by_identifier
 
 dispatch_delete($PRE.'/sessions/',                   'sessions_delete');
 
@@ -44,6 +69,7 @@ dispatch_get   ($PRE.'/tags/:id',                    'tags_get_by_id');
 dispatch_get   ($PRE.'/tags/:id/photos',             'photos_get_by_tag_id');
 dispatch_get   ($PRE.'/tags/recent/:limit',          'tags_recent');
 dispatch_get   ($PRE.'/tags/trending/:limit',        'tags_trending');
+
 
 run();
 

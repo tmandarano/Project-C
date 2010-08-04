@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * @internal
+ * @property integer $id The id of the identifier.
+ * @property integer $user_id The id of the user in the LiveGather system to whom this identifier belongs.
+ * @property string $identifier The string value representing the unique OpenID/FaceBook/Twitter ID.
+ * @property string $name The name of the identifying service. (e.g. Twitter, Facebook, etc.).
+ * @property time $date_added The date the objected was added to the system.
+ * @property time $date_modified The date the object was last modified in the system.
+ */
 class Identifier {
     public $id;
     public $user_id;
