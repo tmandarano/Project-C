@@ -82,8 +82,10 @@ LGG.html.collage = {};
 LGG.html.collage.photos = function (jdom, photo_ids) {
   jdom.addClass('collage');
   for (var i in photo_ids) {
-    $(['<li><a href="/photos/view/', photo_ids[i], '"><img src="/api/photos/', 
-      photo_ids[i], '/1" /></a></li>'].join('')).appendTo(jdom);
+    $(['<li><img src="/api/photos/', 
+      photo_ids[i], '/1" /></li>'].join(''))
+      .appendTo(jdom)
+      .click(function () { LGG.showPhoto(photo_ids[i]); });
   }
 };
 LGG.html.collage.people = function (jdom, people_ids) {
@@ -246,6 +248,7 @@ LGG.dimmedDialog = function(jdom) {
     dimmer.detach();
     close.detach();
     jdom.detach();
+    LGG._showing = false;
   }
   jdom.addClass('dialog win');
   jdom.click(function (e) { e.stopPropagation(); });
@@ -492,6 +495,10 @@ LGG.showDone = function () {
 };
 
 LGG.showPhoto = function(id) {
+  if (LGG._showing) {
+    $('.dialog.close').click();
+  }
+  LGG._showing = true;
   var viewer = $([
     '<div class="viewphoto"></div>'].join(''));
   LGG.dimmedDialog(viewer);
@@ -515,9 +522,9 @@ LGG.showPhoto = function(id) {
             '<img class="sround" src="/api/photos/'+id+'/3" />',
           '</td>',
           '<td>',
-            '<div class="gathered sround">',
-              '12 people recently gathered nearby',
-            '</div>',
+            //'<div class="gathered sround">',
+            //  '12 people recently gathered nearby',
+            //'</div>',
             '<h1 class="bichrome"><em>Similar</em> photos nearby.</h1>',
             '<ul class="collage similar photos"></ul>',
             '<div class="viewmap"></div>',
@@ -530,7 +537,6 @@ LGG.showPhoto = function(id) {
     var similar_photos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     LG.G.html.collage.photos($('.similar.photos', viewer), similar_photos);
 
-    p.latitude = 32.7; p.longitude = -117.1;
     var mapOpts = {
       zoom: 15,
       center: new GM.LatLng(defaultTo(p.latitude, 0), defaultTo(p.longitude, 0)),

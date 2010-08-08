@@ -51,8 +51,8 @@ LG.eye = (function () {
     L.addPhoto = function (photo) {
       var id = photo.id;
       $.get('/api/photos/' + id + '/user', function (user) {
-        var photoInfo = $(['<li><img class="clickable" src="/api/photos/', id, '/3" />',
-           '<div>',
+        var photoInfo = $(['<li><img src="/api/photos/', id, '/3" />',
+           '<div class="clickable">',
            '<p class="time">', LG.dateToVernacular(photo.date_added), '</p>',
            '<p class="user">', user ? user.username : 'Unknown user', '</p>',
            '<p class="location">', photo.location || 'Unknown place', '</p>',
