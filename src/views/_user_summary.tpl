@@ -1,5 +1,3 @@
-{* TODO do highlighting of matched words in bio using span.match *}
-{* TODO do highlighting of matched words in interests using span.match *}
 <li>
   <a href="/profile/{$user.id}"><img src="/users/photo/{$photo.id}" /></a>
   <a href="/profile/{$user.id}" class="username">{$user.name}</a>

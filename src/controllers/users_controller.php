@@ -30,7 +30,7 @@ function users_get_by_id() {
 function users_get_by_identifier() {
     check_system_auth();
 
-    $identifier = filter_var(params('identifier'));
+    $identifier = filter_var(params('id'));
     $user = UserDAO::get_user_by_identifier($identifier);
 
     return json($user);
