@@ -504,7 +504,7 @@ LGG.showPhoto = function(id) {
   LGG.dimmedDialog(viewer);
 
   $.getJSON('/api/photos/'+id, function (p) {
-    $.getJSON('/api/users/'+id, function (u) {
+    $.getJSON('/api/users/'+p.user_id, function (u) {
       var display = [
         '<div class="header">',
         '<a href="#"><img src="/api/users/', p.user_id, '/photo" /></a>',

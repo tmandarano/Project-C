@@ -34,10 +34,16 @@ function find_objects_by_sql($sql = '', $params = array(), $classname) {
         }
     }
     
-    if ($stmt->execute()) {
-        while ($obj = $stmt->fetchObject($classname)) {
-            $result[] = $obj;
+    try {
+        if ($stmt->execute()) {
+            while ($obj = $stmt->fetchObject($classname)) {
+                $result[] = $obj;
+            }
+        } else {
+            debug('Error executing sql', $sql);
         }
+    } catch (Exception $e) {
+        debug('Exception while executing sql', $sql, $e);
     }
 
     return $result;

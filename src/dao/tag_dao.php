@@ -43,7 +43,7 @@ class TagDAO {
 
     public static function get_tags_by_user_id($id) {
         $sql = 'SELECT * FROM tag WHERE id IN (SELECT tag_id FROM ';
-        $sql .= 'photo_tags pt JOIN user_photos up ON (pt.photo_id = up.photo_id ';
+        $sql .= 'photo_tags pt JOIN user_photos up ON pt.photo_id = up.photo_id ';
         $sql .= 'AND user_id = :id) ORDER BY date_added DESC';
         $tags = find_objects_by_sql($sql, array(':id' => $id), 'Tag');
         return $tags;
