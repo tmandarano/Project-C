@@ -307,7 +307,7 @@ h1 strong { font-weight: bold; }
 #livestream img { margin: 0 2px; float: left; }
 #livestream div { font-size: 0.8em; margin-left: 2px; margin-top: 2px; position: relative; }
 #livestream p { position: absolute; text-align: center; width: 100%; }
-#livestream .time { top: 1em; text-align: center; }
+#livestream .time { top: 1em; text-align: center; color: white !important; }
 #livestream .user { display: none; }
 #livestream .location { bottom: 1em; z-index: 10; color: white !important; }
 #livestream p span {
