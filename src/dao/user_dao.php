@@ -59,7 +59,7 @@ class UserDAO {
     }
 
     public static function get_users_similar($user_id, $num) {
-        // TODO
+        // TODO determine what similar means
         return array();
     }
 
