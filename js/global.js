@@ -82,7 +82,7 @@ LGG.html.collage = {};
 LGG.html.collage.photos = function (jdom, photo_ids) {
   jdom.addClass('collage');
   for (var i in photo_ids) {
-    $(['<li><img src="/api/photos/', 
+    $(['<li class="clickable"><img src="/api/photos/', 
       photo_ids[i], '/1" /></li>'].join(''))
       .appendTo(jdom)
       .click(function () { LGG.showPhoto(photo_ids[i]); });
@@ -503,50 +503,54 @@ LGG.showPhoto = function(id) {
     '<div class="viewphoto"></div>'].join(''));
   LGG.dimmedDialog(viewer);
 
-  $.getJSON('/api/photos/'+id, function(p) {
-    var display = [
-      '<div class="header">',
-      '<a href="#"><img src="/api/users/', p.user_id, '/photo" /></a>',
-      '<h1>Tony Mandarano</h1>',
-      '<h2>', p.caption, '</h2>',
-      '<ul class="tags">',
-        '<li>tag1 is four words</li>',
-        '<li>tag2</li>',
-        '<li>tag3</li>',
-      '</ul>',
-      '<h3>', LG.dateToVernacular(p.date_added), '</h3>',
-      '</div>',
-      '<table class="split">',
-        '<tr>',
-          '<td class="photo">',
-            '<img class="sround" src="/api/photos/'+id+'/3" />',
-          '</td>',
-          '<td>',
-            //'<div class="gathered sround">',
-            //  '12 people recently gathered nearby',
-            //'</div>',
-            '<h1 class="bichrome"><em>Similar</em> photos nearby.</h1>',
-            '<ul class="collage similar photos"></ul>',
-            '<div class="viewmap"></div>',
-          '</td>',
-        '</tr>',
-      '</table>'
-    ].join('');
-    viewer.append($(display));
+  $.getJSON('/api/photos/'+id, function (p) {
+    $.getJSON('/api/users/'+id, function (u) {
+      var display = [
+        '<div class="header">',
+        '<a href="#"><img src="/api/users/', p.user_id, '/photo" /></a>',
+        '<h1>', u ? u.username : 'Unknown', '</h1>',
+        '<h2>', p.caption, '</h2>',
+        '<ul class="tags"></ul>',
+        '<h3>', LG.dateToVernacular(p.date_added), '</h3>',
+        '</div>',
+        '<table class="split">',
+          '<tr>',
+            '<td class="photo">',
+              '<img class="sround" src="/api/photos/'+id+'/3" />',
+            '</td>',
+            '<td>',
+              //'<div class="gathered sround">',
+              //  '12 people recently gathered nearby',
+              //'</div>',
+              '<h1 class="bichrome"><em>Similar</em> photos nearby.</h1>',
+              '<ul class="collage similar photos"></ul>',
+              '<div class="viewmap"></div>',
+            '</td>',
+          '</tr>',
+        '</table>'
+      ].join('');
+      viewer.append($(display));
 
-    var similar_photos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    LG.G.html.collage.photos($('.similar.photos', viewer), similar_photos);
+      var tags = $.map(p.tags, function (x) { return x.tag; });
+      var tagjdom = viewer.find('.tags');
+      for (var i in tags) {
+        tagjdom.append($('<li>' + tags[i] + '</li>'));
+      }
 
-    var mapOpts = {
-      zoom: 15,
-      center: new GM.LatLng(defaultTo(p.latitude, 0), defaultTo(p.longitude, 0)),
-      mapTypeId: GM.MapTypeId.ROADMAP,
-      disableDefaultUI: true,
-    };
-    var map = new GM.Map($(".viewmap", viewer)[0], mapOpts);
-    if (p.latitude && p.longitude) {
-      new GM.Marker({position: map.getCenter(), map: map});
-    }
+      var similar_photos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      LG.G.html.collage.photos($('.similar.photos', viewer), similar_photos);
+
+      var mapOpts = {
+        zoom: 15,
+        center: new GM.LatLng(defaultTo(p.latitude, 0), defaultTo(p.longitude, 0)),
+        mapTypeId: GM.MapTypeId.ROADMAP,
+        disableDefaultUI: true,
+      };
+      var map = new GM.Map($(".viewmap", viewer)[0], mapOpts);
+      if (p.latitude && p.longitude) {
+        new GM.Marker({position: map.getCenter(), map: map});
+      }
+    });
   });
 };
 
