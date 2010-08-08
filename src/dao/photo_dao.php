@@ -49,7 +49,7 @@ class PhotoDAO {
 
     public static function get_photos_by_user_id($user_id) {
         $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
-        $sql .= 'WHERE up.user_id = :user_id AND status = :status';
+        $sql .= 'AND up.user_id = :user_id AND status = :status';
 
         $params = array('user_id'=>$user_id, 'status'=>Photo::STATUS_ACTIVE);
 
@@ -65,7 +65,7 @@ class PhotoDAO {
 
     public static function get_photos_by_user_id_recent($user_id, $days) {
         $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
-        $sql .= 'WHERE up.user_id = :user_id ';
+        $sql .= 'AND up.user_id = :user_id ';
         $sql .= 'AND p.date_added > DATE_SUB(NOW(), INTERVAL :days DAY) AND p.status = :status';
 
         $params = array('user_id'=>$user_id, 'days'=>$days, 'status'=>Photo::STATUS_ACTIVE);
@@ -76,10 +76,13 @@ class PhotoDAO {
     }
 
     public static function get_photos_by_tag_id($tag_id) {
-        $sql = 'SELECT * FROM photo WHERE id IN (SELECT photo_id FROM ';
-        $sql .= 'photo_tags WHERE tag_id = :tag) AND status = :status';
+        $sql = 'SELECT * FROM photo JOIN photo_tags ON ';
+        $sql .= 'photo.id = photo_tags.photo_id AND tag_id = :tag ';
+        $sql .= 'AND status = :status';
 
-        $photos = find_objects_by_sql($sql, array(':tag' => $tag_id, ':status'=>Photo::STATUS_ACTIVE), 'Photo');
+        $photos = find_objects_by_sql(
+            $sql, array(':tag' => $tag_id,
+                        ':status'=>Photo::STATUS_ACTIVE), 'Photo');
 
         return $photos;
     }

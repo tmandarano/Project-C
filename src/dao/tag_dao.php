@@ -43,9 +43,8 @@ class TagDAO {
 
     public static function get_tags_by_user_id($id) {
         $sql = 'SELECT * FROM tag WHERE id IN (SELECT tag_id FROM ';
-        $sql .= 'photo_tags pt, user_photos up WHERE ';
-        $sql .= 'up.photo_id = pt.photo_id AND user_id = :id) ';
-        $sql .= 'ORDER BY date_added DESC';
+        $sql .= 'photo_tags pt JOIN user_photos up ON (pt.photo_id = up.photo_id ';
+        $sql .= 'AND user_id = :id) ORDER BY date_added DESC';
         $tags = find_objects_by_sql($sql, array(':id' => $id), 'Tag');
         return $tags;
     }
@@ -55,8 +54,8 @@ class TagDAO {
     }
 
     public static function get_tags_for_photo($id) {
-        $sql = 'SELECT * FROM tag WHERE id IN (SELECT tag_id FROM photo_tags ';
-        $sql .= 'WHERE photo_id = :id) ORDER BY date_added DESC';
+        $sql = 'SELECT * FROM tag JOIN photo_tags ON (tag.id = photo_tags.tag_id AND ';
+        $sql .= 'photo_id = :id) ORDER BY date_added DESC';
         $tags = find_objects_by_sql($sql, array(':id' => $id), 'Tag');
         return $tags;
     }
