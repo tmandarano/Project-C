@@ -147,7 +147,7 @@ LG.eye = (function () {
         ptcache = [];
       }
       return ptcache[k] = this.getProjection()
-        .fromContainerPixelToLatLng(new GM.Point(x, y));
+        .fromDivPixelToLatLng(new GM.Point(x, y));
     };
     Pp.doSearch = function () {
       if (!this.get('map') || !this.get('projection')) {
@@ -159,6 +159,9 @@ LG.eye = (function () {
       var div = $(this.get('map').getDiv());
       var width = div.outerWidth(),
           height = div.outerHeight();
+
+      // clear the point cache for new projection
+      this._coord(0, 0, true);
 
       for (var x = 0; x < width; x += size) {
         for (var y = 0; y < height; y += size) {
