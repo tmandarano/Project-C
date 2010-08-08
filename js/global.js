@@ -480,16 +480,18 @@ LGG.showDone = function () {
           '<h3><a href="/download"><em>Download</em> the app</a></h3>',
           '<h3><a href="/settings"><em>Sync</em> with your Twitter and Facebook</a></h3>',
         '</div>',
-        '<h1 class="bichrome"><em>Popular</em> people to check out.</h1>',
+        '<h1 class="bichrome"><em>Photos</em> gathered recently.</h1>',
         '<ul><% for (var i = 0; i < photos.length; i += 1) { %>',
           '<li><img src="/api/photos/<%= photos[i].id %>/1" /></li>',
           '<% } %>',
         '</ul>',
       '</div>',
     '</div>'].join('');
-  var done = $(tmpl(HTML_DONE, {photos: [{id: 123}, {id: 123}]})); // TODO
-  LGG.dimmedDialogue(done);
-  done.find('.close').click(function () { window.location = '/'; });
+  $.getJSON('/api/photos/recent/12', function (photos) {
+    var done = $(tmpl(HTML_DONE, {photos: photos}));
+    LGG.dimmedDialogue(done);
+    done.find('.close').click(function () { window.location = '/'; });
+  });
 };
 
 LGG.showPhoto = function(id) {

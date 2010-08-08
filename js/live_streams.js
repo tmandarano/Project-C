@@ -17,11 +17,11 @@ var PHOTOSTUB_LIVESTREAM = [
   'class="location"><%=location%></span></p>',
   '<p><span class="caption"><%=caption%></span></p>',
   '<div class="bottom">',
-    '<p class="comments"><a href="#">7 people</a> have commented</p>',
-    '<form class="comments" name="comments" action="/photos/edit/<%=id%>" method="post">',
-      '<input name="photo[comment]" type="text" class="default" value="add comment" />',
-      '<input type="submit" value="comment" />',
-    '</form>',
+//    '<p class="comments"><a href="#">7 people</a> have commented</p>',
+//    '<form class="comments" name="comments" action="/photos/edit/<%=id%>" method="post">',
+//      '<input name="photo[comment]" type="text" class="default" value="add comment" />',
+//      '<input type="submit" value="comment" />',
+//    '</form>',
     '<p>Tags <% for (var i = 0; i < tags.length; i += 1) {%><a href="#"><%=tags[i].tag%></a>, <%}%></p>',
     '<form class="tags" name="tags" action="/photos/edit/<%=id%>" method="post">',
       '<input name="photo[tag]" type="text" class="default" value="add tag" />',
@@ -30,9 +30,6 @@ var PHOTOSTUB_LIVESTREAM = [
   '</div>',
 '</div>'
 ].join('');
-// TODO Need to know
-// how many people have commented on a photo
-//
 
 LGLS.tmplLivestream = tmpl(PHOTOSTUB_LIVESTREAM);
 
@@ -41,15 +38,11 @@ function loadLivestreamPhoto(jdom, photo_id) {
   jdom.html(HTML_LOADING);
   $.get('/photos/'+photo_id, function (data) {
     var photo = data[0];
-      // TODO get real data for latlng
-    photo.latitude = 32.7477 + Math.random() - 0.5;
-    photo.longitude = -117.1575 + Math.random() - 0.5;
     var coord = new GM.LatLng(photo.latitude, photo.longitude);
     new GM.Marker({position: coord, map: LGLS.photoMap});
     LGLS.bounds.extend(coord);
     LGLS.photoMap.fitBounds(LGLS.bounds);
 
-    // TODO give a proper date time
     photo.datetime = photo.date_added;
 
     if (photo.user_id) {
@@ -65,6 +58,8 @@ function loadLivestreamPhoto(jdom, photo_id) {
 }
 
 $(function() {
+  var _ = {};
+
   // Living event handler for all photos
   $('.photo').live('hover', function(event) {
     if (event.type == 'mouseover') {
@@ -83,11 +78,10 @@ $(function() {
       lis.push(li);
       $('#stream').append(li);
     }
-    $.get('/users/photo', function(data) {
-      /* TODO make the right API call to get the next few photo ids */
-      var ids = [101, 102, 103, 104];
+    var offset = _.lastLoaded ? _.lastLoaded : 0 + loadnum;
+    $.get('/users/' + _.user.id + '/photos/'+offset +'/' + loadnum, function(photos) {
       for (var i = 0; i < loadnum; i++) {
-        loadLivestreamPhoto($('<li></li>').appendTo('ol.live.stream'), ids[i]);
+        loadLivestreamPhoto($('<li></li>').appendTo('ol.live.stream'), photos[i]);
       }
     });
   });
