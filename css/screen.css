@@ -90,7 +90,7 @@ h1 strong { font-weight: bold; }
 
 /* Setup large page elements */
 #header,
-#footer { position: relative; width: 100%; height: 3em; line-height: 3em; background: #45a136 url('/img/hlgrad.png') repeat-x; color: #fff; }
+#footer { position: relative; width: 100%; height: 3em; line-height: 3em; background: #45a136 url('/img/hlgrad.png') repeat-x; color: #fff; z-index: 999; }
 #header a,
 #footer a { color: #fff; }
 

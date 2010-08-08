@@ -58,6 +58,7 @@ class PhotoDAO {
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
         }
 
         return $photos;
@@ -89,11 +90,13 @@ class PhotoDAO {
 
     public static function get_recent_photos($limit = 10) {
         $sql = 'SELECT * FROM photo WHERE status = :status ORDER BY date_added DESC LIMIT :limit';
-        $photos = find_objects_by_sql($sql, array(':status'=>Photo::STATUS_ACTIVE, ':limit' => $limit), 'Photo');
+        $photos = find_objects_by_sql($sql, array(':status'=>Photo::STATUS_ACTIVE,
+                                                  ':limit' => $limit), 'Photo');
 
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
         }
 
         return $photos;
@@ -110,6 +113,7 @@ class PhotoDAO {
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
         }
 
         return $photos;

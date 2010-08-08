@@ -4,12 +4,53 @@ function photo_stub_profile_stream(jdom, photo_id) {
     jdom.html(data);
   });
 }
+
+var HTML_BOTTOM = [
+  '<div class="bottom">',
+    //'<p class="comments"><a href="#">7 people</a> have commented</p>',
+    //'<form class="comments" name="comments"',
+    //'action="/photos/edit/{$mostRecent.id}" method="post">',
+    //  '<input name="photo[comment]" type="text" class="default" value="add comment" />',
+    //  '<input type="submit" value="comment" />',
+    //'</form>',
+    '<p>Tags <% if (x.tags) { ',
+      'for (var i = 0; i < Math.min(LG.profile.MAX_TAGS, x.tags.length); i += 1) {',
+      '%><a href="#"><%=x.tags[i].tag%></a> <%}}%></p>',
+    '<form class="tags" name="tags" action="/api/photos/<%=x.id%>/tags" method="POST">',
+      '<input name="tag" type="text" class="default" value="add tag" />',
+      '<input type="submit" value="tag" />',
+    '</form>',
+  '</div>'
+].join('');
+var HTML_PHOTO = [
+  '<div class="photo" photo_id="<%=x.id%>">',
+    '<a href="#"><img src="/api/photos/<%=x.id%>/3" /></a>',
+    //'<a class="like" href="#like">Like</a>',
+  '</div>'
+].join('');
+var HTML_MOST_RECENT = [
+  '<div class="most_recent">',
+    '<p><span class="caption"><%=x.caption%></span> ',
+       '<span class="time"><%=LG.dateToVernacular(x.date_added)%> from</span> ',
+       '<span class="location"><%=x.location%></span></p>',
+    '<ol class="profile stream">',
+      '<li>',
+        HTML_PHOTO,
+        '<div class="detail">',
+          '<div class="map" lat="<%=x.latitude%>" lng="<%=x.longitude%>"></div>',
+          HTML_BOTTOM,
+        '</div>',
+      '</li>',
+    '</ol>',
+  '</div>'
+].join('');
+
 $(function () {
   var _ = LG.profile;
-  var profileLink = ['/profile/', _.user.id, '"'].join('');
-  $('.left .username a').attr('href', profileLink).html(_.user.username);
-  $('.left .userphoto').attr('src', '/api/users/photo/' + _.user.id)
-    .parent().attr('href', profileLink);
+  _.MAX_TAGS = 20;
+
+  $('.left .username a').html(_.user.username);
+  $('.left .userphoto').attr('src', '/api/users/photo/' + _.user.id);
   
   for (var i in _.similarPeople) {
     var person = _.similarPeople[i];
@@ -22,44 +63,6 @@ $(function () {
     var tag = _.tags[i];
     $('.tagcloud').append($(['<li><a href="">', tag.tag, '</a></li>'].join('')));
   }
-
-  var HTML_BOTTOM = [
-    '<div class="bottom">',
-      //'<p class="comments"><a href="#">7 people</a> have commented</p>',
-      //'<form class="comments" name="comments"',
-      //'action="/photos/edit/{$mostRecent.id}" method="post">',
-      //  '<input name="photo[comment]" type="text" class="default" value="add comment" />',
-      //  '<input type="submit" value="comment" />',
-      //'</form>',
-      '<p>Tags <% if (x.tags) { for (var i = 0; i < x.tags.length; i += 1) {%><a href="#"><%=x.tags[i].tag%></a> <%}}%></p>',
-      '<form class="tags" name="tags" action="/api/photos/<%=x.id%>/tags" method="POST">',
-        '<input name="tag" type="text" class="default" value="add tag" />',
-        '<input type="submit" value="tag" />',
-      '</form>',
-    '</div>'
-  ].join('');
-  var HTML_PHOTO = [
-    '<div class="photo">',
-      '<a href="/api/photos/<%=x.id%>"><img src="/api/photos/<%=x.id%>/3" /></a>',
-      //'<a class="like" href="#like">Like</a>',
-    '</div>'
-  ].join('');
-  var HTML_MOST_RECENT = [
-    '<div class="most_recent">',
-      '<p><span class="caption"><%=x.caption%></span> ',
-         '<span class="time"><%=LG.dateToVernacular(x.date_added)%> from</span> ',
-         '<span class="location"><%=x.location%></span></p>',
-      '<ol class="profile stream">',
-        '<li>',
-          HTML_PHOTO,
-          '<div class="detail">',
-            '<div class="map" lat="<%=x.latitude%>" lng="<%=x.longitude%>"></div>',
-            HTML_BOTTOM,
-          '</div>',
-        '</li>',
-      '</ol>',
-    '</div>'
-  ].join('');
 
   if (_.recentPhotos.length > 0) {
     $('.right').prepend($(tmpl(HTML_MOST_RECENT, {x: _.recentPhotos[0]})));
@@ -109,6 +112,11 @@ $(function () {
 //        $('a.like', this).hide();
 //      }
 //    });
+
+  $('.photo')
+    .live('click', function () {
+      LG.G.showPhoto($(this).attr('photo_id'));
+    });
 
   $('.loadmore a').click(function() {
     var loadnum = 4;

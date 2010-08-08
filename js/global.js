@@ -136,20 +136,18 @@ var _ = function(jdom) {
   this.init();
 };
 var _p = _.prototype = function() {};
-_p.append = function (json) {
-  var p = json;
-  p.location="location";
-  p.lat = 32;
-  p.lng = -117;
-  p.user = {name: 'name'}; // TODO
-  $(['<li><a href="#"><img src="/api/photos/', p.id,
-     '/2" title="', p.user.name, ': ', p.name, '"/></a></li>'].join(''))
-    .data('json', json)
-    .appendTo(this.jdom)
-    .find('a').click(function () { LGG.showPhoto(p.id); });
-  if (this.ready) {
-    this.jdom.trigger('change');
+_p.append = function (p) {
+  var self = this;
+  var li = $(['<li><a href="#"><img src="/api/photos/', p.id, '/2" /></a></li>'].join(''))
+    .data('json', p)
+    .appendTo(self.jdom)
+    .click(function () { LGG.showPhoto(p.id); });
+  if (self.ready) {
+    self.jdom.trigger('change');
   }
+  $.getJSON('/api/users/' + p.user_id, function (u) {
+    li.find('img').attr('title', (u ? u.username : 'Unknown') + ': ' + p.caption);
+  });
 };
 _p.getMaxPhotos = function () { return Math.floor(this.jdom.width() / this.slideWidth); };
 _p.getNumPhotos = function () { return this.jdom.children().length; };
@@ -507,8 +505,8 @@ LGG.showPhoto = function(id) {
     $.getJSON('/api/users/'+p.user_id, function (u) {
       var display = [
         '<div class="header">',
-        '<a href="#"><img src="/api/users/', p.user_id, '/photo" /></a>',
-        '<h1>', u ? u.username : 'Unknown', '</h1>',
+        '<a href="#"><img src="/api/users/photo/', p.user_id, '" /></a>',
+        '<h1><a href="/', u ? u.username : '','">', u ? u.username : 'Unknown', '</a></h1>',
         '<h2>', p.caption, '</h2>',
         '<ul class="tags"></ul>',
         '<h3>', LG.dateToVernacular(p.date_added), '</h3>',
