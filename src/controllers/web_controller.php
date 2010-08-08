@@ -203,7 +203,7 @@ function profile() {
     $profile_user = UserDAO::get_user_by_id($user_id);
     $similarPeople = UserDAO::get_users_similar($user_id, 10);
 
-    $recentPhotos = PhotoDAO::get_photos_by_user_id($user_id, 4);
+    $recentPhotos = PhotoDAO::get_photos_by_user_id_limited($user_id, 0, 4);
     $template = new Template();
     $template->assign(array(
       'profile_user' => json_encode($profile_user),

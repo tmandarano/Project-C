@@ -126,9 +126,8 @@ $(function () {
       lis.push(li);
       $('#stream').append(li);
     }
-    $.get('/users/' + _.user.id + '/photos', function(data) {
-      /* TODO make the right API call to get the next few photo ids */
-      var photos = [451, 452, 453, 451];
+    var offset = _.lastLoaded ? _.lastLoaded : 0 + loadnum;
+    $.get('/users/' + _.user.id + '/photos/'+offset +'/' + loadnum, function(photos) {
       for (var i = 0; i < loadnum; i++) {
         lis[i].html(tmpl(HTML_PROFILE_STUB, {x: photos[i]}));
       }

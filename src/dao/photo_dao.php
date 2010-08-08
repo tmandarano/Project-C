@@ -64,6 +64,24 @@ class PhotoDAO {
         return $photos;
     }
 
+    public static function get_photos_by_user_id_limited($user_id, $offset, $limit) {
+        $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
+        $sql .= 'AND up.user_id = :user_id AND status = :status LIMIT :offset, :limit';
+
+        $params = array('user_id'=>$user_id, 'status'=>Photo::STATUS_ACTIVE, 
+                        'offset' => $offset, 'limit' => $limit);
+
+        $photos = find_objects_by_sql($sql, $params, 'Photo');
+
+        foreach($photos as $photo) {
+            $tags = TagDAO::get_tags_for_photo($photo->get_id());            
+            $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
+        }
+
+        return $photos;
+    }
+
     public static function get_photos_by_user_id_recent($user_id, $days) {
         $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
         $sql .= 'AND up.user_id = :user_id ';

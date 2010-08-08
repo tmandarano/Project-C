@@ -63,6 +63,17 @@ function photos_get_by_user_id() {
     return json($photos);
 }
 
+function photos_get_by_user_id_limited() {
+    check_system_auth();
+
+    $user_id = var_to_i(params('id'));
+    $offset = var_to_i(params('offset'));
+    $limit = var_to_i(params('limit'));
+    $photos = PhotoDao::get_photos_by_user_id_limited($user_id, $offset, $limit);
+
+    return json($photos);
+}
+
 function photos_get_by_user_id_recent() {
     check_system_auth();
 
