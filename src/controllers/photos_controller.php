@@ -249,9 +249,11 @@ var_dump($_SERVER['REQUEST_URI']);
     //    var_dump(file_get_contents($stream));
     //    halt();
     // }
-
-    $data = get_json_input();
-    debug(serialize($data));
+    $post_vars = array('test'=>'');
+    $z = file_get_contents("php://input");
+    parse_str($z, $post_vars);
+    debug($data['test']);
+    debug(serialize($post_vars));
     halt();
     // Fill data with POST parameters if there is no incoming JSON
     if (!$data) {
