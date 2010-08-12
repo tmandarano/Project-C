@@ -43,11 +43,12 @@ $(function () {
     action: '/api/photos/upload',
     name: 'userfile',
     autoSubmit: false,
-    onComplete: function (file) {
+    onComplete: function (file, response) {
       $.ajax({
         type: 'POST',
         url: '/api/photos',
         data: {
+          response: response,
           userfile: file, 
           tags: $('#photo_tags').val(),
           caption: $('#photo_caption').val(),
