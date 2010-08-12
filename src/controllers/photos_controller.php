@@ -103,7 +103,7 @@ function photos_create() {
         $p = env('POST');
         $p = $p['REQUEST'];
         if ($p) {
-            $vars = array('caption', 'userfile', 'tags', 'latitude', 
+            $vars = array('caption', 'response', 'userfile', 'tags', 'latitude', 
                           'longitude');
             foreach ($vars as $var) {
                 $data[$var] = $p[$var];
@@ -119,7 +119,7 @@ function photos_create() {
     if (empty($data['userfile'])) {
         return halt(400);
     }
- 
+
     $photo = new Photo();
     $photo->set_user_id($user->get_id());
     
@@ -135,7 +135,7 @@ function photos_create() {
     $photo->set_tags($tags);
 
     $photo->set_caption($data['caption']);
-    $photo->set_name($data['userfile']);
+    $photo->set_name($data['response']);
     $photo->set_latitude($data['latitude']);
     $photo->set_longitude($data['longitude']);
     
@@ -233,17 +233,20 @@ function photos_upload() {
               ". Not a valid image type. Type is " . $type . ".");
         halt(403);
     }
-    // Create temporary filename so we don't rely on the client filename
-    $tempname = tempnam('/tmp', 'lg_upload');
+    // Use the file upload tmp_name as tempname unlinks the file
+    // and makes it no longer an "uploaded file", breaking move_uploaded_file()
+    $tempname = $_FILES['userfile']['tmp_name'];
 
-    $uploadfile = option('UPLOAD_DIR') . $tempname;
-    $thefile = $_FILES['userfile']['tmp_name'];
-    
-    if (move_uploaded_file($thefile, $uploadfile)) {
-        debug("Successfully moved the file " . $thefile . " to " . $uploadfile);
-        return json($tempname);
+    // Grab the extension so we retain it
+    $ext = strtolower(array_pop(explode(".", $_FILES['userfile']['name'])));
+    $uploadfilename = str_replace("/tmp/", "", $tempname) . "." . $ext;
+    $uploadfilepath = option('UPLOAD_DIR') . $uploadfilename;
+
+    if (move_uploaded_file($tempname, $uploadfilepath)) {
+        debug("Successfully moved the file " . $tempname . " to " . $uploadfilepath);
+        return json($uploadfilename);
     } else {
-        debug("ERROR: File upload failed for " . $thefile);
+        debug("ERROR: File upload failed for " . $tempname);
         // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
         // Otherwise onSubmit event will not be fired
         halt(500);
