@@ -49,7 +49,7 @@ class PhotoDAO {
 
     public static function get_photos_by_user_id($user_id) {
         $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
-        $sql .= 'WHERE up.user_id = :user_id AND status = :status';
+        $sql .= 'AND up.user_id = :user_id AND status = :status';
 
         $params = array('user_id'=>$user_id, 'status'=>Photo::STATUS_ACTIVE);
 
@@ -58,6 +58,25 @@ class PhotoDAO {
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
+        }
+
+        return $photos;
+    }
+
+    public static function get_photos_by_user_id_limited($user_id, $offset, $limit) {
+        $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
+        $sql .= 'AND up.user_id = :user_id AND status = :status LIMIT :offset, :limit';
+
+        $params = array('user_id'=>$user_id, 'status'=>Photo::STATUS_ACTIVE, 
+                        'offset' => $offset, 'limit' => $limit);
+
+        $photos = find_objects_by_sql($sql, $params, 'Photo');
+
+        foreach($photos as $photo) {
+            $tags = TagDAO::get_tags_for_photo($photo->get_id());            
+            $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
         }
 
         return $photos;
@@ -65,7 +84,7 @@ class PhotoDAO {
 
     public static function get_photos_by_user_id_recent($user_id, $days) {
         $sql = 'SELECT * FROM user_photos up JOIN photo p ON up.photo_id = p.id ';
-        $sql .= 'WHERE up.user_id = :user_id ';
+        $sql .= 'AND up.user_id = :user_id ';
         $sql .= 'AND p.date_added > DATE_SUB(NOW(), INTERVAL :days DAY) AND p.status = :status';
 
         $params = array('user_id'=>$user_id, 'days'=>$days, 'status'=>Photo::STATUS_ACTIVE);
@@ -76,21 +95,26 @@ class PhotoDAO {
     }
 
     public static function get_photos_by_tag_id($tag_id) {
-        $sql = 'SELECT * FROM photo WHERE id IN (SELECT photo_id FROM ';
-        $sql .= 'photo_tags WHERE tag_id = :tag) AND status = :status';
+        $sql = 'SELECT * FROM photo JOIN photo_tags ON ';
+        $sql .= 'photo.id = photo_tags.photo_id AND tag_id = :tag ';
+        $sql .= 'AND status = :status';
 
-        $photos = find_objects_by_sql($sql, array(':tag' => $tag_id, ':status'=>Photo::STATUS_ACTIVE), 'Photo');
+        $photos = find_objects_by_sql(
+            $sql, array(':tag' => $tag_id,
+                        ':status'=>Photo::STATUS_ACTIVE), 'Photo');
 
         return $photos;
     }
 
     public static function get_recent_photos($limit = 10) {
         $sql = 'SELECT * FROM photo WHERE status = :status ORDER BY date_added DESC LIMIT :limit';
-        $photos = find_objects_by_sql($sql, array(':status'=>Photo::STATUS_ACTIVE, ':limit' => $limit), 'Photo');
+        $photos = find_objects_by_sql($sql, array(':status'=>Photo::STATUS_ACTIVE,
+                                                  ':limit' => $limit), 'Photo');
 
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
         }
 
         return $photos;
@@ -107,6 +131,7 @@ class PhotoDAO {
         foreach($photos as $photo) {
             $tags = TagDAO::get_tags_for_photo($photo->get_id());            
             $photo->set_tags($tags);
+            $photo->set_user_id(PhotoDAO::get_user_id($photo->get_id()));
         }
 
         return $photos;

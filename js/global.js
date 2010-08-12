@@ -82,8 +82,10 @@ LGG.html.collage = {};
 LGG.html.collage.photos = function (jdom, photo_ids) {
   jdom.addClass('collage');
   for (var i in photo_ids) {
-    $(['<li><a href="/photos/view/', photo_ids[i], '"><img src="/api/photos/', 
-      photo_ids[i], '/1" /></a></li>'].join('')).appendTo(jdom);
+    $(['<li class="clickable"><img src="/api/photos/', 
+      photo_ids[i], '/1" /></li>'].join(''))
+      .appendTo(jdom)
+      .click(function () { LGG.showPhoto(photo_ids[i]); });
   }
 };
 LGG.html.collage.people = function (jdom, people_ids) {
@@ -134,20 +136,18 @@ var _ = function(jdom) {
   this.init();
 };
 var _p = _.prototype = function() {};
-_p.append = function (json) {
-  var p = json;
-  p.location="location";
-  p.lat = 32;
-  p.lng = -117;
-  p.user = {name: 'name'}; // TODO
-  $(['<li><a href="#"><img src="/api/photos/', p.id,
-     '/2" title="', p.user.name, ': ', p.name, '"/></a></li>'].join(''))
-    .data('json', json)
-    .appendTo(this.jdom)
-    .find('a').click(function () { LGG.showPhoto(p.id); });
-  if (this.ready) {
-    this.jdom.trigger('change');
+_p.append = function (p) {
+  var self = this;
+  var li = $(['<li><a href="#"><img src="/api/photos/', p.id, '/2" /></a></li>'].join(''))
+    .data('json', p)
+    .appendTo(self.jdom)
+    .click(function () { LGG.showPhoto(p.id); });
+  if (self.ready) {
+    self.jdom.trigger('change');
   }
+  $.getJSON('/api/users/' + p.user_id, function (u) {
+    li.find('img').attr('title', (u ? u.username : 'Unknown') + ': ' + p.caption);
+  });
 };
 _p.getMaxPhotos = function () { return Math.floor(this.jdom.width() / this.slideWidth); };
 _p.getNumPhotos = function () { return this.jdom.children().length; };
@@ -246,6 +246,7 @@ LGG.dimmedDialog = function(jdom) {
     dimmer.detach();
     close.detach();
     jdom.detach();
+    LGG._showing = false;
   }
   jdom.addClass('dialog win');
   jdom.click(function (e) { e.stopPropagation(); });
@@ -479,68 +480,77 @@ LGG.showDone = function () {
           '<h3><a href="/download"><em>Download</em> the app</a></h3>',
           '<h3><a href="/settings"><em>Sync</em> with your Twitter and Facebook</a></h3>',
         '</div>',
-        '<h1 class="bichrome"><em>Popular</em> people to check out.</h1>',
+        '<h1 class="bichrome"><em>Photos</em> gathered recently.</h1>',
         '<ul><% for (var i = 0; i < photos.length; i += 1) { %>',
           '<li><img src="/api/photos/<%= photos[i].id %>/1" /></li>',
           '<% } %>',
         '</ul>',
       '</div>',
     '</div>'].join('');
-  var done = $(tmpl(HTML_DONE, {photos: [{id: 123}, {id: 123}]})); // TODO
-  LGG.dimmedDialogue(done);
-  done.find('.close').click(function () { window.location = '/'; });
+  $.getJSON('/api/photos/recent/12', function (photos) {
+    var done = $(tmpl(HTML_DONE, {photos: photos}));
+    LGG.dimmedDialogue(done);
+    done.find('.close').click(function () { window.location = '/'; });
+  });
 };
 
 LGG.showPhoto = function(id) {
+  if (LGG._showing) {
+    $('.dialog.close').click();
+  }
+  LGG._showing = true;
   var viewer = $([
     '<div class="viewphoto"></div>'].join(''));
   LGG.dimmedDialog(viewer);
 
-  $.getJSON('/api/photos/'+id, function(p) {
-    var display = [
-      '<div class="header">',
-      '<a href="#"><img src="/api/users/', p.user_id, '/photo" /></a>',
-      '<h1>Tony Mandarano</h1>',
-      '<h2>', p.caption, '</h2>',
-      '<ul class="tags">',
-        '<li>tag1 is four words</li>',
-        '<li>tag2</li>',
-        '<li>tag3</li>',
-      '</ul>',
-      '<h3>', LG.dateToVernacular(p.date_added), '</h3>',
-      '</div>',
-      '<table class="split">',
-        '<tr>',
-          '<td class="photo">',
-            '<img class="sround" src="/api/photos/'+id+'/3" />',
-          '</td>',
-          '<td>',
-            '<div class="gathered sround">',
-              '12 people recently gathered nearby',
-            '</div>',
-            '<h1 class="bichrome"><em>Similar</em> photos nearby.</h1>',
-            '<ul class="collage similar photos"></ul>',
-            '<div class="viewmap"></div>',
-          '</td>',
-        '</tr>',
-      '</table>'
-    ].join('');
-    viewer.append($(display));
+  $.getJSON('/api/photos/'+id, function (p) {
+    $.getJSON('/api/users/'+p.user_id, function (u) {
+      var display = [
+        '<div class="header">',
+        '<a href="#"><img src="/api/users/photo/', p.user_id, '" /></a>',
+        '<h1><a href="/', u ? u.username : '','">', u ? u.username : 'Unknown', '</a></h1>',
+        '<h2>', p.caption, '</h2>',
+        '<ul class="tags"></ul>',
+        '<h3>', LG.dateToVernacular(p.date_added), '</h3>',
+        '</div>',
+        '<table class="split">',
+          '<tr>',
+            '<td class="photo">',
+              '<img class="sround" src="/api/photos/'+id+'/3" />',
+            '</td>',
+            '<td>',
+              //'<div class="gathered sround">',
+              //  '12 people recently gathered nearby',
+              //'</div>',
+              '<h1 class="bichrome"><em>Similar</em> photos nearby.</h1>',
+              '<ul class="collage similar photos"></ul>',
+              '<div class="viewmap"></div>',
+            '</td>',
+          '</tr>',
+        '</table>'
+      ].join('');
+      viewer.append($(display));
 
-    var similar_photos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    LG.G.html.collage.photos($('.similar.photos', viewer), similar_photos);
+      var tags = $.map(p.tags, function (x) { return x.tag; });
+      var tagjdom = viewer.find('.tags');
+      for (var i in tags) {
+        tagjdom.append($('<li>' + tags[i] + '</li>'));
+      }
 
-    p.latitude = 32.7; p.longitude = -117.1;
-    var mapOpts = {
-      zoom: 15,
-      center: new GM.LatLng(defaultTo(p.latitude, 0), defaultTo(p.longitude, 0)),
-      mapTypeId: GM.MapTypeId.ROADMAP,
-      disableDefaultUI: true,
-    };
-    var map = new GM.Map($(".viewmap", viewer)[0], mapOpts);
-    if (p.latitude && p.longitude) {
-      new GM.Marker({position: map.getCenter(), map: map});
-    }
+      var similar_photos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+      LG.G.html.collage.photos($('.similar.photos', viewer), similar_photos);
+
+      var mapOpts = {
+        zoom: 15,
+        center: new GM.LatLng(defaultTo(p.latitude, 0), defaultTo(p.longitude, 0)),
+        mapTypeId: GM.MapTypeId.ROADMAP,
+        disableDefaultUI: true,
+      };
+      var map = new GM.Map($(".viewmap", viewer)[0], mapOpts);
+      if (p.latitude && p.longitude) {
+        new GM.Marker({position: map.getCenter(), map: map});
+      }
+    });
   });
 };
 

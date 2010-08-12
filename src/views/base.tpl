@@ -18,10 +18,8 @@
     {if $class == 'eye'}
     <li id='search' class='controls search'>
       <form action="" method="GET">
-        <input type="text" name="what" class="default controls what"
-               value="What" />
-        <input type="text" name="where" class="default controls where"
-               value="Where" />
+        <input type="text" name="what" class="default controls what" value="What" />
+        <input type="text" name="where" class="default controls where" value="Where" />
         <input type="submit" value="Show" />
       </form>
     </li>
@@ -61,7 +59,7 @@ enjoyable experience.</p>
     <li><a href="/tos">Terms of Service</a></li>
     <li><a href="/contact">Contact Us</a></li>
     <li><a href="/team">The LiveGather Team</a></li>
-    <li><button id="download">Download</button></li>
+    <li><button id="download" class="clickable">Download</button></li>
     <li class="copyright">Copyright &copy; 2010 LiveGather. All rights reserved.</li>
   </ul>
 </div>

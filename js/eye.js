@@ -51,8 +51,8 @@ LG.eye = (function () {
     L.addPhoto = function (photo) {
       var id = photo.id;
       $.get('/api/photos/' + id + '/user', function (user) {
-        var photoInfo = $(['<li><img class="clickable" src="/api/photos/', id, '/3" />',
-           '<div>',
+        var photoInfo = $(['<li><img src="/api/photos/', id, '/3" />',
+           '<div class="clickable">',
            '<p class="time">', LG.dateToVernacular(photo.date_added), '</p>',
            '<p class="user">', user ? user.username : 'Unknown user', '</p>',
            '<p class="location">', photo.location || 'Unknown place', '</p>',
@@ -147,7 +147,7 @@ LG.eye = (function () {
         ptcache = [];
       }
       return ptcache[k] = this.getProjection()
-        .fromContainerPixelToLatLng(new GM.Point(x, y));
+        .fromDivPixelToLatLng(new GM.Point(x, y));
     };
     Pp.doSearch = function () {
       if (!this.get('map') || !this.get('projection')) {
@@ -159,6 +159,9 @@ LG.eye = (function () {
       var div = $(this.get('map').getDiv());
       var width = div.outerWidth(),
           height = div.outerHeight();
+
+      // clear the point cache for new projection
+      this._coord(0, 0, true);
 
       for (var x = 0; x < width; x += size) {
         for (var y = 0; y < height; y += size) {

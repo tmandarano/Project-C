@@ -12,25 +12,21 @@ var HPP = HP.prototype = new google.maps.OverlayView();
 HPP.onAdd = function() { $(this.getMap().getDiv()).append(this.captionPane).append(this.photoPane); };
 HPP.draw = function() {};
 HPP.onRemove = function() { $(this.getMap().getDiv()).empty(); };
-HPP.show = function(json) {
+HPP.show = function(photo) {
   this.captionPane.hide();
   this.photoPane.hide()
-  var photo = json;
-  photo.location = "location";
-  photo.lat = 32;
-  photo.lng = -117;
-  photo.user = {'id': 1, 'name': 'name'}; // TODO
-  var usr = photo.user;
-  this.getMap().panTo(new google.maps.LatLng(photo.lat, photo.lng));
-  var caption = '<div class="users">'+
-    '<a href="/profile/'+usr.id+'"><img src="/users/photo/'+usr.id+'" /></a>'+
-    '<a href="/profile/'+usr.id+'" class="username">'+usr.name+'</a> '+
-    '<span class="time">'+photo.datetime+'</span> '+
-    '<span class="location">'+(photo.location || 'Location unknown')+'</span>'+
-    '<p class="caption">'+photo.caption+'</p></div>';
-  this.captionPane.html(caption).fadeIn(600);
-  this.photoPane.html($('<a href="#"><img src="/photo/'+photo.id+'/2" /></a>')
-    .click(function() {viewpic(photo.id);})).fadeIn(600);
+  $.getJSON('/api/users/' + photo.user_id, function (usr) {
+    this.getMap().panTo(new google.maps.LatLng(photo.lat, photo.lng));
+    var caption = '<div class="users">'+
+      '<a href="/profile/'+usr.id+'"><img src="/users/photo/'+usr.id+'" /></a>'+
+      '<a href="/profile/'+usr.id+'" class="username">'+usr.username+'</a> '+
+      '<span class="time">'+photo.datetime+'</span> '+
+      '<span class="location">'+(photo.location || 'Location unknown')+'</span>'+
+      '<p class="caption">'+photo.caption+'</p></div>';
+    this.captionPane.html(caption).fadeIn(600);
+    this.photoPane.html($('<a href="#"><img src="/photo/'+photo.id+'/2" /></a>')
+      .click(function() {viewpic(photo.id);})).fadeIn(600);
+  });
 };
 return HP;
 })();

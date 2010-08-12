@@ -29,7 +29,7 @@ class Config {
             $db = new PDO($dsn, $dbuser, $dbpass);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         } catch (PDOException $e) {
-            debug('DATABASE CONNECTION ERROR.');
+            debug('DATABASE CONNECTION ERROR.', $e);
             halt(500);
         }
 

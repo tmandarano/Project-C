@@ -41,10 +41,6 @@ function check_username() {
     $user = UserDao::get_user_by_username($possible_username);
 
     if ($user) {
-        //// TODO Change 'http' hardcode into a server
-        //$url = get_protocol_string().'://'.$_SERVER['HTTP_HOST'].'/profile/'.$user->get_id();
-        //header("Location:".$url);
-
         // Change the request into a GET for the appropriate profile/user_id
         // so that the run() will dispatch it correctly.
         $_GET = array('uri' => '/profile/'.$user->get_id());

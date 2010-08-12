@@ -35,8 +35,8 @@ class UserDAO {
     }
 
     public static function get_user_by_photo_id($photo_id) {
-        $sql = 'SELECT * FROM user WHERE id IN (SELECT user_id FROM user_photos ';
-        $sql .= ' WHERE photo_id = :photo_id) AND status = :status';
+        $sql = 'SELECT * FROM user JOIN user_photos ON user.id = user_photos.user_id ';
+        $sql .= 'AND photo_id = :photo_id AND status = :status LIMIT 1';
         $users = find_objects_by_sql($sql, array(':photo_id'=>$photo_id,
                                                  ':status' => User::STATUS_ACTIVE), 'User');
       
@@ -59,7 +59,7 @@ class UserDAO {
     }
 
     public static function get_users_similar($user_id, $num) {
-        // TODO
+        // TODO determine what similar means
         return array();
     }
 

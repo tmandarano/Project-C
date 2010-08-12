@@ -33,18 +33,18 @@ function configure() {
 
 $PRE = '/api';
 
-dispatch_get   ($PRE.'/users/',                      'users_get');
-dispatch_get   ($PRE.'/users/status/:status',        'users_get');
-dispatch_get   ($PRE.'/users/:id',                   'users_get_by_id');
-dispatch_get   ($PRE.'/users/:id/photos/',           'photos_get_by_user_id');
-dispatch_get   ($PRE.'/users/:id/photos/days/:days', 'photos_get_by_user_id_recent');
-dispatch_get   ($PRE.'/users/:id/tags/',             'tags_get_by_user_id');
-dispatch_get   ($PRE.'/users/:id/tags/days/:days',   'tags_get_by_user_id_recent');
-dispatch_post  ($PRE.'/users/',                      'users_create');
-dispatch_get   ($PRE.'/users/photo/:id',             'users_get_photo_by_id');
-dispatch_post  ($PRE.'/users/:id/identifiers',       'users_add_identifier');
-// TODO CREATE API CALL FOR
-// users_get_by_identifier
+dispatch_get   ($PRE.'/users/',                          'users_get');
+dispatch_post  ($PRE.'/users/',                          'users_create');
+dispatch_get   ($PRE.'/users/status/:status',            'users_get');
+dispatch_get   ($PRE.'/users/:id',                       'users_get_by_id');
+dispatch_get   ($PRE.'/users/:id/identifiers',           'users_get_by_identifier');
+dispatch_post  ($PRE.'/users/:id/identifiers',           'users_add_identifier');
+dispatch_get   ($PRE.'/users/:id/photos/',               'photos_get_by_user_id');
+dispatch_get   ($PRE.'/users/:id/photos/:offset/:limit', 'photos_get_by_user_id_limited');
+dispatch_get   ($PRE.'/users/:id/photos/days/:days',     'photos_get_by_user_id_recent');
+dispatch_get   ($PRE.'/users/:id/tags/',                 'tags_get_by_user_id');
+dispatch_get   ($PRE.'/users/:id/tags/days/:days',       'tags_get_by_user_id_recent');
+dispatch_get   ($PRE.'/users/photo/:id',                 'users_get_photo_by_id');
 
 dispatch_delete($PRE.'/sessions/',                   'sessions_delete');
 

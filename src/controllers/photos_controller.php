@@ -63,6 +63,17 @@ function photos_get_by_user_id() {
     return json($photos);
 }
 
+function photos_get_by_user_id_limited() {
+    check_system_auth();
+
+    $user_id = var_to_i(params('id'));
+    $offset = var_to_i(params('offset'));
+    $limit = var_to_i(params('limit'));
+    $photos = PhotoDao::get_photos_by_user_id_limited($user_id, $offset, $limit);
+
+    return json($photos);
+}
+
 function photos_get_by_user_id_recent() {
     check_system_auth();
 
@@ -217,19 +228,20 @@ function photos_delete_tag() {
 function photos_upload() {
     $image_types = array('image/jpeg', 'image/gif', 'image/png');
     $type = $_FILES['userfile']['type'];
-    // TODO Create temporary filename so we don't rely on the client filename
     if(! in_array($type, $image_types)) {
         debug("ERROR: File upload failed for " . $_FILES['userfile']['name'] . 
               ". Not a valid image type. Type is " . $type . ".");
         halt(403);
     }
+    // Create temporary filename so we don't rely on the client filename
+    $tempname = tempnam('/tmp', 'lg_upload');
 
-    $uploadfile = option('UPLOAD_DIR') . basename($_FILES['userfile']['name']);
+    $uploadfile = option('UPLOAD_DIR') . $tempname;
     $thefile = $_FILES['userfile']['tmp_name'];
     
     if (move_uploaded_file($thefile, $uploadfile)) {
         debug("Successfully moved the file " . $thefile . " to " . $uploadfile);
-        return json($thefile);
+        return json($tempname);
     } else {
         debug("ERROR: File upload failed for " . $thefile);
         // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!

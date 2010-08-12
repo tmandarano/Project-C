@@ -18,7 +18,7 @@ class CommentDAO {
 
     public static function get_comments_for_photo($photo_id) {
         $sql = 'SELECT c.id, c.comment as comment, c.date_added as date_added, c.date_modified as date_modified ';
-        $sql .= 'FROM comment c JOIN photo_comments pc on c.id = pc.comment_id WHERE pc.photo_id = :photo_id';
+        $sql .= 'FROM comment c JOIN photo_comments pc on c.id = pc.comment_id AND pc.photo_id = :photo_id';
 
         $comments = find_objects_by_sql($sql, array(':photo_id'=>$photo_id), 'Comment');
 
