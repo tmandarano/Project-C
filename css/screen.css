@@ -319,18 +319,10 @@ h1 strong { font-weight: bold; }
   -webkit-border-radius: 0.5em;
 }
 
-.search h1 {
-  color: #3b0;
-  font-size: large;
-}
-.search .searchbox {
-  width: 80%;
-  text-align: center;
-  margin: 0.5em auto;
-}
-.search label {
-  color: #3b0;
-}
+.tagline { padding-left: 1em; }
+.search h1 { color: #3b0; font-size: large; }
+.search .searchbox { width: 80%; text-align: center; margin: 0.5em auto; }
+.search label { color: #3b0; }
 span.label {
   color: #555;
   font-size: small;
@@ -787,6 +779,7 @@ input.comment:focus {
   position: relative;
   height: 50px;
   background-color: #000;
+  width: 100%;
   margin: auto;
   overflow: hidden;
 }

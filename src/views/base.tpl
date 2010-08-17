@@ -33,6 +33,7 @@
       </li> 
       <li class="profile"><a href="/profile/{$user.id}">{$user.name}</a></li>
     {else}
+      <li class="tagline">See and show your world in real-time</li>
       <li class='sign in'>
         <a class='rpxnow' onclick='return false;'
            href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Fsignin_janrain">
