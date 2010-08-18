@@ -95,7 +95,7 @@ LGG.html.collage.people = function (jdom, people_ids) {
       people_ids[i], '" /></a></li>'].join('')).appendTo(jdom);
   }
 };
-LGG.setupExpandable = function () {
+LGG.setupExpandable = function (stayopen) {
   $('.expandable').each(function () {
     var pane = this;
     var header = $('h1', pane);
@@ -112,7 +112,9 @@ LGG.setupExpandable = function () {
       });
       header.attr('expanded', 'false');
     }
-    hide();
+    if (!stayopen) {
+        hide();
+    }
     header.click(function () {
       if (header.attr('expanded') == 'true') {
         hide();

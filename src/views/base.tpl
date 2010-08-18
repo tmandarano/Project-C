@@ -20,7 +20,7 @@
       <form action="" method="GET">
         <input type="text" name="what" class="default controls what" value="What" />
         <input type="text" name="where" class="default controls where" value="Where" />
-        <input type="submit" value="Show" />
+        <input class="clickable" type="submit" value="Show" />
       </form>
     </li>
     {/if}
@@ -37,7 +37,7 @@
       <li class='sign in'>
         <a class='rpxnow' onclick='return false;'
            href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Fsignin_janrain">
-        <input type='submit' value='Sign in/up' /></a>
+        <input class="clickable" type='submit' value='Sign in/up' /></a>
       </li>
     {/if}
   </ul> 
