@@ -48,8 +48,7 @@ $(function () {
         type: 'POST',
         url: '/api/photos',
         data: {
-          response: response,
-          userfile: file, 
+          userfile: response, 
           tags: $('#photo_tags').val(),
           caption: $('#photo_caption').val(),
           latitude: $('#lat').val(),
