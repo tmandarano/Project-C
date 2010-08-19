@@ -7,6 +7,20 @@ require_once('src/utils/helpers.php');
 option('PHOTOS_IOS_DIR', 'iOS');
 option('PHOTOS_IOS_RETINA_DIR', 'iOS_retina');
 
+// Ensure the directories exist
+$IOS_DIR = option('PHOTOS_DIR') . option('PHOTOS_IOS_DIR');
+if ( ! is_dir($IOS_DIR)) {
+    mkdir($IOS_DIR . '/' . 's', 0775, true);
+    mkdir($IOS_DIR . '/' . 'm', 0775, true);
+    mkdir($IOS_DIR . '/' . 'f', 0775, true);
+}
+$IOS_RETINA_DIR = option('PHOTOS_DIR') . option('PHOTOS_IOS_RETINA_DIR');
+if ( ! is_dir($IOS_RETINA_DIR)) {
+    mkdir($IOS_RETINA_DIR . '/' . 's', 0775, true);
+    mkdir($IOS_RETINA_DIR . '/' . 'm', 0775, true);
+    mkdir($IOS_RETINA_DIR . '/' . 'f', 0775, true);
+}
+
 function photos_get() {
     $status = check_status_param();
 
