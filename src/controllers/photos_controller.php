@@ -340,7 +340,7 @@ function _generate_iOS_photos($photo) {
 
     imagegif(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename);
     imagegif(_thumbnailify_jpeg($src_filename, 125, 130), $dir . '/' . 'm' . '/' . $filename);
-    imagejpeg(_thumbnailify_jpeg($src_filename, 290, 360), $dir . '/' . 'f' . '/' . $filename);
+    imagejpeg(_thumbnailify_jpeg($src_filename, 290, 360), $dir . '/' . 'f' . '/' . $filename, 100);
 }
 
 function _generate_iOS_retina_photos($photo) {
@@ -350,7 +350,7 @@ function _generate_iOS_retina_photos($photo) {
 
     imagegif(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename);
     imagegif(_thumbnailify_jpeg($src_filename, 250, 260), $dir . '/' . 'm' . '/' . $filename);
-    imagejpeg(_thumbnailify_jpeg($src_filename, 520, 580), $dir . '/' . 'f' . '/' . $filename);
+    imagejpeg(_thumbnailify_jpeg($src_filename, 520, 580), $dir . '/' . 'f' . '/' . $filename, 100);
 }
 
 function _scaled_to_x($img, $px) {
