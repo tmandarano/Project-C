@@ -209,7 +209,7 @@ h1 strong { font-weight: bold; }
 #done ul { padding-top: 0.2em; }
 #done li { display: inline; padding: 0.1em; }
 
-.viewphoto.dialog.win { width: 804px; background: #fff; color: #000; padding-bottom: 0.1em; }
+.viewphoto.dialog.win { width: 665px; background: #fff; color: #000; padding-bottom: 0.1em; }
 .viewphoto .header { padding-bottom: 2em; }
 .sround { border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; }
 .lround { border-radius: 1em; -moz-border-radius: 1em; -webkit-border-radius: 1em; }
@@ -222,7 +222,7 @@ h1 strong { font-weight: bold; }
 .viewphoto .tags li { display: inline; color: #fff890; margin: 0 0.3em; }
 .viewphoto .split { margin: 1em; width: 95%; }
 .viewphoto .photo,
-.viewphoto .photo img { width: 540px; }
+.viewphoto .photo img { width: 400px; }
 .viewphoto .photo { padding-right: 1em; }
 .viewphoto .photo img { border: 2px solid #666; margin-top: -2em;}
 .viewphoto .gathered { background-color: #ececec; text-align: center; font-size: 1.5em; padding: 1em 1em; }

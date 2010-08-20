@@ -420,8 +420,11 @@ function _scale_image($img, $px, $xAxis) {
 }
 
 function photos_image_by_platform() {
+    // Getting a photo using /api/photos/:id/full/{s,m,f}
+    // will give the original size photo.
     $platform = params('platform');
-    $ALLOWED_PLATFORMS = array(option('PHOTOS_IOS_DIR'),
+    $ALLOWED_PLATFORMS = array('full',
+                               option('PHOTOS_IOS_DIR'),
                                option('PHOTOS_IOS_RETINA_DIR'));
     $platformOK = false;
     foreach ($ALLOWED_PLATFORMS as $p) {
@@ -458,10 +461,11 @@ function photos_image_by_platform() {
     }
 
     $path = '';
-    $path .= $platform;
-    $path .= '/' . $size;
+    if ($platform != 'full') {
+        $path .= $platform;
+        $path .= '/' . $size;
+    }
     $path .= '/' . _get_photo_filename($photo) . 'jpg'; // TODO
-    debug($path);
 
     if (file_exists(option('PHOTOS_DIR') . $path)) {
         header('Cache-Control: public');
