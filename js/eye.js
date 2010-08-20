@@ -206,14 +206,19 @@ LG.eye = (function () {
 
     function showNowTrendingTags() {
       $.get('/api/tags/trending/20', function (tags) {
-        $.map(tags, function (t) {
-          var tag = t.tag;
-          alltags.append($(['<a href="#">', tag, '</a> '].join(''))
-              .click(function () {
-                setSearch(tag);
-                return false;
-              }))
-        });
+        alltags.empty();
+        if (tags.length > 0) {
+          $.map(tags, function (t) {
+            var tag = t.tag;
+            alltags.append($(['<a href="#">', tag, '</a> '].join(''))
+                .click(function () {
+                  setSearch(tag);
+                  return false;
+                }))
+          });
+        } else {
+          alltags.append('<p>Not currently trending tags</p>');
+        }
       }, 'json');
     }
 

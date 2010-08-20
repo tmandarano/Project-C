@@ -461,13 +461,13 @@ function photos_image_by_platform() {
     $path .= $platform;
     $path .= '/' . $size;
     $path .= '/' . _get_photo_filename($photo) . 'jpg'; // TODO
+    debug($path);
 
     if (file_exists(option('PHOTOS_DIR') . $path)) {
         header('Cache-Control: public');
         header('Expires: '.date(DateTime::RFC1123, time() + 31556926));
-        header('Location: ' . '/photos/'. $path);
-        //header('Content-Type: image/jpeg'); // TODO
-        exit;
+        header('Content-Type: image/jpeg'); // TODO
+        readfile(option('PHOTOS_DIR') . $path);
     } else {
         halt(404);
     }
