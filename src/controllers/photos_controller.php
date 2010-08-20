@@ -283,11 +283,10 @@ function photos_create() {
 }
 
 function save_photo($photo) {
-    debug('SAVING PHOTO', $photo->get_name());
+    // Store the uploaded file in the toplevel.
     $new_filename = _get_photo_filename($photo);
     $target_path = option('PHOTOS_DIR') . $new_filename;
     $photo->set_url("/photos/" . $new_filename);
-
     $upload_path = option('UPLOAD_DIR') . $photo->get_name();
     copy($upload_path, $target_path);
     unlink($upload_path);
@@ -321,7 +320,7 @@ function _get_photo_extension($photo) {
 }
 
 function _get_photo_filename($photo) {
-    return 'IMG'.$photo->get_id().'.'._get_photo_extension($photo);
+    return 'IMG'.$photo->get_id();
 }
 
 /** Tell if image is wider than it is tall. A square qualifies also.
@@ -339,8 +338,8 @@ function _generate_iOS_photos($photo) {
     $filename = _get_photo_filename($photo);
     $src_filename = option('PHOTOS_DIR') . $filename;
 
-    imagejpeg(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename);
-    imagejpeg(_thumbnailify_jpeg($src_filename, 125, 130), $dir . '/' . 'm' . '/' . $filename);
+    imagegif(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename);
+    imagegif(_thumbnailify_jpeg($src_filename, 125, 130), $dir . '/' . 'm' . '/' . $filename);
     imagejpeg(_thumbnailify_jpeg($src_filename, 290, 360), $dir . '/' . 'f' . '/' . $filename);
 }
 
@@ -349,8 +348,8 @@ function _generate_iOS_retina_photos($photo) {
     $filename = _get_photo_filename($photo);
     $src_filename = option('PHOTOS_DIR') . $filename;
 
-    imagejpeg(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename);
-    imagejpeg(_thumbnailify_jpeg($src_filename, 250, 260), $dir . '/' . 'm' . '/' . $filename);
+    imagegif(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename);
+    imagegif(_thumbnailify_jpeg($src_filename, 250, 260), $dir . '/' . 'm' . '/' . $filename);
     imagejpeg(_thumbnailify_jpeg($src_filename, 520, 580), $dir . '/' . 'f' . '/' . $filename);
 }
 
@@ -465,12 +464,16 @@ function photos_image_by_platform() {
         $path .= $platform;
         $path .= '/' . $size;
     }
-    $path .= '/' . _get_photo_filename($photo) . 'jpg'; // TODO
+    $path .= '/' . _get_photo_filename($photo);
 
     if (file_exists(option('PHOTOS_DIR') . $path)) {
         header('Cache-Control: public');
         header('Expires: '.date(DateTime::RFC1123, time() + 31556926));
-        header('Content-Type: image/jpeg'); // TODO
+        if ($size == 'f') {
+            header('Content-Type: image/jpeg');
+        } else {
+            header('Content-Type: image/gif');
+        }
         readfile(option('PHOTOS_DIR') . $path);
     } else {
         halt(404);
