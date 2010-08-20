@@ -13,8 +13,8 @@ LG.map.markers.photo = function (photo) {
         position: new GM.LatLng(photo.latitude, photo.longitude),
         title: [(user ? user.username : 'Unknown'), ': ',
                 photo.caption].join(''),
-        icon: new GM.MarkerImage(['api/photos/', photo.id, '/1'].join(''),
-          null, null, new GM.Point(20, 42)),
+        icon: new GM.MarkerImage(['/api/photos/', photo.id, '/iOS/s'].join(''),
+          null, null, new GM.Point(31, 63), new GM.Size(61, 61)),
         shadow: new GM.MarkerImage('/img/mapmkrbdr.png')
       });
     }
@@ -49,7 +49,7 @@ LG.eye = (function () {
     L.addPhoto = function (photo) {
       var id = photo.id;
       $.get('/api/photos/' + id + '/user', function (user) {
-        var photoInfo = $(['<li><img src="/api/photos/', id, '/3" />',
+        var photoInfo = $(['<li><img src="/api/photos/', id, '/iOS/f" />',
            '<div class="clickable">',
            '<p class="time">', LG.dateToVernacular(photo.date_added), '</p>',
            '<p class="user">', user ? user.username : 'Unknown user', '</p>',
@@ -181,7 +181,7 @@ LG.eye = (function () {
       }
       this.onRemove();
 
-      var size = 40 * 3;
+      var size = 60 * 3;
       var div = $(this.get('map').getDiv());
       var width = div.outerWidth(),
           height = div.outerHeight();

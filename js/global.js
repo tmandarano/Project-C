@@ -140,7 +140,7 @@ var _ = function(jdom) {
 var _p = _.prototype = function() {};
 _p.append = function (p) {
   var self = this;
-  var li = $(['<li><a href="#"><img src="/api/photos/', p.id, '/iOS/s" /></a></li>'].join(''))
+  var li = $(['<li class="clickable"><img src="/api/photos/', p.id, '/iOS/s" /></li>'].join(''))
     .data('json', p)
     .appendTo(self.jdom)
     .click(function () { LGG.showPhoto(p.id); });
@@ -518,7 +518,7 @@ LGG.showPhoto = function(id) {
         '<table class="split">',
           '<tr>',
             '<td class="photo">',
-              '<img class="sround" src="/api/photos/'+id+'/full/f" />',
+              '<img class="sround" src="/api/photos/'+id+'/iOS/f" />',
             '</td>',
             '<td>',
               //'<div class="gathered sround">',

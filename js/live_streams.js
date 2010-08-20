@@ -8,7 +8,7 @@ LGLS.bounds = null;
 var HTML_LOADING = '<img src="/img/loading.gif" />';
 var PHOTOSTUB_LIVESTREAM = [
 '<div class="photo">',
-  '<a href="/api/photos/<%=id%>"><img src="/photo/<%=id%>/3" /></a>',
+  '<a href="/api/photos/<%=id%>/iOS/m"><img src="/api/photos/<%=id%>/iOS/m" /></a>',
   '<a class="like" href="#like">230</a>',
 '</div>',
 '<div class="detail">',
@@ -23,7 +23,7 @@ var PHOTOSTUB_LIVESTREAM = [
 //      '<input type="submit" value="comment" />',
 //    '</form>',
     '<p>Tags <% for (var i = 0; i < tags.length; i += 1) {%><a href="#"><%=tags[i].tag%></a>, <%}%></p>',
-    '<form class="tags" name="tags" action="/photos/edit/<%=id%>" method="post">',
+    '<form class="tags" name="tags" action="/api/photos/edit/<%=id%>" method="post">',
       '<input name="photo[tag]" type="text" class="default" value="add tag" />',
       '<input type="submit" value="tag" />',
     '</form>',
@@ -36,7 +36,7 @@ LGLS.tmplLivestream = tmpl(PHOTOSTUB_LIVESTREAM);
 function loadLivestreamPhoto(jdom, photo_id) {
   jdom.addClass('photo');
   jdom.html(HTML_LOADING);
-  $.get('/photos/'+photo_id, function (data) {
+  $.get('/api/photos/'+photo_id, function (data) {
     var photo = data[0];
     var coord = new GM.LatLng(photo.latitude, photo.longitude);
     new GM.Marker({position: coord, map: LGLS.photoMap});
