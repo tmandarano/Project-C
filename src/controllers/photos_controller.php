@@ -127,7 +127,7 @@ function photos_delete_tag() {
 }
 
 function photos_upload() {
-    $image_types = array('image/jpeg', 'image/gif', 'image/png');
+    $image_types = array('image/jpeg');//, 'image/gif', 'image/png');
     $type = $_FILES['userfile']['type'];
     if(! in_array($type, $image_types)) {
         debug("ERROR: File upload failed for " . $_FILES['userfile']['name'] . 
@@ -284,7 +284,7 @@ function photos_create() {
 
 function save_photo($photo) {
     // Store the uploaded file in the toplevel.
-    $new_filename = _get_photo_filename($photo);
+    $new_filename = _get_photo_filename($photo) . '.' . _get_photo_extension($photo);
     $target_path = option('PHOTOS_DIR') . $new_filename;
     $photo->set_url("/photos/" . $new_filename);
     $upload_path = option('UPLOAD_DIR') . $photo->get_name();
@@ -336,21 +336,21 @@ function _is_image_horizontal($img) {
 function _generate_iOS_photos($photo) {
     $dir = option('PHOTOS_DIR') . '/' . option('PHOTOS_IOS_DIR');
     $filename = _get_photo_filename($photo);
-    $src_filename = option('PHOTOS_DIR') . $filename;
+    $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
 
-    imagegif(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename);
-    imagegif(_thumbnailify_jpeg($src_filename, 125, 130), $dir . '/' . 'm' . '/' . $filename);
-    imagejpeg(_thumbnailify_jpeg($src_filename, 290, 360), $dir . '/' . 'f' . '/' . $filename, 100);
+    imagegif(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename . '.gif');
+    imagegif(_thumbnailify_jpeg($src_filename, 125, 130), $dir . '/' . 'm' . '/' . $filename . '.gif');
+    imagejpeg(_thumbnailify_jpeg($src_filename, 290, 360), $dir . '/' . 'f' . '/' . $filename . '.jpg', 100);
 }
 
 function _generate_iOS_retina_photos($photo) {
     $dir = option('PHOTOS_DIR') . '/' . option('PHOTOS_IOS_RETINA_DIR');
     $filename = _get_photo_filename($photo);
-    $src_filename = option('PHOTOS_DIR') . $filename;
+    $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
 
-    imagegif(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename);
-    imagegif(_thumbnailify_jpeg($src_filename, 250, 260), $dir . '/' . 'm' . '/' . $filename);
-    imagejpeg(_thumbnailify_jpeg($src_filename, 520, 580), $dir . '/' . 'f' . '/' . $filename, 100);
+    imagegif(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename . '.gif');
+    imagegif(_thumbnailify_jpeg($src_filename, 250, 260), $dir . '/' . 'm' . '/' . $filename . '.gif');
+    imagejpeg(_thumbnailify_jpeg($src_filename, 520, 580), $dir . '/' . 'f' . '/' . $filename . '.jpg', 100);
 }
 
 function _scaled_to_x($img, $px) {
@@ -465,6 +465,11 @@ function photos_image_by_platform() {
         $path .= '/' . $size;
     }
     $path .= '/' . _get_photo_filename($photo);
+    if ($size == 'f') {
+        $path .= '.jpg';
+    } else {
+        $path .= '.gif';
+    }
 
     if (file_exists(option('PHOTOS_DIR') . $path)) {
         header('Cache-Control: public');
