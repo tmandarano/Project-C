@@ -338,6 +338,7 @@ function _generate_iOS_photos($photo) {
     $filename = _get_photo_filename($photo);
     $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
 
+    imagegif(_thumbnailify_jpeg($src_filename, 50, 50), $dir . '/' . 't' . '/' . $filename . '.gif');
     imagegif(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename . '.gif');
     imagegif(_thumbnailify_jpeg($src_filename, 125, 130), $dir . '/' . 'm' . '/' . $filename . '.gif');
     imagejpeg(_thumbnailify_jpeg($src_filename, 290, 360), $dir . '/' . 'f' . '/' . $filename . '.jpg', 100);
@@ -348,6 +349,7 @@ function _generate_iOS_retina_photos($photo) {
     $filename = _get_photo_filename($photo);
     $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
 
+    imagegif(_thumbnailify_jpeg($src_filename, 50, 50), $dir . '/' . 't' . '/' . $filename . '.gif');
     imagegif(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename . '.gif');
     imagegif(_thumbnailify_jpeg($src_filename, 250, 260), $dir . '/' . 'm' . '/' . $filename . '.gif');
     imagejpeg(_thumbnailify_jpeg($src_filename, 520, 580), $dir . '/' . 'f' . '/' . $filename . '.jpg', 100);
@@ -439,7 +441,7 @@ function photos_image_by_platform() {
     }
 
     $size = params('size');
-    $ALLOWED_SIZES = array('s', 'm', 'f');
+    $ALLOWED_SIZES = array('t', 's', 'm', 'f');
     $sizeOK = false;
     foreach ($ALLOWED_SIZES as $s) {
         if ($size == $s) {
