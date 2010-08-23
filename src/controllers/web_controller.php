@@ -15,6 +15,10 @@ function get_session_user_info($user) {
     return array();
 }
 
+function beta() {
+    return html(file_get_contents('src/views/beta.tpl'));
+}
+
 function signin_janrain() {
     // This function runs as a result of an incoming call from Janrain.
     debug('signin callback');

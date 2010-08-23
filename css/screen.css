@@ -100,9 +100,9 @@ h1 strong { font-weight: bold; }
 #footer { font-size: 0.9em; position: fixed; bottom: 0; text-align: center; }
 #footer li { display: inline; padding: 0 0.5em; }
 
-#download { background-color: #dd0; border: #dd0; color: #000; }
-#download:hover { background-color: #ee0; }
-#download:active { background-color: #ee0; color: #555; }
+button.yellow { background-color: #dd0; border: #dd0; color: #000; }
+button.yellow:hover { background-color: #ee0; }
+button.yellow:active { background-color: #ee0; color: #555; }
 .copyright { font-size: 0.8em; }
 
 .nav li { float: left; }
@@ -366,6 +366,7 @@ form.search input[type="image"] {
 }
 form.comments input[type="text"],
 form.tags input[type="text"] {
+  font-size: 1.3em;
   border: 1px solid #aaa;
   border-radius: 2px;
   -moz-border-radius: 2px;
@@ -441,13 +442,12 @@ h1.monochrome { color: #444; font-size: 2.5em; }
 h1.monochrome em { font-weight: bold; }
 
 .profile #content { width: 1024px; }
-.profile .left.pane { width: 220px; }
-.profile .left.pane .actions { text-align: center; }
-.profile .left.pane .actions a { color: #bb2727; }
-.profile .left.pane ul.collage { width: 220px; }
-.profile .left.pane h1.username { text-align: center; }
-.profile .left.pane .username { font-size: large; font-weight: bold; color: #a3d277; }
-.profile .left.pane .userphoto { width: 220px; height: 220px; text-align: center; }
+.profile .pane { padding-top: 1em; }
+.profile .left,
+.profile .left ul.collage { width: 220px; }
+.profile .left h1.username { text-align: center; margin-bottom: 0.5em; }
+.profile .left .username { font-size: large; font-weight: bold; color: #a3d277; }
+.profile .left .userphoto { width: 220px; height: 220px; text-align: center; }
 .profile dl.user.info dt:after { content: ":"; }
 .profile dl.user.info dt { float: left; clear: left; margin-right: 0.5em; }
 .profile .right.pane { padding-left: 3em; }

@@ -55,6 +55,7 @@ dispatch_post  ($PRE.'/photos/upload',               'photos_upload');
 dispatch_get   ($PRE.'/photos/status/:status',       'photos_get');
 dispatch_get   ($PRE.'/photos/recent/:limit',        'photos_recent');
 dispatch_get   ($PRE.'/photos/area/:limit/:coords',  'photos_recent_by_area');
+dispatch_get   ($PRE.'/photos/circle/:limit/:radius/:coord','photos_recent_by_circle');
 dispatch_get   ($PRE.'/photos/:id',                  'photos_get_by_id');
 dispatch_get   ($PRE.'/photos/:id/status/:status',   'photos_get_by_id');
 dispatch_get   ($PRE.'/photos/:id/user/',            'users_get_by_photo_id');

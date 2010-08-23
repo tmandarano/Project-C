@@ -59,6 +59,7 @@ function check_username() {
 
 // Now dispatch paths
 dispatch        ('/',                     'eye');
+dispatch        ('/beta',                 'beta');
 //dispatch        ('/',                     'home');
 dispatch_post   ('/signin_janrain',               'signin_janrain');
 dispatch        ('/signout',              'signout');

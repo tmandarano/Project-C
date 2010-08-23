@@ -1,0 +1,24 @@
+em { font-style: italic; }
+#header { height: 6em; }
+#header div { width: 800px; margin: auto; line-height: 6em; height: inherit;}
+#header img { vertical-align: middle; height: 3em; margin-right: 1em; margin-bottom: 1em; }
+#header p { font-size: 1.1em; display: inline; vertical-align: sub; }
+#header button {
+}
+#content { text-align: center; font-weight: bold; }
+#content h1 { height: 4em; line-height: 4em; margin: 2em; }
+#content h1 p {
+  background-color: #efefef;
+  padding: 0.5em; 
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 1.6em;
+  display: inline;
+  text-align: center;
+  border-radius: 0.3em;
+  -moz-border-radius: 0.3em;
+  -webkit-border-radius: 0.3em; 
+}
+#content p { margin: 1em; }
+#content img { position: fixed; left: 0; bottom: 4.5em; }
+#footer { height: 5em; }
