@@ -71,6 +71,46 @@ function photos_recent_by_area() {
     return json(PhotoDao::get_recent_photos_by_area($points, $limit));
 }
 
+function _meters_to_deg_lat($meters) {
+    return $meters / 111131.745;
+}
+
+function _meters_to_deg_lng($meters, $lat) {
+    // 111200 m = 1 degree at equator.
+    // rough estimate of the degrees of longitude matching the meters given at 
+    // a given latitude.
+    if (!$lat or $lat == 0) {
+        return $meters / 111200;
+    } else { 
+        return $meters / (111200 * cos($lat * M_PI / 180));
+    }
+}
+
+function photos_recent_by_circle() {
+    check_system_auth();
+
+    $limit = var_to_i(params('limit'));
+    $radius = var_to_i(params('radius'));
+    $coord = explode(',', params('coord'));
+    if (count($coord) != 2) {
+        halt(400);
+    }
+
+    $lat = $coord[0];
+    $lng = $coord[1];
+
+    $dlat = _meters_to_deg_lat($radius);
+    $dlng = _meters_to_deg_lng($radius, $lat);
+
+    $points = array();
+    $points[] = array($lat + $dlat, $lng);
+    $points[] = array($lat, $lng + $dlng);
+    $points[] = array($lat - $dlat, $lng);
+    $points[] = array($lat, $lng - $dlng);
+
+    return json(PhotoDao::get_recent_photos_by_area($points, $limit));
+}
+
 function photos_get_by_user_id() {
     check_system_auth();
 
