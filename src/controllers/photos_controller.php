@@ -513,6 +513,12 @@ function photos_image_by_platform() {
         $path .= '.gif';
     }
 
+    if (!file_exists(option('PHOTOS_DIR') . $path)) {
+        // try to generate the photos on the fly
+        _generate_iOS_photos($photo);
+        _generate_iOS_retina_photos($photo);
+    }
+
     if (file_exists(option('PHOTOS_DIR') . $path)) {
         header('Cache-Control: public');
         header('Expires: '.date(DateTime::RFC1123, time() + 31556926));
