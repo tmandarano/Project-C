@@ -8,18 +8,23 @@ option('PHOTOS_IOS_DIR', 'iOS');
 option('PHOTOS_IOS_RETINA_DIR', 'iOS_retina');
 
 // Ensure the directories exist
+function ensure_dir($dir) {
+    if (!is_dir($dir)) {
+        mkdir($dir, 0775, true);
+    }
+}
 $IOS_DIR = option('PHOTOS_DIR') . option('PHOTOS_IOS_DIR');
-if ( ! is_dir($IOS_DIR)) {
-    mkdir($IOS_DIR . '/' . 's', 0775, true);
-    mkdir($IOS_DIR . '/' . 'm', 0775, true);
-    mkdir($IOS_DIR . '/' . 'f', 0775, true);
-}
+ensure_dir($IOS_DIR);
+ensure_dir($IOS_DIR . '/' . 't');
+ensure_dir($IOS_DIR . '/' . 's');
+ensure_dir($IOS_DIR . '/' . 'm');
+ensure_dir($IOS_DIR . '/' . 'f');
 $IOS_RETINA_DIR = option('PHOTOS_DIR') . option('PHOTOS_IOS_RETINA_DIR');
-if ( ! is_dir($IOS_RETINA_DIR)) {
-    mkdir($IOS_RETINA_DIR . '/' . 's', 0775, true);
-    mkdir($IOS_RETINA_DIR . '/' . 'm', 0775, true);
-    mkdir($IOS_RETINA_DIR . '/' . 'f', 0775, true);
-}
+ensure_dir($IOS_RETINA_DIR);
+ensure_dir($IOS_RETINA_DIR . '/' . 't');
+ensure_dir($IOS_RETINA_DIR . '/' . 's');
+ensure_dir($IOS_RETINA_DIR . '/' . 'm');
+ensure_dir($IOS_RETINA_DIR . '/' . 'f');
 
 function photos_get() {
     $status = check_status_param();
@@ -324,7 +329,7 @@ function photos_create() {
 
 function save_photo($photo) {
     // Store the uploaded file in the toplevel.
-    $new_filename = _get_photo_filename($photo); . '.' . _get_photo_extension($photo);
+    $new_filename = _get_photo_filename($photo) . '.' . _get_photo_extension($photo);
     $target_path = option('PHOTOS_DIR') . $new_filename;
     $photo->set_url("/photos/" . $new_filename);
     $upload_path = option('UPLOAD_DIR') . $photo->get_name();
@@ -358,7 +363,7 @@ function _get_photo_extension($photo) {
     $name = $photo->get_name();
     if ($name) {
         return strtolower(substr($name, strrpos($name, '.') + 1));
-    else {
+    } else {
         return 'jpg';
     }
 }
@@ -380,7 +385,8 @@ function _is_image_horizontal($img) {
 function _generate_iOS_photos($photo) {
     $dir = option('PHOTOS_DIR') . '/' . option('PHOTOS_IOS_DIR');
     $filename = _get_photo_filename($photo);
-    $src_filename = option('PHOTOS_DIR') . $filename; . '.' . _get_photo_extension($photo);
+    $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
+    debug('SOURCE: ' . $src_filename);
 
     imagegif(_thumbnailify_jpeg($src_filename, 50, 50), $dir . '/' . 't' . '/' . $filename . '.gif');
     imagegif(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename . '.gif');
@@ -391,7 +397,7 @@ function _generate_iOS_photos($photo) {
 function _generate_iOS_retina_photos($photo) {
     $dir = option('PHOTOS_DIR') . '/' . option('PHOTOS_IOS_RETINA_DIR');
     $filename = _get_photo_filename($photo);
-    $src_filename = option('PHOTOS_DIR') . $filename;// . '.' . _get_photo_extension($photo);
+    $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
 
     imagegif(_thumbnailify_jpeg($src_filename, 50, 50), $dir . '/' . 't' . '/' . $filename . '.gif');
     imagegif(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename . '.gif');
