@@ -324,7 +324,7 @@ function photos_create() {
 
 function save_photo($photo) {
     // Store the uploaded file in the toplevel.
-    $new_filename = _get_photo_filename($photo) . '.' . _get_photo_extension($photo);
+    $new_filename = _get_photo_filename($photo);// . '.' . _get_photo_extension($photo);
     $target_path = option('PHOTOS_DIR') . $new_filename;
     $photo->set_url("/photos/" . $new_filename);
     $upload_path = option('UPLOAD_DIR') . $photo->get_name();
@@ -376,7 +376,7 @@ function _is_image_horizontal($img) {
 function _generate_iOS_photos($photo) {
     $dir = option('PHOTOS_DIR') . '/' . option('PHOTOS_IOS_DIR');
     $filename = _get_photo_filename($photo);
-    $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
+    $src_filename = option('PHOTOS_DIR') . $filename;// . '.' . _get_photo_extension($photo);
 
     imagegif(_thumbnailify_jpeg($src_filename, 50, 50), $dir . '/' . 't' . '/' . $filename . '.gif');
     imagegif(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename . '.gif');
@@ -387,7 +387,7 @@ function _generate_iOS_photos($photo) {
 function _generate_iOS_retina_photos($photo) {
     $dir = option('PHOTOS_DIR') . '/' . option('PHOTOS_IOS_RETINA_DIR');
     $filename = _get_photo_filename($photo);
-    $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
+    $src_filename = option('PHOTOS_DIR') . $filename;// . '.' . _get_photo_extension($photo);
 
     imagegif(_thumbnailify_jpeg($src_filename, 50, 50), $dir . '/' . 't' . '/' . $filename . '.gif');
     imagegif(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename . '.gif');
@@ -431,7 +431,7 @@ function _thumbnailify_jpeg($filename, $x, $y) {
     if (file_exists($filename)) {
         return _thumbnailify_image(imageCreateFromJpeg($filename), $x, $y);
     }
-    return null;
+    halt(404);
 }
 
 /** Scale the given image.
