@@ -3,9 +3,10 @@
 *~
 empty
 \#*#
-photos/IMG*
+photos/*
 special/smarty_pants/compiled/*
 !special/uploads/README*
 special/uploads/*
 test.html
 *.bak
+*.DS_Store

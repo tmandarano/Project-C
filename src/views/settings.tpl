@@ -23,7 +23,7 @@
 *}
 
 <div class="expandable auths">
-  <h1>Connections</h1>
+  <h1 class="clickable">Connections</h1>
   <div class="content">
     <p>Signed in but you can't see your photos? Your account has never been
     signed into using this service. Please reauthenticate with a service that

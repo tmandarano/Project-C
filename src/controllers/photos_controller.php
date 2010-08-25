@@ -4,11 +4,33 @@ require_once('src/dao/photo_dao.php');
 require_once('src/dao/user_dao.php');
 require_once('src/utils/helpers.php');
 
+option('PHOTOS_IOS_DIR', 'iOS');
+option('PHOTOS_IOS_RETINA_DIR', 'iOS_retina');
+
+// Ensure the directories exist
+function ensure_dir($dir) {
+    if (!is_dir($dir)) {
+        mkdir($dir, 0775, true);
+    }
+}
+$IOS_DIR = option('PHOTOS_DIR') . option('PHOTOS_IOS_DIR');
+ensure_dir($IOS_DIR);
+ensure_dir($IOS_DIR . '/' . 't');
+ensure_dir($IOS_DIR . '/' . 's');
+ensure_dir($IOS_DIR . '/' . 'm');
+ensure_dir($IOS_DIR . '/' . 'f');
+$IOS_RETINA_DIR = option('PHOTOS_DIR') . option('PHOTOS_IOS_RETINA_DIR');
+ensure_dir($IOS_RETINA_DIR);
+ensure_dir($IOS_RETINA_DIR . '/' . 't');
+ensure_dir($IOS_RETINA_DIR . '/' . 's');
+ensure_dir($IOS_RETINA_DIR . '/' . 'm');
+ensure_dir($IOS_RETINA_DIR . '/' . 'f');
+
 function photos_get() {
     $status = check_status_param();
 
     $photos = PhotoDao::get_photos($status);
-    
+
     return json($photos);
 }
 
@@ -50,6 +72,46 @@ function photos_recent_by_area() {
     $points[] = array($coords[1][0], $coords[1][1]);
     $points[] = array($coords[1][0], $coords[0][1]);
     $points[] = $coords[0];
+
+    return json(PhotoDao::get_recent_photos_by_area($points, $limit));
+}
+
+function _meters_to_deg_lat($meters) {
+    return $meters / 111131.745;
+}
+
+function _meters_to_deg_lng($meters, $lat) {
+    // 111200 m = 1 degree at equator.
+    // rough estimate of the degrees of longitude matching the meters given at 
+    // a given latitude.
+    if (!$lat or $lat == 0) {
+        return $meters / 111200;
+    } else { 
+        return $meters / (111200 * cos($lat * M_PI / 180));
+    }
+}
+
+function photos_recent_by_circle() {
+    check_system_auth();
+
+    $limit = var_to_i(params('limit'));
+    $radius = var_to_i(params('radius'));
+    $coord = explode(',', params('coord'));
+    if (count($coord) != 2) {
+        halt(400);
+    }
+
+    $lat = $coord[0];
+    $lng = $coord[1];
+
+    $dlat = _meters_to_deg_lat($radius);
+    $dlng = _meters_to_deg_lng($radius, $lat);
+
+    $points = array();
+    $points[] = array($lat + $dlat, $lng);
+    $points[] = array($lat, $lng + $dlng);
+    $points[] = array($lat - $dlat, $lng);
+    $points[] = array($lat, $lng - $dlng);
 
     return json(PhotoDao::get_recent_photos_by_area($points, $limit));
 }
@@ -198,11 +260,6 @@ function photo_by_size() {
     return;
 }
 
-function photo() {
-    params('size', 'o');
-    return photo_by_size();
-}
-
 function photos_add_tag() {
     check_system_auth();
 
@@ -220,7 +277,7 @@ function photos_delete_tag() {
 }
 
 function photos_upload() {
-    $image_types = array('image/jpeg', 'image/gif', 'image/png');
+    $image_types = array('image/jpeg');//, 'image/gif', 'image/png');
     $type = $_FILES['userfile']['type'];
     if(! in_array($type, $image_types)) {
         debug("ERROR: File upload failed for " . $_FILES['userfile']['name'] . 
@@ -320,6 +377,271 @@ var_dump($_SERVER['REQUEST_URI']);
     }
 
     return json($photo);
+}
+
+function photos_create() {
+    check_system_auth();
+
+    $expected_vars = array('identifier', 'caption', 'response', 'tags', 'latitude', 'longitude');
+    $required_vars = array('caption', 'response', 'tags', 'latitude', 'longitude');
+
+    $data = get_json_or_post_input($expected_vars);
+
+    // Check to make sure all expected values are present
+    foreach($required_vars as $var) {
+        if(! isset($data[$var])) {
+            debug("The required parameter ".$var." was not sent.");
+            halt(400);
+        }
+    }
+   
+    $user = get_user_by_session_or_identifier($data['identifier']);
+    if(!$user) {
+        return halt(401);
+    }
+
+    $photo = new Photo();
+    $photo->set_user_id($user->get_id());
+    
+    $tag_str = $data['tags'];
+    $tag_strs = explode(',', $tag_str);
+    $tags = array();
+
+    foreach($tag_strs as $tag_var) {
+        $tag = new Tag();
+        $tag->set_tag($tag_var);
+        $tags[] = $tag;
+    }
+    $photo->set_tags($tags);
+
+    $photo->set_caption($data['caption']);
+    $photo->set_name($data['userfile']);
+    $photo->set_latitude($data['latitude']);
+    $photo->set_longitude($data['longitude']);
+    
+    $returned_id = PhotoDAO::save($photo);
+    $photo->set_id($returned_id);
+    save_photo($photo);
+
+    return json($photo);
+}
+
+function save_photo($photo) {
+    // Store the uploaded file in the toplevel.
+    $new_filename = _get_photo_filename($photo) . '.' . _get_photo_extension($photo);
+    $target_path = option('PHOTOS_DIR') . $new_filename;
+    $photo->set_url("/photos/" . $new_filename);
+    $upload_path = option('UPLOAD_DIR') . $photo->get_name();
+    copy($upload_path, $target_path);
+    unlink($upload_path);
+
+    PhotoDAO::update($photo);
+
+    // Image sizes needed:
+    //            small   medium  full
+    // iOS normal 61x61   125x130 290x360
+    // iOS retina 122x122 250x260 580x520
+    // 
+    // I am designating a hierarchy within the photos directory anticipating 
+    // more device specific sizes.
+    // photos/
+    //   originals can be stored in top level
+    //   iOS/
+    //     s/
+    //     m/
+    //     f/
+    //   iOS_retina/
+    //     s/
+    //     m/
+    //     f/
+    _generate_iOS_photos($photo);
+    _generate_iOS_retina_photos($photo);
+}
+
+function _get_photo_extension($photo) {
+    $name = $photo->get_name();
+    if ($name) {
+        return strtolower(substr($name, strrpos($name, '.') + 1));
+    } else {
+        return 'jpg';
+    }
+}
+
+function _get_photo_filename($photo) {
+    return 'IMG'.$photo->get_id();
+}
+
+/** Tell if image is wider than it is tall. A square qualifies also.
+ * Arg:
+ *      img - the PHP image
+ * Return:
+ *      true if the image is wider than it is tall or as wide as it is tall.
+ */
+function _is_image_horizontal($img) {
+    return imagesX($img) >= imagesY($img);
+}
+
+function _generate_iOS_photos($photo) {
+    $dir = option('PHOTOS_DIR') . '/' . option('PHOTOS_IOS_DIR');
+    $filename = _get_photo_filename($photo);
+    $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
+    debug('SOURCE: ' . $src_filename);
+
+    imagegif(_thumbnailify_jpeg($src_filename, 50, 50), $dir . '/' . 't' . '/' . $filename . '.gif');
+    imagegif(_thumbnailify_jpeg($src_filename, 61, 61), $dir . '/' . 's' . '/' . $filename . '.gif');
+    imagegif(_thumbnailify_jpeg($src_filename, 125, 130), $dir . '/' . 'm' . '/' . $filename . '.gif');
+    imagejpeg(_thumbnailify_jpeg($src_filename, 290, 360), $dir . '/' . 'f' . '/' . $filename . '.jpg', 100);
+}
+
+function _generate_iOS_retina_photos($photo) {
+    $dir = option('PHOTOS_DIR') . '/' . option('PHOTOS_IOS_RETINA_DIR');
+    $filename = _get_photo_filename($photo);
+    $src_filename = option('PHOTOS_DIR') . $filename . '.' . _get_photo_extension($photo);
+
+    imagegif(_thumbnailify_jpeg($src_filename, 50, 50), $dir . '/' . 't' . '/' . $filename . '.gif');
+    imagegif(_thumbnailify_jpeg($src_filename, 122, 122), $dir . '/' . 's' . '/' . $filename . '.gif');
+    imagegif(_thumbnailify_jpeg($src_filename, 250, 260), $dir . '/' . 'm' . '/' . $filename . '.gif');
+    imagejpeg(_thumbnailify_jpeg($src_filename, 520, 580), $dir . '/' . 'f' . '/' . $filename . '.jpg', 100);
+}
+
+function _scaled_to_x($img, $px) {
+    return array($px, imagesY($img) * $px / imagesX($img));
+}
+
+function _scaled_to_y($img, $px) {
+    return array(imagesX($img) * $px / imagesY($img), $px);
+}
+
+function _thumbnailify_image($img, $x, $y) {
+    // I want to scale to the axis that will result in there still being too 
+    // much image left on the other axis; I can crop that.
+    $width = imagesX($img);
+    $height = imagesY($img);
+
+    $scaled_to_x = _scaled_to_x($img, $x);
+    $scaled_to_y = _scaled_to_y($img, $y);
+
+    $cimg = imagecreatetruecolor($x, $y);
+    if ($scaled_to_x[1] < $y) {
+        // Scaling to the x axis makes y axis too small.
+        $simg = _scale_image($img, $y, false);
+        $pt = imagesx($simg) / 2 - $x / 2;
+        imagecopyresized($cimg, $simg, 0, 0, $pt, 0, $x, $y, $pt + $x, $y);
+    } else {
+        // Scaling to the y axis makes x axis too small.
+        $simg = _scale_image($img, $x, true);
+        $pt = imagesy($simg) / 2 - $y / 2;
+        imagecopyresized($cimg, $simg, 0, 0, 0, $pt, $x, $y, $x, $pt + $y);
+    }
+    return $cimg;
+}
+
+function _thumbnailify_jpeg($filename, $x, $y) {
+    if (file_exists($filename)) {
+        return _thumbnailify_image(imageCreateFromJpeg($filename), $x, $y);
+    }
+    halt(404);
+}
+
+/** Scale the given image.
+ * Args:
+ *      img - the PHP image to scale
+ *      x - the target pixel size
+ *      xAxis - boolean indicating x or y axis.
+ * Return:
+ *      scaled PHP image with the indicated axis at x pixels.
+ */
+function _scale_image($img, $px, $xAxis) {
+    if (!$img) {
+        return null;
+    }
+    $width = imagesX($img);
+    $height = imagesY($img);
+    $scaled = array($width, $height);
+    if ($xAxis) {
+        $scaled = _scaled_to_x($img, $px);
+    } else {
+        $scaled = _scaled_to_y($img, $px);
+    }
+    $scaledimg = ImageCreateTrueColor($scaled[0], $scaled[1]);
+    ImageCopyResampled($scaledimg, $img, 0, 0, 0, 0,
+                       $scaled[0], $scaled[1], $width, $height);
+    return $scaledimg;
+}
+
+function photos_image_by_platform() {
+    // Getting a photo using /api/photos/:id/full/{s,m,f}
+    // will give the original size photo.
+    $platform = params('platform');
+    $ALLOWED_PLATFORMS = array('full',
+                               option('PHOTOS_IOS_DIR'),
+                               option('PHOTOS_IOS_RETINA_DIR'));
+    $platformOK = false;
+    foreach ($ALLOWED_PLATFORMS as $p) {
+        if ($platform == $p) {
+            $platformOK = true;
+            break;
+        }
+    }
+
+    if (!$platformOK) {
+        debug('Illegal platform given during attempt to get photo:', $platform);
+        halt(401);
+    }
+
+    $size = params('size');
+    $ALLOWED_SIZES = array('t', 's', 'm', 'f');
+    $sizeOK = false;
+    foreach ($ALLOWED_SIZES as $s) {
+        if ($size == $s) {
+            $sizeOK = true;
+            break;
+        }
+    }
+
+    if (!$sizeOK) {
+        debug('Illegal size given during attempt to get photo:', $size);
+        halt(401);
+    }
+
+    $photo = PhotoDao::get_photo_by_id(var_to_i(params('id')));
+
+    if (!$photo) {
+        halt(404);
+    }
+
+    $path = '';
+    if ($platform != 'full') {
+        $path .= $platform;
+        $path .= '/' . $size;
+    }
+    $path .= '/' . _get_photo_filename($photo);
+    if ($size == 'f') {
+        $path .= '.jpg';
+    } else {
+        $path .= '.gif';
+    }
+
+    if (!file_exists(option('PHOTOS_DIR') . $path)) {
+        // try to generate the photos on the fly
+        _generate_iOS_photos($photo);
+        _generate_iOS_retina_photos($photo);
+    }
+
+    if (file_exists(option('PHOTOS_DIR') . $path)) {
+        header('Cache-Control: public');
+        header('Expires: '.date(DateTime::RFC1123, time() + 31556926));
+        if ($size == 'f') {
+            header('Content-Type: image/jpeg');
+        } else {
+            header('Content-Type: image/gif');
+        }
+        readfile(option('PHOTOS_DIR') . $path);
+    } else {
+        halt(404);
+    }
+
+    return;
 }
 
 ?>

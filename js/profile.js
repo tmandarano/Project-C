@@ -24,7 +24,7 @@ var HTML_BOTTOM = [
 ].join('');
 var HTML_PHOTO = [
   '<div class="photo" photo_id="<%=x.id%>">',
-    '<a href="#"><img src="/api/photos/<%=x.id%>/3" /></a>',
+    '<a href="#"><img src="/api/photos/<%=x.id%>/iOS/f" /></a>',
     //'<a class="like" href="#like">Like</a>',
   '</div>'
 ].join('');

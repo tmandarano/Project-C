@@ -83,7 +83,7 @@ LGG.html.collage.photos = function (jdom, photo_ids) {
   jdom.addClass('collage');
   for (var i in photo_ids) {
     $(['<li class="clickable"><img src="/api/photos/', 
-      photo_ids[i], '/1" /></li>'].join(''))
+      photo_ids[i], '/iOS/s" /></li>'].join(''))
       .appendTo(jdom)
       .click(function () { LGG.showPhoto(photo_ids[i]); });
   }
@@ -95,7 +95,7 @@ LGG.html.collage.people = function (jdom, people_ids) {
       people_ids[i], '" /></a></li>'].join('')).appendTo(jdom);
   }
 };
-LGG.setupExpandable = function () {
+LGG.setupExpandable = function (stayopen) {
   $('.expandable').each(function () {
     var pane = this;
     var header = $('h1', pane);
@@ -112,7 +112,9 @@ LGG.setupExpandable = function () {
       });
       header.attr('expanded', 'false');
     }
-    hide();
+    if (!stayopen) {
+        hide();
+    }
     header.click(function () {
       if (header.attr('expanded') == 'true') {
         hide();
@@ -138,7 +140,7 @@ var _ = function(jdom) {
 var _p = _.prototype = function() {};
 _p.append = function (p) {
   var self = this;
-  var li = $(['<li><a href="#"><img src="/api/photos/', p.id, '/2" /></a></li>'].join(''))
+  var li = $(['<li class="clickable"><img src="/api/photos/', p.id, '/iOS/s" /></li>'].join(''))
     .data('json', p)
     .appendTo(self.jdom)
     .click(function () { LGG.showPhoto(p.id); });
@@ -482,7 +484,7 @@ LGG.showDone = function () {
         '</div>',
         '<h1 class="bichrome"><em>Photos</em> gathered recently.</h1>',
         '<ul><% for (var i = 0; i < photos.length; i += 1) { %>',
-          '<li><img src="/api/photos/<%= photos[i].id %>/1" /></li>',
+          '<li><img src="/api/photos/<%= photos[i].id %>/iOS/s" /></li>',
           '<% } %>',
         '</ul>',
       '</div>',
@@ -516,7 +518,7 @@ LGG.showPhoto = function(id) {
         '<table class="split">',
           '<tr>',
             '<td class="photo">',
-              '<img class="sround" src="/api/photos/'+id+'/3" />',
+              '<img class="sround" src="/api/photos/'+id+'/iOS/f" />',
             '</td>',
             '<td>',
               //'<div class="gathered sround">',

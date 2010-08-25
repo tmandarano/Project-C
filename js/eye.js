@@ -1,5 +1,7 @@
 LG.map = defaultTo(LG.map, {});
-LG.map.defaultLoc = new GM.LatLng(32.7155, -117.1636); // San Diego 1st and Broadway
+
+// San Diego 1st and Broadway
+LG.map.defaultLoc = new GM.LatLng(32.7155, -117.1636);
 
 LG.map.markers = defaultTo(LG.map.markers, {});
 LG.map.markers.photo = function (photo) {
@@ -7,18 +9,14 @@ LG.map.markers.photo = function (photo) {
   $.ajax({async: false, url: ['/api/photos/', photo.id, '/user'].join(''),
     dataType: 'json',
     success: function (user) {
-      try {
       marker = new GM.Marker({
         position: new GM.LatLng(photo.latitude, photo.longitude),
         title: [(user ? user.username : 'Unknown'), ': ',
                 photo.caption].join(''),
-        icon: new GM.MarkerImage(['api/photos/', photo.id, '/1'].join(''),
-          null, null, new GM.Point(20, 42)),
+        icon: new GM.MarkerImage(['/api/photos/', photo.id, '/iOS/s'].join(''),
+          null, null, new GM.Point(31, 63), new GM.Size(61, 61)),
         shadow: new GM.MarkerImage('/img/mapmkrbdr.png')
       });
-      } catch (e) {
-        console.log(e);
-      }
     }
   });
   return marker;
@@ -32,7 +30,7 @@ LG.eye = (function () {
       search = null,
       latentResizeRefresh = null;
   var updateTimer = null,
-      refreshDelay = 1234800,//8000
+      refreshDelay = 8000,
       UPDATING = false,
       floodTime = 200; // long enough for timeout to cancel when resizing
 
@@ -51,7 +49,7 @@ LG.eye = (function () {
     L.addPhoto = function (photo) {
       var id = photo.id;
       $.get('/api/photos/' + id + '/user', function (user) {
-        var photoInfo = $(['<li><img src="/api/photos/', id, '/3" />',
+        var photoInfo = $(['<li><img src="/api/photos/', id, '/iOS/f" />',
            '<div class="clickable">',
            '<p class="time">', LG.dateToVernacular(photo.date_added), '</p>',
            '<p class="user">', user ? user.username : 'Unknown user', '</p>',
@@ -103,12 +101,40 @@ LG.eye = (function () {
       }
       return marker;
     }
+    function satisfiesSearch(p) {
+      if (search) {
+        // Make sure p matches search somehow.
+        var lsearch = search.toLowerCase();
+        if (p.caption && p.caption.toLowerCase().indexOf(lsearch) >= 0) {
+          return true;
+        }
+        if (p.tags && $.map(p.tags, function (x) { return x.tag; })
+                        .join(' ').toLowerCase().indexOf(lsearch) >= 0) {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    }
     function getAndShowPhotoForCell(cell, last) {
       $.get('/api/photos/area/1/' + cellToStr(cell), function (photos) {
         if (photos.length > 0) {
-          var photo = photos[0];
-          lastPhotos.push(addPhoto(photo));
-          Livestream.addPhoto(photo);
+          var photo = null;
+          var i = 0;
+          for (; i < photos.length; i += 1) {
+            var p = photos[i];
+            if (satisfiesSearch(p)) {
+              photo = p;
+              break;
+            }
+          }
+          if (i == photos.length) {
+            // none of the photos matched the keyword...
+          }
+          if (photo) {
+            lastPhotos.push(addPhoto(photo));
+            Livestream.addPhoto(photo);
+          }
         }
         if (last) {
           UPDATING = false;
@@ -155,7 +181,7 @@ LG.eye = (function () {
       }
       this.onRemove();
 
-      var size = 40 * 3;
+      var size = 60 * 3;
       var div = $(this.get('map').getDiv());
       var width = div.outerWidth(),
           height = div.outerHeight();
@@ -180,14 +206,19 @@ LG.eye = (function () {
 
     function showNowTrendingTags() {
       $.get('/api/tags/trending/20', function (tags) {
-        $.map(tags, function (t) {
-          var tag = t.tag;
-          alltags.append($(['<a href="#">', tag, '</a> '].join(''))
-              .click(function () {
-                setSearch(tag);
-                return false;
-              }))
-        });
+        alltags.empty();
+        if (tags.length > 0) {
+          $.map(tags, function (t) {
+            var tag = t.tag;
+            alltags.append($(['<a href="#">', tag, '</a> '].join(''))
+                .click(function () {
+                  setSearch(tag);
+                  return false;
+                }))
+          });
+        } else {
+          alltags.append('<p>Not currently trending tags</p>');
+        }
       }, 'json');
     }
 

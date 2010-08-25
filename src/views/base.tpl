@@ -4,8 +4,8 @@
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' /> 
 <link rel='icon' type='image/png' href='/favicon.png' />
 <link rel='shortcut icon' href='/favicon.ico' />
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css" />
-{*<link rel="stylesheet" type="text/css" href="/css/yui-reset-2.8.1.min.css" />*}
+{*<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/reset/reset-min.css" />*}
+<link rel="stylesheet" type="text/css" href="/css/yui-reset-2.8.1.min.css" />
 <link rel='stylesheet' type='text/css' href='/css/custom-theme/jquery-ui-1.8.2.custom.css' />
 <link rel='stylesheet' type='text/css' href='/css/screen.css' />
 <title>{if $title}{$title} | {/if}LiveGather</title> 
@@ -20,10 +20,11 @@
       <form action="" method="GET">
         <input type="text" name="what" class="default controls what" value="What" />
         <input type="text" name="where" class="default controls where" value="Where" />
-        <input type="submit" value="Show" />
+        <input class="clickable" type="submit" value="Show" />
       </form>
     </li>
     {/if}
+    <li class="tagline">See and show your world in real-time</li>
     {if $user != null}
       <li class="account clickable"><span>Account</span>
         <ol>
@@ -36,7 +37,7 @@
       <li class='sign in'>
         <a class='rpxnow' onclick='return false;'
            href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Fsignin_janrain">
-        <input type='submit' value='Sign in/up' /></a>
+        <input class="clickable" type='submit' value='Sign in/up' /></a>
       </li>
     {/if}
   </ul> 
@@ -59,7 +60,7 @@ enjoyable experience.</p>
     <li><a href="/tos">Terms of Service</a></li>
     <li><a href="/contact">Contact Us</a></li>
     <li><a href="/team">The LiveGather Team</a></li>
-    <li><button id="download" class="clickable">Download</button></li>
+    <li><button id="download" class="clickable yellow">Download</button></li>
     <li class="copyright">Copyright &copy; 2010 LiveGather. All rights reserved.</li>
   </ul>
 </div>
