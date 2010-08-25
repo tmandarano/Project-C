@@ -96,28 +96,22 @@ function photos_get_by_tag_id() {
 function photos_create() {
     check_system_auth();
 
-    $data = get_json_input();
+    $expected_vars = array('identifier', 'caption', 'response', 'tags', 'latitude', 'longitude');
+    $required_vars = array('caption', 'response', 'tags', 'latitude', 'longitude');
 
-    // Fill data with POST parameters if there is no incoming JSON
-    if (!$data) {
-        $p = env('POST');
-        $p = $p['REQUEST'];
-        if ($p) {
-            $vars = array('caption', 'response', 'userfile', 'tags', 'latitude', 
-                          'longitude');
-            foreach ($vars as $var) {
-                $data[$var] = $p[$var];
-            }
+    $data = get_json_or_post_input($expected_vars);
+
+    // Check to make sure all expected values are present
+    foreach($required_vars as $var) {
+        if(! isset($data[$var])) {
+            debug("The required parameter ".$var." was not sent.");
+            halt(400);
         }
     }
-
-    $user = get_user_by_session_or_id();
+   
+    $user = get_user_by_session_or_identifier($data['identifier']);
     if(!$user) {
         return halt(401);
-    }
-
-    if (empty($data['userfile'])) {
-        return halt(400);
     }
 
     $photo = new Photo();

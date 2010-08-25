@@ -13,6 +13,32 @@ function get_json_input() {
     return json_decode(file_get_contents("php://input"), true);
 }
 
+
+/**
+ * @internal
+ * @return array
+ *
+ * This function attempts to grab JSON input from the server variables.
+ * If this is unsuccessful it then tries the $_POST variable.
+ */
+function get_json_or_post_input($params) {
+    $data = get_json_input();
+
+    $post = NULL;
+    if(! $data) {
+        $post = $_POST;
+    }
+
+    if($post) {
+        foreach($params as $param) {
+            $data[$var] = $post[$param];
+        }
+    }
+
+    return $data;
+}
+
+
 /**
  * @internal
  *
@@ -66,17 +92,17 @@ function get_session_user() {
  *
  * This function gets one master copy of the session user if it exists.
  */
-function get_user_by_session_or_id($id=null) { 
+function get_user_by_session_or_identifier($identifier=null) { 
     $user = get_session_user();
     
-    if(!$user) {
-        $user = UserDao::get_user_by_id($id);
+    if(!$user && $identifier != null) {
+        $user = UserDao::get_user_by_identifier($identifier);
+    }
 
-        if(!$user) {
-            $user = null;
-        } else {
-            $_SESSION['user'] = serialize($user);
-        }
+    if(!$user) {
+        $user = null;
+    } else {
+        $_SESSION['user'] = serialize($user);
     }    
 
     return $user;
