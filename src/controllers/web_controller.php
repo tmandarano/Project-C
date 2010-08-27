@@ -19,6 +19,19 @@ function beta() {
     return html(file_get_contents('src/views/beta.tpl'));
 }
 
+function beta_email() {
+    $email = htmlspecialchars(params('email'), ENT_QUOTES);
+
+    $to = 'livegather@gmail.com';
+    $subject = $email . ' wants to join the LiveGather Beta';
+    $message = $subject;
+    $headers = 'From: ' . $email . "\r\nReply-To: ". $email;
+
+    if ( ! mail($to, $subject, $message, $headers) ) {
+        debug('ERROR: BETA EMAIL FAILED TO SEND FOR ' . $email);
+    }
+}
+
 function signin_janrain() {
     // This function runs as a result of an incoming call from Janrain.
     debug('signin callback');

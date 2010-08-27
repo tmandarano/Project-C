@@ -25,9 +25,9 @@
 
 <p>Love taking and sharing photos on your iPhone? Become a beta tester!</p>
 
-<form class="beta_email">
+<form class="beta_email" action="/beta" method="POST">
 <input type="text" name="email" class="default" value="email" />
-<input type="submit" value="get beta" />
+<input type="submit" class="clickable" value="get beta" />
 </form>
 
 <img src="/img/globe.png" />
