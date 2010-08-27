@@ -755,7 +755,7 @@ input.comment:focus {
 .settings .privacy .content table tr { line-height: 2em; }
 .settings .privacy .content table th { text-align: right; padding-right: 1em; }
 
-.http404 { text-align: center; }
+.http404 #content { text-align: center; }
 .oops {
   background-color: #ddd;
   padding: 1em;
