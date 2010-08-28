@@ -45,6 +45,7 @@ class Config {
         option('UPLOAD_DIR', $_SERVER['DOCUMENT_ROOT'].'/special/uploads/');
         option('PHOTOS_DIR', $_SERVER['DOCUMENT_ROOT'].'/photos/');
         option('rpxApiKey', '6af1713bce4897a0067343c5da898e1dccb6862d');  
+        option('BETA', true);
     }
 }
 ?>

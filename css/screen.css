@@ -100,9 +100,9 @@ h1 strong { font-weight: bold; }
 #footer { font-size: 0.9em; position: fixed; bottom: 0; text-align: center; }
 #footer li { display: inline; padding: 0 0.5em; }
 
-button.yellow { background-color: #dd0; border: #dd0; color: #000; }
-button.yellow:hover { background-color: #ee0; }
-button.yellow:active { background-color: #ee0; color: #555; }
+button.yellow, input[type="submit"].yellow { background-color: #dd0; border: #dd0; color: #000; }
+button.yellow:hover, input[type="submit"].yellow:hover { background-color: #ee0; }
+button.yellow:active, input[type="submit"].yellow:active { background-color: #ee0; color: #555; }
 .copyright { font-size: 0.8em; }
 
 .nav li { float: left; }

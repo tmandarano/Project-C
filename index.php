@@ -58,10 +58,11 @@ function check_username() {
  */
 
 // Now dispatch paths
-dispatch        ('/',                     'eye');
-//dispatch        ('/',                     'home');
+dispatch        ('/',                     'home');
 dispatch        ('/beta',                 'beta');
 dispatch_post   ('/beta',                 'beta_email');
+dispatch        ('/beta/confirm',         'beta_confirm');
+dispatch_post   ('/beta/confirm',         'beta_confirmed');
 dispatch_post   ('/signin_janrain',       'signin_janrain');
 dispatch        ('/signout',              'signout');
 dispatch        ('/getapp',               'getapp');
@@ -70,12 +71,7 @@ dispatch        ('/download',             'getapp');
 //dispatch        ('/about/contact',        'about_contact');
 //dispatch        ('/about/faq',            'about_faq');
 
-//dispatch        ('/explore/map',          'explore_map');
-//dispatch        ('/explore/photos',       'explore_photos');
-
 dispatch        ('/share/upload',         'share_upload');
-//dispatch        ('/share/mobile',         'share_mobile');
-//dispatch        ('/share/webcam',         'share_webcam');
 
 dispatch        ('/profile/:id',          'profile');
 dispatch        ('/settings',             'settings');
@@ -85,8 +81,6 @@ dispatch        ('/tos',                  'tos');
 dispatch        ('/contact',              'contact');
 dispatch        ('/team',                 'team');
 
-//dispatch        ('/photos/view/:id',      'photos_view_by_id');
-   
 run();
 
 ?>

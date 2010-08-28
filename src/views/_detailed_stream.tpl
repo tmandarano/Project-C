@@ -27,7 +27,8 @@
       </li>
       <li>
         <a href="/profile/11"><img src="/users/photo/11" /></a>
-        <form class="comments" name="comments" action="/photos/comment" method="post"><input type="text" class="default" value="add comment" /><input type="submit" value="add" /></form>
+        <form class="comments" name="comments" action="/photos/comment"
+        method="post"><input type="text" class="defaultable" value="add comment" /><input type="submit" value="add" /></form>
       </li>
     </li>
   </div>
@@ -53,7 +54,8 @@
         <li>seahawks</li>
         <li>kouchdown</li>
       </ul>
-      <form class="tags" name="tag" action="/tags/add" method="post"><input type="text" size="5" class="default" value="add tag" /><input type="submit" value="add" /></form>
+      <form class="tags" name="tag" action="/tags/add" method="post"><input
+      type="text" size="5" class="defaultable" value="add tag" /><input type="submit" value="add" /></form>
     </div>
     <ul class="users">
       <li>

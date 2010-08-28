@@ -25,12 +25,6 @@ em { font-style: italic; }
 #content input[type="text"] {
   height: 100%;
   background: white url('/img/textgrad.png');
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  -moz-border-radius-topright: 0;
-  -moz-border-radius-bottomright: 0;
-  -webkit-border-top-right-radius: 0;
-  -webkit-border-bottom-right-radius: 0;
 }
 #content input[type="submit"] {
   margin-left: -0.35em;
@@ -39,6 +33,16 @@ em { font-style: italic; }
   border: 1px #45a136;
   top: 1px;
   background: #45a136 url('/img/hlgrad.png');
+}
+.beta #content input[type="text"] {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  -moz-border-radius-topright: 0;
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+}
+.beta #content input[type="submit"] {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   -moz-border-radius-topleft: 0;
@@ -47,3 +51,11 @@ em { font-style: italic; }
   -webkit-border-bottom-left-radius: 0;
 }
 #footer { height: 5em; }
+
+.beta_confirm table {
+  width: 100%;
+  text-align: center;
+}
+.beta_confirm td { padding: 0.5em; }
+
+#content input[type="text"]:focus { background-color: #ffc; }

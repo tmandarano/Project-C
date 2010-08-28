@@ -8,27 +8,41 @@
 <link rel='stylesheet' type='text/css' href='/css/custom-theme/jquery-ui-1.8.2.custom.css' />
 <link rel='stylesheet' type='text/css' href='/css/screen.css' />
 <link rel='stylesheet' type='text/css' href='/css/beta.css' />
-<title>LiveGather Beta</title>
+<title>Confirm | LiveGather Beta</title>
 </head>
-<body class="beta">
+<body class="beta_confirm">
 
 <div id="header">
 <div>
 <img src="/img/logo/medium_no_tagline.png">
 <p><em>See</em> and <em>show</em> what's happening near you.</p>
-<a class='rpxnow' onclick='return false;' href="https://livegather.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F{$smarty.server.HTTP_HOST}%2Fsignin_janrain">
-<input class="clickable yellow" type='submit' value='beta sign in' /></a>
 </div>
 </div>
 
 <div id="content">
-<h1><p>We're in beta and taking on beta testers!</p></h1>
 
-<p>Love taking and sharing photos on your iPhone? Become a beta tester!</p>
+<h1><p>Please verify you are in the beta.</p></h1>
 
-<form class="beta_email" action="/beta" method="POST">
-<input type="text" name="email" class="defaultable" value="email" />
-<input type="submit" class="clickable" value="get beta" />
+<p>Please enter your email and beta key.</p>
+
+<form class="beta_confirmed" action="/beta_confirmed" method="POST">
+<table>
+  <tr>
+    <td>
+      <input type="text" name="email" class="defaultable" value="email" />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input type="text" name="key" class="defaultable" value="key" />
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input type="submit" class="clickable" value="let's go!" />
+    </td>
+  </tr>
+</table>
 </form>
 
 <img src="/img/globe.png" />
@@ -42,15 +56,5 @@ src="http://www.google.com/jsapi?key=ABQIAAAATXJifusyeTqIXK5-oRfMqRSslEfASqMaD8v
 {literal}var LG = {NO_HEADERSTREAM: true};{/literal}
 </script>
 <script type="text/javascript" src="/js/global.js"></script>
-<script type="text/javascript">
-  var rpxJsHost = (("https:" == document.location.protocol) ? "https://" : "http://static.");
-  document.write(unescape(["%3Cscript src='", rpxJsHost,
-    "rpxnow.com/js/lib/rpx.js' ",
-    "type='text/javascript'%3E%3C/script%3E"].join('')));
-</script>
-<script type="text/javascript">
-  RPXNOW.overlay = true;
-  RPXNOW.language_preference = 'en';
-</script>
 </body>
 </html>

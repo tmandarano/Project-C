@@ -669,7 +669,7 @@ LGG.setupAccountMenu = function () {
 LGG.setupDefaultingInputFields = function (def) {
   /* Input fields with default values will automatically clear and restore the
    * default value when no user input is supplied. */
-  $('.default:text')
+  $('.defaultable')
     .live('focus', function() {
       var s = $(this);
       if (!s.data(def)) {
@@ -697,7 +697,7 @@ LGG.init = function () {
     LGG.showDone();
   }
 
-  LGG.setupDefaultingInputFields('default');
+  LGG.setupDefaultingInputFields('defaultdata');
   LGG.setupAccountMenu();
 
   $('#download').click(function () { window.location = '/getapp'; });
@@ -709,7 +709,9 @@ LGG.init = function () {
   //});
   
 
-  new LGG.HeaderStream($('#headerstream'));
+  if (!LG.NO_HEADERSTREAM) {
+    new LGG.HeaderStream($('#headerstream'));
+  }
   //LGG.setupDetailedStreams();
 };
 return LGG;

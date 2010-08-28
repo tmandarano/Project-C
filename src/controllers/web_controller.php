@@ -15,11 +15,26 @@ function get_session_user_info($user) {
     return array();
 }
 
+function home() {
+    if (option('BETA')) {
+        $user = get_session_user();
+        if ($user) {
+            return eye();
+        } else {
+            return beta();
+        }
+    } else {
+        return eye();
+    }
+}
+
 function beta() {
-    return html(file_get_contents('src/views/beta.tpl'));
+    $template = new Template();
+    return html($template->untemplated_fetch('beta.tpl'));
 }
 
 function beta_email() {
+    // Sends user's email from beta page.
     $email = htmlspecialchars(params('email'), ENT_QUOTES);
 
     $to = 'livegather@gmail.com';
@@ -32,16 +47,26 @@ function beta_email() {
     }
 }
 
+function beta_confirm() {
+    $template = new Template();
+    return html($template->untemplated_fetch('beta_confirm.tpl'));
+}
+
 function signin_janrain() {
     // This function runs as a result of an incoming call from Janrain.
-    debug('signin callback');
+    //
+    // During beta, a failure to find the user does not automatically mean 
+    // that the user gets to sign up. Instead, they are redirected to the beta 
+    // confirmation page.
 
     if (isset($_POST['token'])) { 
         $token = $_POST['token'];
-        $post_data = array('token' => $_POST['token'],
-                           'apiKey' => option('rpxApiKey'),
-                           'format' => 'json');     
 
+        $post_data = array(
+            'token' => $token,
+            'apiKey' => option('rpxApiKey'),
+            'format' => 'json'
+        );     
         $profile = janrain_post($post_data, 'auth_info');
 
         $user = UserDao::get_user_by_identifier($profile['identifier']);
@@ -57,7 +82,14 @@ function signin_janrain() {
             debug('user found and session started. redirecting');
             redirect_to('http://'.$_SERVER['HTTP_HOST'].'/');
         } else {
+            if (option('BETA')) {
+                // Since this is the beta, send the user to the beta 
+                // confirmation page.
+                redirect_to('http://'.$_SERVER['HTTP_HOST'].'/beta/confirm');
+            }
+
             // We have no user with the given Janrain token. 
+            // Prompt the user to sign up.
             debug("Can't find user with identifier: ".$profile['identifier']);
 
             // We want to have a dialog that asks the user to create an 
@@ -96,7 +128,7 @@ function eye() {
     return html($template->fetch('eye.tpl'));
 }
 
-function home() {
+function old_home() {
     check_system_auth();
     $user = get_session_user();
 
