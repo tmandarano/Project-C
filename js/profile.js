@@ -1,10 +1,3 @@
-function photo_stub_profile_stream(jdom, photo_id) {
-  jdom.html('<img src="/img/loading.gif" />');
-  $.get('/shard/photo_stub_profile_stream/'+photo_id, function(data) {
-    jdom.html(data);
-  });
-}
-
 var HTML_BOTTOM = [
   '<div class="bottom">',
     //'<p class="comments"><a href="#">7 people</a> have commented</p>',
@@ -61,7 +54,7 @@ $(function () {
 
   for (var i in _.tags) {
     var tag = _.tags[i];
-    $('.tagcloud').append($(['<li><a href="">', tag.tag, '</a></li>'].join('')));
+    $('.tagcloud').append($(['<li>', tag.tag, '</li>'].join('')));
   }
 
   if (_.recentPhotos.length > 0) {
@@ -98,25 +91,23 @@ $(function () {
       tmpl(HTML_PROFILE_STUB, {x: _.recentPhotos[i]}));
   }
 
-//  $('.tagcloud').tagcloud({
-//    'type': 'list',
-//    'height': 'auto',
-//    'colormin': '2594c2',
-//    'colormax': '1584b2'});
-//
-//  $('.photo')
-//    .live('hover', function(event) {
-//      if (event.type == 'mouseover') {
-//        $('a.like', this).show();
-//      } else {
-//        $('a.like', this).hide();
-//      }
-//    });
+  $('div.photo').live('click', function () {
+    LG.G.showPhoto($(this).attr('photo_id'));
+  });
 
-  $('.photo')
-    .live('click', function () {
-      LG.G.showPhoto($(this).attr('photo_id'));
+  var signed_in_as_user = false; // TODO
+  if (signed_in_as_user) {
+    $('.profile.stream li').live('mouseenter mouseleave', function (event) {
+      if (event.type == 'mouseover') {
+        $(this).append($('<div>Hello</div>')
+          .css({position: 'absolute', 'top': 140, 'left': 280, 'background': '#aaa',
+                padding: '0.5em'})
+          .attr('transient', true));
+      } else {
+        $('div[transient=true]', this).remove();
+      }
     });
+  }
 
   $('.loadmore a').click(function() {
     var loadnum = 4;

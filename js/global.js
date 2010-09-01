@@ -63,7 +63,7 @@ LG.dateToVernacular = function (str) {
 
   return doD(Date.prototype.getFullYear, function () {
     return doD(Date.prototype.getMonth, function () {
-      return doD(Date.prototype.getDay, function () {
+      return doD(Date.prototype.getDate, function () {
         return doD(Date.prototype.getHours, function () {
           return doD(Date.prototype.getMinutes, function () {
             return doD(Date.prototype.getSeconds, function () {
