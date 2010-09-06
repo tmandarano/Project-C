@@ -3,6 +3,7 @@ require_once('src/utils/helpers.php');
 require_once('src/utils/template.php');
 require_once('src/dao/photo_dao.php');
 require_once('src/dao/user_dao.php');
+require_once('src/dao/beta_dao.php');
 require_once('src/controllers/sessions_controller.php');
 
 function get_session_user_info($user) {
@@ -34,22 +35,80 @@ function beta() {
 }
 
 function beta_email() {
+    $variables = env('POST');
+    $variables = $variables['REQUEST'];
+    $email = $variables['email'];
     // Sends user's email from beta page.
-    $email = htmlspecialchars(params('email'), ENT_QUOTES);
+    $email = htmlspecialchars($email, ENT_QUOTES);
 
     $to = 'livegather@gmail.com';
     $subject = $email . ' wants to join the LiveGather Beta';
-    $message = $subject;
+    $message = $subject . '\r\n<a href="http://livegather.com/beta/allow/' . $email .
+        '">Fill in a nice key here.</a>';
     $headers = 'From: ' . $email . "\r\nReply-To: ". $email;
 
     if ( ! mail($to, $subject, $message, $headers) ) {
         debug('ERROR: BETA EMAIL FAILED TO SEND FOR ' . $email);
+        $template = new Template();
+        return html($template->untemplated_fetch('beta.tpl'));
+    } else {
+        $template = new Template();
+        return html($template->untemplated_fetch('beta_thanks.tpl'));
     }
 }
 
 function beta_confirm() {
     $template = new Template();
     return html($template->untemplated_fetch('beta_confirm.tpl'));
+}
+
+function beta_confirmed() {
+    $variables = env('POST');
+    $variables = $variables['REQUEST'];
+    $email = $variables['email'];
+    $key = $variables['key'];
+
+    if (BetaDAO::get_key($email) == $key) {
+        _prompt_for_signup($_SESSION['profile']);
+    } else {
+        // Sorry, try again.
+        $_SESSION['error'] = 'You gave an incorrect key. Please try again.';
+        $template = new Template();
+        return html($template->untemplated_fetch('beta_confirm.tpl'));
+    }
+}
+
+function beta_add() {
+    $user = get_session_user();
+    if ($user['id'] == 0) {
+        BetaDAO::add_key(params('email'), params('key'));
+    } else {
+        halt(401);
+    }
+}
+
+function _prompt_for_signup($profile) {
+    // We want to have a dialog that asks the user to create an 
+    // account. This needs email, username, and display name.
+    // We have most of these from Janrain.
+    // Put them in SESSION so that the redirected page can setup 
+    // the signup dialog properly.
+    $_SESSION['signup'] = array(
+        'email' => isset($profile['verifiedEmail']) ? 
+        $profile['verifiedEmail'] : '',
+        'username' => isset($profile['preferredUsername']) ? 
+        $profile['preferredUsername'] : '',
+        'display' => isset($profile['displayName']) ? 
+        $profile['displayName'] : '',
+        'identifier' => isset($profile['identifier']) ?
+        $profile['identifier'] : '',
+        'providerName' => isset($profile['providerName']) ?
+        $profile['providerName'] : ''
+    );
+    debug('PROMPTING FOR SIGNUP', $_SESSION['signup']);
+
+    // Redirect.
+    redirect_to('http://'.$_SERVER['HTTP_HOST'].'/#signup');
 }
 
 function signin_janrain() {
@@ -85,6 +144,7 @@ function signin_janrain() {
             if (option('BETA')) {
                 // Since this is the beta, send the user to the beta 
                 // confirmation page.
+                $_SESSION['profile'] = $profile;
                 redirect_to('http://'.$_SERVER['HTTP_HOST'].'/beta/confirm');
             }
 
@@ -92,26 +152,7 @@ function signin_janrain() {
             // Prompt the user to sign up.
             debug("Can't find user with identifier: ".$profile['identifier']);
 
-            // We want to have a dialog that asks the user to create an 
-            // account. This needs email, username, and display name.
-            // We have most of these from Janrain.
-            // Put them in SESSION so that the redirected page can setup 
-            // the signup dialog properly.
-            $_SESSION['signup'] = array(
-                'email' => isset($profile['verifiedEmail']) ? 
-                $profile['verifiedEmail'] : '',
-                'username' => isset($profile['preferredUsername']) ? 
-                $profile['preferredUsername'] : '',
-                'display' => isset($profile['displayName']) ? 
-                $profile['displayName'] : '',
-                'identifier' => isset($profile['identifier']) ?
-                $profile['identifier'] : '',
-                'providerName' => isset($profile['providerName']) ?
-                $profile['providerName'] : ''
-            );
-
-            // Redirect.
-            redirect_to('http://'.$_SERVER['HTTP_HOST'].'/#signup');
+            _prompt_for_signup($profile);
         }
     }
 }

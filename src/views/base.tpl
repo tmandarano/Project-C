@@ -79,7 +79,7 @@ src="http://www.google.com/jsapi?key=ABQIAAAATXJifusyeTqIXK5-oRfMqRSslEfASqMaD8v
 <script type="text/javascript">
   RPXNOW.overlay = true;
   RPXNOW.language_preference = 'en';
-  {if $smarty.session && is_array($smarty.session.signup)}
+  {if $smarty.session.signup}
     LG.G.signupInfo = {literal}{{/literal}
       email: {literal}"{/literal}{$smarty.session.signup.email}{literal}"{/literal},
       username: {literal}"{/literal}{$smarty.session.signup.username}{literal}"{/literal},

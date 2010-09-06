@@ -63,6 +63,8 @@ dispatch        ('/beta',                 'beta');
 dispatch_post   ('/beta',                 'beta_email');
 dispatch        ('/beta/confirm',         'beta_confirm');
 dispatch_post   ('/beta/confirm',         'beta_confirmed');
+dispatch        ('/beta/allow/:email/:key','beta_add');
+
 dispatch_post   ('/signin_janrain',       'signin_janrain');
 dispatch        ('/signout',              'signout');
 dispatch        ('/getapp',               'getapp');

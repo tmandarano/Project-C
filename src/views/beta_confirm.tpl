@@ -25,7 +25,11 @@
 
 <p>Please enter your email and beta key.</p>
 
-<form class="beta_confirmed" action="/beta_confirmed" method="POST">
+{if $smarty.session.error != 1}
+<p class="error">{$smarty.session.error}</p>
+{/if}
+
+<form class="beta_confirmed" action="/beta/confirm" method="POST">
 <table>
   <tr>
     <td>

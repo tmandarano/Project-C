@@ -22,14 +22,11 @@
 </div>
 
 <div id="content">
-<h1><p>We're in beta and taking on beta testers!</p></h1>
+<h1><p>Thanks for your interest!</p></h1>
 
-<p>Love taking and sharing photos on your iPhone? Become a beta tester!</p>
+<p>You'll be receiving an email from us shortly with your beta key.</p>
 
-<form class="beta_email" action="/beta" method="POST">
-<input type="text" name="email" class="defaultable" value="email" />
-<input type="submit" class="clickable" value="get beta" />
-</form>
+<p>Then all you need to do is click the sign in button and start taking photos!</p>
 
 <img src="/img/globe.png" />
 </div>
@@ -51,15 +48,7 @@ src="http://www.google.com/jsapi?key=ABQIAAAATXJifusyeTqIXK5-oRfMqRSslEfASqMaD8v
 <script type="text/javascript">
   RPXNOW.overlay = true;
   RPXNOW.language_preference = 'en';
-  {if $smarty.session.signup}
-    LG.G.signupInfo = {literal}{{/literal}
-      email: {literal}"{/literal}{$smarty.session.signup.email}{literal}"{/literal},
-      username: {literal}"{/literal}{$smarty.session.signup.username}{literal}"{/literal},
-      display: {literal}"{/literal}{$smarty.session.signup.display}{literal}"{/literal},
-      identifier: {literal}"{/literal}{$smarty.session.signup.identifier}{literal}"{/literal},
-      providerName: {literal}"{/literal}{$smarty.session.signup.providerName}{literal}"{/literal}
-    {literal}};{/literal}
-  {/if}
 </script>
 </body>
 </html>
+

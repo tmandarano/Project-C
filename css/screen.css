@@ -17,6 +17,7 @@ body {
 }
 a { text-decoration: none; color: #1584b2; }
 .clickable { cursor: pointer; }
+.error { color: #f00; }
 
 /* classes */
 input[type="text"],
@@ -182,7 +183,7 @@ button.yellow:active, input[type="submit"].yellow:active { background-color: #ee
 #welcome .connect { width: 33%; }
 #welcome .photos { width: 33%; }
 
-.dialog .border { top: 5em;  background-color: #333; width: 570px; margin: auto; position: relative; padding: 0.7em 0; 
+.dialog .border { top: 7em;  background-color: #333; width: 570px; margin: auto; position: relative; padding: 0.7em 0; 
   border-radius: 1.5em;
   -moz-border-radius: 1.5em;
   -webkit-border-radius: 1.5em;
@@ -312,6 +313,7 @@ button.yellow:active, input[type="submit"].yellow:active { background-color: #ee
 
 .tagline { padding-left: 1em; }
 .search h1 { color: #3b0; font-size: large; }
+.search .controls { width: 10em; }
 .search .searchbox { width: 80%; text-align: center; margin: 0.5em auto; }
 .search label { color: #3b0; }
 span.label {
