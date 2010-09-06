@@ -116,30 +116,37 @@ LG.eye = (function () {
         return true;
       }
     }
+    function _photosHandler(photos, lim, last, cellstr) {
+      if (!lim) { lim = 2; }
+      if (lim > 10) { return; }
+      if (photos.length > 0) {
+        var photo = null;
+        var i = 0;
+        for (; i < photos.length; i += 1) {
+          var p = photos[i];
+          if (satisfiesSearch(p)) {
+            photo = p;
+            break;
+          }
+        }
+        if (!photo) {
+          // none of the photos matched the keyword...
+          $.get('/api/photos/area/' + lim + '/' + cellstr, function (p) {
+            _photosHandler(p, lim + 1, last, cellstr); }, json);
+        }
+        if (photo) {
+          lastPhotos.push(addPhoto(photo));
+          Livestream.addPhoto(photo);
+        }
+      }
+      if (last) {
+        UPDATING = false;
+      }
+    }
     function getAndShowPhotoForCell(cell, last) {
-      $.get('/api/photos/area/1/' + cellToStr(cell), function (photos) {
-        if (photos.length > 0) {
-          var photo = null;
-          var i = 0;
-          for (; i < photos.length; i += 1) {
-            var p = photos[i];
-            if (satisfiesSearch(p)) {
-              photo = p;
-              break;
-            }
-          }
-          if (i == photos.length) {
-            // none of the photos matched the keyword...
-          }
-          if (photo) {
-            lastPhotos.push(addPhoto(photo));
-            Livestream.addPhoto(photo);
-          }
-        }
-        if (last) {
-          UPDATING = false;
-        }
-      }, 'json');
+      var cellstr = cellToStr(cell);
+      $.get('/api/photos/area/1/' + cellstr, function (p) {
+        _photosHandler(p, null, last, cellstr); }, 'json');
     }
 
     function P() {}

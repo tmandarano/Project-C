@@ -213,6 +213,17 @@ CREATE TABLE `user_photos` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `beta`
+
+DROP TABLE IF EXISTS `beta`;
+CREATE TABLE `beta` (
+  `email` varchar(255) NOT NULL,
+  `key` varchar(255) NOT NULL
+  PRIMARY KEY (`email`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
