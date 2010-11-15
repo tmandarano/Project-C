@@ -1,31 +1,19 @@
 import cgi
+import logging
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-from google.appengine.ext import db
 
+import controllers
 
-class HomePage(webapp.RequestHandler):
-    def get(self):
-        self.response.out.write('<html><body>Hello . world</body></html>')
-
-
-class PhotoResource(webapp.RequestHandler):
-    def get(self):
-        self.response.out.write('Not implemented yet.')
+# XXX DEBUG
+logging.getLogger().setLevel(logging.DEBUG)
 
 
 routes = [
-    ('/', HomePage),
-    ('/photos', PhotoResource),
-#    ('/a', A),
+    ('/photos(/\d+)?', controllers.PhotoResource),
+    ('/photos/([^/]+)/(.*)', controllers.PhotoImageResource),
 ]
-
-
-class Photo(db.Model):
-    location = db.StringProperty()
-    caption = db.StringProperty()
-    date = db.DateTimeProperty(auto_now_add=True)
 
 
 application = webapp.WSGIApplication(routes, debug=True)
