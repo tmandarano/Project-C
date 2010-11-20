@@ -6,13 +6,23 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 import controllers
 
+
 # XXX DEBUG
 logging.getLogger().setLevel(logging.DEBUG)
 
 
 routes = [
-    ('/photos(/\d+)?', controllers.PhotoResource),
-    ('/photos/([^/]+)/(.*)', controllers.PhotoImageResource),
+# Photo resource
+    # POST /photos
+    ('/photos/?', controllers.PhotoCreate),
+    # GET /photos/:id
+    # PUT /photos/:id
+    ('/photos/(\d+)/?', controllers.PhotoResource),
+    # GET /photos/:id/:os/:size
+    ('/photos/(\d+)/(\w*)/(\w*)/?', controllers.PhotoImageResource),
+
+# XXX Admin
+    ('/a/(.*)/(.*)', controllers.Admin),
 ]
 
 

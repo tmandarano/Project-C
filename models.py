@@ -1,10 +1,26 @@
 import logging
+import datetime
 import StringIO
 
 from google.appengine.ext import db
 from google.appengine.api import images
 
 from vendors import EXIF
+from vendors.python2_6 import json
+
+
+def _json_default_handler(obj):
+    if type(obj) is datetime.datetime:
+        return obj.isoformat()
+    else:
+        raise TypeError('Object %s = %s is not JSON serializable' %
+                (type(obj), repr(obj)))
+
+
+class JSONableModel(db.Model):
+
+    def to_json(self):
+        return json.dumps(self.properties(), default=_json_default_handler)
 
 
 def _read_EXIF(image_data):
@@ -24,7 +40,7 @@ def _scrub_EXIF(image_data, byterange):
     return db.Blob(''.join(scrubbed))
 
 
-class Photo(db.Model):
+class Photo(JSONableModel):
 #    owner = db.UserProperty(required=True)
     location = db.StringProperty()
     geopt = db.GeoPtProperty()
@@ -75,6 +91,12 @@ class Photo(db.Model):
         self.img_ios_r_f = self._generate_thumbnail(520, 580)
 
     def get_os_img(self, os='iOS', size='t'):
+        """ Returns a bytestring valid image of the corresponding OS and size.
+            Args:
+                os - the OS type
+                size - the size (one of t, s, m, l, o). The sizes are tiny,
+                    small, medium, large, and original
+        """
         if os == 'iOS':
             return get_iOS_img(size)
         elif os == 'iOS_retina':
@@ -99,3 +121,15 @@ class Photo(db.Model):
             return self.img_ios_r_m
         elif size == 'f':
             return self.img_ios_r_f
+
+    def to_json(self):
+        properties = self.properties()
+        keys = properties.keys()
+        non_images = filter(lambda x: not x.startswith('img'), keys)
+
+        obj = {}
+        for x in non_images:
+            obj[x] = properties[x].get_value_for_datastore(self)
+        obj['key'] = self.key().id()
+
+        return json.dumps(obj, default=_json_default_handler)
