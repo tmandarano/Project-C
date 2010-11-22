@@ -12,3 +12,4 @@ handlers:
 
 - url: /.*
   script: lg.py
+  secure: always

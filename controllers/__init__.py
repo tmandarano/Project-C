@@ -138,6 +138,7 @@ class PhotoResource(webapp.RequestHandler):
             photo = models.Photo.get(unquote(key))
         except db.BadKeyError:
             self.error(404)
+            return
         self.response.out.write(photo.to_json())
 
     def put(self, key):
@@ -147,6 +148,7 @@ class PhotoResource(webapp.RequestHandler):
             photo = models.Photo.get(unquote(key))
         except db.BadKeyError:
             self.error(404)
+            return
 
         try:
             caption = self.request.get('caption', default_value=None)
@@ -173,13 +175,12 @@ class PhotoImageResource(webapp.RequestHandler):
 
         try:
             photo = models.Photo.get(unquote(key))
-        except:
+        except db.BadKeyError:
             self.error(404)
             return
 
         self.response.out.write(photo.get_os_img(unquote(os),
                                                  unquote(size)))
-
 
 class Admin(webapp.RequestHandler):
 

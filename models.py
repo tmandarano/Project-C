@@ -29,6 +29,25 @@ class JSONableModel(db.Model):
         return json.dumps(self.properties(), default=_json_default_handler)
 
 
+class User(JSONableModel):
+    email = db.EmailProperty()
+    display_name = db.TextProperty()
+
+    def to_json(self):
+        properties = self.properties()
+        keys = properties.keys()
+
+        key_whitelist = ('email', 'display_name', )
+        allowed_keys = filter(lambda x: x in key_whitelist, keys)
+
+        obj = {}
+        for x in allowed_keys:
+            obj[x] = properties[x].get_value_for_datastore(self)
+        obj['key'] = str(self.key())
+
+        return json.dumps(obj, default=_json_default_handler)
+
+
 def _read_EXIF(fobj):
     return EXIF.process_file(fobj)
 
@@ -46,7 +65,7 @@ def _scrub_EXIF(image_data, byterange):
 
 
 class Photo(JSONableModel, GeoModel):
-#    owner = db.UserProperty(required=True)
+    user = db.ReferenceProperty(User, required=True)
     caption = db.StringProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now=True)
@@ -54,7 +73,7 @@ class Photo(JSONableModel, GeoModel):
 
     geoname = db.StringProperty()
 
-    img_orig = blobstore.BlobReferenceProperty()
+    img_orig = blobstore.BlobReferenceProperty(required=True)
 
     img_ios_t = db.BlobProperty()
     img_ios_s = db.BlobProperty()
