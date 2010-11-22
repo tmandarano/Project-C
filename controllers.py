@@ -140,20 +140,23 @@ class PhotoResource(webapp.RequestHandler):
             self.error(404)
         self.response.out.write(photo.to_json())
 
-    def put(self, *args):
+    def put(self, key):
         self.response.headers["Content-Type"] = MIMETYPE_JSON
+
         try:
-            # try to save
-            # TODO
-            #for photo in models.Photo.all():
-            #    photo.delete()
-            #photo = models.Photo()
-            #photo.put()
-            pass
+            photo = models.Photo.get(unquote(key))
+        except db.BadKeyError:
+            self.error(404)
+
+        try:
+            caption = self.request.get('caption', default_value=None)
+            if caption is not None:
+                photo.caption = unquote(caption)
+            photo.put()
         except apiproxy_errors.CapabilityDisabledError:
             # fail
             pass
-        self.response.out.write('"%s\n\n%s"' % (self.__dict__, args))
+        self.redirect('/photos/%s' % key)
 
 
 class PhotoImageResource(webapp.RequestHandler):

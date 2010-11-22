@@ -17,7 +17,7 @@ routes = [
     ('/photos/([^/]+)/([^/]+)/([^/]+).*', controllers.PhotoImageResource),
     # GET /photos/:id
     # PUT /photos/:id
-    ('/photos/([^/]+)/?', controllers.PhotoResource),
+    ('/photos/([^/]+).*', controllers.PhotoResource),
     # POST /photos
     ('/photos.*', controllers.PhotoCreate),
 

@@ -1,6 +1,7 @@
 import logging
 import datetime
 import StringIO
+import pickle
 
 from google.appengine.ext import db
 from google.appengine.ext import blobstore
@@ -51,6 +52,8 @@ class Photo(JSONableModel, GeoModel):
     updated_at = db.DateTimeProperty(auto_now=True)
     exif = db.TextProperty()
 
+    geoname = db.StringProperty()
+
     img_orig = blobstore.BlobReferenceProperty()
 
     img_ios_t = db.BlobProperty()
@@ -65,11 +68,30 @@ class Photo(JSONableModel, GeoModel):
 
     def put(self, **kwargs):
         """ Postprocess img_orig before storing. """
-        # Sync geocell indexing
-        self.update_location()
+        saved = True
+        try:
+            self.key()
+        except db.NotSavedError:
+            saved = False
 
-        self._postprocess()
+        # Image, thumbnails, location are not mutable
+        if not saved:
+            # Sync geocell indexing
+            self.update_location()
+            self.geoname = self._get_geo_name()
+
+            self._postprocess()
+
         return super(Photo, self).put(**kwargs)
+
+    def _get_geo_name():
+        try:
+            result = urllib2.urlopen(
+                'http://ws.geonames.org/findNearestAddressJSON?lat=%f&lng=%f' %
+                (self.location.lat, self.location.lon)).read()
+        except urllib2.URLError, e:
+            result = 'Unknown'
+        return result
 
     def _img_orig_fobj(self):
         if type(self.img_orig) is blobstore.BlobInfo:
@@ -85,10 +107,9 @@ class Photo(JSONableModel, GeoModel):
         logging.info("Processing original image")
 
         fobj = self._img_orig_fobj()
-
         exif, byterange = _read_EXIF(fobj)
         logging.info(byterange)
-        self.exif = str(exif)
+        self.exif = pickle.dumps(exif)
         logging.info("Got EXIF: \n%s" % self.exif)
 
         # TODO Can't edit Blobstore info so maybe we shouldn't offer original
@@ -163,7 +184,7 @@ class Photo(JSONableModel, GeoModel):
         keys = properties.keys()
 
         key_whitelist = ('created_at', 'updated_at', 'caption', 'location',
-            'location_geocells', )
+            'location_geocells', 'geoname', )
         allowed_keys = filter(lambda x: x in key_whitelist, keys)
 
         obj = {}
