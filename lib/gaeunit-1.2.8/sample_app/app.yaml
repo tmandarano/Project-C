@@ -1,14 +1,13 @@
-application: lg
+application: gaeunit-sampleapp
 version: 1
 runtime: python
 api_version: 1
 
 handlers:
+
 - url: /test.*
+  login: admin
   script: gaeunit.py
 
-- url: /assets
-  static_dir: assets
-
-- url: /.*
-  script: lg.py
+- url: /
+  script: index.py

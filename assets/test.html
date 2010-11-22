@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html> 
+  <head> 
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' /> 
+    <title>Upload LiveGather</title> 
+  </head> 
+  <body> 
+
+    <form action="http://localhost:8080/photos" method="POST" enctype="multipart/form-data">
+    <table>
+      <tr>
+        <th><label for="photo_image">Photo</label></th>
+        <td><input id="photo_image" name="image" type="file" /></td>
+        <td id="preview"></td>
+      </tr>
+      <tr>
+        <th><label for="photo_caption">Caption</label></th>
+        <td><input id="photo_caption" name="caption" type="text" /></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td>
+          <input id="geopt" name="geopt" type="hidden" />
+          <p>Please click on the map where the photo was taken</p>
+          <div id="map" style="height: 200px; width: 400px;"></div>
+        </td>
+      </tr>
+    </table>
+    <input id="photo_submit" type="submit" value="Share" />
+    </div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://github.com/malsup/form/raw/master/jquery.form.js?v2.43"></script>
+    <script type="text/javascript">
+var GM = google.maps;
+function defaultTo(x, d) { return x ? x : d; }
+var LG = {};
+LG.share = defaultTo(LG.share, {});
+LG.share.upload = (function () {
+  var mapOpts = {
+    zoom: 7,
+    center: new GM.LatLng(32.77977,-117.137947),
+    mapTypeId: GM.MapTypeId.TERRAIN
+  };
+
+  var _ = {};
+  var map, marker, follower;
+  _.init = function () {
+    var map = new GM.Map($("#map")[0], mapOpts);
+    marker = new GM.Marker({
+      draggable: true,
+      position: map.getCenter(),
+      map: map
+    });
+    marker.bindTo('position', map, 'center');
+
+    follower = (function () {
+      var x = function () {};
+      var xp = x.prototype = new GM.MVCObject();
+      xp.position_changed = function () {
+        var latlng = this.get('position');
+        $('#geopt').val([latlng.lat(), latlng.lng()].join(','));
+      };
+      var y = new x();
+      y.bindTo('position', marker);
+      return y;
+    })();
+
+    GM.event.addListener(map, 'click', function(e) {
+      marker.setPosition(e.latLng);
+    });
+  };
+  return _;
+})();
+$(function () {
+  LG.share.upload.init();
+
+  $(':file').change(function () {
+    if (FileList && FileReader) {
+      var file = this.files[0];
+      if (file) {
+        var r = new FileReader();
+        r.onerror = function (e) {
+          console.log('error', e.target.error);
+        };
+        r.onprogress = function (e) {
+          if (e.lengthComputable) {
+            console.log(e.loaded / e.total);
+          }
+        };
+        r.onload = function (e) {
+          $('#preview').html('<img id="preview" style="width: 100px;" src="' + e.target.result + '" />');
+        };
+        r.readAsDataURL(file);
+      }
+    }
+  });
+  $(':submit').click(function () {
+    var okay = false;
+    $.ajax({
+      async: false,
+      url: 'http://localhost:8080/photos/upload',
+      success: function (url) {
+        if (url) {
+          $('form').attr('action', url).css('background', '#afa');
+          console.log(url);
+          okay = true;
+        }
+      }
+    });
+    return okay;
+  });
+
+  $('#photo_caption').val('caption yay');
+  $('#photo_tags').val('tag is more, than two words long');
+});
+    </script>
+  </body> 
+</html> 

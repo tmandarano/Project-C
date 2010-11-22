@@ -7,19 +7,19 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import controllers
 
 
-# XXX DEBUG
-logging.getLogger().setLevel(logging.DEBUG)
-
-
 routes = [
 # Photo resource
-    # POST /photos
-    ('/photos/?', controllers.PhotoCreate),
+    # GET /photos/proximity/:geopt/:radius
+    ('/photos/proximity/([^/]+)/([^/]+).*', controllers.PhotoProximity),
+    # GET /photos/upload
+    ('/photos/upload.*', controllers.PhotoCreatePath),
+    # GET /photos/:id/:os/:size
+    ('/photos/([^/]+)/([^/]+)/([^/]+).*', controllers.PhotoImageResource),
     # GET /photos/:id
     # PUT /photos/:id
-    ('/photos/(\d+)/?', controllers.PhotoResource),
-    # GET /photos/:id/:os/:size
-    ('/photos/(\d+)/(\w*)/(\w*)/?', controllers.PhotoImageResource),
+    ('/photos/([^/]+)/?', controllers.PhotoResource),
+    # POST /photos
+    ('/photos.*', controllers.PhotoCreate),
 
 # XXX Admin
     ('/a/(.*)/(.*)', controllers.Admin),

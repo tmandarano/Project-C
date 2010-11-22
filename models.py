@@ -3,15 +3,19 @@ import datetime
 import StringIO
 
 from google.appengine.ext import db
+from google.appengine.ext import blobstore
 from google.appengine.api import images
 
-from vendors import EXIF
-from vendors.python2_6 import json
+from lib import EXIF
+from lib.python2_6 import json
 
 
 def _json_default_handler(obj):
-    if type(obj) is datetime.datetime:
+    obj_type = type(obj)
+    if obj_type is datetime.datetime:
         return obj.isoformat()
+    elif obj_type is db.GeoPt:
+        return ','.join(map(str, (obj.lat, obj.lon)))
     else:
         raise TypeError('Object %s = %s is not JSON serializable' %
                 (type(obj), repr(obj)))
@@ -23,9 +27,8 @@ class JSONableModel(db.Model):
         return json.dumps(self.properties(), default=_json_default_handler)
 
 
-def _read_EXIF(image_data):
-    imgdata = StringIO.StringIO(image_data)
-    return EXIF.process_file(imgdata)
+def _read_EXIF(fobj):
+    return EXIF.process_file(fobj)
 
 
 def _scrub_EXIF(image_data, byterange):
@@ -47,8 +50,9 @@ class Photo(JSONableModel):
     caption = db.StringProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now=True)
-    img_orig = db.BlobProperty()
     exif = db.TextProperty()
+
+    img_orig = blobstore.BlobReferenceProperty()
 
     img_ios_t = db.BlobProperty()
     img_ios_s = db.BlobProperty()
@@ -60,24 +64,54 @@ class Photo(JSONableModel):
     img_ios_r_m = db.BlobProperty()
     img_ios_r_f = db.BlobProperty()
 
-    def store_image_data(self, image_data):
-        logging.info("Storing image blob")
-        exif, byterange = _read_EXIF(image_data)
+    def put(self, **kwargs):
+        """ Postprocess img_orig before storing. """
+        self._postprocess()
+        return super(Photo, self).put(self, **kwargs)
+
+    def _img_orig_fobj(self):
+        if type(self.img_orig) is blobstore.BlobInfo:
+            return blobstore.BlobReader(self.img_orig, buffer_size=2**10)
+        else:
+            return StringIO.StringIO(self.img_orig)
+
+    def _postprocess(self):
+        """ Gather image data and make thumbnails.
+            1. Read and store EXIF
+            2. Generate smaller sizes
+        """
+        logging.info("Processing original image")
+
+        fobj = self._img_orig_fobj()
+
+        exif, byterange = _read_EXIF(fobj)
         logging.info(byterange)
         self.exif = str(exif)
-        logging.info("Got EXIF: %s" % self.exif)
-        logging.info("Scrubbing EXIF from image_data")
-        image_data = _scrub_EXIF(image_data, byterange)
+        logging.info("Got EXIF: \n%s" % self.exif)
 
-        self.img_orig = image_data
+        # TODO Can't edit Blobstore info so maybe we shouldn't offer original
+        # size images.
+        #logging.info("Scrubbing EXIF from image_data")
+        #image_data = _scrub_EXIF(image_data, byterange)
 
-#       TODO
-#        self._generate_thumbnails()
+        self._generate_thumbnails()
 
     def _generate_thumbnail(self, width, height):
-        img = images.Image(self.img_orig)
+        logging.info("Generating thumbnail %dx%d" % (width, height))
+        if type(self.img_orig) is blobstore.BlobInfo:
+            img = images.Image(blob_key=self.img_orig.key())
+        else:
+            img = images.Image(image_data=self.img_orig)
         img.resize(width, height)
-        return img.execute_transforms(output_encoding=images.JPEG)
+        # TODO rotate the image if necessary
+        # I'm feeling luckyify?
+
+        result = None
+        try:
+            result = img.execute_transforms(output_encoding=images.JPEG, quality=85)
+        except Exception, e:
+            logging.error("Transformations failed: %s" % e)
+        return result
 
     def _generate_thumbnails(self):
         self.img_ios_t = self._generate_thumbnail(50, 50)
@@ -130,6 +164,6 @@ class Photo(JSONableModel):
         obj = {}
         for x in non_images:
             obj[x] = properties[x].get_value_for_datastore(self)
-        obj['key'] = self.key().id()
+        obj['key'] = str(self.key())
 
         return json.dumps(obj, default=_json_default_handler)

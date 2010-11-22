@@ -1,5 +1,7 @@
 from __future__ import with_statement
 import os
+import logging
+import StringIO
 from unittest import TestCase
 
 from google.appengine.ext import db
@@ -28,16 +30,17 @@ class TestPhoto(TestCase):
                 data = f.read()
                 blob = db.Blob(data)
                 self.blobs.append(blob)
-                photo = models.Photo()
-                photo.store_image_data(blob)
-                self.photos.append(photo)
+                #photo = models.Photo(img_orig=blob)
+                #photo._postprocess()
+                #self.photos.append(photo)
+        # Blobstore sucks. Can't insert Blobs so can't test! WTH Google.
 
     def test_initialization(self):
-        print self.image_files
+        logging.info(self.image_files)
 
     def test_exif(self):
         for img in self.blobs:
-            print models._read_EXIF(img)
+            logging.info(models._read_EXIF(StringIO.StringIO(img)))
 
 #    def test_sizes(self):
 #        print self.photo.__dict__

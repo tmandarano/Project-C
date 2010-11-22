@@ -31,8 +31,8 @@ class TestCommand(distutils.core.Command):
         pass
 
     def run(self):
-        """Finds all the tests modules in tests/ and runs them."""
-        testdir = 'tests'
+        """Finds all the tests modules in test/ and runs them."""
+        testdir = 'test'
         testspath = os.path.join(DIRECTORY, testdir)
         testfiles = []
         verbosity = 2
