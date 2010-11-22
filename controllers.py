@@ -1,5 +1,6 @@
 import logging
 import urllib
+import datetime
 
 from google.appengine.ext import db
 from google.appengine.ext import webapp
@@ -25,8 +26,17 @@ class PhotoProximity(webapp.RequestHandler):
 
     def get(self, geopt, distance):
         """ Find photos within distance of GeoPt
-            geopt - lat,lon
-            distance - in meters
+            Args:
+                required for URL to match:
+                    geopt - lat,lon
+                    distance - in meters
+                optional:
+                    max_age - results will be restricted to at most this many 
+                        minutes in the past (in set float((0, inf)))
+                    max_results - at most return this many results (in set
+                        int([1, 20]))
+
+            Gives a JSON array with max_results photos.
         """
         try:
             geopt = db.GeoPt(*map(float, unquote(geopt).split(',')))
@@ -42,10 +52,33 @@ class PhotoProximity(webapp.RequestHandler):
                 400, 'distance must be a number in meters')
             return
 
+        max_results = 20
+        try:
+            max_results = int(unquote(self.request.get('max_results',
+                                                        default_value='20')))
+        except ValueError:
+            self.response.set_status(400, 'max_results must be integer')
+            return
+        max_age = 30
+        try:
+            max_age = float(unquote(self.request.get('max_age',
+                                                     default_value='30')))
+        except ValueError:
+            self.response.set_status(400, 'max_age must be number')
+            return
+
+        query = models.Photo.all()
+
+        if max_age:
+            max_age = max(max_age, 1e-6)
+            query.filter('created_at >',
+                         datetime.datetime.now() - \
+                         datetime.timedelta(minutes=max_age))
+
         photos = models.Photo.proximity_fetch(
-            models.Photo.all(),
+            query,
             geopt,
-            max_results=10,
+            max_results=min(20, max(max_results, 1)),
             max_distance=distance)
 
         json_photos = map(lambda x: x.to_json(), photos)
