@@ -8,6 +8,7 @@ from google.appengine.api import images
 
 from lib import EXIF
 from lib.python2_6 import json
+from lib.geo.geomodel import GeoModel
 
 
 def _json_default_handler(obj):
@@ -43,10 +44,8 @@ def _scrub_EXIF(image_data, byterange):
     return db.Blob(''.join(scrubbed))
 
 
-class Photo(JSONableModel):
+class Photo(JSONableModel, GeoModel):
 #    owner = db.UserProperty(required=True)
-    location = db.StringProperty()
-    geopt = db.GeoPtProperty()
     caption = db.StringProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now=True)
@@ -66,8 +65,11 @@ class Photo(JSONableModel):
 
     def put(self, **kwargs):
         """ Postprocess img_orig before storing. """
+        # Sync geocell indexing
+        self.update_location()
+
         self._postprocess()
-        return super(Photo, self).put(self, **kwargs)
+        return super(Photo, self).put(**kwargs)
 
     def _img_orig_fobj(self):
         if type(self.img_orig) is blobstore.BlobInfo:
@@ -159,10 +161,13 @@ class Photo(JSONableModel):
     def to_json(self):
         properties = self.properties()
         keys = properties.keys()
-        non_images = filter(lambda x: not x.startswith('img'), keys)
+
+        key_whitelist = ('created_at', 'updated_at', 'caption', 'location',
+            'location_geocells', )
+        allowed_keys = filter(lambda x: x in key_whitelist, keys)
 
         obj = {}
-        for x in non_images:
+        for x in allowed_keys:
             obj[x] = properties[x].get_value_for_datastore(self)
         obj['key'] = str(self.key())
 

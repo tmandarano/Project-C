@@ -1,5 +1,5 @@
 import logging
-import urllib2
+import urllib
 
 from google.appengine.ext import db
 from google.appengine.ext import webapp
@@ -14,10 +14,43 @@ import models
 MIMETYPE_JSON = 'application/json'
 
 
+unquote = urllib.unquote
+
+
+# TODO provide ws.geonames.org cache?
+# http://ws.geonames.org/findNearestAddress?lat=37.451&lng=-122.18
+# http://ws.geonames.org/findNearestAddressJSON?lat=37.451&lng=-122.18
+
 class PhotoProximity(webapp.RequestHandler):
 
-    def get(self, geopt, radius):
-        pass
+    def get(self, geopt, distance):
+        """ Find photos within distance of GeoPt
+            geopt - lat,lon
+            distance - in meters
+        """
+        try:
+            geopt = db.GeoPt(*map(float, unquote(geopt).split(',')))
+        except ValueError:
+            self.response.set_status(
+                400, 'GeoPt is lat,lon. Lat and Lon must be numbers')
+            return
+
+        try:
+            distance = float(unquote(distance))
+        except ValueError:
+            self.response.set_status(
+                400, 'distance must be a number in meters')
+            return
+
+        photos = models.Photo.proximity_fetch(
+            models.Photo.all(),
+            geopt,
+            max_results=10,
+            max_distance=distance)
+
+        json_photos = map(lambda x: x.to_json(), photos)
+
+        self.response.out.write('[%s]' % ', '.join(json_photos))
 
 
 class PhotoCreatePath(blobstore_handlers.BlobstoreUploadHandler):
@@ -43,17 +76,17 @@ class PhotoCreate(blobstore_handlers.BlobstoreUploadHandler):
             return
         image = uploads[0]
 
-        caption = self.request.get('caption')
-        geopt = self.request.get('geopt')
+        caption = unquote(self.request.get('caption'))
+        geopt = unquote(self.request.get('geopt'))
 
         try:
-            geopt = db.GeoPt(*map(float, (geopt.split(','))))
+            geopt = db.GeoPt(*map(float, (unquote(geopt).split(','))))
         except:
             self.response.set_status(302, 'GeoPt must be lat,lon')
             image.delete()
             return
 
-        photo = models.Photo(img_orig=image.key(), caption=caption, geopt=geopt)
+        photo = models.Photo(img_orig=image.key(), caption=caption, location=geopt)
         try:
             photo.put()
         except Exception, e:
@@ -69,7 +102,7 @@ class PhotoResource(webapp.RequestHandler):
     def get(self, key):
         self.response.headers["Content-Type"] = MIMETYPE_JSON
         try:
-            photo = models.Photo.get(key)
+            photo = models.Photo.get(unquote(key))
         except db.BadKeyError:
             self.error(404)
         self.response.out.write(photo.to_json())
@@ -92,11 +125,9 @@ class PhotoResource(webapp.RequestHandler):
 
 class PhotoImageResource(webapp.RequestHandler):
 
-    def get(self, *args):
+    def get(self, key, os, size):
         self.response.headers["Content-Type"] = "image/jpeg"
         #self.response.headers.add_header("Expires", "")
-
-        id, os, size = args
 
         try:
             id = long(id)
@@ -105,12 +136,13 @@ class PhotoImageResource(webapp.RequestHandler):
             return
 
         try:
-            photo = models.Photo.get_by_id(id)
+            photo = models.Photo.get(unquote(key))
         except:
             self.error(404)
             return
 
-        self.response.out.write(photo.get_os_img(os, size))
+        self.response.out.write(photo.get_os_img(unquote(os),
+                                                 unquote(size)))
 
 
 class Admin(webapp.RequestHandler):

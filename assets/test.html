@@ -11,7 +11,7 @@
       <tr>
         <th><label for="photo_image">Photo</label></th>
         <td><input id="photo_image" name="image" type="file" /></td>
-        <td id="preview"></td>
+        <td id="preview" style="height: 200px;"></td>
       </tr>
       <tr>
         <th><label for="photo_caption">Caption</label></th>
@@ -90,7 +90,7 @@ $(function () {
           }
         };
         r.onload = function (e) {
-          $('#preview').html('<img id="preview" style="width: 100px;" src="' + e.target.result + '" />');
+          $('#preview').html('<img id="preview" style="height: 200px;" src="' + e.target.result + '" />');
         };
         r.readAsDataURL(file);
       }
