@@ -5,36 +5,35 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 import controllers
+import controllers.photo
 import controllers.user
-from controllers import session as session_controllers
+import controllers.session
 
 
 routes = [
 # Photo resource
     # GET /photos/proximity/:geopt/:radius
-    ('/photos/proximity/([^/]+)/([^/]+).*', controllers.PhotoProximity),
+    ('/photos/proximity/([^/]+)/([^/]+).*', controllers.photo.Proximity),
     # GET /photos/upload
-    ('/photos/upload.*', controllers.PhotoCreatePath),
+    ('/photos/upload.*', controllers.photo.CreatePath),
     # GET /photos/:id/:os/:size
-    ('/photos/([^/]+)/([^/]+)/([^/]+).*', controllers.PhotoImageResource),
+    ('/photos/([^/]+)/([^/]+)/([^/]+).*', controllers.photo.ImageResource),
     # GET /photos/:id
     # PUT /photos/:id
-    ('/photos/([^/]+).*', controllers.PhotoResource),
+    ('/photos/([^/]+).*', controllers.photo.Resource),
     # POST /photos
-    ('/photos.*', controllers.PhotoCreate),
+    ('/photos.*', controllers.photo.Create),
 
     # GET /users
     ('/users/([^/]+)/photos.*', controllers.user.Photos),
     ('/users/([^/]+).*', controllers.user.Resource),
+    ('/users.*', controllers.user.User),
 
     # DELETE /session
-    ('/session', session_controllers.SessionResource),
+    ('/session', controllers.session.Resource),
 
     # POST /rpx (called by Janrain)
-    ('/rpx.*', session_controllers.RPXTokenHandler),
-
-# XXX Admin
-    ('/a/(.*)/(.*)', controllers.Admin),
+    ('/rpx.*', controllers.session.RPXTokenHandler),
 ]
 
 

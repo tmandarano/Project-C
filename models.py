@@ -2,6 +2,7 @@ import logging
 import datetime
 import StringIO
 import pickle
+import urllib2
 
 from google.appengine.ext import db
 from google.appengine.ext import blobstore
@@ -18,6 +19,8 @@ def _json_default_handler(obj):
         return obj.isoformat()
     elif obj_type is db.GeoPt:
         return ','.join(map(str, (obj.lat, obj.lon)))
+    elif obj_type is db.Key:
+        return obj.id_or_name()
     else:
         raise TypeError('Object %s = %s is not JSON serializable' %
                 (type(obj), repr(obj)))
@@ -97,13 +100,13 @@ class Photo(JSONableModel, GeoModel):
         if not saved:
             # Sync geocell indexing
             self.update_location()
-            self.geoname = self._get_geo_name()
+            self.geoname = pickle.dumps(self._get_geo_name())
 
             self._postprocess()
 
         return super(Photo, self).put(**kwargs)
 
-    def _get_geo_name():
+    def _get_geo_name(self):
         try:
             result = urllib2.urlopen(
                 'http://ws.geonames.org/findNearestAddressJSON?lat=%f&lng=%f' %
@@ -203,7 +206,7 @@ class Photo(JSONableModel, GeoModel):
         keys = properties.keys()
 
         key_whitelist = ('created_at', 'updated_at', 'caption', 'location',
-            'location_geocells', 'geoname', )
+            'location_geocells', 'geoname', 'user', )
         allowed_keys = filter(lambda x: x in key_whitelist, keys)
 
         obj = {}

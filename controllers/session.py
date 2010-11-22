@@ -1,11 +1,16 @@
+import urllib
+
 from google.appengine.ext import webapp
+from google.appengine.ext import db
 from google.appengine.api import urlfetch
 
 from lib.python2_6 import json
 from lib import gaesessions
 
+import models
 
-def _get_session():
+
+def get_session():
     return gaesessions.get_current_session()
 
 
@@ -14,11 +19,11 @@ def _session_terminate(session):
         session.terminate()
 
 
-class SessionResource(webapp.RequestHandler):
+class Resource(webapp.RequestHandler):
 
     def delete(self):
         """ Delete session """
-        _session_terminate(_get_session())
+        _session_terminate(get_session())
 
 
 class RPXTokenHandler(webapp.RequestHandler):
