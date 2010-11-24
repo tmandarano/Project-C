@@ -175,12 +175,6 @@ class ImageResource(webapp.RequestHandler):
         #self.response.headers.add_header("Expires", "")
 
         try:
-            id = long(id)
-        except ValueError:
-            self.response.set_status(400, 'Illegal ID')
-            return
-
-        try:
             photo = models.Photo.get(controllers.unquote(key))
         except db.BadKeyError:
             self.error(404)

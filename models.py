@@ -74,7 +74,7 @@ class Photo(JSONableModel, GeoModel):
     updated_at = db.DateTimeProperty(auto_now=True)
     exif = db.TextProperty()
 
-    geoname = db.StringProperty()
+    geoname = db.StringProperty(multiline=True)
 
     img_orig = blobstore.BlobReferenceProperty(required=True)
 
@@ -132,7 +132,7 @@ class Photo(JSONableModel, GeoModel):
         exif, byterange = _read_EXIF(fobj)
         logging.info(byterange)
         self.exif = pickle.dumps(exif)
-        logging.info("Got EXIF: \n%s" % self.exif)
+        logging.info("Got EXIF: \n%s" % exif)
 
         # TODO Can't edit Blobstore info so maybe we shouldn't offer original
         # size images.
@@ -144,7 +144,7 @@ class Photo(JSONableModel, GeoModel):
     def _generate_thumbnail(self, width, height):
         logging.info("Generating thumbnail %dx%d" % (width, height))
         if type(self.img_orig) is blobstore.BlobInfo:
-            img = images.Image(blob_key=self.img_orig.key())
+            img = images.Image(blob_key=str(self.img_orig.key()))
         else:
             img = images.Image(image_data=self.img_orig)
         img.resize(width, height)
@@ -177,11 +177,12 @@ class Photo(JSONableModel, GeoModel):
                     small, medium, large, and original
         """
         if os == 'iOS':
-            return get_iOS_img(size)
+            return self.get_iOS_img(size)
         elif os == 'iOS_retina':
-            return get_iOS_retina_img(size)
+            return self.get_iOS_retina_img(size)
 
     def get_iOS_img(self, size='t'):
+        logging.info("Returning image of size %s" % size)
         if size == 't':
             return self.img_ios_t
         elif size == 's':
@@ -206,12 +207,13 @@ class Photo(JSONableModel, GeoModel):
         keys = properties.keys()
 
         key_whitelist = ('created_at', 'updated_at', 'caption', 'location',
-            'location_geocells', 'geoname', 'user', )
+            'location_geocells', 'geoname', )
         allowed_keys = filter(lambda x: x in key_whitelist, keys)
 
         obj = {}
         for x in allowed_keys:
             obj[x] = properties[x].get_value_for_datastore(self)
         obj['key'] = str(self.key())
+        obj['user'] = str(self.user.key())
 
         return json.dumps(obj, default=_json_default_handler)
