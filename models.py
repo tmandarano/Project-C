@@ -9,7 +9,7 @@ from google.appengine.ext import blobstore
 from google.appengine.api import images
 
 from lib import EXIF
-from lib.python2_6 import json
+from django.utils import simplejson as json
 from lib.geo.geomodel import GeoModel
 
 
@@ -98,11 +98,12 @@ class Photo(JSONableModel, GeoModel):
 
         # Image, thumbnails, location are not mutable
         if not saved:
+            self._postprocess()
+
             # Sync geocell indexing
             self.update_location()
             self.geoname = pickle.dumps(self._get_geo_name())
 
-            self._postprocess()
 
         return super(Photo, self).put(**kwargs)
 

@@ -4,7 +4,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
 
-from lib.python2_6 import json
+from django.utils import simplejson as json
 from lib import gaesessions
 
 import models
@@ -40,8 +40,7 @@ class RPXTokenHandler(webapp.RequestHandler):
         r = urlfetch.fetch(
             url=url,
             payload=urllib.urlencode(args),
-            method=urlfetch.POST,
-            headers={'content-Type': 'application/x-www-form-urlencoded'})
+            method=urlfetch.POST)
 
         auth = json.loads(r.content)
 

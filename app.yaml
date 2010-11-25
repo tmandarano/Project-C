@@ -7,8 +7,9 @@ handlers:
 - url: /test.*
   script: gaeunit.py
 
-- url: /assets
-  static_dir: assets
+- url: /(.*\.(html|ico))
+  static_files: \1
+  upload: (.*\.(html|ico))
 
 - url: /.*
   script: lg.py
