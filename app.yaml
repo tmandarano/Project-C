@@ -11,6 +11,9 @@ handlers:
   static_files: \1
   upload: (.*\.(html|ico))
 
+- url: /js
+  static_dir: js
+
 - url: /.*
   script: __init__.py
   secure: always

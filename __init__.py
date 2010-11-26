@@ -20,6 +20,8 @@ routes = [
     ('/photos/([^/]+)/([^/]+)/([^/]+).*', controllers.photo.ImageResource),
     # PUT /photos/:key/(up|down)
     ('/photos/([^/]+)/(up|down).*', controllers.photo.Thumb),
+    # PUT /photos/:key/comment
+    ('/photos/([^/]+)/comment.*', controllers.photo.Comment),
     # GET /photos/:key
     # PUT /photos/:key
     ('/photos/([^/]+).*', controllers.photo.Resource),
