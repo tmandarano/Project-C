@@ -13,23 +13,23 @@ from django.utils import simplejson as json
 from lib.geo.geomodel import GeoModel
 
 
-def _json_default_handler(obj):
-    obj_type = type(obj)
-    if obj_type is datetime.datetime:
-        return obj.isoformat()
-    elif obj_type is db.GeoPt:
-        return ','.join(map(str, (obj.lat, obj.lon)))
-    elif obj_type is db.Key:
-        return obj.id_or_name()
-    else:
-        raise TypeError('Object %s = %s is not JSON serializable' %
-                (type(obj), repr(obj)))
+class SpecializedJSONEncoder(json.JSONEncoder):
+
+    def default(self, obj):
+        obj_type = type(obj)
+        if obj_type is datetime.datetime:
+            return obj.isoformat()
+        elif obj_type is db.GeoPt:
+            return ','.join(map(str, (obj.lat, obj.lon)))
+        elif obj_type is db.Key:
+            return obj.id_or_name()
+        return json.JSONEncoder.default(self, obj)
 
 
 class JSONableModel(db.Model):
 
     def to_json(self):
-        return json.dumps(self.properties(), default=_json_default_handler)
+        return json.dumps(self.properties(), cls=SpecializedJSONEncoder)
 
 
 class User(JSONableModel):
@@ -48,7 +48,7 @@ class User(JSONableModel):
             obj[x] = properties[x].get_value_for_datastore(self)
         obj['key'] = str(self.key())
 
-        return json.dumps(obj, default=_json_default_handler)
+        return json.dumps(obj, cls=SpecializedJSONEncoder)
 
 
 def _read_EXIF(fobj):
@@ -79,6 +79,7 @@ def _iOS_coord_to_decimal(coord, ref=None):
 class Photo(JSONableModel, GeoModel):
     user = db.ReferenceProperty(User, required=True)
     caption = db.StringProperty()
+    taken_at = db.DateTimeProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now=True)
     exif = db.TextProperty()
@@ -146,19 +147,22 @@ class Photo(JSONableModel, GeoModel):
         self.exif = pickle.dumps(exif)
         logging.info("Got EXIF: \n%s" % exif)
 
-        lat = models._iOS_coord_to_decimal(
+        lat = _iOS_coord_to_decimal(
             exif['GPS GPSLatitude'], exif['GPS GPSLatitudeRef'])
-        lon = models._iOS_coord_to_decimal(
+        lon = _iOS_coord_to_decimal(
             exif['GPS GPSLongitude'], exif['GPS GPSLongitudeRef'])
-        dir = models._iOS_coord_to_decimal(
+        dir = _iOS_coord_to_decimal(
             exif['GPS GPSImgDirection'], exif['GPS GPSImgDirectionRef'])
-        alt = models._iOS_coord_to_decimal(
+        alt = _iOS_coord_to_decimal(
             exif['GPS GPSAltitude'], exif['GPS GPSAltitudeRef'])
-        time = models._iOS_coord_to_decimal(
+        gpstime = _iOS_coord_to_decimal(
             exif['GPS GPSTimeStamp'])
+        image_time = datetime.strptime(exif['Image DateTime'].values[0],
+            '%Y:%m:%d %H:%M:%S')
         info = exif['Image GPSInfo'].values[0]
         horiz = True if exif['Image Orientation'].values else False
 
+        self.taken_at = image_time
         self._set_location(db.GeoPt(lat, lon))
 
         self._generate_thumbnails()
@@ -228,8 +232,8 @@ class Photo(JSONableModel, GeoModel):
         properties = self.properties()
         keys = properties.keys()
 
-        key_whitelist = ('created_at', 'updated_at', 'caption', 'location',
-            'location_geocells', 'geoname', )
+        key_whitelist = ('taken_at', 'caption', 'location', 'location_geocells',
+                         'geoname', )
         allowed_keys = filter(lambda x: x in key_whitelist, keys)
 
         obj = {}
@@ -238,4 +242,4 @@ class Photo(JSONableModel, GeoModel):
         obj['key'] = str(self.key())
         obj['user'] = str(self.user.key())
 
-        return json.dumps(obj, default=_json_default_handler)
+        return json.dumps(obj, cls=SpecializedJSONEncoder)
