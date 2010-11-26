@@ -14,10 +14,8 @@ class TestPhoto(TestCase):
     def setUp(self):
         asset_path = os.path.join(os.path.dirname(__file__), 'assets')
         names = [
-            'Canon_40D_photoshop_import.jpg',
-            'Nikon_COOLPIX_P1.jpg',
-            'iphone.jpg',
-            'iphone_3gs.jpg',
+            'realiphone.jpg',
+            'realiphone2.jpg',
         ]
 
         self.image_files = []
@@ -40,7 +38,28 @@ class TestPhoto(TestCase):
 
     def test_exif(self):
         for img in self.blobs:
-            logging.info(models._read_EXIF(StringIO.StringIO(img)))
+            logging.info(models._read_EXIF(StringIO.StringIO(img))[0])
+
+    def test_postprocessing(self):
+        for img in self.blobs:
+            exif = models._read_EXIF(StringIO.StringIO(img))[0]
+
+            print
+
+            print sorted(exif.keys())
+
+            print 'lat', models._iOS_coord_to_decimal(
+                exif['GPS GPSLatitude'], exif['GPS GPSLatitudeRef'])
+            print 'lon', models._iOS_coord_to_decimal(
+                exif['GPS GPSLongitude'], exif['GPS GPSLongitudeRef'])
+            print 'dir', models._iOS_coord_to_decimal(
+                exif['GPS GPSImgDirection'], exif['GPS GPSImgDirectionRef'])
+            print 'alt', models._iOS_coord_to_decimal(
+                exif['GPS GPSAltitude'], exif['GPS GPSAltitudeRef'])
+            print 'time', models._iOS_coord_to_decimal(
+                exif['GPS GPSTimeStamp'])
+            print 'info', exif['Image GPSInfo'].values[0]
+            print 'horiz', True if exif['Image Orientation'].values else False
 
 #    def test_sizes(self):
 #        print self.photo.__dict__

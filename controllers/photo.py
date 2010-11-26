@@ -98,35 +98,33 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
             Since this is a blobstore handler and does not respond RESTfully
             the only HTTP status codes allowed are 301, 302, and 303. Any
             errors are represented by 302 and an ASCII description of the
-            error. Proper requests will redirect with a 303.
+            error. Proper requests will redirect.
         """
+        uploads = self.get_uploads()
+        if len(uploads) is not 1:
+            self.response.set_status(302, 'Need one file')
+            return
+        # REMEMBER TO DELETE THE IMAGE FROM BLOBSTORE WHEN RETURNING ERROR
+        image = uploads[0]
+
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
             self.error(401)
             return
 
-        uploads = self.get_uploads()
-        if len(uploads) is not 1:
-            self.response.set_status(302, 'Need one file')
-            return
-        image = uploads[0]
-
         caption = controllers.unquote(self.request.get('caption'))
-        geopt = controllers.unquote(self.request.get('geopt'))
 
         try:
-            geopt = db.GeoPt(
-                *map(float, (controllers.unquote(geopt).split(','))))
-        except:
-            self.response.set_status(302, 'GeoPt must be lat,lon')
+            user = current_session['me']
+        except KeyError:
+            self.error(401)
             image.delete()
             return
 
         photo = models.Photo(
-            user=current_session['me'],
+            user=user,
             img_orig=image.key(),
-            caption=caption,
-            location=geopt)
+            caption=caption)
         try:
             photo.put()
         except Exception, e:

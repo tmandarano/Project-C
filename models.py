@@ -55,16 +55,25 @@ def _read_EXIF(fobj):
     return EXIF.process_file(fobj)
 
 
-def _scrub_EXIF(image_data, byterange):
-    """ Remove EXIF data from the image """
-    logging.info("Scrubbing EXIF from image")
-    logging.debug("EXIF header found at range %s" % str(byterange))
+def ref_to_sign(r):
+    return 1 if r.values in ('N', 'E', 'T') else -1
 
-    # TODO
-    scrubbed = list(image_data)
-    for i in range(*byterange):
-        scrubbed[i] = chr(0x0)
-    return db.Blob(''.join(scrubbed))
+
+def ratio_to_frac(r):
+    return float(r.num) / float(r.den)
+
+
+def decimalify(*xs):
+    s = 0
+    for x in reversed(xs):
+        s = x + s / 60.0
+    return s
+
+
+def _iOS_coord_to_decimal(coord, ref=None):
+    coord = map(ratio_to_frac, coord.values)
+    sign = 1 if not ref else ref_to_sign(ref)
+    return sign * decimalify(*coord)
 
 
 class Photo(JSONableModel, GeoModel):
@@ -100,12 +109,13 @@ class Photo(JSONableModel, GeoModel):
         if not saved:
             self._postprocess()
 
-            # Sync geocell indexing
-            self.update_location()
-            self.geoname = pickle.dumps(self._get_geo_name())
-
-
         return super(Photo, self).put(**kwargs)
+
+    def _img_orig_fobj(self):
+        if type(self.img_orig) is blobstore.BlobInfo:
+            return blobstore.BlobReader(self.img_orig, buffer_size=2**10)
+        else:
+            return StringIO.StringIO(self.img_orig)
 
     def _get_geo_name(self):
         try:
@@ -116,11 +126,12 @@ class Photo(JSONableModel, GeoModel):
             result = 'Unknown'
         return result
 
-    def _img_orig_fobj(self):
-        if type(self.img_orig) is blobstore.BlobInfo:
-            return blobstore.BlobReader(self.img_orig, buffer_size=2**10)
-        else:
-            return StringIO.StringIO(self.img_orig)
+    def _set_location(self, geopt):
+        self.location = geopt
+        self.geoname = pickle.dumps(self._get_geo_name())
+
+        # Sync geocell indexing
+        self.update_location()
 
     def _postprocess(self):
         """ Gather image data and make thumbnails.
@@ -135,10 +146,20 @@ class Photo(JSONableModel, GeoModel):
         self.exif = pickle.dumps(exif)
         logging.info("Got EXIF: \n%s" % exif)
 
-        # TODO Can't edit Blobstore info so maybe we shouldn't offer original
-        # size images.
-        #logging.info("Scrubbing EXIF from image_data")
-        #image_data = _scrub_EXIF(image_data, byterange)
+        lat = models._iOS_coord_to_decimal(
+            exif['GPS GPSLatitude'], exif['GPS GPSLatitudeRef'])
+        lon = models._iOS_coord_to_decimal(
+            exif['GPS GPSLongitude'], exif['GPS GPSLongitudeRef'])
+        dir = models._iOS_coord_to_decimal(
+            exif['GPS GPSImgDirection'], exif['GPS GPSImgDirectionRef'])
+        alt = models._iOS_coord_to_decimal(
+            exif['GPS GPSAltitude'], exif['GPS GPSAltitudeRef'])
+        time = models._iOS_coord_to_decimal(
+            exif['GPS GPSTimeStamp'])
+        info = exif['Image GPSInfo'].values[0]
+        horiz = True if exif['Image Orientation'].values else False
+
+        self._set_location(db.GeoPt(lat, lon))
 
         self._generate_thumbnails()
 

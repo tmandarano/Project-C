@@ -40,7 +40,8 @@ class RPXTokenHandler(webapp.RequestHandler):
         r = urlfetch.fetch(
             url=url,
             payload=urllib.urlencode(args),
-            method=urlfetch.POST)
+            method=urlfetch.POST,
+            headers={'Content-Type': 'application/x-www-form-urlencoded'})
 
         auth = json.loads(r.content)
 
