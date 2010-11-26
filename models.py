@@ -290,6 +290,11 @@ class Photo(JSONableModel, GeoModel):
         else:
             return self.img_ios_r_f
 
+    def thumbs(self):
+        """ Get summary of number of thumbs up """
+        return self.thumb_set.filter('up', True).count() - \
+               self.thumb_set.filter('up', False).count()
+
     def to_json(self):
         properties = self.properties()
         keys = properties.keys()
@@ -303,5 +308,12 @@ class Photo(JSONableModel, GeoModel):
             obj[x] = properties[x].get_value_for_datastore(self)
         obj['key'] = str(self.key())
         obj['user'] = str(self.user.key())
+        obj['thumbs'] = self.thumbs()
 
         return json.dumps(obj, cls=SpecializedJSONEncoder)
+
+
+class Thumb(db.Model):
+    up = db.BooleanProperty(required=True)
+    user = db.ReferenceProperty(User, required=True)
+    photo = db.ReferenceProperty(Photo, required=True)

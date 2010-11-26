@@ -77,6 +77,37 @@ class Proximity(webapp.RequestHandler):
         self.response.out.write('[%s]' % ', '.join(json_photos))
 
 
+class Thumb(webapp.RequestHandler):
+
+    def put(self, key, up):
+        """ Change the user's vote on a given photo """
+        current_session = session.get_session()
+        if not current_session or not current_session.is_active():
+            self.error(401)
+            return
+
+        try:
+            user = current_session['me']
+        except KeyError:
+            self.error(401)
+            return
+
+        try:
+            photo = models.Photo.get(controllers.unquote(key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        thumb = photo.thumb_set.filter('user = ', user).get()
+        if not thumb:
+            thumb = models.Thumb(up=True, photo=photo, user=user)
+        logging.info('thumb %s' % up)
+        thumb.up = (up == 'up')
+        thumb.put()
+
+        self.redirect('/photos/%s' % key)
+
+
 class CreatePath(blobstore_handlers.BlobstoreUploadHandler):
 
     def get(self):

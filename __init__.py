@@ -16,17 +16,21 @@ routes = [
     ('/photos/proximity/([^/]+)/([^/]+).*', controllers.photo.Proximity),
     # GET /photos/upload
     ('/photos/upload.*', controllers.photo.CreatePath),
-    # GET /photos/:id/:os/:size
+    # GET /photos/:key/:os/:size
     ('/photos/([^/]+)/([^/]+)/([^/]+).*', controllers.photo.ImageResource),
-    # GET /photos/:id
-    # PUT /photos/:id
+    # PUT /photos/:key/(up|down)
+    ('/photos/([^/]+)/(up|down).*', controllers.photo.Thumb),
+    # GET /photos/:key
+    # PUT /photos/:key
     ('/photos/([^/]+).*', controllers.photo.Resource),
     # POST /photos
     ('/photos.*', controllers.photo.Create),
 
-    # GET /users
+    # GET /users/:key/photos
     ('/users/([^/]+)/photos.*', controllers.user.Photos),
+    # GET /users/:key
     ('/users/([^/]+).*', controllers.user.Resource),
+    # GET /users
     ('/users.*', controllers.user.User),
 
     # DELETE /session
