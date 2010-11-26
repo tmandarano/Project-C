@@ -12,6 +12,7 @@ import session
 class Photos(webapp.RequestHandler):
 
     def get(self, key):
+        """ JSON serializations of photos the user referenced by :key took """
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         try:
             user = models.User.get(controllers.unquote(key))
@@ -29,6 +30,7 @@ class Photos(webapp.RequestHandler):
 class Resource(webapp.RequestHandler):
 
     def get(self, key):
+        """ JSON serialization of the user referenced by :key """
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         try:
             user = models.User.get(controllers.unquote(key))
@@ -42,6 +44,7 @@ class Resource(webapp.RequestHandler):
 class User(webapp.RequestHandler):
 
     def get(self):
+        """ JSON serialization of the current logged in user """
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
             self.error(404)

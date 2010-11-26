@@ -138,6 +138,7 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
 class Resource(webapp.RequestHandler):
 
     def get(self, key):
+        """ JSON serialization of photo identified by :key """
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         try:
             photo = models.Photo.get(controllers.unquote(key))
@@ -147,6 +148,7 @@ class Resource(webapp.RequestHandler):
         self.response.out.write(photo.to_json())
 
     def put(self, key):
+        """ Updates caption of photo identified by :key """
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
 
         try:
@@ -169,6 +171,7 @@ class Resource(webapp.RequestHandler):
 class ImageResource(webapp.RequestHandler):
 
     def get(self, key, os, size):
+        """ JPG thumbnail of original image """
         self.response.headers["Content-Type"] = "image/jpeg"
         #self.response.headers.add_header("Expires", "")
 

@@ -2,11 +2,11 @@ import logging
 import datetime
 import StringIO
 import pickle
-import urllib2
 
 from google.appengine.ext import db
 from google.appengine.ext import blobstore
 from google.appengine.api import images
+from google.appengine.api import urlfetch
 
 from lib import EXIF
 from django.utils import simplejson as json
@@ -14,6 +14,8 @@ from lib.geo.geomodel import GeoModel
 
 
 class SpecializedJSONEncoder(json.JSONEncoder):
+    """ Serializes additional objects beyond the default simplejson encoder
+    """
 
     def default(self, obj):
         obj_type = type(obj)
@@ -27,12 +29,14 @@ class SpecializedJSONEncoder(json.JSONEncoder):
 
 
 class JSONableModel(db.Model):
+    """ Generic model that is JSON serializable """
 
     def to_json(self):
         return json.dumps(self.properties(), cls=SpecializedJSONEncoder)
 
 
 class User(JSONableModel):
+    """ Service User """
     email = db.EmailProperty()
     display_name = db.TextProperty()
 
@@ -56,14 +60,22 @@ def _read_EXIF(fobj):
 
 
 def ref_to_sign(r):
+    """ Convert EXIF.ASCII to a sign """
     return 1 if r.values in ('N', 'E', 'T') else -1
 
 
 def ratio_to_frac(r):
-    return float(r.num) / float(r.den)
+    """ Converts EXIF.Ratio to a float """
+    return float(r.num) / float(r.den) if r.den is not 0 else float('nan')
 
 
 def decimalify(*xs):
+    """ Turns an array of degrees minutes seconds into a decimal
+        Arg:
+            xs - a bunch of numbers representing DMS
+        Returns:
+            decimal representation
+    """
     s = 0
     for x in reversed(xs):
         s = x + s / 60.0
@@ -71,12 +83,52 @@ def decimalify(*xs):
 
 
 def _iOS_coord_to_decimal(coord, ref=None):
+    """ Convert iOS photo EXIF to decimal
+        Args:
+            coord - EXIF GPS coordinate in DMS
+            ref - EXIF GPS coordinate ref
+        Returns:
+            decimal representation
+    """
     coord = map(ratio_to_frac, coord.values)
     sign = 1 if not ref else ref_to_sign(ref)
     return sign * decimalify(*coord)
 
 
 class Photo(JSONableModel, GeoModel):
+    """ Photo
+        A Photo's information is available as a JSON object at:
+
+        GET /photos/<key>
+
+        Overview of information:
+
+        key - the string key that uniquely identifies this photo in the
+            service
+        taken_at - time the photo EXIF reports it was taken
+        caption - a caption specified by the user
+        location - the GPS coordinates the photo EXIF reported
+        location_geocells - http://geohash.org/
+        geoname - reverse geocode result from ws.geonames.org
+        user - a string key that uniquely identifies the photo's user
+
+        In order to get a photo's image data:
+
+        GET /photos/<key>/<OS>/<size>
+
+        where OS is the mobile operating system and size is one of the
+        following:
+
+        t - tiny
+        s - small
+        m - medium
+        f - full
+
+        The default size is full. Valid operating systems are:
+
+        iOS
+        iOS_retina
+    """
     user = db.ReferenceProperty(User, required=True)
     caption = db.StringProperty()
     taken_at = db.DateTimeProperty()
@@ -99,7 +151,7 @@ class Photo(JSONableModel, GeoModel):
     img_ios_r_f = db.BlobProperty()
 
     def put(self, **kwargs):
-        """ Postprocess img_orig before storing. """
+        """ Postprocess img_orig """
         saved = True
         try:
             self.key()
@@ -119,15 +171,21 @@ class Photo(JSONableModel, GeoModel):
             return StringIO.StringIO(self.img_orig)
 
     def _get_geo_name(self):
+        """ Attempts to get the results of a reverse geocode """
         try:
-            result = urllib2.urlopen(
+            result = urlfetch.fetch(
                 'http://ws.geonames.org/findNearestAddressJSON?lat=%f&lng=%f' %
                 (self.location.lat, self.location.lon)).read()
-        except urllib2.URLError, e:
+        except urlfetch.DownloadError:
+            result = 'Unknown'
+        except urlfetch.Error:
             result = 'Unknown'
         return result
 
     def _set_location(self, geopt):
+        """ Sets the location of the photo to geopt and updates the location
+            hash and reverse geocode results.
+        """
         self.location = geopt
         self.geoname = pickle.dumps(self._get_geo_name())
 
@@ -137,6 +195,7 @@ class Photo(JSONableModel, GeoModel):
     def _postprocess(self):
         """ Gather image data and make thumbnails.
             1. Read and store EXIF
+            2. Update image information based on EXIF
             2. Generate smaller sizes
         """
         logging.info("Processing original image")
@@ -208,7 +267,6 @@ class Photo(JSONableModel, GeoModel):
             return self.get_iOS_retina_img(size)
 
     def get_iOS_img(self, size='t'):
-        logging.info("Returning image of size %s" % size)
         if size == 't':
             return self.img_ios_t
         elif size == 's':
@@ -216,6 +274,8 @@ class Photo(JSONableModel, GeoModel):
         elif size == 'm':
             return self.img_ios_m
         elif size == 'f':
+            return self.img_ios_f
+        else:
             return self.img_ios_f
 
     def get_iOS_retina_img(self, size='t'):
@@ -226,6 +286,8 @@ class Photo(JSONableModel, GeoModel):
         elif size == 'm':
             return self.img_ios_r_m
         elif size == 'f':
+            return self.img_ios_r_f
+        else:
             return self.img_ios_r_f
 
     def to_json(self):

@@ -4,7 +4,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import urlfetch
 
-from django.utils import simplejson as json
+from django.utils import simplejson
 from lib import gaesessions
 
 import models
@@ -30,6 +30,7 @@ class RPXTokenHandler(webapp.RequestHandler):
     """ Receive RPX POST with user's login information """
 
     def post(self):
+        """ Receiver for RPX """
         token = self.request.get('token')
         url = 'https://rpxnow.com/api/v2/auth_info'
         args = {
@@ -43,7 +44,7 @@ class RPXTokenHandler(webapp.RequestHandler):
             method=urlfetch.POST,
             headers={'Content-Type': 'application/x-www-form-urlencoded'})
 
-        auth = json.loads(r.content)
+        auth = simplejson.loads(r.content)
 
         session = get_session()
         _session_terminate(session)

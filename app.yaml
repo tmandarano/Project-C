@@ -12,5 +12,5 @@ handlers:
   upload: (.*\.(html|ico))
 
 - url: /.*
-  script: lg.py
+  script: __init__.py
   secure: always
