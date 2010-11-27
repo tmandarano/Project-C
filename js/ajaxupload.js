@@ -1,1 +1,0 @@
-../lib/ajax-upload/ajaxupload.js

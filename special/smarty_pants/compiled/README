@@ -1,1 +1,0 @@
-This directory needs to be writeable by the process that runs the web server, that's why it's been placed inside of the "special" directory. At some point we may move this to a service where it's not written to side by side with other app elements.

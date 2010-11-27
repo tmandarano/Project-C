@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<head> 
+  <title>LG</title> 
+  <link rel="stylesheet" href="/css/custom-theme/jquery-ui-1.8.2.custom.css" />
+  <style type="text/css">
+    body { font-family: sans-serif; }
+    #preview { height: 200px; }
+  </style>
+</head> 
+<body> 
+  <form method="POST" enctype="multipart/form-data">
+    <table>
+      <tr>
+        <th><label for="image">Photo</label></th>
+        <td>
+          <input id="image" name="image" type="file" />
+          <div id="preview"></div>
+        </td>
+      </tr>
+      <tr>
+        <th><label for="caption">Caption</label></th>
+        <td><input id="caption" name="caption" type="text" /></td>
+      </tr>
+    </table>
+    <input type="submit" value="Share" />
+  </form>
+
+  <script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.form.js"></script>
+  <script type="text/javascript">
+function origin() {
+  var l = window.location;
+  return l.origin ? l.origin : l.protocol + '//' + l.host;
+}
+$(function () {
+  var user_dialog = $('<div></div>').dialog({position: ['right', 'top']});
+  function showPhoto(photo) {
+    var photo_dialog = $('<div></div>')
+      .dialog({position: ['center', 'top'], title: photo.key});
+    photo_dialog.append('<img src="/photos/' + photo.key + '/iOS/f">');
+    photo_dialog.append('<p>' + photo.caption + '</p>');
+    photo_dialog.append('<p>' + photo.location + '</p>');
+    var comment_list = $('<ul></ul>');
+    for (var i = 0; i < photo.comments.length; i += 1) {
+      var comment = photo.comments[i];
+      comment_list.append('<li>' + comment.comment + '</li>');
+    }
+    photo_dialog.append(comment_list);
+    var comment_form = $([
+      '<form>',
+        '<input type="text" name="caption" />',
+        '<input type="submit" />',
+      '</form>'
+    ].join(''));
+    comment_form.submit(function () { return false; });
+    comment_form.find(':submit').click(function () {
+      $.ajax({
+        url: '/photos/' + photo.key + '/comment',
+        type: 'POST',
+        dataType: 'json',
+        data: {comment: comment_form.find(':text').val()},
+        success: function (photo) {
+          comment_list.append(
+            '<li>' + comment_form.find(':text').val() + '</li>');
+        },
+        error: function (xhr) {
+          console.log(xhr);
+        }
+      });
+    });
+    photo_dialog.append(comment_form);
+    comment_form.find(':text').focus();
+  }
+  $.ajax({
+    url: origin() + '/users',
+    dataType: 'json',
+    success: function (user) {
+      user_dialog.dialog({title: user.display_name});
+      user_dialog.append('<h1>Most recent photos</h1>');
+      var photos_list = $('<ul></ul>');
+      $.get(origin() + '/users/' + user.key + '/photos', function (photos) {
+        for (var i = 0; i < photos.length; i += 1) {
+          var photo = photos[i];
+          console.log(photo);
+          photos_list.append(
+            $('<li>Photo ' + photo.key + '</li>').click(function () {
+              showPhoto(photo);
+            }).css('cursor', 'pointer'));
+        }
+      }, 'json');
+      user_dialog.append(photos_list);
+    },
+    error: function () {
+      user_dialog.append([
+        '<iframe src="',
+        'http://livegather.rpxnow.com/openid/embed?token_url=',
+        encodeURIComponent(origin()), '/rpx',
+        '" scrolling="no" frameBorder="no" allowtransparency="true" ', 
+        'style="width:400px;height:160px"></iframe>'].join(''));
+    }
+  });
+  $(':file').change(function () {
+    if (FileList && FileReader) {
+      var file = this.files[0];
+      if (file) {
+        var r = new FileReader();
+        r.onload = function (e) {
+          $('#preview').html('<img style="height: 200px;" src="' + e.target.result + '" />');
+        };
+        r.readAsDataURL(file);
+      }
+    }
+  });
+  $(':submit').click(function () {
+    var okay = false;
+    $.ajax({
+      async: false,
+      url: origin() + '/photos/upload',
+      success: function (url) {
+        if (url) {
+          $('form').attr('action', url)
+          console.log(url);
+          okay = true;
+        }
+      }
+    });
+    return okay;
+  });
+
+  $('#caption').val('caption yay');
+});
+  </script>
+</body> 
