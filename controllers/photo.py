@@ -143,6 +143,18 @@ class Comment(webapp.RequestHandler):
         self.redirect('/photos/%s' % key)
 
 
+class User(webapp.RequestHandler):
+
+    def get(self, key):
+        try:
+            photo = models.Photo.get(controllers.unquote(key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        self.redirect('/users/%s' % photo.user.key())
+
+
 class CreatePath(blobstore_handlers.BlobstoreUploadHandler):
 
     def get(self):
