@@ -1,43 +1,103 @@
 <!DOCTYPE html>
 <head> 
-  <title>Upload LG</title> 
+  <title>LG</title> 
+  <link rel="stylesheet" href="/css/south-street/jquery-ui-1.8.6.custom.css" />
   <style type="text/css">
-    * { font-family: sans-serif; color: #fff; background: #283;}
+    body { font-family: sans-serif; }
+    #preview { height: 200px; }
   </style>
 </head> 
 <body> 
-  <form action="" method="POST" enctype="multipart/form-data">
-  <table>
-    <tr>
-      <th><label for="photo_image">Photo</label></th>
-      <td><input id="photo_image" name="image" type="file" /></td>
-      <td id="preview" style="height: 200px;"></td>
-    </tr>
-    <tr>
-      <th><label for="caption">Caption</label></th>
-      <td><input id="caption" name="caption" type="text" /></td>
-    </tr>
-  </table>
-  <input id="photo_submit" type="submit" value="Share" />
+  <form method="POST" enctype="multipart/form-data">
+    <table>
+      <tr>
+        <th><label for="image">Photo</label></th>
+        <td>
+          <input id="image" name="image" type="file" />
+          <div id="preview"></div>
+        </td>
+      </tr>
+      <tr>
+        <th><label for="caption">Caption</label></th>
+        <td><input id="caption" name="caption" type="text" /></td>
+      </tr>
+    </table>
+    <input type="submit" value="Share" />
   </form>
 
-  <iframe scrolling="no" frameBorder="no" allowtransparency="true" style="width:400px;height:160px"></iframe>
-
   <script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/js/jquery.form.js"></script>
   <script type="text/javascript">
+function origin() {
+  var l = window.location;
+  return l.origin ? l.origin : l.protocol + '//' + l.host;
+}
 $(function () {
-  $('iframe').attr('src',
-    'http://livegather.rpxnow.com/openid/embed?token_url=' +
-    encodeURIComponent(window.location.protocol + '//' +
-                       window.location.host) + '/rpx').hide();
+  var user_dialog = $('<div></div>').dialog({position: ['right', 'top']});
+  function showPhoto(photo) {
+    var photo_dialog = $('<div></div>')
+      .dialog({position: ['center', 'top'], title: photo.key});
+    photo_dialog.append('<img src="/photos/' + photo.key + '/iOS/f">');
+    photo_dialog.append('<p>' + photo.caption + '</p>');
+    photo_dialog.append('<p>' + photo.location + '</p>');
+    var comment_list = $('<ul></ul>');
+    for (var i = 0; i < photo.comments.length; i += 1) {
+      var comment = photo.comments[i];
+      comment_list.append('<li>' + comment.comment + '</li>');
+    }
+    photo_dialog.append(comment_list);
+    var comment_form = $([
+      '<form>',
+        '<input type="text" name="caption" />',
+        '<input type="submit" />',
+      '</form>'
+    ].join(''));
+    comment_form.submit(function () { return false; });
+    comment_form.find(':submit').click(function () {
+      $.ajax({
+        url: '/photos/' + photo.key + '/comment',
+        type: 'POST',
+        dataType: 'json',
+        data: {comment: comment_form.find(':text').val()},
+        success: function (photo) {
+          comment_list.append(
+            '<li>' + comment_form.find(':text').val() + '</li>');
+        },
+        error: function (xhr) {
+          console.log(xhr);
+        }
+      });
+    });
+    photo_dialog.append(comment_form);
+    comment_form.find(':text').focus();
+  }
   $.ajax({
-    url: window.location.protocol + '//' + window.location.host + '/users',
+    url: origin() + '/users',
+    dataType: 'json',
     success: function (user) {
-      $('iframe').replaceWith('<p>' + user.toString() + '</p');
+      user_dialog.dialog({title: user.display_name});
+      user_dialog.append('<h1>Most recent photos</h1>');
+      var photos_list = $('<ul></ul>');
+      $.get(origin() + '/users/' + user.key + '/photos', function (photos) {
+        for (var i = 0; i < photos.length; i += 1) {
+          var photo = photos[i];
+          console.log(photo);
+          photos_list.append(
+            $('<li>Photo ' + photo.key + '</li>').click(function () {
+              showPhoto(photo);
+            }).css('cursor', 'pointer'));
+        }
+      }, 'json');
+      user_dialog.append(photos_list);
     },
     error: function () {
-      $('iframe').show();
+      user_dialog.append([
+        '<iframe src="',
+        'http://livegather.rpxnow.com/openid/embed?token_url=',
+        encodeURIComponent(origin()), '/rpx',
+        '" scrolling="no" frameBorder="no" allowtransparency="true" ', 
+        'style="width:400px;height:160px"></iframe>'].join(''));
     }
   });
   $(':file').change(function () {
@@ -56,10 +116,10 @@ $(function () {
     var okay = false;
     $.ajax({
       async: false,
-      url: 'http://' + window.location.host + '/photos/upload',
+      url: origin() + '/photos/upload',
       success: function (url) {
         if (url) {
-          $('form').attr('action', url).css('background', '#afa');
+          $('form').attr('action', url)
           console.log(url);
           okay = true;
         }

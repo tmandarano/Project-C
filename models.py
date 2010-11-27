@@ -9,13 +9,12 @@ from google.appengine.api import images
 from google.appengine.api import urlfetch
 
 from lib import EXIF
-from django.utils import simplejson as json
+from django.utils import simplejson
 from lib.geo.geomodel import GeoModel
 
 
-class SpecializedJSONEncoder(json.JSONEncoder):
-    """ Serializes additional objects beyond the default simplejson encoder
-    """
+class SpecializedJSONEncoder(simplejson.JSONEncoder):
+    """ Serializes additional objects beyond the default simplejson encoder """
 
     def default(self, obj):
         obj_type = type(obj)
@@ -25,14 +24,30 @@ class SpecializedJSONEncoder(json.JSONEncoder):
             return ','.join(map(str, (obj.lat, obj.lon)))
         elif obj_type is db.Key:
             return obj.id_or_name()
-        return json.JSONEncoder.default(self, obj)
+        elif isinstance(obj, JSONableModel):
+            return obj.serialize()
+        return simplejson.JSONEncoder.default(self, obj)
 
 
 class JSONableModel(db.Model):
     """ Generic model that is JSON serializable """
 
+    serializable = ()
+
+    def serialize(self):
+        properties = self.properties()
+        keys = properties.keys()
+
+        allowed_keys = filter(lambda x: x in self.serializable, keys)
+
+        obj = {}
+        for x in allowed_keys:
+            obj[x] = properties[x].get_value_for_datastore(self)
+
+        return obj
+
     def to_json(self):
-        return json.dumps(self.properties(), cls=SpecializedJSONEncoder)
+        return simplejson.dumps(self.serialize(), cls=SpecializedJSONEncoder)
 
 
 class User(JSONableModel):
@@ -40,19 +55,12 @@ class User(JSONableModel):
     email = db.EmailProperty()
     display_name = db.TextProperty()
 
-    def to_json(self):
-        properties = self.properties()
-        keys = properties.keys()
+    serializable = ('email', 'display_name', )
 
-        key_whitelist = ('email', 'display_name', )
-        allowed_keys = filter(lambda x: x in key_whitelist, keys)
-
-        obj = {}
-        for x in allowed_keys:
-            obj[x] = properties[x].get_value_for_datastore(self)
+    def serialize(self):
+        obj = super(User, self).serialize()
         obj['key'] = str(self.key())
-
-        return json.dumps(obj, cls=SpecializedJSONEncoder)
+        return obj
 
 
 def _read_EXIF(fobj):
@@ -134,9 +142,8 @@ class Photo(JSONableModel, GeoModel):
     taken_at = db.DateTimeProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now=True)
-    exif = db.TextProperty()
-
-    geoname = db.StringProperty(multiline=True)
+    exif = db.BlobProperty()
+    geoname = db.BlobProperty()
 
     img_orig = blobstore.BlobReferenceProperty(required=True)
 
@@ -149,6 +156,8 @@ class Photo(JSONableModel, GeoModel):
     img_ios_r_s = db.BlobProperty()
     img_ios_r_m = db.BlobProperty()
     img_ios_r_f = db.BlobProperty()
+
+    serializable = ('taken_at', 'caption', 'location', )
 
     def put(self, **kwargs):
         """ Postprocess img_orig """
@@ -175,12 +184,12 @@ class Photo(JSONableModel, GeoModel):
         try:
             result = urlfetch.fetch(
                 'http://ws.geonames.org/findNearestAddressJSON?lat=%f&lng=%f' %
-                (self.location.lat, self.location.lon)).read()
+                (self.location.lat, self.location.lon)).content
         except urlfetch.DownloadError:
             result = 'Unknown'
         except urlfetch.Error:
             result = 'Unknown'
-        return result
+        return simplejson.loads(result)
 
     def _set_location(self, geopt):
         """ Sets the location of the photo to geopt and updates the location
@@ -216,9 +225,9 @@ class Photo(JSONableModel, GeoModel):
             exif['GPS GPSAltitude'], exif['GPS GPSAltitudeRef'])
         gpstime = _iOS_coord_to_decimal(
             exif['GPS GPSTimeStamp'])
-        image_time = datetime.strptime(exif['Image DateTime'].values[0],
+        image_time = datetime.datetime.strptime(exif['Image DateTime'].values,
             '%Y:%m:%d %H:%M:%S')
-        info = exif['Image GPSInfo'].values[0]
+        info = exif['Image GPSInfo'].values
         horiz = True if exif['Image Orientation'].values else False
 
         self.taken_at = image_time
@@ -295,25 +304,28 @@ class Photo(JSONableModel, GeoModel):
         return self.thumb_set.filter('up', True).count() - \
                self.thumb_set.filter('up', False).count()
 
-    def to_json(self):
-        properties = self.properties()
-        keys = properties.keys()
-
-        key_whitelist = ('taken_at', 'caption', 'location', 'location_geocells',
-                         'geoname', )
-        allowed_keys = filter(lambda x: x in key_whitelist, keys)
-
-        obj = {}
-        for x in allowed_keys:
-            obj[x] = properties[x].get_value_for_datastore(self)
+    def serialize(self):
+        obj = super(Photo, self).serialize()
         obj['key'] = str(self.key())
         obj['user'] = str(self.user.key())
         obj['thumbs'] = self.thumbs()
+        obj['comments'] = [x for x in self.comment_set]
+        obj['geoname'] = pickle.loads(self.geoname)
+        return obj
 
-        return json.dumps(obj, cls=SpecializedJSONEncoder)
 
-
-class Thumb(db.Model):
+class Thumb(JSONableModel):
     up = db.BooleanProperty(required=True)
     user = db.ReferenceProperty(User, required=True)
     photo = db.ReferenceProperty(Photo, required=True)
+
+    serializable = ('up', 'user', 'photo', )
+
+
+class Comment(JSONableModel):
+    comment = db.StringProperty(required=True, multiline=True)
+    photo = db.ReferenceProperty(Photo, required=True)
+    user = db.ReferenceProperty(User, required=True)
+    created_at = db.DateTimeProperty(auto_now_add=True)
+
+    serializable = ('comment', 'photo', 'user', 'created_at', )
