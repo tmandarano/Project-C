@@ -20,6 +20,8 @@ subdomains = {
     # Photo resource
         # GET /photos/proximity/:geopt/:radius
         ('/photos/proximity/([^/]+)/([^/]+).*', controllers.photo.Proximity),
+        # GET /photos/recent/:limit
+        ('/photos/recent/([^/]+).*', controllers.photo.Recent),
         # GET /photos/upload
         ('/photos/upload.*', controllers.photo.CreatePath),
         # GET /photos/:key/:os/:size

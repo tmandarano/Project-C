@@ -62,7 +62,7 @@ class Proximity(webapp.RequestHandler):
 
         if max_age:
             max_age = max(max_age, 1e-6)
-            query.filter('created_at >',
+            query.filter('taken_at >',
                          datetime.datetime.now() - \
                          datetime.timedelta(minutes=max_age))
 
@@ -74,6 +74,19 @@ class Proximity(webapp.RequestHandler):
 
         json_photos = map(lambda x: x.to_json(), photos)
 
+        self.response.out.write('[%s]' % ', '.join(json_photos))
+
+
+class Recent(webapp.RequestHandler):
+
+    def get(self, limit):
+        try:
+            limit = int(limit)
+        except ValueError:
+            self.error(401)
+            return
+        json_photos = models.Photo.all().order('-created_at').fetch(limit)
+        json_photos = [x.to_json() for x in json_photos]
         self.response.out.write('[%s]' % ', '.join(json_photos))
 
 
