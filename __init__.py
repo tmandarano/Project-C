@@ -28,8 +28,16 @@ subdomains = {
         ('/photos/([^/]+)/([^/]+)/([^/]+).*', controllers.photo.ImageResource),
         # POST /photos/:key/(up|down)
         ('/photos/([^/]+)/(up|down).*', controllers.photo.Thumb),
-        # POST /photos/:key/comment
-        ('/photos/([^/]+)/comment.*', controllers.photo.Comment),
+        # DELETE /photos/:key/tags/:tag_key
+        # GET /photos/:key/tags
+        # POST /photos/:key/tags
+        ('/photos/([^/]+)/tags/([^/]+).*', controllers.photo.Tag),
+        ('/photos/([^/]+)/tags.*', controllers.photo.Tags),
+        # DELETE /photos/:key/comments/:comment_key
+        # GET /photos/:key/comments
+        # POST /photos/:key/comments
+        ('/photos/([^/]+)/comments/([^/]+).*', controllers.photo.Comment),
+        ('/photos/([^/]+)/comments.*', controllers.photo.Comments),
         # GET /photos/:key/user
         ('/photos/([^/]+)/user.*', controllers.photo.User),
         # GET /photos/:key
@@ -38,6 +46,7 @@ subdomains = {
         # POST /photos
         ('/photos.*', controllers.photo.Create),
 
+    # User resource
         # GET /users/:key/photos
         ('/users/([^/]+)/photos.*', controllers.user.Photos),
         # GET /users/:key

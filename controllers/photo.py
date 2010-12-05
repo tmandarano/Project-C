@@ -29,6 +29,7 @@ class Proximity(webapp.RequestHandler):
 
             Gives a JSON array with max_results photos.
         """
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         try:
             geopt = db.GeoPt(*map(float, controllers.unquote(geopt).split(',')))
         except ValueError:
@@ -80,6 +81,7 @@ class Proximity(webapp.RequestHandler):
 class Recent(webapp.RequestHandler):
 
     def get(self, limit):
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         try:
             limit = int(limit)
         except ValueError:
@@ -118,10 +120,23 @@ class Thumb(webapp.RequestHandler):
         thumb.up = (up == 'up')
         thumb.put()
 
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         self.redirect('/photos/%s' % key)
 
 
-class Comment(webapp.RequestHandler):
+class Comments(webapp.RequestHandler):
+
+    def get(self, key):
+        """ Get comments on a given photo """
+        try:
+            photo = models.Photo.get(controllers.unquote(key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        json_comments = [x.to_json() for x in photo.comment_set]
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
+        self.response.out.write('[%s]' % ', '.join(json_comments))
 
     def post(self, key):
         """ Add a comment by the current user on a given photo """
@@ -146,12 +161,142 @@ class Comment(webapp.RequestHandler):
 
         logging.error(self.request.body)
         if not comment:
-            logging.error('nocomment')
+            logging.error('no comment')
             self.error(400)
             return
 
         c = models.Comment(comment=comment, photo=photo, user=user)
         c.put()
+
+        self.redirect('/photos/%s' % key)
+
+
+class Comment(webapp.RequestHandler):
+
+    def delete(self, key):
+        """ Delete a comment by the current user on a given photo """
+        current_session = session.get_session()
+        if not current_session or not current_session.is_active():
+            self.error(401)
+            return
+
+        try:
+            user = current_session['me']
+        except KeyError:
+            self.error(401)
+            return
+
+        try:
+            photo = models.Photo.get(controllers.unquote(key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        try:
+            comment = models.Comment.get(controllers.unquote(comment_key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        if comment.user != user:
+            self.error(401)
+            return
+
+        if comment in photo.comment_set:
+            comment.delete()
+        else:
+            self.error(404)
+            return
+
+        self.redirect('/photos/%s' % key)
+
+
+class Tags(webapp.RequestHandler):
+
+    def get(self, key):
+        """ Get tags on a given photo """
+        try:
+            photo = models.Photo.get(controllers.unquote(key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        json_tags = [x.to_json() for x in photo.tag_set]
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
+        self.response.out.write('[%s]' % ', '.join(json_tags))
+
+    def post(self, key):
+        """ Add a tag by the current user on a given photo """
+        current_session = session.get_session()
+        if not current_session or not current_session.is_active():
+            self.error(401)
+            return
+
+        try:
+            user = current_session['me']
+        except KeyError:
+            self.error(401)
+            return
+
+        try:
+            photo = models.Photo.get(controllers.unquote(key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        tag = self.request.get('tag')
+
+        logging.error(self.request.body)
+        if not comment:
+            logging.error('no tag')
+            self.error(400)
+            return
+
+        # Prevent double tag
+        tag = photo.tag_set.filter('tag = ', tag).filter('user = ', user).get()
+        if not tag:
+            tag = models.Tag(tag=tag, photo=photo, user=user)
+            tag.put()
+
+        self.redirect('/photos/%s' % key)
+
+
+class Tag(webapp.RequestHandler):
+
+    def delete(self, key, tag_key):
+        """ Delete a tag by the current user on a given photo """
+        current_session = session.get_session()
+        if not current_session or not current_session.is_active():
+            self.error(401)
+            return
+
+        try:
+            user = current_session['me']
+        except KeyError:
+            self.error(401)
+            return
+
+        try:
+            photo = models.Photo.get(controllers.unquote(key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        try:
+            tag = models.Tag.get(controllers.unquote(tag_key))
+        except db.BadKeyError:
+            self.error(400)
+            return
+
+        if tag.user != user:
+            self.error(401)
+            return
+
+        if tag in photo.tag_set:
+            tag.delete()
+        else:
+            self.error(404)
+            return
 
         self.redirect('/photos/%s' % key)
 
@@ -165,7 +310,7 @@ class User(webapp.RequestHandler):
             self.error(400)
             return
 
-        self.redirect('/users/%s' % photo.user.key())
+        self.redirect('/users/%s' % photo.user.key(), permanent=True)
 
 
 class CreatePath(blobstore_handlers.BlobstoreUploadHandler):
@@ -178,6 +323,7 @@ class CreatePath(blobstore_handlers.BlobstoreUploadHandler):
         if not current_session or not current_session.is_active():
             self.error(401)
             return
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         self.response.out.write(
             str(blobstore.create_upload_url('/photos')))
 
@@ -230,18 +376,16 @@ class Resource(webapp.RequestHandler):
 
     def get(self, key):
         """ JSON serialization of photo identified by :key """
-        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         try:
             photo = models.Photo.get(controllers.unquote(key))
         except db.BadKeyError:
             self.error(404)
             return
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         self.response.out.write(photo.to_json())
 
     def put(self, key):
         """ Updates caption of photo identified by :key """
-        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
-
         try:
             photo = models.Photo.get(controllers.unquote(key))
         except db.BadKeyError:
@@ -263,7 +407,6 @@ class ImageResource(webapp.RequestHandler):
 
     def get(self, key, os, size):
         """ JPG thumbnail of original image """
-        self.response.headers["Content-Type"] = "image/jpeg"
         #self.response.headers.add_header("Expires", "")
 
         try:
@@ -272,6 +415,7 @@ class ImageResource(webapp.RequestHandler):
             self.error(404)
             return
 
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         self.response.out.write(photo.get_os_img(
             controllers.unquote(os),
             controllers.unquote(size)))

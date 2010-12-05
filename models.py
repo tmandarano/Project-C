@@ -310,8 +310,21 @@ class Photo(JSONableModel, GeoModel):
         obj['user'] = str(self.user.key())
         obj['thumbs'] = self.thumbs()
         obj['comments'] = [x for x in self.comment_set]
+        obj['tags'] = [x for x in self.tag_set]
         obj['geoname'] = pickle.loads(self.geoname)
         return obj
+
+
+class Tag(JSONableModel):
+    """ A photo can be tagged by a user with a phrase.
+        TODO perhaps expand this to also allow tagging an area with a phrase?
+    """
+    tag = db.StringProperty(required=True, multiline=True)
+    photo = db.ReferenceProperty(Photo, required=True)
+    user = db.ReferenceProperty(User, required=True)
+    created_at = db.DateTimeProperty(auto_now_add=True)
+
+    serializable = ('tag', 'photo', 'user', 'created_at', )
 
 
 class Thumb(JSONableModel):
