@@ -8,6 +8,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import controllers
 import controllers.photo
 import controllers.user
+import controllers.trending
 import controllers.session
 import controllers.web
 
@@ -58,6 +59,10 @@ subdomains = {
         ('/sessions', controllers.session.Resource),
         # POST /rpx (called by Janrain)
         ('/rpx.*', controllers.session.RPXTokenHandler),
+
+    # Trending resource
+        # GET /trending/tags
+        ('/trending/tags', controllers.trending.Tags),
 
         ('.*', controllers.web.API),
     ], debug=debug),
