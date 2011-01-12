@@ -73,15 +73,16 @@ subdomains = {
 
 
 def main():
-    # TESTING HACK:
-    os.environ['HTTP_HOST'] = 'api.testing.' + os.environ['HTTP_HOST']
+    ## TESTING HACK:
+    #os.environ['HTTP_HOST'] = 'api.testing.' + os.environ['HTTP_HOST']
 
-    domains = os.environ['HTTP_HOST'].split('.')
-    if type(domains) is str or len(domains) < 3:
-        subdomain = 'www'
-    else:
-        subdomain = domains[0]
-    run_wsgi_app(subdomains[subdomain])
+    #domains = os.environ['HTTP_HOST'].split('.')
+    #if type(domains) is str or len(domains) < 3:
+    #    subdomain = 'www'
+    #else:
+    #    subdomain = domains[0]
+    #run_wsgi_app(subdomains[subdomain])
+    run_wsgi_app(subdomains['api'])
 
 
 if __name__ == "__main__":
