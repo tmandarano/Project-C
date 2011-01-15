@@ -45,9 +45,12 @@ class User(webapp.RequestHandler):
 
     def get(self):
         """ JSON serialization of the current logged in user """
+        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         current_session = session.get_session()
+        import logging
+        logging.warn(str(current_session))
         if not current_session or not current_session.is_active():
-            self.error(404)
+            self.response.set_status(404, 'No user logged in')
             return
         user = current_session.get('me', None)
         if user is not None:

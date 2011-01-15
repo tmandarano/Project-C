@@ -10,8 +10,7 @@ from lib import gaesessions
 import models
 
 
-def get_session():
-    return gaesessions.get_current_session()
+get_session = gaesessions.get_current_session
 
 
 def _session_terminate(session):
@@ -23,7 +22,11 @@ class Resource(webapp.RequestHandler):
 
     def delete(self):
         """ Delete session """
-        _session_terminate(get_session())
+        import logging
+        logging.warn('deleting %s' % str(get_session()))
+        current_session = get_session()
+        _session_terminate(current_session)
+        logging.warn('deleted %s' % str(get_session()))
 
 
 class RPXTokenHandler(webapp.RequestHandler):
@@ -67,6 +70,8 @@ class RPXTokenHandler(webapp.RequestHandler):
                 # TODO uhoh.
                 pass
 
+            session.start()
+            session.regenerate_id()
             session['me'] = user
             self.redirect('/users/%s' % user.key())
         else:

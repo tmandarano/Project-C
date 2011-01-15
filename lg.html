@@ -25,16 +25,20 @@
     <input type="submit" value="Share" />
   </form>
 
+  <button id="signout">Signout</button>
+
   <script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
   <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/js/jquery.form.js"></script>
   <script type="text/javascript">
+if (!window.console) { window.console = {log: function () {}}}
 function origin() {
   var l = window.location;
   return l.origin ? l.origin : l.protocol + '//' + l.host;
 }
 $(function () {
-  var user_dialog = $('<div></div>').dialog({position: ['right', 'top']});
+  var user_dialog = $('<div></div>').dialog({position: ['right', 'top'],
+                                             width: 400, height: 400});
   function showPhoto(photo) {
     var photo_dialog = $('<div></div>')
       .dialog({position: ['center', 'top'], title: photo.key});
@@ -97,7 +101,7 @@ $(function () {
         'http://livegather.rpxnow.com/openid/embed?token_url=',
         encodeURIComponent(origin()), '/rpx',
         '" scrolling="no" frameBorder="no" allowtransparency="true" ', 
-        'style="width:400px;height:160px"></iframe>'].join(''));
+        'style="width:400px;height:220px"></iframe>'].join(''));
     }
   });
   $(':file').change(function () {
@@ -126,6 +130,16 @@ $(function () {
       }
     });
     return okay;
+  });
+
+  $('#signout').click(function () {
+    $.ajax({
+      type: 'DELETE',
+      url: origin() + '/sessions',
+      success: function () {
+        window.location.reload();
+      }
+    });
   });
 
   $('#caption').val('caption yay');

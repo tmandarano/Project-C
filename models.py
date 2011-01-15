@@ -215,11 +215,13 @@ class Photo(JSONableModel, GeoModel):
         self.exif = pickle.dumps(exif)
         logging.info("Got EXIF: \n%s" % exif)
 
+        lat = 0
         try:
             lat = _iOS_coord_to_decimal(
                 exif['GPS GPSLatitude'], exif['GPS GPSLatitudeRef'])
         except KeyError:
             pass
+        lon = 0
         try:
             lon = _iOS_coord_to_decimal(
                 exif['GPS GPSLongitude'], exif['GPS GPSLongitudeRef'])
@@ -240,6 +242,7 @@ class Photo(JSONableModel, GeoModel):
                 exif['GPS GPSTimeStamp'])
         except KeyError:
             pass
+        image_time = datetime.datetime.now()
         try:
             image_time = datetime.datetime.strptime(exif['Image DateTime'].values,
                 '%Y:%m:%d %H:%M:%S')
