@@ -215,20 +215,44 @@ class Photo(JSONableModel, GeoModel):
         self.exif = pickle.dumps(exif)
         logging.info("Got EXIF: \n%s" % exif)
 
-        lat = _iOS_coord_to_decimal(
-            exif['GPS GPSLatitude'], exif['GPS GPSLatitudeRef'])
-        lon = _iOS_coord_to_decimal(
-            exif['GPS GPSLongitude'], exif['GPS GPSLongitudeRef'])
-        dir = _iOS_coord_to_decimal(
-            exif['GPS GPSImgDirection'], exif['GPS GPSImgDirectionRef'])
-        alt = _iOS_coord_to_decimal(
-            exif['GPS GPSAltitude'], exif['GPS GPSAltitudeRef'])
-        gpstime = _iOS_coord_to_decimal(
-            exif['GPS GPSTimeStamp'])
-        image_time = datetime.datetime.strptime(exif['Image DateTime'].values,
-            '%Y:%m:%d %H:%M:%S')
-        info = exif['Image GPSInfo'].values
-        horiz = True if exif['Image Orientation'].values else False
+        try:
+            lat = _iOS_coord_to_decimal(
+                exif['GPS GPSLatitude'], exif['GPS GPSLatitudeRef'])
+        except KeyError:
+            pass
+        try:
+            lon = _iOS_coord_to_decimal(
+                exif['GPS GPSLongitude'], exif['GPS GPSLongitudeRef'])
+        except KeyError:
+            pass
+        try:
+            dir = _iOS_coord_to_decimal(
+                exif['GPS GPSImgDirection'], exif['GPS GPSImgDirectionRef'])
+        except KeyError:
+            pass
+        try:
+            alt = _iOS_coord_to_decimal(
+                exif['GPS GPSAltitude'], exif['GPS GPSAltitudeRef'])
+        except KeyError:
+            pass
+        try:
+            gpstime = _iOS_coord_to_decimal(
+                exif['GPS GPSTimeStamp'])
+        except KeyError:
+            pass
+        try:
+            image_time = datetime.datetime.strptime(exif['Image DateTime'].values,
+                '%Y:%m:%d %H:%M:%S')
+        except KeyError:
+            pass
+        try:
+            info = exif['Image GPSInfo'].values
+        except KeyError:
+            pass
+        try:
+            horiz = True if exif['Image Orientation'].values else False
+        except KeyError:
+            pass
 
         self.taken_at = image_time
         self._set_location(db.GeoPt(lat, lon))

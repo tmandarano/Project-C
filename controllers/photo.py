@@ -324,8 +324,10 @@ class CreatePath(blobstore_handlers.BlobstoreUploadHandler):
             self.error(401)
             return
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
+        self.response.out.write('"')
         self.response.out.write(
             str(blobstore.create_upload_url('/photos')))
+        self.response.out.write('"')
 
 
 class Create(blobstore_handlers.BlobstoreUploadHandler):
@@ -365,7 +367,7 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
         try:
             photo.put()
         except Exception, e:
-            logging.error('Postprocessing failed: %s' % e)
+            logging.error('Postprocessing failed: %s' % repr(e))
             self.response.set_status(302, 'Postprocessing failed')
             image.delete()
             return
