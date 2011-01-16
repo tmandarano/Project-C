@@ -169,7 +169,7 @@ class Photo(JSONableModel, GeoModel):
 
         # Image, thumbnails, location are not mutable
         if not saved:
-            self._postprocess()
+            self._postprocess():
 
         return super(Photo, self).put(**kwargs)
 

@@ -1,6 +1,7 @@
 """ Application routing """
 import cgi
 import os
+import logging
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -11,6 +12,9 @@ import controllers.user
 import controllers.trending
 import controllers.session
 import controllers.web
+
+
+logging.getLogger('').setLevel(logging.INFO)
 
 
 debug = True
@@ -44,7 +48,7 @@ subdomains = {
         # GET /photos/:key
         # PUT /photos/:key
         ('/photos/([^/]+).*', controllers.photo.Resource),
-        # POST /photos
+        # POST /photos - callback for Blobstore
         ('/photos.*', controllers.photo.Create),
 
     # User resource

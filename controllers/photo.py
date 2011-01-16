@@ -4,6 +4,7 @@ import datetime
 from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.runtime import apiproxy_errors
+from google.appengine.runtime import DeadlineExceededError
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 
@@ -313,7 +314,7 @@ class User(webapp.RequestHandler):
         self.redirect('/users/%s' % photo.user.key(), permanent=True)
 
 
-class CreatePath(blobstore_handlers.BlobstoreUploadHandler):
+class CreatePath(webapp.RequestHandler):
 
     def get(self):
         """ Get Blobstore upload URL
@@ -336,29 +337,31 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
         """ Store photo
             Since this is a blobstore handler and does not respond RESTfully
             the only HTTP status codes allowed are 301, 302, and 303. Any
-            errors are represented by 302 and an ASCII description of the
-            error. Proper requests will redirect.
+            errors are represented by 303 and an ASCII description of the
+            error. Proper requests will redirect with 302 Found.
         """
+        error_code = 303
         uploads = self.get_uploads()
         if len(uploads) is not 1:
-            self.response.set_status(302, 'Need one file')
+            self.response.set_status(error_code, 'Need one file')
             return
         # REMEMBER TO DELETE THE IMAGE FROM BLOBSTORE WHEN RETURNING ERROR
         image = uploads[0]
 
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
-            self.error(401)
+            image.delete()
+            self.response.set_status(error_code, 'Unauthorized')
             return
-
-        caption = controllers.unquote(self.request.get('caption'))
 
         try:
             user = current_session['me']
         except KeyError:
-            self.error(401)
             image.delete()
+            self.response.set_status(error_code, 'Unauthorized')
             return
+
+        caption = controllers.unquote(self.request.get('caption'))
 
         photo = models.Photo(
             user=user,
@@ -366,10 +369,16 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
             caption=caption)
         try:
             photo.put()
-        except Exception, e:
-            logging.error('Postprocessing failed: %s' % repr(e))
-            self.response.set_status(302, 'Postprocessing failed')
+        except DeadlineExceededError:
             image.delete()
+            logging.error('Processing took too long.')
+            self.response.set_status(error_code,
+                                     'Postprocessing took too long.')
+            return
+        except Exception, e:
+            image.delete()
+            logging.error(repr(e))
+            self.response.set_status(error_code, 'Postprocessing failed')
             return
         self.redirect('/photos/%s' % photo.key())
 

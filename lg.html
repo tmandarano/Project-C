@@ -8,7 +8,7 @@
   </style>
 </head> 
 <body> 
-  <form method="POST" enctype="multipart/form-data">
+  <form action="/photos/upload" method="POST" enctype="multipart/form-data">
     <table>
       <tr>
         <th><label for="image">Photo</label></th>
@@ -124,11 +124,19 @@ $(function () {
       success: function (url) {
         if (url) {
           $('form').attr('action', url)
-          console.log(url);
+          console.log('form action changed to:', url);
           okay = true;
         }
       }
     });
+    //$(this).ajaxSubmit({
+    //  success: function (data, textStatus, xhr) {
+    //    console.log('upload success', data, textStatus, xhr);
+    //  }, 
+    //  error: function (xhr, textStatus, errorThrown) {
+    //    console.log('upload error', xhr, textStatus, errorThrown);
+    //  }
+    //});
     return okay;
   });
 

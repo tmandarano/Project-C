@@ -17,6 +17,10 @@ handlers:
 - url: /js
   static_dir: js
 
+# Callback URL for Blobstore CANNOT be HTTPS
+- url: /photos
+  script: __init__.py
+
 - url: /.*
   script: __init__.py
   secure: always
