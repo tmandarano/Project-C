@@ -59,6 +59,7 @@ subdomains = {
         # GET /users
         ('/users.*', controllers.user.User),
 
+    # Session resource
         # DELETE /session
         ('/sessions', controllers.session.Resource),
         # POST /rpx (called by Janrain)

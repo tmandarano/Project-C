@@ -60,7 +60,7 @@ $(function () {
     comment_form.submit(function () { return false; });
     comment_form.find(':submit').click(function () {
       $.ajax({
-        url: '/photos/' + photo.key + '/comment',
+        url: '/photos/' + photo.key + '/comments',
         type: 'POST',
         dataType: 'json',
         data: {comment: comment_form.find(':text').val()},

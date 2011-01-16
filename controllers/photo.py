@@ -8,6 +8,8 @@ from google.appengine.runtime import DeadlineExceededError
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 
+from django.utils import simplejson
+
 import models
 import controllers
 
@@ -27,8 +29,8 @@ class Proximity(webapp.RequestHandler):
                         minutes in the past (in set float((0, inf)))
                     max_results - at most return this many results (in set
                         int([1, 20]))
-
-            Gives a JSON array with max_results photos.
+            Returns:
+                JSON array with max_results photos.
         """
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         try:
@@ -52,6 +54,7 @@ class Proximity(webapp.RequestHandler):
         except ValueError:
             self.response.set_status(400, 'max_results must be integer')
             return
+
         max_age = 30
         try:
             max_age = float(controllers.unquote(self.request.get('max_age',
@@ -74,7 +77,7 @@ class Proximity(webapp.RequestHandler):
             max_results=min(20, max(max_results, 1)),
             max_distance=distance)
 
-        json_photos = map(lambda x: x.to_json(), photos)
+        json_photos = [x.to_json() for x in photos]
 
         self.response.out.write('[%s]' % ', '.join(json_photos))
 
@@ -82,6 +85,12 @@ class Proximity(webapp.RequestHandler):
 class Recent(webapp.RequestHandler):
 
     def get(self, limit):
+        """ List recently uploaded photos
+            Args:
+                limit - the maximum number of recently uploaded photos
+            Returns:
+                JSON array of recently uploaded photos
+        """
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         try:
             limit = int(limit)
@@ -94,6 +103,7 @@ class Recent(webapp.RequestHandler):
 
 
 class Thumb(webapp.RequestHandler):
+    """ Exposes the thumb up and thumb down operations on photos by a user """
 
     def post(self, key, up):
         """ Change the user's vote on a given photo """
@@ -126,6 +136,7 @@ class Thumb(webapp.RequestHandler):
 
 
 class Comments(webapp.RequestHandler):
+    """ Exposes commenting on a photo """
 
     def get(self, key):
         """ Get comments on a given photo """
@@ -173,6 +184,7 @@ class Comments(webapp.RequestHandler):
 
 
 class Comment(webapp.RequestHandler):
+    """ Exposes comment management """
 
     def delete(self, key):
         """ Delete a comment by the current user on a given photo """
@@ -213,6 +225,7 @@ class Comment(webapp.RequestHandler):
 
 
 class Tags(webapp.RequestHandler):
+    """ Exposes tagging """
 
     def get(self, key):
         """ Get tags on a given photo """
@@ -263,6 +276,7 @@ class Tags(webapp.RequestHandler):
 
 
 class Tag(webapp.RequestHandler):
+    """ Exposes tag managment """
 
     def delete(self, key, tag_key):
         """ Delete a tag by the current user on a given photo """
@@ -305,6 +319,7 @@ class Tag(webapp.RequestHandler):
 class User(webapp.RequestHandler):
 
     def get(self, key):
+        """ Redirects permanently to the photo's user URN """
         try:
             photo = models.Photo.get(controllers.unquote(key))
         except db.BadKeyError:
@@ -318,17 +333,16 @@ class CreatePath(webapp.RequestHandler):
 
     def get(self):
         """ Get Blobstore upload URL
-            Upload to this URL to actually be able to store a photo.
+            POST to the response URL to actually be able to store a photo.
+            Returns:
+                JSON string containing upload URL
         """
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
             self.error(401)
             return
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
-        self.response.out.write('"')
-        self.response.out.write(
-            str(blobstore.create_upload_url('/photos')))
-        self.response.out.write('"')
+        self.response.out.write('"%s"' % blobstore.create_upload_url('/photos'))
 
 
 class Create(blobstore_handlers.BlobstoreUploadHandler):
@@ -339,26 +353,35 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
             the only HTTP status codes allowed are 301, 302, and 303. Any
             errors are represented by 303 and an ASCII description of the
             error. Proper requests will redirect with 302 Found.
+
+            Errors:
+                Need one file
+                Unauthorized
+                Postprocessing took too long
+                Postprocessing failed
         """
-        error_code = 303
         uploads = self.get_uploads()
         if len(uploads) is not 1:
             self.response.set_status(error_code, 'Need one file')
             return
-        # REMEMBER TO DELETE THE IMAGE FROM BLOBSTORE WHEN RETURNING ERROR
         image = uploads[0]
+
+        # THE ONLY RIGHT WAY TO EXIT THIS HANDLER IS WITH 302 OR CALLING THIS
+        # METHOD AND RETURNING.
+        def failed(message, error_code=303):
+            """ Encapsulate failure logic. Yay closures. """
+            image.delete()
+            self.response.set_status(error_code, message)
 
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
-            image.delete()
-            self.response.set_status(error_code, 'Unauthorized')
+            failed('Unauthorized')
             return
 
         try:
             user = current_session['me']
         except KeyError:
-            image.delete()
-            self.response.set_status(error_code, 'Unauthorized')
+            failed('Unauthorized')
             return
 
         caption = controllers.unquote(self.request.get('caption'))
@@ -370,15 +393,12 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
         try:
             photo.put()
         except DeadlineExceededError:
-            image.delete()
-            logging.error('Processing took too long.')
-            self.response.set_status(error_code,
-                                     'Postprocessing took too long.')
+            logging.error('Postprocessing took too long.')
+            failed('Postprocessing took too long.')
             return
         except Exception, e:
-            image.delete()
             logging.error(repr(e))
-            self.response.set_status(error_code, 'Postprocessing failed')
+            failed('Postprocessing failed')
             return
         self.redirect('/photos/%s' % photo.key())
 
@@ -411,7 +431,6 @@ class Resource(webapp.RequestHandler):
         except apiproxy_errors.CapabilityDisabledError:
             # fail
             pass
-        self.redirect('/photos/%s' % key)
 
 
 class ImageResource(webapp.RequestHandler):
@@ -426,7 +445,7 @@ class ImageResource(webapp.RequestHandler):
             self.error(404)
             return
 
-        self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
+        self.response.headers["Content-Type"] = 'image/jpeg'
         self.response.out.write(photo.get_os_img(
             controllers.unquote(os),
             controllers.unquote(size)))

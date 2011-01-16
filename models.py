@@ -169,7 +169,7 @@ class Photo(JSONableModel, GeoModel):
 
         # Image, thumbnails, location are not mutable
         if not saved:
-            self._postprocess():
+            self._postprocess()
 
         return super(Photo, self).put(**kwargs)
 
@@ -185,6 +185,7 @@ class Photo(JSONableModel, GeoModel):
             result = urlfetch.fetch(
                 'http://ws.geonames.org/findNearestAddressJSON?lat=%f&lng=%f' %
                 (self.location.lat, self.location.lon)).content
+            # TODO handle cases when server is overloaded.
         except urlfetch.DownloadError:
             result = 'Unknown'
         except urlfetch.Error:
@@ -263,6 +264,10 @@ class Photo(JSONableModel, GeoModel):
         self._generate_thumbnails()
 
     def _generate_thumbnail(self, width, height):
+        """ Generates a thumbnail of size width x height. Unfortunately the
+            only allowed output encodings are JPEG and PNG. Since this
+            operates on photos, JPEG has been selected.
+        """
         logging.info("Generating thumbnail %dx%d" % (width, height))
         if type(self.img_orig) is blobstore.BlobInfo:
             img = images.Image(blob_key=str(self.img_orig.key()))
@@ -351,15 +356,30 @@ class Tag(JSONableModel):
     user = db.ReferenceProperty(User, required=True)
     created_at = db.DateTimeProperty(auto_now_add=True)
 
-    serializable = ('tag', 'photo', 'user', 'created_at', )
+    serializable = ('tag', 'created_at', )
+
+    def serialize(self):
+        obj = super(Tag, self).serialize()
+        obj['photo'] = str(self.photo.key())
+        obj['user'] = str(self.user.key())
+        return obj
 
 
 class Thumb(JSONableModel):
+    """ A thumb is a representation of a user's opinion on a photo. A user can
+        only change a thumb up or down once they have given an opinion.
+    """
     up = db.BooleanProperty(required=True)
     user = db.ReferenceProperty(User, required=True)
     photo = db.ReferenceProperty(Photo, required=True)
 
-    serializable = ('up', 'user', 'photo', )
+    serializable = ('up', )
+
+    def serialize(self):
+        obj = super(Thumb, self).serialize()
+        obj['photo'] = str(self.photo.key())
+        obj['user'] = str(self.user.key())
+        return obj
 
 
 class Comment(JSONableModel):
@@ -368,4 +388,10 @@ class Comment(JSONableModel):
     user = db.ReferenceProperty(User, required=True)
     created_at = db.DateTimeProperty(auto_now_add=True)
 
-    serializable = ('comment', 'photo', 'user', 'created_at', )
+    serializable = ('comment', 'created_at', )
+
+    def serialize(self):
+        obj = super(Comment, self).serialize()
+        obj['photo'] = str(self.photo.key())
+        obj['user'] = str(self.user.key())
+        return obj

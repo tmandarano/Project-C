@@ -22,11 +22,8 @@ class Resource(webapp.RequestHandler):
 
     def delete(self):
         """ Delete session """
-        import logging
-        logging.warn('deleting %s' % str(get_session()))
         current_session = get_session()
         _session_terminate(current_session)
-        logging.warn('deleted %s' % str(get_session()))
 
 
 class RPXTokenHandler(webapp.RequestHandler):
@@ -68,7 +65,7 @@ class RPXTokenHandler(webapp.RequestHandler):
                     display_name=display_name)
             except db.TransactionFailedError:
                 # TODO uhoh.
-                pass
+                raise
 
             session.start()
             session.regenerate_id()
