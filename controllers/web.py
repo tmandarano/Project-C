@@ -12,4 +12,10 @@ class Index(webapp.RequestHandler):
 class API(webapp.RequestHandler):
 
     def get(self):
-        self.response.out.write('LG API')
+        self.response.out.write("""\
+<!DOCTYPE html>
+<style type="text/css">
+  html { height: 100%; }
+  body { background: #45a136 url('img/logo/large_no_tagline.png') no-repeat center 40%; }
+</style>
+""")
