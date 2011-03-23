@@ -83,7 +83,7 @@ function beta_add() {
     if ($user['id'] == 0) {
         BetaDAO::add_key(params('email'), params('key'));
     } else {
-        halt(401);
+        halt(403);
     }
 }
 
@@ -311,7 +311,7 @@ function settings() {
     $user = get_session_user();
 
     if (!$user) {
-        halt(401);
+        halt(403);
     }
 
     $template = new Template();

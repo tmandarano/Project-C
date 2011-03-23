@@ -95,7 +95,7 @@ class Recent(webapp.RequestHandler):
         try:
             limit = int(limit)
         except ValueError:
-            self.error(401)
+            self.error(403)
             return
         json_photos = models.Photo.all().order('-created_at').fetch(limit)
         json_photos = [x.to_json() for x in json_photos]
@@ -109,13 +109,13 @@ class Thumb(webapp.RequestHandler):
         """ Change the user's vote on a given photo """
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
-            self.error(401)
+            self.error(403)
             return
 
         try:
             user = current_session['me']
         except KeyError:
-            self.error(401)
+            self.error(403)
             return
 
         try:
@@ -154,13 +154,13 @@ class Comments(webapp.RequestHandler):
         """ Add a comment by the current user on a given photo """
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
-            self.error(401)
+            self.error(403)
             return
 
         try:
             user = current_session['me']
         except KeyError:
-            self.error(401)
+            self.error(403)
             return
 
         try:
@@ -190,13 +190,13 @@ class Comment(webapp.RequestHandler):
         """ Delete a comment by the current user on a given photo """
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
-            self.error(401)
+            self.error(403)
             return
 
         try:
             user = current_session['me']
         except KeyError:
-            self.error(401)
+            self.error(403)
             return
 
         try:
@@ -212,7 +212,7 @@ class Comment(webapp.RequestHandler):
             return
 
         if comment.user != user:
-            self.error(401)
+            self.error(403)
             return
 
         if comment in photo.comment_set:
@@ -243,13 +243,13 @@ class Tags(webapp.RequestHandler):
         """ Add a tag by the current user on a given photo """
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
-            self.error(401)
+            self.error(403)
             return
 
         try:
             user = current_session['me']
         except KeyError:
-            self.error(401)
+            self.error(403)
             return
 
         try:
@@ -282,13 +282,13 @@ class Tag(webapp.RequestHandler):
         """ Delete a tag by the current user on a given photo """
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
-            self.error(401)
+            self.error(403)
             return
 
         try:
             user = current_session['me']
         except KeyError:
-            self.error(401)
+            self.error(403)
             return
 
         try:
@@ -304,7 +304,7 @@ class Tag(webapp.RequestHandler):
             return
 
         if tag.user != user:
-            self.error(401)
+            self.error(403)
             return
 
         if tag in photo.tag_set:
@@ -339,7 +339,7 @@ class CreatePath(webapp.RequestHandler):
         """
         current_session = session.get_session()
         if not current_session or not current_session.is_active():
-            self.error(401)
+            self.error(403)
             return
         self.response.headers["Content-Type"] = controllers.MIMETYPE_JSON
         self.response.out.write('"%s"' % blobstore.create_upload_url('/photos'))

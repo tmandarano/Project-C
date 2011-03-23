@@ -233,7 +233,7 @@ var_dump($_SERVER['REQUEST_URI']);
     
     $user = get_user_by_session_or_id();
     if(!$user) {
-        return halt(401);
+        return halt(403);
     }
 
     $tag_str = $data['tags'];
@@ -292,7 +292,7 @@ function photos_create() {
    
     $user = get_user_by_session_or_identifier($data['identifier']);
     if(!$user) {
-        return halt(401);
+        return halt(403);
     }
 
     $photo = new Photo();
@@ -481,7 +481,7 @@ function photos_image_by_platform() {
 
     if (!$platformOK) {
         debug('Illegal platform given during attempt to get photo:', $platform);
-        halt(401);
+        halt(403);
     }
 
     $size = params('size');
@@ -496,7 +496,7 @@ function photos_image_by_platform() {
 
     if (!$sizeOK) {
         debug('Illegal size given during attempt to get photo:', $size);
-        halt(401);
+        halt(403);
     }
 
     $photo = PhotoDao::get_photo_by_id(var_to_i(params('id')));
