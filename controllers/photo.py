@@ -352,7 +352,9 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
             Since this is a blobstore handler and does not respond RESTfully
             the only HTTP status codes allowed are 301, 302, and 303. Any
             errors are represented by 303 and an ASCII description of the
-            error. Proper requests will redirect with 302 Found.
+            error in the Location header.
+
+            Proper requests will redirect with 302 Found.
 
             Errors:
                 Need one file
@@ -360,18 +362,19 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
                 Postprocessing took too long
                 Postprocessing failed
         """
-        uploads = self.get_uploads()
-        if len(uploads) is not 1:
-            self.response.set_status(error_code, 'Need one file')
-            return
-        image = uploads[0]
-
         # THE ONLY RIGHT WAY TO EXIT THIS HANDLER IS WITH 302 OR CALLING THIS
         # METHOD AND RETURNING.
         def failed(message, error_code=303):
             """ Encapsulate failure logic. Yay closures. """
             image.delete()
             self.response.set_status(error_code, message)
+            self.response.headers.add('Location', message)
+
+        uploads = self.get_uploads()
+        if len(uploads) is not 1:
+            failed('Need one file')
+            return
+        image = uploads[0]
 
         current_session = session.get_session()
         if not current_session or not current_session.is_active():

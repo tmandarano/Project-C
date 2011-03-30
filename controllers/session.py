@@ -52,17 +52,25 @@ class RPXTokenHandler(webapp.RequestHandler):
         if auth['stat'] == 'ok':
             info = auth['profile']
             oid = info['identifier']
-            email = info.get('email', '')
+            try:
+                email = info['verifiedEmail']
+            except KeyError:
+                try:
+                    email = info['email']
+                except KeyError:
+                    email = ''
             try:
                 display_name = info['displayName']
             except KeyError:
                 display_name = email.partition('@')[0]
 
             try:
-                user = models.User.get_or_insert(
-                    oid,
-                    email=email,
-                    display_name=display_name)
+                user = models.User.get_or_insert(oid)
+                if email:
+                    user.email = email
+                if display_name:
+                    user.display_name = display_name
+                user.put()
             except db.TransactionFailedError:
                 # TODO uhoh.
                 raise
