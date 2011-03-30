@@ -367,8 +367,9 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
         def failed(message, error_code=303):
             """ Encapsulate failure logic. Yay closures. """
             image.delete()
+            logging.error('Upload failed with error: %s' % message)
             self.response.set_status(error_code, message)
-            self.response.headers.add('Location', message)
+            self.response.headers.add_header('Location', message)
 
         uploads = self.get_uploads()
         if len(uploads) is not 1:
@@ -396,7 +397,6 @@ class Create(blobstore_handlers.BlobstoreUploadHandler):
         try:
             photo.put()
         except DeadlineExceededError:
-            logging.error('Postprocessing took too long.')
             failed('Postprocessing took too long.')
             return
         except Exception, e:
